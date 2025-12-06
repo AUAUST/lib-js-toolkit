@@ -1,4 +1,6 @@
-export function value<V>(subject: V | (() => V)): V;
+export type Value<V> = V | (() => V);
+
+export function value<V>(subject: Value<V>): V;
 export function value<V, A extends any[]>(
   subject: V | ((...args: A) => V),
   ...args: A
