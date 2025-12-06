@@ -25,7 +25,7 @@ export function empty<T>(value: T): value is T & EmptyValue {
   }
 
   if (typeof value === "object") {
-    return Object.keys(value as object).length === 0;
+    return Object.keys(value).length === 0;
   }
 
   return false;
