@@ -1,5 +1,5 @@
+import { tap } from "@auaust/toolkit";
 import { describe, expect, test, vi } from "vitest";
-import { tap } from "~/index";
 
 describe("tap()", () => {
   test("calls the provided function with the value and returns the value", () => {

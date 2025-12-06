@@ -1,5 +1,5 @@
+import { once } from "@auaust/toolkit";
 import { describe, expect, test, vi } from "vitest";
-import { once } from "~/functions/once";
 
 describe("once()", () => {
   test("calls the provided function once and caches the value", () => {
