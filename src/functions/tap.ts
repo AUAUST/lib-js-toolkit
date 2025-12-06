@@ -1,3 +1,3 @@
-export function tap<V>(value: V, fn: (value: V) => void): V {
-  return fn(value), value;
+export function tap<V>(value: V, interceptor: (value: V) => void): V {
+  return interceptor(value), value;
 }
