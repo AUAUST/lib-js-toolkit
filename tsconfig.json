@@ -8,6 +8,8 @@
     "declarationDir": "dist/types",
     "declarationMap": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": "./",
