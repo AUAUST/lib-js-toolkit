@@ -2,6 +2,7 @@ export { after } from "~/functions/after.js";
 export { attempt } from "~/functions/attempt.js";
 export { attemptAsync } from "~/functions/attemptAsync.js";
 export { defer } from "~/functions/defer.js";
+export { empty } from "~/functions/empty.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
