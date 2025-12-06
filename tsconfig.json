@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@auaust/toolkit": ["./src/index.ts"]
+    }
+  },
+  "include": ["src", "tests"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@auaust/toolkit",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "What you need, I provide.",
+  "packageManager": "pnpm@9.5.0",
+  "author": {
+    "name": "Aurian Aubert",
+    "email": "aurian@auaust.ch",
+    "url": "https://auaust.ch"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm test && pnpm build:notest",
+    "build:notest": "pnpm run build:clean && pnpm run build:js",
+    "build:clean": "rimraf dist",
+    "build:js": "tsup",
+    "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm typecheck",
+    "test:dist": "pnpm build:notest && vitest run --config vitest.config.ts --typecheck --mode build --",
+    "watch": "vitest --config vitest.config.ts --typecheck --",
+    "coverage": "vitest run --coverage",
+    "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
+    "ci:publish": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@vitest/coverage-istanbul": "^4.0.15",
+    "rimraf": "^6.1.2",
+    "tsup": "^8.5.1",
+    "type-fest": "^5.3.0",
+    "type-testing": "^0.2.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}
