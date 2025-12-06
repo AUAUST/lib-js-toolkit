@@ -1,3 +1,5 @@
 export default "Hello, World!";
 
-export { tap } from "./functions/tap.js";
+export { once } from "~/functions/once.js";
+export { tap } from "~/functions/tap.js";
+export { value } from "~/functions/value.js";
