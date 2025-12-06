@@ -1,3 +1,4 @@
+export { attempt } from "~/functions/attempt.js";
 export { defer } from "~/functions/defer.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
