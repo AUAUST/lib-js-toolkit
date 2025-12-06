@@ -2,8 +2,8 @@ export type EmptyValue =
   | ""
   | []
   | Record<string, never>
-  | Map<any, any>
-  | Set<any>
+  | Map<any, never>
+  | Set<never>
   | null
   | undefined;
 
