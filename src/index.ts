@@ -1,5 +1,6 @@
 export { defer } from "~/functions/defer.js";
 export { md5 } from "~/functions/md5.js";
+export { noop } from "~/functions/noop.js";
 export { once } from "~/functions/once.js";
 export { sleep } from "~/functions/sleep.js";
 export { spy } from "~/functions/spy.js";
