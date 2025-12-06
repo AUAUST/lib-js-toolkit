@@ -1,4 +1,4 @@
-import { Value, value } from "./value";
+import { type Value, value } from "./value";
 
 export function when<T = void, F = undefined>(
   condition: Value<boolean>,
