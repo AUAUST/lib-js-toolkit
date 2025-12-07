@@ -1,7 +1,11 @@
 export { after } from "~/functions/after.js";
 export { attempt, type AttemptResult } from "~/functions/attempt.js";
 export { attemptAsync } from "~/functions/attemptAsync.js";
-export { cached, type CachedOptions } from "~/functions/cached.js";
+export {
+  cached,
+  type CachedFn,
+  type CachedOptions,
+} from "~/functions/cached.js";
 export {
   defer,
   type DeferPromise,
