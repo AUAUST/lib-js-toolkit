@@ -1,4 +1,4 @@
-export type CachedFn<K, A extends any[], R> = ((key: K, ...args: A) => R) & {
+export type CachedFn<K, R, Fn> = Fn & {
   /**
    * Clears the cached values.
    */
@@ -43,16 +43,16 @@ export type CachedOptions = {
   cachePrimitives?: boolean;
 };
 
-export function cached<K, A extends any[], R>(
-  fn: (key: K, ...args: A) => R,
+export function cached<K, A extends any[], R, T = any>(
+  fn: (this: T, key: K, ...args: A) => R,
   options?: CachedOptions
-): CachedFn<K, A, R> {
+): CachedFn<K, R, (this: T, key: K, ...args: A) => R> {
   const weakKeys = options?.weakKeys ?? true;
   const cachePrimitives = options?.cachePrimitives ?? false;
 
   const cache = new Map<K, WeakRef<R & WeakKey> | R>();
 
-  const accessor = function (key: K, ...args: A): R {
+  const accessor = function (this: T, key: K, ...args: A): R {
     if (cache.has(key)) {
       let value = cache.get(key);
 
@@ -71,7 +71,7 @@ export function cached<K, A extends any[], R>(
       }
     }
 
-    const value = fn(key, ...args);
+    const value = fn.call(this, key, ...args);
 
     if (
       (typeof value === "object" && value !== null) ||
@@ -125,5 +125,5 @@ export function cached<K, A extends any[], R>(
 
   accessor.delete = (key: K): boolean => cache.delete(key);
 
-  return <CachedFn<K, A, R>>accessor;
+  return <CachedFn<K, R, () => any>>accessor;
 }
