@@ -1,15 +1,20 @@
 export { after } from "~/functions/after.js";
-export { attempt } from "~/functions/attempt.js";
+export { attempt, type AttemptResult } from "~/functions/attempt.js";
 export { attemptAsync } from "~/functions/attemptAsync.js";
-export { defer } from "~/functions/defer.js";
-export { empty } from "~/functions/empty.js";
-export { filled } from "~/functions/filled.js";
+export {
+  defer,
+  type DeferPromise,
+  type PromiseRejecter,
+  type PromiseResolver,
+} from "~/functions/defer.js";
+export { empty, type EmptyValue } from "~/functions/empty.js";
+export { filled, type FilledValue } from "~/functions/filled.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
-export { once } from "~/functions/once.js";
+export { once, type OnceFn } from "~/functions/once.js";
 export { sleep } from "~/functions/sleep.js";
-export { spy } from "~/functions/spy.js";
+export { spy, type SpyOptions } from "~/functions/spy.js";
 export { tap } from "~/functions/tap.js";
-export { value } from "~/functions/value.js";
+export { value, type Value } from "~/functions/value.js";
 export { when } from "~/functions/when.js";
