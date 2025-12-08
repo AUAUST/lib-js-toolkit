@@ -16,6 +16,11 @@ export {
 } from "~/functions/defer.js";
 export { empty, type EmptyValue } from "~/functions/empty.js";
 export { filled, type FilledValue } from "~/functions/filled.js";
+export {
+  forwardCalls,
+  type ForwardCalls,
+  type MethodNames,
+} from "~/functions/forwardCalls.js";
 export { identity } from "~/functions/identity.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
