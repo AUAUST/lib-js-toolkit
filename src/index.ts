@@ -6,6 +6,7 @@ export {
   type CachedFn,
   type CachedOptions,
 } from "~/functions/cached.js";
+export { debounce } from "~/functions/debounce.js";
 export {
   defer,
   type DeferPromise,

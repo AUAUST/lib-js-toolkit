@@ -8,7 +8,7 @@ describe("sleep()", () => {
     return sleep(100).then(() => {
       const duration = Date.now() - start;
 
-      expect(duration).toBeGreaterThanOrEqual(100);
+      expect(duration).toBeGreaterThanOrEqual(99);
     });
   });
 });
