@@ -50,8 +50,5 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
-  },
-  "dependencies": {
-    "crypto-js": "^4.2.0"
   }
 }
