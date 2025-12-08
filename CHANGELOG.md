@@ -1,5 +1,13 @@
 # @auaust/toolkit
 
+## 0.0.3
+
+### Patch Changes
+
+- 0b6930a: All helpers forward `this` bindings to make them more convenient to use
+- 9e1ec2b: Improved semantics of the `spy()`, now receiving seperate listeners for before and after hooks
+- c10c7f9: Cleanup functional parameters to use `fn`, `closure` or `callback` in a deterministic manner
+
 ## 0.0.2
 
 ### Patch Changes
