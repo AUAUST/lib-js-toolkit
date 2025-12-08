@@ -10,12 +10,13 @@ export type AttemptResult<T> =
       error: unknown;
     };
 
-export function attempt<T, A extends any[]>(
-  fn: (...args: A) => T,
+export function attempt<T, A extends any[], This>(
+  this: This,
+  fn: (this: This, ...args: A) => T,
   ...args: NoInfer<A>
 ): AttemptResult<T> {
   try {
-    const result = fn(...args);
+    const result = fn.apply(this, args);
 
     return {
       success: true,

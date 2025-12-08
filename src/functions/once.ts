@@ -28,11 +28,12 @@ export type OnceFn<T> = (() => T) & {
       }
   );
 
-export function once<T>(fn: () => T): OnceFn<T> {
+export function once<T>(closure: () => T): OnceFn<T> {
   let value: T | undefined;
   let called = false;
 
-  const accessor = () => (called ? value! : ((called = true), (value = fn())));
+  const accessor = () =>
+    called ? value! : ((called = true), (value = closure()));
 
   accessor.reset = () => {
     called = false;

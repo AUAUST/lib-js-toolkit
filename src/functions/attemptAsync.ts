@@ -1,11 +1,12 @@
 import type { AttemptResult } from "./attempt";
 
-export async function attemptAsync<T, A extends any[]>(
-  fn: (...args: A) => Promise<T> | T,
+export async function attemptAsync<T, A extends any[], This>(
+  this: This,
+  fn: (this: This, ...args: A) => Promise<T> | T,
   ...args: A
 ): Promise<AttemptResult<T>> {
   try {
-    const result = await fn(...args);
+    const result = await fn.apply(this, args);
 
     return {
       success: true,
