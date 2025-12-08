@@ -2,7 +2,7 @@
   "name": "@auaust/toolkit",
   "license": "GPL-3.0-only",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
