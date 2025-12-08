@@ -33,7 +33,7 @@ export type CachedOptions = {
    *
    * @default true
    */
-  weakKeys?: boolean;
+  weakRefs?: boolean;
 
   /**
    * If true, caches primitive values as well. This may lead to memory leaks.
@@ -47,7 +47,7 @@ export function cached<K, A extends any[], R, T = any>(
   fn: (this: T, key: K, ...args: A) => R,
   options?: CachedOptions
 ): CachedFn<K, R, (this: T, key: K, ...args: A) => R> {
-  const weakKeys = options?.weakKeys ?? true;
+  const weakRefs = options?.weakRefs ?? true;
   const cachePrimitives = options?.cachePrimitives ?? false;
 
   const cache = new Map<K, WeakRef<R & WeakKey> | R>();
@@ -77,7 +77,7 @@ export function cached<K, A extends any[], R, T = any>(
       (typeof value === "object" && value !== null) ||
       typeof value === "function"
     ) {
-      if (weakKeys) {
+      if (weakRefs) {
         cache.set(key, new WeakRef(value));
       } else {
         cache.set(key, value);
