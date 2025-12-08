@@ -33,4 +33,14 @@ describe("value()", () => {
 
     expect(value(sum, 10, 15)).toBe(25);
   });
+
+  test("preserves 'this' context in the provided function", () => {
+    const context = { multiplier: 3 };
+
+    function multiply(this: typeof context, value: number): number {
+      return value * this.multiplier;
+    }
+
+    expect(value.call(context, multiply, 10)).toBe(30);
+  });
 });

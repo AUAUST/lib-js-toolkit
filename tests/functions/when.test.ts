@@ -49,4 +49,23 @@ describe("when()", () => {
     expect(callback).toHaveBeenCalledOnce();
     expect(fallback).toHaveBeenCalledOnce();
   });
+
+  test("preserves 'this' context in callbacks", () => {
+    const context = { value: 42 };
+
+    function condition(this: typeof context) {
+      return this.value === 42;
+    }
+
+    function callback(this: typeof context) {
+      return this.value + 1;
+    }
+
+    function fallback(this: typeof context) {
+      return this.value - 1;
+    }
+
+    expect(when.call(context, condition, callback, fallback)).toBe(43);
+    expect(when.call({ value: 0 }, condition, callback, fallback)).toBe(-1);
+  });
 });

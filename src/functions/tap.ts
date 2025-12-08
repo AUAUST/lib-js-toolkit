@@ -1,3 +1,7 @@
-export function tap<V>(value: V, callback: (value: V) => void): V {
-  return callback(value), value;
+export function tap<V, This = any>(
+  this: This,
+  value: V,
+  callback: (this: This, value: V) => void
+): V {
+  return callback.call(this, value), value;
 }

@@ -45,7 +45,7 @@ describe("spy()", () => {
     expect(after).toHaveBeenCalledWith(10, 5);
   });
 
-  test("forwards the this context to the closure and listeners", () => {
+  test("forwards the 'this' context to the closure and listeners", () => {
     const obj = {
       factor: 2,
       method(this: { factor: number }, x: number) {

@@ -1,8 +1,9 @@
-export type Value<V, T = any> = V | ((this: T) => V);
+export type Value<V, This = any> = V | ((this: This) => V);
 
-export function value<V>(input: Value<V>): V;
-export function value<V, A extends any[], T>(
-  input: V | ((this: T, ...args: A) => V),
+export function value<V, This = any>(this: This, input: Value<V, This>): V;
+export function value<V, A extends any[], This = any>(
+  this: This,
+  input: V | ((this: This, ...args: A) => V),
   ...args: A
 ): V;
 export function value(this: any, input: unknown, ...args: unknown[]): unknown {

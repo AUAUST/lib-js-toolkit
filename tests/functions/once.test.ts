@@ -66,4 +66,26 @@ describe("once()", () => {
     expect(result.value).toBe(42);
     expect(result.called).toBe(true);
   });
+
+  test("maintains the context of 'this'", () => {
+    const obj = {
+      factor: 3,
+      getValue(this: { factor: number }) {
+        return 10 * this.factor;
+      },
+    };
+
+    // @ts-expect-error
+    const result = once.call(obj, obj.getValue);
+
+    expect(result()).toBe(30);
+
+    obj.factor = 5;
+
+    expect(result()).toBe(30);
+
+    result.reset();
+
+    expect(result()).toBe(50);
+  });
 });
