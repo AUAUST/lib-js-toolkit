@@ -18,6 +18,7 @@ export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
 export { once, type OnceFn } from "~/functions/once.js";
+export { pipe } from "~/functions/pipe.js";
 export { sleep } from "~/functions/sleep.js";
 export { spy, type SpyOptions } from "~/functions/spy.js";
 export { tap } from "~/functions/tap.js";
