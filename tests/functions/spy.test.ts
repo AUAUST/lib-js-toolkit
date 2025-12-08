@@ -2,59 +2,70 @@ import { spy } from "@auaust/toolkit";
 import { describe, expect, test, vi } from "vitest";
 
 describe("spy()", () => {
-  test("calls the listener before the closure by default", () => {
+  test("calls the before listener before the closure", () => {
     const closure = vi.fn((x: number) => x * 2);
-    const listener = vi.fn();
+    const before = vi.fn();
 
-    const spiedFunction = spy(closure, listener);
+    const spiedFunction = spy(closure, before);
 
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
-    expect(listener).toHaveBeenCalledBefore(closure);
-    expect(listener).toHaveBeenCalledWith(5);
+    expect(before).toHaveBeenCalledBefore(closure);
+    expect(before).toHaveBeenCalledWith(5);
   });
 
-  test("calls the listener after the closure when specified", () => {
+  test("calls the after listener after the closure", () => {
     const closure = vi.fn((x: number) => x * 2);
-    const listener = vi.fn();
+    const after = vi.fn();
 
-    const spiedFunction = spy(closure, listener, { after: true });
+    const spiedFunction = spy(closure, null, after);
 
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
-    expect(listener).toHaveBeenCalledAfter(closure);
-    expect(listener).toHaveBeenCalledWith(5);
-    expect(listener).toHaveBeenCalledOnce();
+    expect(after).toHaveBeenCalledAfter(closure);
+    expect(after).toHaveBeenCalledWith(10, 5);
+    expect(after).toHaveBeenCalledOnce();
   });
 
-  test("calls the listener both before and after the closure when specified", () => {
+  test("calls both before and after listeners when provided", () => {
     const closure = vi.fn((x: number) => x * 2);
-    const listener = vi.fn();
+    const before = vi.fn();
+    const after = vi.fn();
 
-    const spiedFunction = spy(closure, listener, { before: true, after: true });
+    const spiedFunction = spy(closure, before, after);
 
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
-    expect(listener).toHaveBeenCalledTimes(2);
-    expect(listener).toHaveBeenNthCalledWith(1, 5);
-    expect(listener).toHaveBeenNthCalledWith(2, 5);
+    expect(before).toHaveBeenCalledTimes(1);
+    expect(after).toHaveBeenCalledTimes(1);
+    expect(before).toHaveBeenCalledWith(5);
+    expect(after).toHaveBeenCalledWith(10, 5);
   });
 
-  test("calls the listener with the result as `this` context if called after", () => {
-    const closure = vi.fn((x: number) => x * 2);
-
-    const spiedFunction = spy(
-      closure,
-      function () {
-        expect(this).toBe(10);
+  test("forwards the this context to the closure and listeners", () => {
+    const obj = {
+      factor: 2,
+      method(this: { factor: number }, x: number) {
+        expect(this).toBe(obj);
+        return x * this.factor;
       },
-      { after: true }
-    );
+    };
 
-    const result = spiedFunction(5);
+    const before = vi.fn(function (this: typeof obj) {
+      expect(this).toBe(obj);
+    });
+
+    const after = vi.fn(function (this: typeof obj, result: number) {
+      expect(this).toBe(obj);
+      expect(result).toBe(10);
+    });
+
+    const spiedFunction = spy(obj.method, before, after);
+
+    const result = spiedFunction.call(obj, 5);
 
     expect(result).toBe(10);
   });
