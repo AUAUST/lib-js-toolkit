@@ -15,6 +15,7 @@ export {
 } from "~/functions/defer.js";
 export { empty, type EmptyValue } from "~/functions/empty.js";
 export { filled, type FilledValue } from "~/functions/filled.js";
+export { identity } from "~/functions/identity.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
