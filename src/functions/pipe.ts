@@ -1,8 +1,8 @@
-import { type Value } from "./value";
-
 type PipeFunction = (value: any) => any;
 
-type PipeEntry = PipeFunction | [Value<boolean>, PipeFunction];
+type PipeEntry =
+  | PipeFunction
+  | [when: boolean | ((value: any) => boolean), then: PipeFunction];
 
 export function pipe<T>(this: T, ...fns: PipeEntry[]) {
   return function (this: T, initialValue: unknown) {
