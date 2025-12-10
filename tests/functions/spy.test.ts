@@ -69,4 +69,17 @@ describe("spy()", () => {
 
     expect(result).toBe(10);
   });
+
+  test("handles null or undefined closure gracefully", () => {
+    const before = vi.fn();
+    const after = vi.fn();
+
+    const spiedFunction = spy(null, before, after);
+
+    const result = spiedFunction();
+
+    expect(result).toBeUndefined();
+    expect(before).toHaveBeenCalledWith();
+    expect(after).toHaveBeenCalledWith(undefined);
+  });
 });

@@ -33,7 +33,11 @@ export {
   type PipeEntry,
 } from "~/functions/pipe.js";
 export { sleep } from "~/functions/sleep.js";
-export { spy } from "~/functions/spy.js";
+export {
+  spy,
+  type SafeParameters,
+  type SafeReturnType,
+} from "~/functions/spy.js";
 export { tap } from "~/functions/tap.js";
 export { throttle } from "~/functions/throttle.js";
 export { value, type Value } from "~/functions/value.js";
