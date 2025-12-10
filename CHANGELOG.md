@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.0.4
+
+### Patch Changes
+
+- c579ca6: `spy()` gracefully handles missing callbacks
+
 ## 0.0.3
 
 ### Patch Changes
