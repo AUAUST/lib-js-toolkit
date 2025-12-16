@@ -6,6 +6,7 @@ export {
   type CachedFn,
   type CachedOptions,
 } from "~/functions/cached.js";
+export { comparator } from "~/functions/comparator.js";
 export { compare } from "~/functions/compare.js";
 export { constant } from "~/functions/constant.js";
 export { debounce } from "~/functions/debounce.js";
