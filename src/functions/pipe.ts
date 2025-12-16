@@ -1,4 +1,4 @@
-export type OperatorFn<This, In, Out> =
+export type TransformFn<This, In, Out> =
   | ((this: This, value: In) => Out)
   | ((value: In) => Out);
 
@@ -8,8 +8,8 @@ export type PipeCondition<This, In> =
   | ((value: In) => boolean);
 
 export type PipeEntry<This, In, Out> =
-  | OperatorFn<This, In, Out>
-  | [when: PipeCondition<This, In>, then: OperatorFn<This, In, Out>];
+  | TransformFn<This, In, Out>
+  | [when: PipeCondition<This, In>, then: TransformFn<This, In, Out>];
 
 export function pipe(): <This, T>(this: This, value: T) => T;
 export function pipe<This, A, B>(
@@ -70,7 +70,7 @@ export function pipe<This>(
 export function pipe(this: any, ...fns: PipeEntry<any, any, any>[]) {
   return function (this: any, initialValue: unknown) {
     return fns.reduce((carry, entry) => {
-      let fn: OperatorFn<any, unknown, unknown>;
+      let fn: TransformFn<any, unknown, unknown>;
 
       if (Array.isArray(entry)) {
         const [condition, func] = entry;

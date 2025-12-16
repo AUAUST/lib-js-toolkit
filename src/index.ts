@@ -6,6 +6,7 @@ export {
   type CachedFn,
   type CachedOptions,
 } from "~/functions/cached.js";
+export { compare } from "~/functions/compare.js";
 export { constant } from "~/functions/constant.js";
 export { debounce } from "~/functions/debounce.js";
 export {
@@ -28,9 +29,9 @@ export { now } from "~/functions/now.js";
 export { once, type OnceFn } from "~/functions/once.js";
 export {
   pipe,
-  type OperatorFn,
   type PipeCondition,
   type PipeEntry,
+  type TransformFn,
 } from "~/functions/pipe.js";
 export { sleep } from "~/functions/sleep.js";
 export {

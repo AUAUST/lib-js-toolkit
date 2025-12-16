@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@auaust/primitive-kit':
+        specifier: ^0.41.9
+        version: 0.41.9
     devDependencies:
       '@changesets/cli':
         specifier: ^2.29.8
@@ -37,6 +41,9 @@ importers:
         version: 4.0.15(terser@5.44.1)
 
 packages:
+
+  '@auaust/primitive-kit@0.41.9':
+    resolution: {integrity: sha512-E0qQyO0Ee/epAkEBbHKbo5YEvKnM0cvQvSIYya4aMX7YTRxrOjsyGUwGqZbkNULKfeTe17o3acuv2zAYiUdgNg==}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -1354,6 +1361,10 @@ packages:
       typescript:
         optional: true
 
+  type-fest@4.41.0:
+    resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
+    engines: {node: '>=16'}
+
   type-fest@5.3.0:
     resolution: {integrity: sha512-d9CwU93nN0IA1QL+GSNDdwLAu1Ew5ZjTwupvedwg3WdfoH6pIDvYQ2hV0Uc2nKBLPq7NB5apCx57MLS5qlmO5g==}
     engines: {node: '>=20'}
@@ -1468,6 +1479,10 @@ packages:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
 snapshots:
+
+  '@auaust/primitive-kit@0.41.9':
+    dependencies:
+      type-fest: 4.41.0
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -2708,6 +2723,8 @@ snapshots:
       - supports-color
       - tsx
       - yaml
+
+  type-fest@4.41.0: {}
 
   type-fest@5.3.0:
     dependencies:

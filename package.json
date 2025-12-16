@@ -50,5 +50,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
+  },
+  "dependencies": {
+    "@auaust/primitive-kit": "^0.41.9"
   }
 }
