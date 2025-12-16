@@ -1,5 +1,13 @@
 # @auaust/toolkit
 
+## 0.0.5
+
+### Patch Changes
+
+- 58c1798: `compare()` function with support for basic and custom operators
+- 0b55329: `mapped()` and type level improvements
+- 343489c: `compare()` and `comparator()` support disabling default operators, reflects it on the type level
+
 ## 0.0.4
 
 ### Patch Changes
