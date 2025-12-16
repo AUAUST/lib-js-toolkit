@@ -27,7 +27,7 @@ export type OperatorFn = (a: unknown, b: unknown) => boolean;
 
 export type CustomOperators<T extends string = string> = Record<
   T,
-  OperatorFn | boolean
+  OperatorFn | boolean | null | undefined
 >;
 
 export function compare<T extends string>(
@@ -57,6 +57,12 @@ export function compare(
 
     if (typeof customOperator === "boolean") {
       return customOperator;
+    }
+
+    if (customOperator == null) {
+      throw new Error(
+        `Attempted to use a disabled operator: ${String(operator)}`
+      );
     }
 
     return !!customOperator(a, b);

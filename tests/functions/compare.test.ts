@@ -192,4 +192,17 @@ describe("compare()", () => {
     expect(compare(42, "alwaysTrue", undefined, customOperators)).toBe(true);
     expect(compare(42, "alwaysFalse", undefined, customOperators)).toBe(false);
   });
+
+  test("can disable specific operators", () => {
+    const customOperators = {
+      "==": null,
+      filled: undefined,
+    };
+
+    expect(compare(5, "===", 5, customOperators)).toBe(true);
+    expect(() => compare(5, "==", 5, customOperators)).toThrowError(/disabled/);
+    expect(() =>
+      compare("test", "filled", undefined, customOperators)
+    ).toThrowError(/disabled/);
+  });
 });
