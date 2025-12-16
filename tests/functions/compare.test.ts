@@ -8,7 +8,9 @@ describe("compare()", () => {
     expect(compare(NaN, "=", NaN)).toBe(true);
     expect(compare(null, "=", undefined)).toBe(true);
     expect(compare(null, "=", "")).toBe(true);
-    expect(compare(new Date(), "=", new Date())).toBe(true);
+    expect(
+      compare(new Date(2002, 9, 2, 0, 6), "=", new Date(2002, 9, 2, 0, 6))
+    ).toBe(true);
     expect(compare({}, "=", {})).toBe(true);
     expect(compare([], "=", null)).toBe(true);
 
@@ -22,7 +24,9 @@ describe("compare()", () => {
     expect(compare(true, "==", true)).toBe(true);
     expect(compare(false, "==", false)).toBe(true);
 
-    expect(compare(new Date(), "==", new Date())).toBe(false);
+    expect(
+      compare(new Date(2002, 9, 2, 0, 6), "==", new Date(2002, 9, 2, 0, 6))
+    ).toBe(false);
     expect(compare({}, "==", {})).toBe(false);
     expect(compare([], "==", [])).toBe(false);
     expect(compare(5, "==", 6)).toBe(false);
@@ -35,7 +39,9 @@ describe("compare()", () => {
     expect(compare(false, "===", false)).toBe(true);
 
     expect(compare(5, "===", "5")).toBe(false);
-    expect(compare(new Date(), "===", new Date())).toBe(false);
+    expect(
+      compare(new Date(2002, 9, 2, 0, 6), "===", new Date(2002, 9, 2, 0, 6))
+    ).toBe(false);
     expect(compare({}, "===", {})).toBe(false);
     expect(compare([], "===", [])).toBe(false);
     expect(compare(5, "===", 6)).toBe(false);
