@@ -1,4 +1,4 @@
-import { pipe } from "@auaust/toolkit";
+import { pipe, PipelineError } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
 
 describe("pipe()", () => {
@@ -65,5 +65,28 @@ describe("pipe()", () => {
 
     expect(result1).toBe(104);
     expect(result2).toBe(-95);
+  });
+
+  test("throws a PipelineError with useful information on failure", () => {
+    const fn1 = (x: number) => x + 1;
+    const fn2 = (x: number) => {
+      throw new Error("Intentional failure");
+    };
+    const fn3 = (x: number) => x * 2;
+
+    const pipedFunction = pipe(fn1, fn2, fn3);
+
+    try {
+      pipedFunction(5);
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(PipelineError);
+      expect(error.name).toBe("PipelineError");
+      expect(error.message).toMatch(/Pipeline step failed/);
+      expect(error.message).toMatch(/Intentional failure/);
+      expect(error.step).toBe(1); // 0 indexed
+      expect(error.input).toBe(6);
+      expect(error.fn).toBe(fn2);
+      expect(error.cause.message).toBe("Intentional failure");
+    }
   });
 });

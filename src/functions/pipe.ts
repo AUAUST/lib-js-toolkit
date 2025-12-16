@@ -71,7 +71,7 @@ export function pipe<This>(
 ): (this: This, value: any) => any;
 export function pipe(this: any, ...fns: PipeEntry<any, any, any>[]) {
   return function (this: any, initialValue: unknown) {
-    return fns.reduce((carry, entry) => {
+    return fns.reduce((carry, entry, step) => {
       let fn: TransformFn<any, unknown, unknown>;
 
       if (Array.isArray(entry)) {
@@ -95,6 +95,7 @@ export function pipe(this: any, ...fns: PipeEntry<any, any, any>[]) {
       } catch (error) {
         throw new PipelineError({
           fn,
+          step,
           input: carry,
           thisValue: this,
           cause: error,

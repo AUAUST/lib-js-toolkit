@@ -69,7 +69,9 @@ export function pipeAsync(this: any, ...fns: AsyncPipeEntry<any, any, any>[]) {
   return async function (this: any, initialValue: unknown) {
     let carry = initialValue;
 
-    for (const entry of fns) {
+    for (let step = 0; step < fns.length; step++) {
+      const entry = fns[step];
+
       let fn: AsyncTransformFn<any, unknown, unknown>;
 
       if (Array.isArray(entry)) {
@@ -93,6 +95,7 @@ export function pipeAsync(this: any, ...fns: AsyncPipeEntry<any, any, any>[]) {
       } catch (error) {
         throw new PipelineError({
           fn,
+          step,
           input: carry,
           thisValue: this,
           cause: error,
