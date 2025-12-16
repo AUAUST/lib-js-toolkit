@@ -1,8 +1,12 @@
-export type SafeReturnType<F> = F extends (...args: any[]) => infer R
+export type SafeReturnType<F> = NonNullable<F> extends (
+  ...args: any[]
+) => infer R
   ? R
   : undefined;
 
-export type SafeParameters<F> = F extends (...args: infer P) => any ? P : [];
+export type SafeParameters<F> = NonNullable<F> extends (...args: infer P) => any
+  ? P
+  : [];
 
 export function spy<F extends (this: This, ...args: any[]) => any, This>(
   fn: F,
