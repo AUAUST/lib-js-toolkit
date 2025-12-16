@@ -13,6 +13,9 @@
     "email": "aurian@auaust.ch",
     "url": "https://auaust.ch"
   },
+  "repository": {
+    "url": "https://github.com/AUAUST/lib-js-toolkit"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm test && pnpm build:notest",
