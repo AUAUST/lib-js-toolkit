@@ -28,6 +28,7 @@ export class PipelineError<T = unknown> extends Error {
     this.fn = fn;
     this.input = input;
     this.cause = cause;
+    this.thisValue = thisValue;
 
     if (cause instanceof Error) {
       this.stack = cause.stack;

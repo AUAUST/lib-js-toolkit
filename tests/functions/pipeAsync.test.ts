@@ -85,7 +85,8 @@ describe("pipeAsync()", () => {
     return pipedFunction(4).catch((error) => {
       expect(error).toBeInstanceOf(PipelineError);
       expect(error.message).toContain("Test error");
-      expect(error.functionThatFailed).toBe(throwError);
+      expect(error.fn).toBe(throwError);
+      expect(error.input).toBe(6);
     });
   });
 });
