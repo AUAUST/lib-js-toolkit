@@ -7,7 +7,7 @@
     "access": "public"
   },
   "description": "What you need, I provide.",
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@10.26.0",
   "author": {
     "name": "Aurian Aubert",
     "email": "aurian@auaust.ch",
@@ -29,13 +29,13 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
     "@types/crypto-js": "^4.2.2",
-    "@vitest/coverage-istanbul": "^4.0.15",
+    "@vitest/coverage-istanbul": "^4.0.16",
     "rimraf": "^6.1.2",
     "tsup": "^8.5.1",
-    "type-fest": "^5.3.0",
+    "type-fest": "^5.3.1",
     "type-testing": "^0.2.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   },
   "files": [
     "dist",
