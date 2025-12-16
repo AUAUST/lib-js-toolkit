@@ -43,6 +43,12 @@ export {
   type PipeEntry,
   type TransformFn,
 } from "~/functions/pipe.js";
+export {
+  pipeAsync,
+  PipelineError,
+  type AsyncPipeEntry,
+  type AsyncTransformFn,
+} from "~/functions/pipeAsync.js";
 export { sleep } from "~/functions/sleep.js";
 export {
   spy,
