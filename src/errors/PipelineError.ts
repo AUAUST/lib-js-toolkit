@@ -1,0 +1,36 @@
+export class PipelineError<T = unknown> extends Error {
+  public readonly name = "PipelineError";
+
+  /** The function that caused the error in the pipeline. */
+  public readonly fn: Function;
+
+  /** The value of `this`` when the error occurred. */
+  public readonly thisValue: unknown;
+
+  /** The input that was provided to the function that caused the error. */
+  public readonly input: T;
+
+  constructor({
+    fn,
+    input,
+    thisValue,
+    cause,
+  }: {
+    fn: Function;
+    input: T;
+    thisValue: unknown;
+    cause: unknown;
+  }) {
+    const message = cause instanceof Error ? cause.message : String(cause);
+
+    super(`Pipeline step failed: ${message}`, { cause });
+
+    this.fn = fn;
+    this.input = input;
+    this.cause = cause;
+
+    if (cause instanceof Error) {
+      this.stack = cause.stack;
+    }
+  }
+}

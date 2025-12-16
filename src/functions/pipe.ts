@@ -1,3 +1,5 @@
+import { PipelineError } from "~/errors/PipelineError";
+
 export type TransformFn<This, In, Out> =
   | ((this: This, value: In) => Out)
   | ((value: In) => Out);
@@ -88,7 +90,16 @@ export function pipe(this: any, ...fns: PipeEntry<any, any, any>[]) {
         fn = entry;
       }
 
-      return fn.call(this, carry);
+      try {
+        return fn.call(this, carry);
+      } catch (error) {
+        throw new PipelineError({
+          fn,
+          input: carry,
+          thisValue: this,
+          cause: error,
+        });
+      }
     }, initialValue);
   };
 }

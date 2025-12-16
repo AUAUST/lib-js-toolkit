@@ -1,3 +1,4 @@
+import { PipelineError } from "~/errors/PipelineError";
 import type { PipeCondition } from "./pipe";
 
 export type AsyncTransformFn<This, In, Out> =
@@ -90,35 +91,15 @@ export function pipeAsync(this: any, ...fns: AsyncPipeEntry<any, any, any>[]) {
       try {
         carry = await fn.call(this, carry);
       } catch (error) {
-        throw new PipelineError(fn, error);
+        throw new PipelineError({
+          fn,
+          input: carry,
+          thisValue: this,
+          cause: error,
+        });
       }
     }
 
     return carry;
   };
-}
-
-/**
- * Is thrown when an error occurs within a piped function.
- * It wraps the original error and exposes the function that caused the error.
- */
-export class PipelineError extends Error {
-  constructor(
-    public readonly functionThatFailed: Function,
-    originalError: unknown
-  ) {
-    const message = `An error occurred in a piped function: ${
-      originalError instanceof Error
-        ? originalError.message
-        : String(originalError)
-    }`;
-
-    super(message);
-
-    this.name = "PipelineError";
-
-    if (originalError instanceof Error && originalError.stack) {
-      this.stack = originalError.stack;
-    }
-  }
 }
