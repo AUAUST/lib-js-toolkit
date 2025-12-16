@@ -7,7 +7,16 @@ export {
   type CachedOptions,
 } from "~/functions/cached.js";
 export { comparator } from "~/functions/comparator.js";
-export { compare } from "~/functions/compare.js";
+export {
+  compare,
+  type AvailableOperators,
+  type BinaryOperator,
+  type CustomOperators,
+  type DisabledOperators,
+  type Operator,
+  type OperatorFn,
+  type UnaryOperator,
+} from "~/functions/compare.js";
 export { constant } from "~/functions/constant.js";
 export { debounce } from "~/functions/debounce.js";
 export {
