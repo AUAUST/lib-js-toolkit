@@ -1,12 +1,13 @@
 import { toString } from "@auaust/primitive-kit/strings";
+import type { IsLiteral } from "type-fest";
 import { empty } from "./empty";
 import { filled } from "./filled";
 
-export type Operator = BinaryOperators | UnaryOperators | OperatorFn;
+export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 
-export type UnaryOperators = "filled" | "empty";
+export type UnaryOperator = "filled" | "empty";
 
-export type BinaryOperators =
+export type BinaryOperator =
   // The two values resolve to the same string
   | "="
   // The two values are loosely equal
@@ -30,21 +31,31 @@ export type CustomOperators<T extends string = string> = Record<
   OperatorFn | boolean | null | undefined
 >;
 
-export function compare<T extends string>(
+export type DisabledOperators<C extends CustomOperators> = {
+  [K in keyof C]: C[K] extends null | undefined ? K : never;
+}[keyof C];
+
+export type AvailableOperators<C extends CustomOperators> = IsLiteral<
+  keyof C
+> extends true
+  ? Exclude<BinaryOperator | UnaryOperator | keyof C, DisabledOperators<C>>
+  : BinaryOperator | UnaryOperator | (keyof C & string);
+
+export function compare<C extends CustomOperators>(
   a: unknown,
-  operator: Operator | NoInfer<T>,
+  operator: AvailableOperators<C>,
   b: unknown,
-  customOperators: CustomOperators<T>
+  customOperators: C
 ): boolean;
 export function compare(
-  a: unknown,
-  operator: UnaryOperators,
-  b?: unknown
+  value: unknown,
+  operator: UnaryOperator,
+  ignored?: unknown
 ): boolean;
 export function compare(a: unknown, operator: Operator, b: unknown): boolean;
 export function compare(
   a: unknown,
-  operator: Operator,
+  operator: Operator | string,
   b?: unknown,
   customOperators?: CustomOperators
 ): boolean {

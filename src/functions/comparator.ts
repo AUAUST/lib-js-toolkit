@@ -1,9 +1,17 @@
-import { compare, type CustomOperators, type Operator } from "./compare";
+import {
+  compare,
+  type AvailableOperators,
+  type CustomOperators,
+} from "./compare";
 
-export function comparator<T extends string>(
-  operators: CustomOperators<T>
-): (a: unknown, operator: T | Operator, b: unknown) => boolean {
-  return (a: unknown, operator: T | Operator, b: unknown): boolean => {
+export function comparator<C extends CustomOperators>(
+  operators: C
+): (a: unknown, operator: AvailableOperators<C>, b?: unknown) => boolean {
+  return (
+    a: unknown,
+    operator: AvailableOperators<C>,
+    b?: unknown
+  ): boolean => {
     return compare(a, operator, b, operators);
   };
 }

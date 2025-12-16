@@ -200,8 +200,12 @@ describe("compare()", () => {
     };
 
     expect(compare(5, "===", 5, customOperators)).toBe(true);
+
+    // @ts-expect-error
     expect(() => compare(5, "==", 5, customOperators)).toThrowError(/disabled/);
+
     expect(() =>
+      // @ts-expect-error
       compare("test", "filled", undefined, customOperators)
     ).toThrowError(/disabled/);
   });
