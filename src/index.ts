@@ -33,6 +33,7 @@ export {
   type MethodNames,
 } from "~/functions/forwardCalls.js";
 export { identity } from "~/functions/identity.js";
+export { mapped } from "~/functions/mapped.js";
 export { md5 } from "~/functions/md5.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
