@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.0.8
+
+### Patch Changes
+
+- fc4d542: `match()` helpers mimicks PHP's match feature, where map-likes are traversed and the value of the first matched case is returned
+
 ## 0.0.7
 
 ### Patch Changes
