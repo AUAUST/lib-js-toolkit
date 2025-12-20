@@ -100,10 +100,11 @@ describe("forwardCalls()", () => {
       },
     };
 
-    const target = {};
+    const targetOne = {};
+    const targetMany = {};
 
-    const forwardedOne = forwardCalls(target, handler, sym);
-    const forwardedMany = forwardCalls(target, handler, [sym]);
+    const forwardedOne = forwardCalls(targetOne, handler, sym);
+    const forwardedMany = forwardCalls(targetMany, handler, [sym]);
 
     const resultOne = forwardedOne[sym]("Hello Symbol");
     const resultMany = forwardedMany[sym]("Hello Symbol");
