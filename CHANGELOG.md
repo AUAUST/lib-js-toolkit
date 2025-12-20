@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.0.6
+
+### Patch Changes
+
+- a4981e3: `measure()` and `measureAsync()` helpers to measure the execution time of a callback, or to measure the time it took to resolve
+
 ## 0.0.5
 
 ### Patch Changes
