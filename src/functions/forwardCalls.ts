@@ -23,7 +23,7 @@ export function forwardCalls(
   handler: any,
   methods: string | string[]
 ): any {
-  if (typeof methods === "string") {
+  if (!Array.isArray(methods)) {
     methods = [methods];
   }
 
