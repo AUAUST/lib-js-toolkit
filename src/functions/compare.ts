@@ -1,5 +1,5 @@
 import { toString } from "@auaust/primitive-kit/strings";
-import type { IsLiteral } from "type-fest";
+import type { IsLiteral, KeyAsString } from "type-fest";
 import { empty } from "./empty";
 import { filled } from "./filled";
 
@@ -35,11 +35,11 @@ export type DisabledOperators<C extends CustomOperators> = {
   [K in keyof C]: C[K] extends null | undefined ? K : never;
 }[keyof C];
 
-export type AvailableOperators<C extends CustomOperators> = IsLiteral<
-  keyof C
-> extends true
-  ? Exclude<BinaryOperator | UnaryOperator | keyof C, DisabledOperators<C>>
-  : BinaryOperator | UnaryOperator | (keyof C & string);
+export type AvailableOperators<C extends CustomOperators> =
+  | (IsLiteral<keyof C> extends true
+      ? Exclude<BinaryOperator | UnaryOperator | keyof C, DisabledOperators<C>>
+      : BinaryOperator | UnaryOperator | KeyAsString<C>)
+  | OperatorFn;
 
 export function compare<C extends CustomOperators>(
   a: unknown,
