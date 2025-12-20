@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.0.7
+
+### Patch Changes
+
+- a0a1942: Type level of function returned by `comparator()` supports functional operators
+
 ## 0.0.6
 
 ### Patch Changes
