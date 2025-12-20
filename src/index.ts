@@ -60,7 +60,7 @@ export {
 } from "~/functions/spy.js";
 export { tap } from "~/functions/tap.js";
 export { throttle } from "~/functions/throttle.js";
-export { value, type Value } from "~/functions/value.js";
+export { value, type ResolvedValue, type Value } from "~/functions/value.js";
 export { when } from "~/functions/when.js";
 
 export { PipelineError } from "~/errors/PipelineError.js";

@@ -80,9 +80,9 @@ describe("match()", () => {
 
   test("supports callbacks as results", () => {
     const cases = [
-      [1, () => "one"],
-      ["hello", () => "greeting"],
-      [/world/, () => "farewell"],
+      [1, () => "one" as const],
+      ["hello", () => "greeting" as const],
+      [/world/, () => "farewell" as const],
     ] as const;
 
     expect(match(cases, 1)).toBe("one");
