@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.0.9
+
+### Patch Changes
+
+- f3c39fa: `match()` expects the target value to be first, but also support a fully thunk-based logic without target
+
 ## 0.0.8
 
 ### Patch Changes
