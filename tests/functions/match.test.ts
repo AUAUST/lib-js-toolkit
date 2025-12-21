@@ -128,6 +128,7 @@ describe("match()", () => {
       ])
     ).toBe("matched");
 
+    // @ts-expect-error
     match([[(x) => expect(x).toBeUndefined(), 0]]);
   });
 

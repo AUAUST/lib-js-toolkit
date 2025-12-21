@@ -1,32 +1,40 @@
-import { value, type ResolvedValue, type Value } from "./value";
+import { value, type ResolvedValue } from "./value";
 
 type Predicate<T> = (value: T) => unknown;
 
-type FunctionalCase<T, R> =
-  | readonly [Predicate<T>, Value<R>]
-  | readonly [Predicate<T>[], Value<R>];
+type FunctionalCase<T, V> =
+  | readonly [readonly Predicate<T>[], (never?: undefined) => V]
+  | readonly [Predicate<T>, (never?: undefined) => V];
 
-type Case<T, R> =
-  | FunctionalCase<T, R>
-  | readonly [unknown[], Value<R>]
-  | readonly [unknown, Value<R>];
+type LiteralCase<V> = readonly [unknown, V] | readonly [readonly unknown[], V];
 
-type CaseResult<C> = C extends readonly [any, infer R]
-  ? ResolvedValue<R>
+type Case<T, V> = FunctionalCase<T, V> | LiteralCase<V>;
+
+type CaseResult<C> = C extends readonly [any, infer V]
+  ? ResolvedValue<V>
   : never;
 
 type CasesResult<Cases extends readonly unknown[]> = CaseResult<Cases[number]>;
 
 export function match<
-  Cases extends readonly FunctionalCase<undefined, any>[],
+  V,
+  Cases extends readonly FunctionalCase<undefined, V>[],
   Fallback = undefined
 >(
   cases: Cases,
   fallback?: Fallback
 ): CasesResult<Cases> | ResolvedValue<Fallback>;
 export function match<
-  T = undefined,
-  Cases extends readonly Case<T, any>[] = readonly Case<T, any>[],
+  V,
+  Cases extends readonly LiteralCase<V>[],
+  Fallback = undefined
+>(
+  cases: Cases,
+  fallback?: Fallback
+): CasesResult<Cases> | ResolvedValue<Fallback>;
+export function match<
+  T,
+  Cases extends readonly Case<T, any>[],
   Fallback = undefined
 >(
   target: T,
