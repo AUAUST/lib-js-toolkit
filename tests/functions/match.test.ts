@@ -13,13 +13,13 @@ describe("match()", () => {
       [NaN, "seven"],
     ] as const;
 
-    expect(match(cases, 1)).toBe("one");
-    expect(match(cases, "number two")).toBe("two");
-    expect(match(cases, Symbol.for("three"))).toBe("three");
-    expect(match(cases, true)).toBe("four");
-    expect(match(cases, undefined)).toBe("five");
-    expect(match(cases, null)).toBe("six");
-    expect(match(cases, NaN)).toBe("seven");
+    expect(match(1, cases)).toBe("one");
+    expect(match("number two", cases)).toBe("two");
+    expect(match(Symbol.for("three"), cases)).toBe("three");
+    expect(match(true, cases)).toBe("four");
+    expect(match(undefined, cases)).toBe("five");
+    expect(match(null, cases)).toBe("six");
+    expect(match(NaN, cases)).toBe("seven");
   });
 
   test("handles multiple predicates", () => {
@@ -29,9 +29,9 @@ describe("match()", () => {
       [[7, 8, 9], "large number"],
     ] as const;
 
-    expect(match(cases, 2)).toBe("small number");
-    expect(match(cases, 5)).toBe("medium number");
-    expect(match(cases, 8)).toBe("large number");
+    expect(match(2, cases)).toBe("small number");
+    expect(match(5, cases)).toBe("medium number");
+    expect(match(8, cases)).toBe("large number");
   });
 
   test("matches using functions", () => {
@@ -41,9 +41,9 @@ describe("match()", () => {
       [(x: unknown) => Array.isArray(x), "an array"],
     ] as const;
 
-    expect(match(cases, "hello")).toBe("a string");
-    expect(match(cases, 42)).toBe("a big number");
-    expect(match(cases, [1, 2, 3])).toBe("an array");
+    expect(match("hello", cases)).toBe("a string");
+    expect(match(42, cases)).toBe("a big number");
+    expect(match([1, 2, 3], cases)).toBe("an array");
   });
 
   test("matches using regular expressions", () => {
@@ -53,9 +53,9 @@ describe("match()", () => {
       [/^\d+$/, "number string"],
     ] as const;
 
-    expect(match(cases, "hello there")).toBe("greeting");
-    expect(match(cases, "goodbye world!")).toBe("farewell");
-    expect(match(cases, "12345")).toBe("number string");
+    expect(match("hello there", cases)).toBe("greeting");
+    expect(match("goodbye world!", cases)).toBe("farewell");
+    expect(match("12345", cases)).toBe("number string");
   });
 
   test("returns fallback when no match is found", () => {
@@ -64,8 +64,8 @@ describe("match()", () => {
       [2, "two"],
     ] as const;
 
-    expect(match(cases, 3, "unknown")).toBe("unknown");
-    expect(match(cases, "hello", "no match")).toBe("no match");
+    expect(match(3, cases, "unknown")).toBe("unknown");
+    expect(match("hello", cases, "no match")).toBe("no match");
   });
 
   test("returns undefined when no match is found and no fallback is provided", () => {
@@ -74,8 +74,8 @@ describe("match()", () => {
       [2, "two"],
     ] as const;
 
-    expect(match(cases, 3)).toBeUndefined();
-    expect(match(cases, "hello")).toBeUndefined();
+    expect(match(3, cases)).toBeUndefined();
+    expect(match("hello", cases)).toBeUndefined();
   });
 
   test("supports callbacks as results", () => {
@@ -85,9 +85,9 @@ describe("match()", () => {
       [/world/, () => "farewell" as const],
     ] as const;
 
-    expect(match(cases, 1)).toBe("one");
-    expect(match(cases, "hello")).toBe("greeting");
-    expect(match(cases, "world")).toBe("farewell");
+    expect(match(1, cases)).toBe("one");
+    expect(match("hello", cases)).toBe("greeting");
+    expect(match("world", cases)).toBe("farewell");
   });
 
   test("supports callbacks as fallback", () => {
@@ -96,8 +96,8 @@ describe("match()", () => {
       [2, "two"],
     ] as const;
 
-    expect(match(cases, 3, () => "unknown")).toBe("unknown");
-    expect(match(cases, "hello", () => "no match")).toBe("no match");
+    expect(match(3, cases, () => "unknown")).toBe("unknown");
+    expect(match("hello", cases, () => "no match")).toBe("no match");
   });
 
   test("first matching case is returned", () => {
@@ -107,8 +107,49 @@ describe("match()", () => {
       [/^\d+$/, "number string"],
     ] as const;
 
-    expect(match(cases, 2)).toBe("small number");
-    expect(match(cases, 42)).toBe("any number");
-    expect(match(cases, "12345")).toBe("number string");
+    expect(match(2, cases)).toBe("small number");
+    expect(match(42, cases)).toBe("any number");
+    expect(match("12345", cases)).toBe("number string");
+  });
+
+  test("handles a lack of target value", () => {
+    expect(
+      match([
+        [() => false, () => "never"],
+        [() => true, () => "matched"],
+      ])
+    ).toBe("matched");
+
+    expect(
+      match([
+        [[() => false, () => false], "never"],
+        [() => false, () => NaN],
+        [[() => false, () => true], () => "matched"],
+      ])
+    ).toBe("matched");
+
+    match([[(x) => expect(x).toBeUndefined(), 0]]);
+  });
+
+  test("supports fallbacks without target value", () => {
+    expect(
+      match(
+        [
+          [() => false, "never"],
+          [() => false, "also never"],
+        ],
+        "fallback"
+      )
+    ).toBe("fallback");
+
+    expect(
+      match(
+        [
+          [() => false, "never"],
+          [[() => false, () => false], "also never"],
+        ],
+        () => ["fallback"]
+      )
+    ).toEqual(["fallback"]);
   });
 });

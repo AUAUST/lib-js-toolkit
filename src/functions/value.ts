@@ -1,6 +1,6 @@
 export type Value<V, This = any> = V | ((this: This) => V);
 
-export type ResolvedValue<V> = V extends Value<infer R> ? R : never;
+export type ResolvedValue<V> = V extends (this: any) => infer R ? R : V;
 
 export function value<V, This = any>(this: This, input: Value<V, This>): V;
 export function value<V, A extends any[], This = any>(
