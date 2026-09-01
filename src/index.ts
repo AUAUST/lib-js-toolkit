@@ -35,6 +35,7 @@ export {
 } from "~/functions/forwardCalls.js";
 export { identity } from "~/functions/identity.js";
 export { mapped } from "~/functions/mapped.js";
+export { memoized, type MemoizedFn } from "~/functions/memoized.js";
 export { match } from "~/functions/match.js";
 export { md5 } from "~/functions/md5.js";
 export { measure, type MeasureResult } from "~/functions/measure.js";
