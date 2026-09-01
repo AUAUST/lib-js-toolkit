@@ -31,4 +31,28 @@ describe("transform()", () => {
 
     expect(source).toEqual({ A: 1, B: 2 });
   });
+
+  test("deletes keys marked false in an explicit map", () => {
+    const source = { foo: 1, bar: 2 };
+    const result = transform(source, { foo: false });
+
+    expect(result).toBe(source);
+    expect(source).toEqual({ bar: 2 });
+    // @ts-expect-error
+    result.foo;
+    result.bar;
+  });
+
+  test("deletes false or undefined mapper results and keeps true results", () => {
+    const source = { foo: 1, bar: 2, baz: 3, qux: 4 };
+
+    transform(source, (key) => {
+      if (key === "foo") return undefined;
+      if (key === "bar") return false;
+      if (key === "baz") return true;
+      return "renamed";
+    });
+
+    expect(source).toEqual({ baz: 3, renamed: 4 });
+  });
 });

@@ -59,4 +59,23 @@ describe("mapped()", () => {
 
     expect(result).toEqual({ alpha: 6, beta: 7, c: 8 });
   });
+
+  test("excludes keys marked false in an explicit map", () => {
+    const result = mapped({ foo: 1, bar: 2 }, { foo: false });
+
+    expect(result).toEqual({ bar: 2 });
+    // @ts-expect-error
+    result.foo;
+    result.bar;
+  });
+
+  test("excludes or retains keys based on mapper function control values", () => {
+    const result = mapped({ foo: 1, bar: 2, baz: 3 }, (key) => {
+      if (key === "foo") return undefined;
+      if (key === "bar") return true;
+      return "renamed";
+    });
+
+    expect(result).toEqual({ bar: 2, renamed: 3 });
+  });
 });

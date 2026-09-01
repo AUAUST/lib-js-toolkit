@@ -1,62 +1,82 @@
 import { isFunction } from "@auaust/primitive-kit/functions";
+import { constant } from "./constant";
 import { identity } from "./identity";
+
+type RecordMappedKey<K, M> = M extends object
+  ? K extends keyof M
+    ? M[K] extends false
+      ? never
+      : M[K] extends PropertyKey
+      ? M[K]
+      : K
+    : K
+  : K;
+
+type FunctionMappedKey<S, M extends (...args: any[]) => any> =
+  | Exclude<ReturnType<M>, false | true | undefined>
+  | (true extends ReturnType<M> ? keyof S : never);
 
 export function mapped<T extends Record<string, any>>(source: T): T;
 export function mapped<
   S extends Record<string, any>,
-  M extends Partial<Record<keyof S, string>>,
+  M extends Partial<Record<keyof S, PropertyKey | false>>,
 >(
   source: S,
   map: M,
 ): {
-  [K in keyof S as (K extends keyof M ? M[K] : K) & PropertyKey]: S[K];
+  [K in keyof S as RecordMappedKey<K, M>]: S[K];
 };
 export function mapped<
   S extends Record<string, any>,
-  M extends (key: keyof S) => PropertyKey,
->(source: S, map: M): Record<ReturnType<M>, S[keyof S]>;
+  M extends (key: keyof S) => PropertyKey | boolean | undefined,
+>(source: S, map: M): Record<FunctionMappedKey<S, M>, S[keyof S]>;
 export function mapped<
   S extends Record<string, any>,
-  M extends Partial<Record<keyof S, PropertyKey>> | undefined,
+  M extends Partial<Record<keyof S, PropertyKey | false>> | undefined,
   F extends (value: S[keyof S]) => any,
 >(
   source: S,
   map?: M,
   transform?: F,
 ): {
-  [K in keyof S as (M extends Record<keyof S, PropertyKey> ? M[K] : K) &
-    PropertyKey]: ReturnType<F> extends infer R ? R : S[K];
+  [K in keyof S as RecordMappedKey<K, M>]: ReturnType<F>;
 };
 export function mapped(
   source: Record<string, any>,
-  map?: Record<string, string> | ((key: string) => PropertyKey),
+  map?:
+    | Record<string, PropertyKey | false>
+    | ((key: string) => PropertyKey | boolean | undefined),
   transform?: (value: any) => any,
 ): Record<string, any>;
 export function mapped(
   source: Record<string, any>,
-  map?: Record<string, string> | ((key: string) => PropertyKey),
+  map?:
+    | Record<string, PropertyKey | false>
+    | ((key: string) => PropertyKey | boolean | undefined),
   transform?: (value: any) => any,
 ) {
   if (!source || typeof source !== "object") {
     return source;
   }
 
+  const mapper = isFunction(map)
+    ? map
+    : map
+    ? (key: string) => (key in map ? map[key] : true)
+    : constant(true);
+
   const transformer = isFunction(transform) ? transform : identity;
 
   const mapped = <any>{};
 
-  if (isFunction(map)) {
-    for (const key in source) {
-      mapped[map(key)] = transformer(source[key]);
+  for (const key in source) {
+    const newKey = mapper(key);
+
+    if (newKey === false || newKey === null || newKey === undefined) {
+      continue;
     }
-  } else if (map) {
-    for (const key in source) {
-      mapped[map[key] ?? key] = transformer(source[key]);
-    }
-  } else {
-    for (const key in source) {
-      mapped[key] = transformer(source[key]);
-    }
+
+    mapped[newKey === true ? key : newKey] = transformer(source[key]);
   }
 
   return mapped;
