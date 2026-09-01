@@ -45,7 +45,7 @@ export type CachedOptions = {
 
 export function cached<K, A extends any[], R, T = any>(
   fn: (this: T, key: K, ...args: A) => R,
-  options?: CachedOptions
+  options?: CachedOptions,
 ): CachedFn<K, R, (this: T, key: K, ...args: A) => R> {
   const weakRefs = options?.weakRefs ?? true;
   const cachePrimitives = options?.cachePrimitives ?? false;

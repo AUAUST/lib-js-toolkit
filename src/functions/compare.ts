@@ -45,19 +45,19 @@ export function compare<C extends CustomOperators>(
   a: unknown,
   operator: AvailableOperators<C>,
   b: unknown,
-  customOperators: C
+  customOperators: C,
 ): boolean;
 export function compare(
   value: unknown,
   operator: UnaryOperator,
-  ignored?: unknown
+  ignored?: unknown,
 ): boolean;
 export function compare(a: unknown, operator: Operator, b: unknown): boolean;
 export function compare(
   a: unknown,
   operator: Operator | string,
   b?: unknown,
-  customOperators?: CustomOperators
+  customOperators?: CustomOperators,
 ): boolean {
   if (typeof operator === "function") {
     return !!operator(a, b);
@@ -72,7 +72,7 @@ export function compare(
 
     if (customOperator == null) {
       throw new Error(
-        `Attempted to use a disabled operator: ${String(operator)}`
+        `Attempted to use a disabled operator: ${String(operator)}`,
       );
     }
 

@@ -30,7 +30,7 @@ export type OnceFn<T> = (() => T) & {
 
 export function once<R, This>(
   this: This,
-  closure: (this: This) => R
+  closure: (this: This) => R,
 ): OnceFn<R> {
   let value: R | undefined;
   let called = false;

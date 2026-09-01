@@ -11,29 +11,29 @@ export type AsyncPipeEntry<This, In, Out> =
 
 export function pipeAsync(): <This, T>(this: This, value: T) => Promise<T>;
 export function pipeAsync<This, A, B>(
-  fn: AsyncPipeEntry<This, A, B>
+  fn: AsyncPipeEntry<This, A, B>,
 ): (this: This, value: A) => Promise<B>;
 export function pipeAsync<This, A, B, C>(
   fn1: AsyncPipeEntry<This, A, B>,
-  fn2: AsyncPipeEntry<This, B, C>
+  fn2: AsyncPipeEntry<This, B, C>,
 ): (this: This, value: A) => Promise<C>;
 export function pipeAsync<This, A, B, C, D>(
   fn1: AsyncPipeEntry<This, A, B>,
   fn2: AsyncPipeEntry<This, B, C>,
-  fn3: AsyncPipeEntry<This, C, D>
+  fn3: AsyncPipeEntry<This, C, D>,
 ): (this: This, value: A) => Promise<D>;
 export function pipeAsync<This, A, B, C, D, E>(
   fn1: AsyncPipeEntry<This, A, B>,
   fn2: AsyncPipeEntry<This, B, C>,
   fn3: AsyncPipeEntry<This, C, D>,
-  fn4: AsyncPipeEntry<This, D, E>
+  fn4: AsyncPipeEntry<This, D, E>,
 ): (this: This, value: A) => Promise<E>;
 export function pipeAsync<This, A, B, C, D, E, F>(
   fn1: AsyncPipeEntry<This, A, B>,
   fn2: AsyncPipeEntry<This, B, C>,
   fn3: AsyncPipeEntry<This, C, D>,
   fn4: AsyncPipeEntry<This, D, E>,
-  fn5: AsyncPipeEntry<This, E, F>
+  fn5: AsyncPipeEntry<This, E, F>,
 ): (this: This, value: A) => Promise<F>;
 export function pipeAsync<This, A, B, C, D, E, F, G>(
   fn1: AsyncPipeEntry<This, A, B>,
@@ -41,7 +41,7 @@ export function pipeAsync<This, A, B, C, D, E, F, G>(
   fn3: AsyncPipeEntry<This, C, D>,
   fn4: AsyncPipeEntry<This, D, E>,
   fn5: AsyncPipeEntry<This, E, F>,
-  fn6: AsyncPipeEntry<This, F, G>
+  fn6: AsyncPipeEntry<This, F, G>,
 ): (this: This, value: A) => Promise<G>;
 export function pipeAsync<This, A, B, C, D, E, F, G, H>(
   fn1: AsyncPipeEntry<This, A, B>,
@@ -50,7 +50,7 @@ export function pipeAsync<This, A, B, C, D, E, F, G, H>(
   fn4: AsyncPipeEntry<This, D, E>,
   fn5: AsyncPipeEntry<This, E, F>,
   fn6: AsyncPipeEntry<This, F, G>,
-  fn7: AsyncPipeEntry<This, G, H>
+  fn7: AsyncPipeEntry<This, G, H>,
 ): (this: This, value: A) => Promise<H>;
 export function pipeAsync<This, A, B, C, D, E, F, G, H, I>(
   fn1: AsyncPipeEntry<This, A, B>,
@@ -60,7 +60,7 @@ export function pipeAsync<This, A, B, C, D, E, F, G, H, I>(
   fn5: AsyncPipeEntry<This, E, F>,
   fn6: AsyncPipeEntry<This, F, G>,
   fn7: AsyncPipeEntry<This, G, H>,
-  fn8: AsyncPipeEntry<This, H, I>
+  fn8: AsyncPipeEntry<This, H, I>,
 ): (this: This, value: A) => Promise<I>;
 export function pipeAsync<This>(
   ...fns: AsyncPipeEntry<This, any, any>[]

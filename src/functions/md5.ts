@@ -54,20 +54,20 @@ function str2rstr_utf8(input: string): string {
     } else if (x <= 0x7ff) {
       output += String.fromCharCode(
         0xc0 | ((x >>> 6) & 0x1f),
-        0x80 | (x & 0x3f)
+        0x80 | (x & 0x3f),
       );
     } else if (x <= 0xffff) {
       output += String.fromCharCode(
         0xe0 | ((x >>> 12) & 0x0f),
         0x80 | ((x >>> 6) & 0x3f),
-        0x80 | (x & 0x3f)
+        0x80 | (x & 0x3f),
       );
     } else if (x <= 0x1fffff) {
       output += String.fromCharCode(
         0xf0 | ((x >>> 18) & 0x07),
         0x80 | ((x >>> 12) & 0x3f),
         0x80 | ((x >>> 6) & 0x3f),
-        0x80 | (x & 0x3f)
+        0x80 | (x & 0x3f),
       );
     }
   }
@@ -197,7 +197,7 @@ function md5_cmn(
   b: number,
   x: number,
   s: number,
-  t: number
+  t: number,
 ): number {
   return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
 }
@@ -209,7 +209,7 @@ function md5_ff(
   d: number,
   x: number,
   s: number,
-  t: number
+  t: number,
 ): number {
   return md5_cmn((b & c) | (~b & d), a, b, x, s, t);
 }
@@ -221,7 +221,7 @@ function md5_gg(
   d: number,
   x: number,
   s: number,
-  t: number
+  t: number,
 ): number {
   return md5_cmn((b & d) | (c & ~d), a, b, x, s, t);
 }
@@ -233,7 +233,7 @@ function md5_hh(
   d: number,
   x: number,
   s: number,
-  t: number
+  t: number,
 ) {
   return md5_cmn(b ^ c ^ d, a, b, x, s, t);
 }
@@ -245,7 +245,7 @@ function md5_ii(
   d: number,
   x: number,
   s: number,
-  t: number
+  t: number,
 ): number {
   return md5_cmn(c ^ (b | ~d), a, b, x, s, t);
 }

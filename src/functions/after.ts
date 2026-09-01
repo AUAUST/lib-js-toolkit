@@ -5,6 +5,6 @@ export function after<R, A extends any[], This>(
   ...args: NoInfer<A>
 ): Promise<R> {
   return new Promise((resolve) =>
-    setTimeout(() => resolve(callback.apply(this, args)), ms)
+    setTimeout(() => resolve(callback.apply(this, args)), ms),
   );
 }

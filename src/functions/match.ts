@@ -19,32 +19,32 @@ type CasesResult<Cases extends readonly unknown[]> = CaseResult<Cases[number]>;
 export function match<
   V,
   Cases extends readonly FunctionalCase<undefined, V>[],
-  Fallback = undefined
+  Fallback = undefined,
 >(
   cases: Cases,
-  fallback?: Fallback
+  fallback?: Fallback,
 ): CasesResult<Cases> | ResolvedValue<Fallback>;
 export function match<
   V,
   Cases extends readonly LiteralCase<V>[],
-  Fallback = undefined
+  Fallback = undefined,
 >(
   cases: Cases,
-  fallback?: Fallback
+  fallback?: Fallback,
 ): CasesResult<Cases> | ResolvedValue<Fallback>;
 export function match<
   T,
   Cases extends readonly Case<T, any>[],
-  Fallback = undefined
+  Fallback = undefined,
 >(
   target: T,
   cases: Cases,
-  fallback?: Fallback
+  fallback?: Fallback,
 ): CasesResult<Cases> | ResolvedValue<Fallback>;
 export function match(
   targetOrCases: unknown,
   casesOrFallback?: readonly Case<unknown, unknown>[],
-  fallback?: unknown
+  fallback?: unknown,
 ): unknown {
   let target: unknown, cases: readonly Case<unknown, unknown>[];
 
