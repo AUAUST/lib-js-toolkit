@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.1.0
+
+### Minor Changes
+
+- 34dc58d: Various new features and improvements.
+
 ## 0.0.9
 
 ### Patch Changes
