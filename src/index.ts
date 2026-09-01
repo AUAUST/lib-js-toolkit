@@ -33,6 +33,12 @@ export {
   type ForwardCalls,
   type MethodNames,
 } from "~/functions/forwardCalls.js";
+export {
+  forwardProperties,
+  type ForwardProperties,
+  type PropertyDefinition,
+  type PropertyDefinitions,
+} from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
 export { mapped } from "~/functions/mapped.js";
 export { memoized, type MemoizedFn } from "~/functions/memoized.js";
