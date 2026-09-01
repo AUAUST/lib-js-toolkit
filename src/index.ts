@@ -26,6 +26,7 @@ export {
   type PromiseResolver,
 } from "~/functions/defer.js";
 export { empty, type EmptyValue } from "~/functions/empty.js";
+export { expose } from "~/functions/expose.js";
 export { filled, type FilledValue } from "~/functions/filled.js";
 export {
   forwardCalls,
@@ -34,7 +35,6 @@ export {
 } from "~/functions/forwardCalls.js";
 export { identity } from "~/functions/identity.js";
 export { mapped } from "~/functions/mapped.js";
-export { transform } from "~/functions/transform.js";
 export { match } from "~/functions/match.js";
 export { md5 } from "~/functions/md5.js";
 export { measure, type MeasureResult } from "~/functions/measure.js";
@@ -61,6 +61,7 @@ export {
 } from "~/functions/spy.js";
 export { tap } from "~/functions/tap.js";
 export { throttle } from "~/functions/throttle.js";
+export { transform } from "~/functions/transform.js";
 export { value, type ResolvedValue, type Value } from "~/functions/value.js";
 export { when } from "~/functions/when.js";
 
