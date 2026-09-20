@@ -10,6 +10,10 @@ export interface MethodForwarder<
   enumerable?: boolean;
 }
 
+export type MethodForwardingInput<Method extends PropertyKey> =
+  | Method
+  | MethodForwardingOptions<Method>;
+
 export interface MethodForwardingOptions<
   Method extends PropertyKey = PropertyKey,
 > {
@@ -23,7 +27,7 @@ export function methodForwarder<
   const Method extends keyof Methods<Source>,
 >(
   source: Source,
-  method: Method | MethodForwardingOptions<Method>,
+  method: MethodForwardingInput<Method>,
 ): MethodForwarder<Source, Method>;
 export function methodForwarder<
   const Source extends object,
@@ -35,7 +39,7 @@ export function methodForwarder<
 ): MethodForwarder<Source, Method>;
 export function methodForwarder(
   source: any,
-  method: PropertyKey | MethodForwardingOptions,
+  method: MethodForwardingInput<PropertyKey>,
   options?: Partial<MethodForwardingOptions>,
 ): MethodForwarder<any, any> {
   if (!isPropertyKey(method)) {

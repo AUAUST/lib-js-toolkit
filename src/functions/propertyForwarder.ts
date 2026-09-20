@@ -1,5 +1,10 @@
 import { isPropertyKey } from "@auaust/primitive-kit/primitives";
 
+export type PropertyForwardingInput<
+  Property extends PropertyKey,
+  Readonly extends boolean = boolean,
+> = Property | PropertyForwardingOptions<Property, Readonly>;
+
 export interface PropertyForwarder<
   Source extends object = object,
   Property extends keyof Source = keyof Source,
@@ -27,7 +32,7 @@ export function propertyForwarder<
   const Readonly extends boolean,
 >(
   source: Source,
-  property: Property | PropertyForwardingOptions<Property, Readonly>,
+  property: PropertyForwardingInput<Property, Readonly>,
 ): PropertyForwarder<Source, Property, Readonly>;
 export function propertyForwarder<
   const Source extends object,
@@ -40,7 +45,7 @@ export function propertyForwarder<
 ): PropertyForwarder<Source, Property, Readonly>;
 export function propertyForwarder(
   source: any,
-  property: PropertyKey | PropertyForwardingOptions,
+  property: PropertyForwardingInput<PropertyKey>,
   options?: Partial<PropertyForwardingOptions>,
 ): PropertyForwarder<any, any, any> {
   if (!isPropertyKey(property)) {

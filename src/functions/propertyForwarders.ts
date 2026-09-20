@@ -1,12 +1,14 @@
 import {
   propertyForwarder,
   type PropertyForwarder,
+  type PropertyForwardingInput,
   type PropertyForwardingOptions,
 } from "~/functions/propertyForwarder";
+import type { MaybeArray } from "~/types/MaybeArray";
 
 export type PropertyForwarderFor<
   Source extends object,
-  Property extends PropertyForwardingOptions<keyof Source> | keyof Source,
+  Property extends PropertyForwardingInput<keyof Source>,
 > = Property extends keyof Source
   ? PropertyForwarder<Source, Property>
   : Property extends PropertyForwardingOptions<
@@ -18,30 +20,21 @@ export type PropertyForwarderFor<
 
 export function propertyForwarders<
   const Source extends object,
-  const Properties extends (
-    | PropertyForwardingOptions<keyof Source>
-    | keyof Source
-  )[],
+  const Properties extends PropertyForwardingInput<keyof Source>[],
 >(
   source: Source,
   properties: Properties,
 ): PropertyForwarderFor<Source, Properties[number]>[];
 export function propertyForwarders<
   const Source extends object,
-  const Properties extends (
-    | PropertyForwardingOptions<keyof Source>
-    | keyof Source
-  )[],
+  const Properties extends PropertyForwardingInput<keyof Source>[],
 >(
   source: Source,
   ...properties: Properties
 ): PropertyForwarderFor<Source, Properties[number]>[];
 export function propertyForwarders(
   source: any,
-  property:
-    | PropertyKey
-    | PropertyForwardingOptions
-    | (PropertyKey | PropertyForwardingOptions)[],
+  property: MaybeArray<PropertyForwardingInput<PropertyKey>>,
   ...properties: (PropertyKey | PropertyForwardingOptions)[]
 ): PropertyForwarder<any, any, any>[] {
   if (Array.isArray(property)) {
