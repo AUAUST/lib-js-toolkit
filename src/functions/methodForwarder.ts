@@ -9,6 +9,7 @@ export interface MethodForwarder<
   Source extends object = any,
   Method extends keyof Methods<Source> = keyof Methods<Source>,
 > {
+  kind: "method";
   name: Method;
   get(): Source[Method];
   configurable?: boolean;
@@ -22,6 +23,11 @@ export interface MethodForwardingOptions<
   configurable?: boolean;
   enumerable?: boolean;
 }
+
+export type MethodForwarded<Forward extends MethodForwarder> =
+  Forward extends MethodForwarder<infer Source, infer Method>
+    ? { [K in Method]: Source[K] }
+    : never;
 
 export function methodForwarder<
   const Source extends object,
@@ -58,6 +64,7 @@ export function methodForwarder(
   const forwarders = new WeakMap<object, (...args: unknown[]) => unknown>();
 
   return {
+    kind: "method",
     name: method,
     configurable,
     enumerable,

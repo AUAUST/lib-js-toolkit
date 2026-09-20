@@ -5,7 +5,7 @@ import {
   propertyForwarder,
   propertyForwarders,
 } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("forward()", () => {
   test("exposes the forwarding API as methods", () => {
@@ -122,6 +122,32 @@ describe("forward()", () => {
     expect(api.bOtherMethod()).toBe(b.bOtherValue);
     expect(api.cMethod()).toBe(c.cValue);
     expect(api.cOtherMethod()).toBe(c.cOtherValue);
+  });
+
+  test("merges the types of every forwarding entry", () => {
+    const source = {
+      mutable: 1,
+      immutable: "value",
+      method(value: boolean) {
+        return Number(value);
+      },
+    };
+
+    const api = forward(
+      { own: true },
+      forward.properties(source, [
+        "mutable",
+        { property: "immutable", readonly: true },
+      ]),
+      forward.method(source, "method"),
+    );
+
+    expectTypeOf(api).toEqualTypeOf<{
+      own: boolean;
+      mutable: number;
+      readonly immutable: string;
+      method: typeof source.method;
+    }>();
   });
 
   test("throws when target already has the property", () => {

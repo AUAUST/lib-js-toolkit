@@ -10,6 +10,7 @@ export interface PropertyForwarder<
   Property extends keyof Source = keyof Source,
   Readonly extends boolean = boolean,
 > {
+  kind: "property";
   name: Property;
   get(): Source[Property];
   set?(v: Source[Property]): void;
@@ -26,6 +27,17 @@ export interface PropertyForwardingOptions<
   enumerable?: boolean;
   configurable?: boolean;
 }
+
+export type PropertyForwarded<Forward extends PropertyForwarder> =
+  Forward extends PropertyForwarder<
+    infer Source,
+    infer Property,
+    infer Readonly
+  >
+    ? Readonly extends true
+      ? { readonly [K in Property]: Source[K] }
+      : { [K in Property]: Source[K] }
+    : never;
 
 export function propertyForwarder<
   const Source extends object,
@@ -66,6 +78,7 @@ export function propertyForwarder(
   } = options ?? {};
 
   return {
+    kind: "property",
     name: property,
     get: function get() {
       return Reflect.get(source, property);
