@@ -28,6 +28,7 @@ export {
 export { empty, type EmptyValue } from "~/functions/empty.js";
 export { expose } from "~/functions/expose.js";
 export { filled, type FilledValue } from "~/functions/filled.js";
+export { forward } from "~/functions/forward.js";
 export {
   forwardCalls,
   type ForwardCalls,

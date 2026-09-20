@@ -6,7 +6,7 @@ export type MethodForwardingInput<Method extends PropertyKey> =
   | MethodForwardingOptions<Method>;
 
 export interface MethodForwarder<
-  Source extends object = object,
+  Source extends object = any,
   Method extends keyof Methods<Source> = keyof Methods<Source>,
 > {
   name: Method;

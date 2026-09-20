@@ -6,7 +6,7 @@ export type PropertyForwardingInput<
 > = Property | PropertyForwardingOptions<Property, Readonly>;
 
 export interface PropertyForwarder<
-  Source extends object = object,
+  Source extends object = any,
   Property extends keyof Source = keyof Source,
   Readonly extends boolean = boolean,
 > {
@@ -66,6 +66,7 @@ export function propertyForwarder(
   } = options ?? {};
 
   return {
+    name: property,
     get: function get() {
       return Reflect.get(source, property);
     },
