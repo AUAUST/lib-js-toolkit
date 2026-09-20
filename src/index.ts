@@ -34,10 +34,11 @@ export {
   type ForwardedEntry,
 } from "~/functions/forward.js";
 export {
-  forwardCalls,
-  type ForwardCalls,
+  forwardMethods as forwardCalls,
+  forwardMethods,
+  type ForwardMethods,
   type MethodNames,
-} from "~/functions/forwardCalls.js";
+} from "~/functions/forwardMethods.js";
 export {
   forwardProperties,
   type ForwardProperties,

@@ -1,7 +1,7 @@
-import { forwardCalls } from "@auaust/toolkit";
+import { forwardMethods } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
 
-describe("forwardCalls()", () => {
+describe("forwardMethods()", () => {
   test("calls methods on the handler object when invoked on the target object", () => {
     const handler = {
       value: 42,
@@ -12,7 +12,7 @@ describe("forwardCalls()", () => {
 
     const target = {};
 
-    const forwarded = forwardCalls(target, handler, "greet");
+    const forwarded = forwardMethods(target, handler, "greet");
 
     const result = forwarded.greet("World");
 
@@ -31,7 +31,7 @@ describe("forwardCalls()", () => {
 
     const target = {};
 
-    const forwarded = forwardCalls(target, handler, ["add", "multiply"]);
+    const forwarded = forwardMethods(target, handler, ["add", "multiply"]);
 
     const sum = forwarded.add(2, 3);
     const product = forwarded.multiply(4, 5);
@@ -50,7 +50,7 @@ describe("forwardCalls()", () => {
 
     const target = {};
 
-    const forwarded = forwardCalls(target, handler, "scale");
+    const forwarded = forwardMethods(target, handler, "scale");
 
     const result = forwarded.scale(5);
 
@@ -71,9 +71,9 @@ describe("forwardCalls()", () => {
     };
 
     expect(() => {
-      forwardCalls(target, handler, "greet");
+      forwardMethods(target, handler, "greet");
     }).toThrowError(
-      "Target object already has a property named greet. Cannot forward call."
+      "Target object already has a property named greet. Cannot forward call.",
     );
   });
 
@@ -87,7 +87,7 @@ describe("forwardCalls()", () => {
     const target = {};
 
     expect(() => {
-      forwardCalls(target, handler, "greet" as any);
+      forwardMethods(target, handler, "greet" as any);
     }).toThrowError("Method greet does not exist on the provided interface.");
   });
 
@@ -103,8 +103,8 @@ describe("forwardCalls()", () => {
     const targetOne = {};
     const targetMany = {};
 
-    const forwardedOne = forwardCalls(targetOne, handler, sym);
-    const forwardedMany = forwardCalls(targetMany, handler, [sym]);
+    const forwardedOne = forwardMethods(targetOne, handler, sym);
+    const forwardedMany = forwardMethods(targetMany, handler, [sym]);
 
     const resultOne = forwardedOne[sym]("Hello Symbol");
     const resultMany = forwardedMany[sym]("Hello Symbol");

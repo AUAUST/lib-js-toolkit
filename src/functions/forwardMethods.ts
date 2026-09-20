@@ -2,7 +2,7 @@ export type MethodNames<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
 }[keyof T];
 
-export type ForwardCalls<
+export type ForwardMethods<
   T extends object,
   H extends object,
   M extends MethodNames<H>,
@@ -13,12 +13,12 @@ export type ForwardCalls<
 /**
  * Exposes the `methods` from the `handler` through the `interface`.
  */
-export function forwardCalls<
+export function forwardMethods<
   T extends object,
   H extends object,
   M extends MethodNames<H>,
->(target: T, handler: H, methods: M | M[]): ForwardCalls<T, H, M>;
-export function forwardCalls(
+>(target: T, handler: H, methods: M | M[]): ForwardMethods<T, H, M>;
+export function forwardMethods(
   target: any,
   handler: any,
   methods: string | string[],
