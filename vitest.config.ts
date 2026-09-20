@@ -1,4 +1,3 @@
-import type { AliasOptions } from "vite";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig(({ mode }) => {
@@ -6,7 +5,7 @@ export default defineConfig(({ mode }) => {
   // run against the dist folder rather than the src folder.
   const shouldTestDist = mode === "build";
 
-  const alias: AliasOptions = {};
+  const alias: { [key: string]: string } = {};
 
   if (!shouldTestDist) {
     alias["~"] = "/src";
