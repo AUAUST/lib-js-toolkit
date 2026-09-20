@@ -1,5 +1,6 @@
 import { toString } from "@auaust/primitive-kit/strings";
-import type { IsLiteral, KeyAsString } from "type-fest";
+import type { IsLiteral } from "type-fest";
+import type { KeyAsString } from "~/types/KeyAsString";
 import { empty } from "./empty";
 import { filled } from "./filled";
 

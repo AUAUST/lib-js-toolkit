@@ -77,4 +77,15 @@ export { transform } from "~/functions/transform.js";
 export { value, type ResolvedValue, type Value } from "~/functions/value.js";
 export { when } from "~/functions/when.js";
 
+export type { IsAny } from "~/types/IsAny.js";
+export type { IsNever } from "~/types/IsNever.js";
+export type { IsUnknown } from "~/types/IsUnknown.js";
+export type { KeyAsString } from "~/types/KeyAsString.js";
+export type { Maybe } from "~/types/Maybe.js";
+export type { MaybeArray } from "~/types/MaybeArray.js";
+export type { MaybeAsyncFn } from "~/types/MaybeAsyncFn.js";
+export type { MaybeFn } from "~/types/MaybeFn.js";
+export type { MaybePromise } from "~/types/MaybePromise.js";
+export type { ReadonlyRecord } from "~/types/ReadonlyRecord.js";
+
 export { PipelineError } from "~/errors/PipelineError.js";
