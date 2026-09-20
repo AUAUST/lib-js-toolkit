@@ -1,4 +1,3 @@
-import { isArray, map } from "@auaust/primitive-kit/arrays";
 import {
   propertyForwarder,
   type PropertyForwarder,
@@ -45,13 +44,13 @@ export function propertyForwarders(
     | (PropertyKey | PropertyForwardingOptions)[],
   ...properties: (PropertyKey | PropertyForwardingOptions)[]
 ): PropertyForwarder<any, any, any>[] {
-  if (isArray(property)) {
+  if (Array.isArray(property)) {
     properties = property;
   } else {
     properties.unshift(property);
   }
 
-  return map(properties, (property) => {
+  return properties.map((property) => {
     return propertyForwarder(source, property);
   });
 }
