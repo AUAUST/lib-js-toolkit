@@ -1,5 +1,5 @@
+import { methodForwarders } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
-import { methodForwarders } from "~/functions/methodForwarders";
 
 describe("methodForwarders()", () => {
   test("handles the spread call form", () => {

@@ -1,18 +1,19 @@
 import { isPropertyKey } from "@auaust/primitive-kit/primitives";
 import type { Methods } from "~/types/Methods";
 
+export type MethodForwardingInput<Method extends PropertyKey> =
+  | Method
+  | MethodForwardingOptions<Method>;
+
 export interface MethodForwarder<
   Source extends object = object,
   Method extends keyof Methods<Source> = keyof Methods<Source>,
 > {
+  name: Method;
   get(): Source[Method];
   configurable?: boolean;
   enumerable?: boolean;
 }
-
-export type MethodForwardingInput<Method extends PropertyKey> =
-  | Method
-  | MethodForwardingOptions<Method>;
 
 export interface MethodForwardingOptions<
   Method extends PropertyKey = PropertyKey,
@@ -57,6 +58,7 @@ export function methodForwarder(
   const forwarders = new WeakMap<object, (...args: unknown[]) => unknown>();
 
   return {
+    name: method,
     configurable,
     enumerable,
     get() {

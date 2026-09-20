@@ -10,6 +10,7 @@ export interface PropertyForwarder<
   Property extends keyof Source = keyof Source,
   Readonly extends boolean = boolean,
 > {
+  name: Property;
   get(): Source[Property];
   set?(v: Source[Property]): void;
   configurable?: boolean;

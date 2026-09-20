@@ -46,6 +46,16 @@ export { md5 } from "~/functions/md5.js";
 export { measure, type MeasureResult } from "~/functions/measure.js";
 export { measureAsync } from "~/functions/measureAsync.js";
 export { memoized, type MemoizedFn } from "~/functions/memoized.js";
+export {
+  methodForwarder,
+  type MethodForwarder,
+  type MethodForwardingInput,
+  type MethodForwardingOptions,
+} from "~/functions/methodForwarder.js";
+export {
+  methodForwarders,
+  type MethodForwarderFor,
+} from "~/functions/methodForwarders.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
 export { once, type OnceFn } from "~/functions/once.js";
@@ -63,8 +73,13 @@ export {
 export {
   propertyForwarder,
   type PropertyForwarder,
+  type PropertyForwardingInput,
   type PropertyForwardingOptions,
 } from "~/functions/propertyForwarder.js";
+export {
+  propertyForwarders,
+  type PropertyForwarderFor,
+} from "~/functions/propertyForwarders.js";
 export { sleep } from "~/functions/sleep.js";
 export {
   spy,
