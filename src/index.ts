@@ -41,11 +41,11 @@ export {
 } from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
 export { mapped } from "~/functions/mapped.js";
-export { memoized, type MemoizedFn } from "~/functions/memoized.js";
 export { match } from "~/functions/match.js";
 export { md5 } from "~/functions/md5.js";
 export { measure, type MeasureResult } from "~/functions/measure.js";
 export { measureAsync } from "~/functions/measureAsync.js";
+export { memoized, type MemoizedFn } from "~/functions/memoized.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
 export { once, type OnceFn } from "~/functions/once.js";
@@ -60,6 +60,11 @@ export {
   type AsyncPipeEntry,
   type AsyncTransformFn,
 } from "~/functions/pipeAsync.js";
+export {
+  propertyForwarder,
+  type PropertyForwarder,
+  type PropertyForwardingOptions,
+} from "~/functions/propertyForwarder.js";
 export { sleep } from "~/functions/sleep.js";
 export {
   spy,

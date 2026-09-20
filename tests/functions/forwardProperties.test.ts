@@ -43,7 +43,11 @@ describe("forwardProperties()", () => {
     const handler = {} as { readonly locked: number; mutable: number };
 
     Object.defineProperties(handler, {
-      locked: { value: 1, enumerable: false, configurable: false },
+      locked: {
+        value: 1,
+        enumerable: false,
+        configurable: false,
+      },
       mutable: {
         value: 2,
         writable: true,
