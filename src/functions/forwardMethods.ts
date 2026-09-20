@@ -1,51 +1,21 @@
-export type MethodNames<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
-}[keyof T];
+import { forward } from "~/functions/forward";
+import { methodForwarders } from "~/functions/methodForwarders";
+import type {
+  Forwarded,
+  MaybeArray,
+  MethodForwarderFor,
+  MethodForwardingInput,
+} from "~/index";
+import type { Methods as ExtractMethods } from "~/types/Methods";
 
-export type ForwardMethods<
-  T extends object,
-  H extends object,
-  M extends MethodNames<H>,
-> = T & {
-  [K in M]: K extends keyof T ? never : H[K];
-};
-
-/**
- * Exposes the `methods` from the `handler` through the `interface`.
- */
 export function forwardMethods<
-  T extends object,
-  H extends object,
-  M extends MethodNames<H>,
->(target: T, handler: H, methods: M | M[]): ForwardMethods<T, H, M>;
-export function forwardMethods(
-  target: any,
-  handler: any,
-  methods: string | string[],
-): any {
-  if (!Array.isArray(methods)) {
-    methods = [methods];
-  }
-
-  for (const method of methods) {
-    if (target.hasOwnProperty(method)) {
-      throw new Error(
-        `Target object already has a property named ${String(
-          method,
-        )}. Cannot forward call.`,
-      );
-    }
-
-    if (typeof handler[method] !== "function") {
-      throw new Error(
-        `Method ${method} does not exist on the provided interface.`,
-      );
-    }
-
-    target[method] = function (...args: any[]) {
-      return handler[method].apply(handler, args);
-    };
-  }
-
-  return target;
+  const Target extends object,
+  const Source extends object,
+  const Methods extends keyof ExtractMethods<Source>,
+>(
+  target: Target,
+  handler: Source,
+  ...methods: MaybeArray<MethodForwardingInput<Methods>>[]
+): Forwarded<Target, MethodForwarderFor<Source, Methods>[]> {
+  return forward(target, methodForwarders(handler, ...methods));
 }

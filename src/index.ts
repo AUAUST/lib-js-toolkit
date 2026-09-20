@@ -36,15 +36,8 @@ export {
 export {
   forwardMethods as forwardCalls,
   forwardMethods,
-  type ForwardMethods,
-  type MethodNames,
 } from "~/functions/forwardMethods.js";
-export {
-  forwardProperties,
-  type ForwardProperties,
-  type PropertyDefinition,
-  type PropertyDefinitions,
-} from "~/functions/forwardProperties.js";
+export { forwardProperties } from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
 export { mapped } from "~/functions/mapped.js";
 export { match } from "~/functions/match.js";

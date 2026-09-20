@@ -34,16 +34,9 @@ export function methodForwarders<
 ): MethodForwarderFor<Source, Methods[number]>[];
 export function methodForwarders(
   source: any,
-  method: MaybeArray<MethodForwardingInput<PropertyKey>>,
-  ...methods: MethodForwardingInput<PropertyKey>[]
+  ...methods: MaybeArray<MethodForwardingInput<PropertyKey>>[]
 ): MethodForwarder<any, any>[] {
-  if (Array.isArray(method)) {
-    methods = method;
-  } else {
-    methods.unshift(method);
-  }
-
-  return methods.map((method) => {
+  return methods.flat().map((method) => {
     return methodForwarder(source, method);
   });
 }
