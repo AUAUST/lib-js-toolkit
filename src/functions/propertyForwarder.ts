@@ -27,8 +27,7 @@ export function propertyForwarder<
   const Readonly extends boolean,
 >(
   source: Source,
-  property: Property,
-  options?: Omit<PropertyForwardingOptions<Property, Readonly>, "property">,
+  property: Property | PropertyForwardingOptions<Property, Readonly>,
 ): PropertyForwarder<Source, Property, Readonly>;
 export function propertyForwarder<
   const Source extends object,
@@ -36,7 +35,8 @@ export function propertyForwarder<
   const Readonly extends boolean,
 >(
   source: Source,
-  options: PropertyForwardingOptions<Property, Readonly>,
+  property: Property,
+  options?: Omit<PropertyForwardingOptions<Property, Readonly>, "property">,
 ): PropertyForwarder<Source, Property, Readonly>;
 export function propertyForwarder(
   source: any,
