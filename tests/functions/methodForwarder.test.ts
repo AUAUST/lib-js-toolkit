@@ -10,11 +10,12 @@ describe("methodForwarder()", () => {
       },
     };
 
-    const api = Object.defineProperty(
-      {},
-      "method",
-      methodForwarder(source, "method"),
-    ) as {
+    const descriptor = methodForwarder(source, "method");
+
+    expect(descriptor).toHaveProperty("get");
+    expect(descriptor.get()).toBeTypeOf("function");
+
+    const api = Object.defineProperty({}, "method", descriptor) as {
       method: typeof source.method;
     };
 
@@ -28,6 +29,7 @@ describe("methodForwarder()", () => {
         return this.value;
       },
     };
+
     const api = Object.defineProperty(
       {},
       "method",
