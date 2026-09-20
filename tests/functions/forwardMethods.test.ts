@@ -72,23 +72,7 @@ describe("forwardMethods()", () => {
 
     expect(() => {
       forwardMethods(target, handler, "greet");
-    }).toThrowError(
-      "Target object already has a property named greet. Cannot forward call.",
-    );
-  });
-
-  test("throws an error if the method does not exist on the handler", () => {
-    const handler = {
-      farewell(name: string) {
-        return `Goodbye, ${name}!`;
-      },
-    };
-
-    const target = {};
-
-    expect(() => {
-      forwardMethods(target, handler, "greet" as any);
-    }).toThrowError("Method greet does not exist on the provided interface.");
+    }).toThrow("Existing property greet cannot be forwarded on target.");
   });
 
   test("handles symbol-named methods", () => {

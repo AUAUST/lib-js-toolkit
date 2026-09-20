@@ -9,7 +9,7 @@ describe("compare()", () => {
     expect(compare(null, "=", undefined)).toBe(true);
     expect(compare(null, "=", "")).toBe(true);
     expect(
-      compare(new Date(2002, 9, 2, 0, 6), "=", new Date(2002, 9, 2, 0, 6))
+      compare(new Date(2002, 9, 2, 0, 6), "=", new Date(2002, 9, 2, 0, 6)),
     ).toBe(true);
     expect(compare({}, "=", {})).toBe(true);
     expect(compare([], "=", null)).toBe(true);
@@ -25,7 +25,7 @@ describe("compare()", () => {
     expect(compare(false, "==", false)).toBe(true);
 
     expect(
-      compare(new Date(2002, 9, 2, 0, 6), "==", new Date(2002, 9, 2, 0, 6))
+      compare(new Date(2002, 9, 2, 0, 6), "==", new Date(2002, 9, 2, 0, 6)),
     ).toBe(false);
     expect(compare({}, "==", {})).toBe(false);
     expect(compare([], "==", [])).toBe(false);
@@ -40,7 +40,7 @@ describe("compare()", () => {
 
     expect(compare(5, "===", "5")).toBe(false);
     expect(
-      compare(new Date(2002, 9, 2, 0, 6), "===", new Date(2002, 9, 2, 0, 6))
+      compare(new Date(2002, 9, 2, 0, 6), "===", new Date(2002, 9, 2, 0, 6)),
     ).toBe(false);
     expect(compare({}, "===", {})).toBe(false);
     expect(compare([], "===", [])).toBe(false);
@@ -162,8 +162,8 @@ describe("compare()", () => {
   });
 
   test("throws error for unknown operator", () => {
-    expect(() => compare(5, "unknown" as any, 5)).toThrowError(
-      "Unknown operator: unknown"
+    expect(() => compare(5, "unknown" as any, 5)).toThrow(
+      "Unknown operator: unknown",
     );
   });
 
@@ -188,10 +188,10 @@ describe("compare()", () => {
     };
 
     expect(compare("Apple", "startsWithA", undefined, customOperators)).toBe(
-      true
+      true,
     );
     expect(compare("Banana", "startsWithA", undefined, customOperators)).toBe(
-      false
+      false,
     );
     expect(compare(4, "isEven", undefined, customOperators)).toBe(true);
     expect(compare(5, "isEven", undefined, customOperators)).toBe(false);
@@ -208,11 +208,11 @@ describe("compare()", () => {
     expect(compare(5, "===", 5, customOperators)).toBe(true);
 
     // @ts-expect-error
-    expect(() => compare(5, "==", 5, customOperators)).toThrowError(/disabled/);
+    expect(() => compare(5, "==", 5, customOperators)).toThrow(/disabled/);
 
     expect(() =>
       // @ts-expect-error
-      compare("test", "filled", undefined, customOperators)
-    ).toThrowError(/disabled/);
+      compare("test", "filled", undefined, customOperators),
+    ).toThrow(/disabled/);
   });
 });

@@ -42,9 +42,9 @@ describe("comparator()", () => {
     expect(numberComparator(5, "isEven")).toBe(false);
 
     // @ts-expect-error
-    expect(() => numberComparator(5, "==", 5)).toThrowError(/disabled/);
+    expect(() => numberComparator(5, "==", 5)).toThrow(/disabled/);
 
     // @ts-expect-error
-    expect(() => numberComparator(3, "<=", 5)).toThrowError(/disabled/);
+    expect(() => numberComparator(3, "<=", 5)).toThrow(/disabled/);
   });
 });

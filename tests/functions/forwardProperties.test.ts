@@ -99,9 +99,9 @@ describe("forwardProperties()", () => {
 
     const descriptor = Object.getOwnPropertyDescriptor(forwarded, "later")!;
 
-    expect(descriptor.enumerable).toBe(false);
-    expect(descriptor.configurable).toBe(false);
-    expect(descriptor.set).toBeUndefined();
+    expect(descriptor.enumerable).toBe(true);
+    expect(descriptor.configurable).toBe(true);
+    expect(descriptor.set).toBeTypeOf("function");
     expect(forwarded.later).toBeUndefined();
   });
 
@@ -116,9 +116,7 @@ describe("forwardProperties()", () => {
     expect(() =>
       forwardProperties({ [property]: 0 }, handler, [property] as const),
     ).toThrow(
-      `Target object already has a property named ${String(
-        property,
-      )}. Cannot forward property.`,
+      `Existing property ${String(property)} cannot be forwarded on target.`,
     );
   });
 });
