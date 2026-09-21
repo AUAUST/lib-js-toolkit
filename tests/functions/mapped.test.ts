@@ -54,7 +54,7 @@ describe("mapped()", () => {
     const result = mapped(
       source,
       { a: "alpha", b: "beta" },
-      (value) => value + 5
+      (value) => value + 5,
     );
 
     expect(result).toEqual({ alpha: 6, beta: 7, c: 8 });
@@ -77,5 +77,34 @@ describe("mapped()", () => {
     });
 
     expect(result).toEqual({ bar: 2, renamed: 3 });
+  });
+
+  test("passes values to the key mapper and both keys to the transformer", () => {
+    const mapperCalls: unknown[][] = [];
+    const transformerCalls: unknown[][] = [];
+
+    const result = mapped(
+      { foo: 1, bar: 2 },
+      (key, value) => {
+        mapperCalls.push([key, value]);
+        return key === "foo" ? "renamed" : true;
+      },
+      (value, key, sourceKey) => {
+        transformerCalls.push([value, key, sourceKey]);
+        return `${String(key)}:${value}`;
+      },
+    );
+
+    expect(mapperCalls).toEqual([
+      ["foo", 1],
+      ["bar", 2],
+    ]);
+
+    expect(transformerCalls).toEqual([
+      [1, "renamed", "foo"],
+      [2, "bar", "bar"],
+    ]);
+
+    expect(result).toEqual({ renamed: "renamed:1", bar: "bar:2" });
   });
 });

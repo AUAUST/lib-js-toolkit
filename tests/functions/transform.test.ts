@@ -55,4 +55,34 @@ describe("transform()", () => {
 
     expect(source).toEqual({ baz: 3, renamed: 4 });
   });
+
+  test("passes values to the key mapper and both keys to the transformer", () => {
+    const source = { foo: 1, bar: 2 };
+    const mapperCalls: unknown[][] = [];
+    const transformerCalls: unknown[][] = [];
+
+    transform(
+      source,
+      (key, value) => {
+        mapperCalls.push([key, value]);
+        return key === "foo" ? "renamed" : true;
+      },
+      (value, key, sourceKey) => {
+        transformerCalls.push([value, key, sourceKey]);
+        return `${String(key)}:${value}`;
+      },
+    );
+
+    expect(mapperCalls).toEqual([
+      ["foo", 1],
+      ["bar", 2],
+    ]);
+
+    expect(transformerCalls).toEqual([
+      [1, "renamed", "foo"],
+      [2, "bar", "bar"],
+    ]);
+
+    expect(source).toEqual({ renamed: "renamed:1", bar: "bar:2" });
+  });
 });

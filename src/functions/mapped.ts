@@ -7,8 +7,8 @@ type RecordMappedKey<K, M> = M extends object
     ? M[K] extends false
       ? never
       : M[K] extends PropertyKey
-      ? M[K]
-      : K
+        ? M[K]
+        : K
     : K
   : K;
 
@@ -16,44 +16,72 @@ type FunctionMappedKey<S, M extends (...args: any[]) => any> =
   | Exclude<ReturnType<M>, false | true | undefined>
   | (true extends ReturnType<M> ? keyof S : never);
 
-export function mapped<T extends Record<string, any>>(source: T): T;
+export function mapped<Source extends Record<string, any>>(
+  source: Source,
+): Source;
 export function mapped<
-  S extends Record<string, any>,
-  M extends Partial<Record<keyof S, PropertyKey | false>>,
+  Source extends Record<string, any>,
+  Map extends Partial<Record<keyof Source, PropertyKey | false>>,
 >(
-  source: S,
-  map: M,
+  source: Source,
+  map: Map,
 ): {
-  [K in keyof S as RecordMappedKey<K, M>]: S[K];
+  [K in keyof Source as RecordMappedKey<K, Map>]: Source[K];
 };
 export function mapped<
-  S extends Record<string, any>,
-  M extends (key: keyof S) => PropertyKey | boolean | undefined,
->(source: S, map: M): Record<FunctionMappedKey<S, M>, S[keyof S]>;
-export function mapped<
-  S extends Record<string, any>,
-  M extends Partial<Record<keyof S, PropertyKey | false>> | undefined,
-  F extends (value: S[keyof S]) => any,
+  Source extends Record<string, any>,
+  Mapper extends (
+    key: keyof Source,
+    value: Source[keyof Source],
+  ) => PropertyKey | boolean | undefined,
 >(
-  source: S,
-  map?: M,
-  transform?: F,
+  source: Source,
+  mapper: Mapper,
+): Record<FunctionMappedKey<Source, Mapper>, Source[keyof Source]>;
+export function mapped<
+  Source extends Record<string, any>,
+  Mapper extends (
+    key: keyof Source,
+    value: Source[keyof Source],
+  ) => PropertyKey | boolean | undefined,
+  Transformer extends (
+    value: Source[keyof Source],
+    key: FunctionMappedKey<Source, Mapper>,
+    sourceKey: keyof Source,
+  ) => any,
+>(
+  source: Source,
+  mapper: Mapper,
+  transformer: Transformer,
+): Record<FunctionMappedKey<Source, Mapper>, ReturnType<Transformer>>;
+export function mapped<
+  Source extends Record<string, any>,
+  Map extends Partial<Record<keyof Source, PropertyKey | false>> | undefined,
+  Transformer extends (
+    value: Source[keyof Source],
+    key: RecordMappedKey<keyof Source, Map>,
+    sourceKey: keyof Source,
+  ) => any,
+>(
+  source: Source,
+  map?: Map,
+  transformer?: Transformer,
 ): {
-  [K in keyof S as RecordMappedKey<K, M>]: ReturnType<F>;
+  [K in keyof Source as RecordMappedKey<K, Map>]: ReturnType<Transformer>;
 };
 export function mapped(
   source: Record<string, any>,
-  map?:
+  mapper?:
     | Record<string, PropertyKey | false>
-    | ((key: string) => PropertyKey | boolean | undefined),
-  transform?: (value: any) => any,
+    | ((key: string, value: any) => PropertyKey | boolean | undefined),
+  transformer?: (value: any, key: PropertyKey, sourceKey: string) => any,
 ): Record<string, any>;
 export function mapped(
   source: Record<string, any>,
   map?:
     | Record<string, PropertyKey | false>
-    | ((key: string) => PropertyKey | boolean | undefined),
-  transform?: (value: any) => any,
+    | ((key: string, value: any) => PropertyKey | boolean | undefined),
+  transform?: (value: any, key: PropertyKey, sourceKey: string) => any,
 ) {
   if (!source || typeof source !== "object") {
     return source;
@@ -62,21 +90,23 @@ export function mapped(
   const mapper = isFunction(map)
     ? map
     : map
-    ? (key: string) => (key in map ? map[key] : true)
-    : constant(true);
+      ? (key: string) => (key in map ? map[key] : true)
+      : constant(true);
 
   const transformer = isFunction(transform) ? transform : identity;
 
   const mapped = <any>{};
 
   for (const key in source) {
-    const newKey = mapper(key);
+    const newKey = mapper(key, source[key]);
 
     if (newKey === false || newKey === null || newKey === undefined) {
       continue;
     }
 
-    mapped[newKey === true ? key : newKey] = transformer(source[key]);
+    const actualKey = newKey === true ? key : newKey;
+
+    mapped[actualKey] = transformer(source[key], actualKey, key);
   }
 
   return mapped;
