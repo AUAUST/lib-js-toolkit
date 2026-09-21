@@ -1,5 +1,22 @@
 # @auaust/toolkit
 
+## 0.2.0
+
+### Minor Changes
+
+- 542779c: Expose several frequently used types
+
+### Patch Changes
+
+- 98f45ef: Pass value to `mapped()` and keys to `transform()`'s callbacks
+- 8483a58: Implement `on()`, the cool helper
+- 32c2245: Add `methodForwarder()`, method equivalent to `propertyForwarder()`
+- eaa6d64: Use latest PrimitiveKit
+- 0eb85a7: Add `propertyForwarders()` that maps `propertyForwarder()`
+- 9531f13: Add a `propertyForwarder()` method that creates a proxy property descriptor
+- 60c322c: `forward()` helper that combines the features of `forwardCalls()` and `forwardProperties()` in a more readable interface
+- f86446c: Add `methodForwarders()` array version of `methodForwarder()`
+
 ## 0.1.0
 
 ### Minor Changes
