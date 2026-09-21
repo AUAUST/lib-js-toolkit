@@ -14,10 +14,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18, 21]
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,17 +21,18 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
           cache: "pnpm"
 
       - name: Install dependencies
         run: |
           pnpm install --frozen-lockfile
 
-        # test:dist will build the project then test against the dist folder
+      # test:dist will build the project then test against the dist folder
       - name: Build & Test
         run: |
           pnpm run test:dist
