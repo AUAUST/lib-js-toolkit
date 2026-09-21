@@ -29,17 +29,20 @@ describe("propertyForwarders()", () => {
   });
 
   test("preserves the property and readonly pairs", () => {
-    const source = { foo: 1, bar: "bar" };
+    const source = { foo: 1, bar: "bar", baz: true };
 
-    const forwarders = propertyForwarders(source, [
-      "foo",
+    const forwarders = propertyForwarders(
+      source,
+      ["foo"],
       { property: "bar", readonly: true },
-    ]);
+      ["baz"],
+    );
 
     expectTypeOf(forwarders).toEqualTypeOf<
       (
         | PropertyForwarder<typeof source, "foo">
         | PropertyForwarder<typeof source, "bar", true>
+        | PropertyForwarder<typeof source, "baz">
       )[]
     >();
   });

@@ -28,11 +28,7 @@ export {
 export { empty, type EmptyValue } from "~/functions/empty.js";
 export { expose } from "~/functions/expose.js";
 export { filled, type FilledValue } from "~/functions/filled.js";
-export {
-  forward,
-  type Forwarded,
-  type ForwardedEntry,
-} from "~/functions/forward.js";
+export { forward, type Forwarded } from "~/functions/forward.js";
 export {
   forwardMethods as forwardCalls,
   forwardMethods,
@@ -97,9 +93,12 @@ export type { IsUnknown } from "~/types/IsUnknown.js";
 export type { KeyAsString } from "~/types/KeyAsString.js";
 export type { Maybe } from "~/types/Maybe.js";
 export type { MaybeArray } from "~/types/MaybeArray.js";
+export type { MaybeArrayElement } from "~/types/MaybeArrayElement.js";
 export type { MaybeAsyncFn } from "~/types/MaybeAsyncFn.js";
 export type { MaybeFn } from "~/types/MaybeFn.js";
 export type { MaybePromise } from "~/types/MaybePromise.js";
 export type { ReadonlyRecord } from "~/types/ReadonlyRecord.js";
+export type { Simplify } from "~/types/Simplify.js";
+export type { UnionToIntersection } from "~/types/UnionToIntersection.js";
 
 export { PipelineError } from "~/errors/PipelineError.js";

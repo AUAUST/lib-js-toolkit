@@ -6,16 +6,28 @@ import type {
   MethodForwarderFor,
   MethodForwardingInput,
 } from "~/index";
+import type { MaybeArrayElement } from "~/types/MaybeArrayElement";
 import type { Methods as ExtractMethods } from "~/types/Methods";
 
 export function forwardMethods<
   const Target extends object,
   const Source extends object,
-  const Methods extends keyof ExtractMethods<Source>,
+  const Methods extends MaybeArray<
+    MethodForwardingInput<keyof ExtractMethods<Source>>
+  >[],
 >(
   target: Target,
   handler: Source,
-  ...methods: MaybeArray<MethodForwardingInput<Methods>>[]
-): Forwarded<Target, MethodForwarderFor<Source, Methods>[]> {
+  ...methods: Methods
+): Forwarded<
+  Target,
+  MethodForwarderFor<
+    Source,
+    MaybeArrayElement<
+      Methods[number],
+      MethodForwardingInput<keyof ExtractMethods<Source>>
+    >
+  >[]
+> {
   return forward(target, methodForwarders(handler, ...methods));
 }

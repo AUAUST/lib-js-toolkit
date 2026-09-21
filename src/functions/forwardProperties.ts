@@ -6,15 +6,22 @@ import {
   type PropertyForwarderFor,
   type PropertyForwardingInput,
 } from "~/index";
+import type { MaybeArrayElement } from "~/types/MaybeArrayElement";
 
 export function forwardProperties<
   const Target extends object,
   const Source extends object,
-  const Properties extends keyof Source,
+  const Properties extends MaybeArray<PropertyForwardingInput<keyof Source>>[],
 >(
   target: Target,
   handler: Source,
-  ...properties: MaybeArray<PropertyForwardingInput<Properties>>[]
-): Forwarded<Target, PropertyForwarderFor<Source, Properties>[]> {
+  ...properties: Properties
+): Forwarded<
+  Target,
+  PropertyForwarderFor<
+    Source,
+    MaybeArrayElement<Properties[number], PropertyForwardingInput<keyof Source>>
+  >[]
+> {
   return forward(target, propertyForwarders(handler, ...properties));
 }
