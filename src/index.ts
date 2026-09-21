@@ -53,6 +53,7 @@ export {
 } from "~/functions/methodForwarders.js";
 export { noop } from "~/functions/noop.js";
 export { now } from "~/functions/now.js";
+export { on } from "~/functions/on.js";
 export { once, type OnceFn } from "~/functions/once.js";
 export {
   pipe,
