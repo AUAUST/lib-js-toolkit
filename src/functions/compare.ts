@@ -1,4 +1,3 @@
-import { toString } from "@auaust/primitive-kit/strings";
 import type { IsLiteral } from "type-fest";
 import type { KeyAsString } from "~/types/KeyAsString";
 import { empty } from "./empty";
@@ -55,9 +54,9 @@ export function compare(
 ): boolean;
 export function compare(a: unknown, operator: Operator, b: unknown): boolean;
 export function compare(
-  a: unknown,
+  a: any,
   operator: Operator | string,
-  b?: unknown,
+  b?: any,
   customOperators?: CustomOperators,
 ): boolean {
   if (typeof operator === "function") {
@@ -81,11 +80,13 @@ export function compare(
   }
 
   switch (operator) {
-    case "=":
-      // This will convert null and undefined to empty strings for comparison
-      // and call object's `valueOf()` method before comparing, meaning that
-      // objects such as Dates will be compared by their primitive values.
-      return toString(a) === toString(b);
+    case "=": {
+      return (
+        (empty(a) && empty(b)) ||
+        a.valueOf() == b.valueOf() ||
+        (Number.isNaN(a) && Number.isNaN(b))
+      );
+    }
     case "==":
       return a == b;
     case "===":
@@ -143,16 +144,12 @@ export function compare(
 
   switch (operator) {
     case "<":
-      // @ts-ignore
       return a < b;
     case "<=":
-      // @ts-ignore
       return a <= b;
     case ">":
-      // @ts-ignore
       return a > b;
     case ">=":
-      // @ts-ignore
       return a >= b;
     default:
       throw new Error(`Unknown operator: ${String(operator)}`);
