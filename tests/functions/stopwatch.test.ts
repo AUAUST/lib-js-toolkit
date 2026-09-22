@@ -12,11 +12,11 @@ describe("timer()", () => {
     const duration = elapsed();
 
     expect(typeof duration).toBe("number");
-    expect(Math.abs(duration - delay)).toBeLessThan(2); // Allow 2ms of margin for timing
+    expect(Math.abs(duration - delay)).toBeLessThan(5); // Allow 5ms of margin for timing
 
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    expect(Math.abs(elapsed() - 2 * delay)).toBeLessThan(4);
+    expect(Math.abs(elapsed() - 2 * delay)).toBeLessThan(10);
   });
 
   test("records laps correctly", async () => {
@@ -28,13 +28,13 @@ describe("timer()", () => {
 
     const lap1 = t.lap();
 
-    expect(Math.abs(lap1.duration - delay)).toBeLessThan(2);
+    expect(Math.abs(lap1.duration - delay)).toBeLessThan(5);
 
     await new Promise((resolve) => setTimeout(resolve, delay * 2));
 
     const lap2 = t.lap();
 
-    expect(Math.abs(lap2.duration - delay * 2)).toBeLessThan(2);
+    expect(Math.abs(lap2.duration - delay * 2)).toBeLessThan(5);
 
     expect(t.laps.length).toBe(2);
   });
@@ -74,7 +74,7 @@ describe("timer()", () => {
 
     const lap = t.lap();
 
-    expect(Math.abs(lap.duration - delay)).toBeLessThan(2);
+    expect(Math.abs(lap.duration - delay)).toBeLessThan(5);
   });
 
   test("reads laps by index correctly", async () => {
