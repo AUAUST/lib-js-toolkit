@@ -87,21 +87,25 @@ describe("forward()", () => {
           return Object.keys(this);
         },
       },
-      forward.property(a, "aValue"),
+      forward.property(a, forward.as("aValue", "valueFromA")),
       forward.properties(a, "aOtherValue"),
       forward.method(a, "aMethod"),
       forward.methods(a, "aOtherMethod"),
       forward.properties(b, ["bValue", "bOtherValue"]),
       forward.methods(b, ["bMethod", "bOtherMethod"]),
       forward.properties(c, "cValue", "cOtherValue"),
-      forward.methods(c, "cMethod", "cOtherMethod"),
+      forward.methods(
+        c,
+        "cMethod",
+        forward.as("cOtherMethod", "myAliasedCOtherMethod"),
+      ),
     );
 
     expect(api.method()).toEqual(
       expect.arrayContaining([
         "value",
         "method",
-        "aValue",
+        "valueFromA",
         "aOtherValue",
         "aMethod",
         "aOtherMethod",
@@ -112,16 +116,18 @@ describe("forward()", () => {
         "cValue",
         "cOtherValue",
         "cMethod",
-        "cOtherMethod",
+        "myAliasedCOtherMethod",
       ]),
     );
 
-    expect(api.aMethod()).toBe(a.aValue);
+    expect(api.valueFromA).toBe(a.aValue);
+    // @ts-expect-error
+    expect(api.aValue).toBeUndefined();
     expect(api.aOtherMethod()).toBe(a.aOtherValue);
     expect(api.bMethod()).toBe(b.bValue);
     expect(api.bOtherMethod()).toBe(b.bOtherValue);
     expect(api.cMethod()).toBe(c.cValue);
-    expect(api.cOtherMethod()).toBe(c.cOtherValue);
+    expect(api.myAliasedCOtherMethod()).toBe(c.cOtherValue);
   });
 
   test("merges the types of every forwarding entry", () => {
@@ -147,6 +153,95 @@ describe("forward()", () => {
       mutable: number;
       readonly immutable: string;
       method: typeof source.method;
+    }>();
+  });
+
+  test("forwards properties and methods under aliases", () => {
+    const source = {
+      value: 42,
+      greet(name: string) {
+        return `${this.value} times hello, ${name}!`;
+      },
+    };
+
+    const api = forward(
+      {},
+      forward.property(source, forward.as("value", "answer")),
+      forward.method(source, forward.as("greet", "hello")),
+    );
+
+    expect(api.answer).toBe(42);
+    expect(api.hello("World")).toBe("42 times hello, World!");
+
+    api.answer = 7;
+
+    expect(source.value).toBe(7);
+    expectTypeOf(api).toEqualTypeOf<{
+      answer: number;
+      hello: typeof source.greet;
+    }>();
+  });
+
+  test("accepts forwarding options after a forward.as() input", () => {
+    const source = {
+      value: 42,
+      method() {
+        return this.value;
+      },
+      get getter() {
+        return this.value * 2;
+      },
+    };
+
+    const api = forward(
+      {},
+      forward.property(source, "value", {
+        as: "answer",
+        readonly: true,
+        enumerable: false,
+      }),
+      forward.method(source, forward.as("method", "read"), {
+        enumerable: true,
+      }),
+      forward.property(source, "getter", { as: "doubleValue" }),
+    );
+
+    expect(Object.keys(api)).toEqual(["read", "doubleValue"]);
+    expect(api.read()).toBe(42);
+    expectTypeOf(api).toEqualTypeOf<{
+      readonly answer: number;
+      read: typeof source.method;
+      doubleValue: number;
+    }>();
+  });
+
+  test("supports aliased option entries in plural helpers", () => {
+    const source = {
+      value: 42,
+      method() {
+        return this.value;
+      },
+    };
+
+    const api = forward(
+      {},
+      forward.properties(source, {
+        property: "value",
+        as: "answer",
+        readonly: true,
+      }),
+      forward.methods(source, {
+        method: "method",
+        as: "read",
+        enumerable: true,
+      }),
+    );
+
+    expect(api.answer).toBe(42);
+    expect(api.read()).toBe(42);
+    expectTypeOf(api).toEqualTypeOf<{
+      readonly answer: number;
+      read: typeof source.method;
     }>();
   });
 

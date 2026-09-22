@@ -5,7 +5,7 @@ describe("forwardProperties()", () => {
   test("reads and writes through the handler", () => {
     const handler = { value: 1 };
 
-    const forwarded = forwardProperties({}, handler, ["value"] as const);
+    const forwarded = forwardProperties({}, handler, ["value"]);
 
     expect(forwarded.value).toBe(1);
 
@@ -30,7 +30,7 @@ describe("forwardProperties()", () => {
       },
     };
 
-    const forwarded = forwardProperties({}, handler, ["value"] as const);
+    const forwarded = forwardProperties({}, handler, ["value"]);
 
     expect(forwarded.value).toBe(10);
 
@@ -56,10 +56,7 @@ describe("forwardProperties()", () => {
       },
     });
 
-    const forwarded = forwardProperties({}, handler, [
-      "locked",
-      "mutable",
-    ] as const);
+    const forwarded = forwardProperties({}, handler, ["locked", "mutable"]);
 
     const locked = Object.getOwnPropertyDescriptor(forwarded, "locked")!;
 
@@ -83,7 +80,7 @@ describe("forwardProperties()", () => {
         enumerable: false,
         configurable: false,
       },
-    ] as const);
+    ]);
 
     const descriptor = Object.getOwnPropertyDescriptor(forwarded, "value")!;
 
@@ -95,7 +92,7 @@ describe("forwardProperties()", () => {
   test("uses JavaScript descriptor defaults for missing handler properties", () => {
     const handler = {} as { later: string };
 
-    const forwarded = forwardProperties({}, handler, ["later"] as const);
+    const forwarded = forwardProperties({}, handler, ["later"]);
 
     const descriptor = Object.getOwnPropertyDescriptor(forwarded, "later")!;
 
@@ -110,11 +107,11 @@ describe("forwardProperties()", () => {
 
     const handler = { [property]: 1 };
 
-    const forwarded = forwardProperties({}, handler, [property] as const);
+    const forwarded = forwardProperties({}, handler, [property]);
 
     expect(forwarded[property]).toBe(1);
     expect(() =>
-      forwardProperties({ [property]: 0 }, handler, [property] as const),
+      forwardProperties({ [property]: 0 }, handler, [property]),
     ).toThrow(
       `Existing property ${String(property)} cannot be forwarded on target.`,
     );

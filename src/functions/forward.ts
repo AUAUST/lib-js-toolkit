@@ -1,3 +1,4 @@
+import { forwardAs } from "~/functions/forwardAs";
 import {
   methodForwarder,
   type MethodForwarded,
@@ -59,4 +60,5 @@ export const forward = Object.assign(doForward, {
   property: propertyForwarder,
   methods: methodForwarders,
   method: methodForwarder,
+  as: forwardAs,
 });

@@ -41,7 +41,7 @@ describe("propertyForwarders()", () => {
     expectTypeOf(forwarders).toEqualTypeOf<
       (
         | PropertyForwarder<typeof source, "foo">
-        | PropertyForwarder<typeof source, "bar", true>
+        | PropertyForwarder<typeof source, "bar", "bar", true>
         | PropertyForwarder<typeof source, "baz">
       )[]
     >();

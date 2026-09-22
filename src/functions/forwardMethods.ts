@@ -13,7 +13,7 @@ export function forwardMethods<
   const Target extends object,
   const Source extends object,
   const Methods extends MaybeArray<
-    MethodForwardingInput<keyof ExtractMethods<Source>>
+    MethodForwardingInput<keyof ExtractMethods<Source>, PropertyKey>
   >[],
 >(
   target: Target,
@@ -25,7 +25,7 @@ export function forwardMethods<
     Source,
     MaybeArrayElement<
       Methods[number],
-      MethodForwardingInput<keyof ExtractMethods<Source>>
+      MethodForwardingInput<keyof ExtractMethods<Source>, PropertyKey>
     >
   >[]
 > {
