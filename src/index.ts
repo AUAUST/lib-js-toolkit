@@ -76,6 +76,7 @@ export {
   propertyForwarders,
   type PropertyForwarderFor,
 } from "~/functions/propertyForwarders.js";
+export { readonly } from "~/functions/readonly.js";
 export { sleep } from "~/functions/sleep.js";
 export {
   spy,
@@ -103,3 +104,4 @@ export type { Simplify } from "~/types/Simplify.js";
 export type { UnionToIntersection } from "~/types/UnionToIntersection.js";
 
 export { PipelineError } from "~/errors/PipelineError.js";
+export { ReadonlyError } from "~/errors/ReadonlyError.js";
