@@ -11,8 +11,8 @@ export async function measureAsync<T, A extends any[], This>(
 
   const end = performance.now();
 
-  return {
+  return Object.freeze({
     result,
     duration: end - start,
-  };
+  });
 }

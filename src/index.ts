@@ -83,6 +83,7 @@ export {
   type SafeParameters,
   type SafeReturnType,
 } from "~/functions/spy.js";
+export { stopwatch, type Stopwatch } from "~/functions/stopwatch.js";
 export { tap } from "~/functions/tap.js";
 export { throttle } from "~/functions/throttle.js";
 export { transform } from "~/functions/transform.js";
