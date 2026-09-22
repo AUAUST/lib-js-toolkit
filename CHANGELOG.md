@@ -1,5 +1,16 @@
 # @auaust/toolkit
 
+## 0.2.1
+
+### Patch Changes
+
+- ef46140: Add key and value only variants of `mapped()` and `transform()`
+- 116b12e: Add aliasing support to `forward()` and its related APIs
+- 49774f2: Add `isPropertyKey()`
+- ff69670: Drop `@auaust/primitive-kit` as all its features have been replaced by vanilla JS or implemented in `@auaust/toolkit` directly
+- 70a2ecd: `stopwatch()` sister of `measure()``
+- 6b90c52: `readonly()` helper to expose objects that shouldn't be externally editable
+
 ## 0.2.0
 
 ### Minor Changes
