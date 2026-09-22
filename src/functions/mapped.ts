@@ -1,6 +1,6 @@
-import { isFunction } from "@auaust/primitive-kit/functions";
-import { constant } from "./constant";
-import { identity } from "./identity";
+import { keyMapper } from "~/functions/keyMapper";
+import { mappedKeys } from "~/functions/mappedKeys";
+import { mappedValues } from "~/functions/mappedValues";
 
 type RecordMappedKey<K, M> = M extends object
   ? K extends keyof M
@@ -87,26 +87,28 @@ export function mapped(
     return source;
   }
 
-  const mapper = isFunction(map)
-    ? map
-    : map
-      ? (key: string) => (key in map ? map[key] : true)
-      : constant(true);
+  if (!transform) {
+    return mappedKeys(source, map);
+  }
 
-  const transformer = isFunction(transform) ? transform : identity;
+  if (!map) {
+    return mappedValues(source, transform);
+  }
+
+  const mapper = keyMapper(map);
 
   const mapped = <any>{};
 
   for (const key in source) {
     const newKey = mapper(key, source[key]);
 
-    if (newKey === false || newKey === null || newKey === undefined) {
+    if (newKey === false || newKey == null) {
       continue;
     }
 
     const actualKey = newKey === true ? key : newKey;
 
-    mapped[actualKey] = transformer(source[key], actualKey, key);
+    mapped[actualKey] = transform(source[key], actualKey, key);
   }
 
   return mapped;

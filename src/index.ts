@@ -36,7 +36,10 @@ export {
 } from "~/functions/forwardMethods.js";
 export { forwardProperties } from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
+export { keyMapper } from "~/functions/keyMapper.js";
 export { mapped } from "~/functions/mapped.js";
+export { mappedKeys } from "~/functions/mappedKeys.js";
+export { mappedValues } from "~/functions/mappedValues.js";
 export { match } from "~/functions/match.js";
 export { md5 } from "~/functions/md5.js";
 export { measure, type MeasureResult } from "~/functions/measure.js";
@@ -88,6 +91,8 @@ export { stopwatch, type Stopwatch } from "~/functions/stopwatch.js";
 export { tap } from "~/functions/tap.js";
 export { throttle } from "~/functions/throttle.js";
 export { transform } from "~/functions/transform.js";
+export { transformKeys } from "~/functions/transformKeys.js";
+export { transformValues } from "~/functions/transformValues.js";
 export { value, type ResolvedValue, type Value } from "~/functions/value.js";
 export { when } from "~/functions/when.js";
 

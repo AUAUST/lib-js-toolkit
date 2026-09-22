@@ -1,6 +1,6 @@
-import { isFunction } from "@auaust/primitive-kit/functions";
-import { constant } from "./constant";
-import { identity } from "./identity";
+import { keyMapper } from "~/functions/keyMapper";
+import { transformKeys } from "~/functions/transformKeys";
+import { transformValues } from "~/functions/transformValues";
 
 type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map
@@ -77,7 +77,7 @@ export function transform(
   transformer?: (value: any, key: PropertyKey, sourceKey: string) => any,
 ): Record<string, any>;
 export function transform(
-  target: Record<string, any>,
+  target: any,
   map?:
     | Record<string, PropertyKey | boolean>
     | ((key: string, value: any) => PropertyKey | boolean | undefined),
@@ -87,35 +87,44 @@ export function transform(
     return target;
   }
 
-  const mapper = isFunction(map)
-    ? map
-    : map
-      ? (key: string) => (key in map ? map[key] : true)
-      : constant(true);
+  if (!transform) {
+    return transformKeys(target, map);
+  }
 
-  const transformer = isFunction(transform) ? transform : identity;
+  if (!map) {
+    return transformValues(target, transform);
+  }
 
-  for (const key in target) {
-    const newKey = mapper(key, target[key]);
+  const originals = { ...target };
 
-    if (newKey === false || newKey === null || newKey === undefined) {
-      delete target[key];
+  const mapper = keyMapper(map);
+
+  const overrides = new Set<PropertyKey>();
+
+  for (const key of Object.keys(originals)) {
+    const wasOverwritten = overrides.has(key);
+
+    const value = originals[key];
+
+    const newKey = mapper(key, value);
+
+    if (newKey === false || newKey == null) {
+      if (!wasOverwritten) {
+        delete target[key];
+      }
+
       continue;
     }
 
     const actualKey = newKey === true ? key : newKey;
-    const newValue = transformer(target[key], actualKey, key);
 
-    if (newKey === true) {
-      target[key] = newValue;
-      continue;
-    }
+    overrides.add(actualKey);
 
-    if (newKey !== key) {
+    target[actualKey] = transform(value, actualKey, key);
+
+    if (actualKey !== key && !wasOverwritten) {
       delete target[key];
     }
-
-    target[actualKey as keyof typeof target] = newValue;
   }
 
   return target;
