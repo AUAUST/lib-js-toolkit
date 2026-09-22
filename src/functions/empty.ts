@@ -8,7 +8,7 @@ export type EmptyValue =
   | undefined;
 
 export function empty<T>(value: T): value is T & EmptyValue {
-  if (value === null || value === undefined) {
+  if (value == null) {
     return true;
   }
 

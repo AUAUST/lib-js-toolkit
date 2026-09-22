@@ -1,5 +1,5 @@
-import { isPropertyKey } from "@auaust/primitive-kit/primitives";
 import type { ForwardAs } from "~/functions/forwardAs";
+import { isPropertyKey } from "~/functions/isPropertyKey";
 import type { IsNever } from "~/types/IsNever";
 
 export type PropertyForwardingInput<

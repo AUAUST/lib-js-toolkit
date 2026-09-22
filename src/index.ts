@@ -36,6 +36,7 @@ export {
 } from "~/functions/forwardMethods.js";
 export { forwardProperties } from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
+export { isPropertyKey } from "~/functions/isPropertyKey.js";
 export { keyMapper } from "~/functions/keyMapper.js";
 export { mapped } from "~/functions/mapped.js";
 export { mappedKeys } from "~/functions/mappedKeys.js";
