@@ -1,6 +1,6 @@
 import { empty } from "@auaust/toolkit";
+import { isEmpty } from "@auaust/toolkit/protocols/emptiable";
 import { describe, expect, test } from "vitest";
-import { isEmpty } from "~/protocols/emptiable";
 
 describe("empty()", () => {
   test("returns true for empty values", () => {
