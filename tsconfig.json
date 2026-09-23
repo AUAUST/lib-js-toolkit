@@ -14,7 +14,8 @@
     "strict": true,
     "paths": {
       "~/*": ["./src/*"],
-      "@auaust/toolkit": ["./src/index.ts"]
+      "@auaust/toolkit": ["./src/index.ts"],
+      "@auaust/toolkit/protocol": ["./src/protocols/index.ts"]
     }
   },
   "include": ["src", "tests"],
