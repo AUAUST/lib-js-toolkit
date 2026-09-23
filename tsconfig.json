@@ -17,8 +17,8 @@
       "@auaust/toolkit": ["./src/index.ts"],
       "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
       "@auaust/toolkit/protocols/*": ["./src/protocols/*"]
-    }
+    },
+    "types": ["node"]
   },
-  "include": ["src", "tests"],
   "exclude": ["node_modules", "dist"]
 }

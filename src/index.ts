@@ -116,3 +116,12 @@ export type { UnionToIntersection } from "~/types/UnionToIntersection.js";
 
 export { PipelineError } from "~/errors/PipelineError.js";
 export { ReadonlyError } from "~/errors/ReadonlyError.js";
+
+const data = {
+  name: __NAME__,
+  version: __VERSION__,
+  license: __LICENSE__,
+  timestamp: __TIMESTAMP__,
+};
+
+export const BUILD: typeof data = Object.assign(Object.create(null), data);

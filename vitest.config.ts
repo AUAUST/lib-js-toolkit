@@ -1,4 +1,7 @@
 import { defineConfig } from "vitest/config";
+import { getCompileTimeVariables } from "./codegen/index.js";
+
+const define = await getCompileTimeVariables();
 
 export default defineConfig(({ mode }) => {
   // If vitest is ran with `--mode build`, the tests will be
@@ -17,6 +20,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias,
     },
+    define,
     test: {
       coverage: {
         provider: "istanbul",
