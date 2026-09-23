@@ -1,5 +1,7 @@
+import { count } from "@auaust/toolkit/count";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
+import { value } from "@auaust/toolkit/value";
 
 export type EmptyValue =
   | ""
@@ -10,34 +12,24 @@ export type EmptyValue =
   | null
   | undefined;
 
-export function empty(value: Emptiable): value is Emptiable<true>;
-export function empty<T>(value: T): value is T & EmptyValue;
-export function empty(value: any): boolean {
-  if (value == null) {
+export function empty(input: Emptiable): input is Emptiable<true>;
+export function empty<T>(input: T): input is T & EmptyValue;
+export function empty(input: any): boolean {
+  if (input == null) {
     return true;
   }
 
-  if (typeof value === "string") {
-    return value.trim() === "";
+  if (typeof input === "number") {
+    return false;
   }
 
-  if (implementsProtocol(isEmpty, value)) {
-    const check = value[isEmpty];
-
-    return !!(typeof check === "function" ? check.call(value) : check);
+  if (typeof input === "string") {
+    return input.trim() === "";
   }
 
-  if (Array.isArray(value)) {
-    return value.length === 0;
+  if (implementsProtocol(isEmpty, input)) {
+    return !!value.call(input, input[isEmpty]);
   }
 
-  if (value instanceof Map || value instanceof Set) {
-    return value.size === 0;
-  }
-
-  if (typeof value === "object") {
-    return Object.keys(value).length === 0;
-  }
-
-  return false;
+  return count(input) === 0;
 }

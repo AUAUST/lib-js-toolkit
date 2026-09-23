@@ -20,6 +20,8 @@ describe("empty()", () => {
     expect(empty(42)).toBe(false);
     expect(empty(0)).toBe(false);
     expect(empty(NaN)).toBe(false);
+    expect(empty(new Date())).toBe(false);
+    expect(empty(() => {})).toBe(false);
     expect(empty(new Map([["key", "value"]]))).toBe(false);
     expect(empty(new Set([1, 2, 3]))).toBe(false);
   });

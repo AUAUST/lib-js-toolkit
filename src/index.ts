@@ -18,6 +18,7 @@ export {
   type UnaryOperator,
 } from "@auaust/toolkit/compare";
 export { constant } from "@auaust/toolkit/constant";
+export { count } from "@auaust/toolkit/count";
 export { debounce } from "@auaust/toolkit/debounce";
 export {
   defer,
