@@ -18,18 +18,21 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "pnpm test && tsup",
-    "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm typecheck",
-    "test:dist": "tsup && vitest run --config vitest.config.ts --typecheck --mode build --",
-    "watch": "vitest --config vitest.config.ts --typecheck --",
+    "build": "pnpm run test && tsup",
+    "compile": "tsx scripts/compile.ts",
     "coverage": "vitest run --coverage",
+    "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm run typecheck",
+    "test:dist": "tsup && vitest run --config vitest.config.ts --typecheck --mode build --",
     "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
+    "watch": "vitest --config vitest.config.ts --typecheck --",
+    "ci:prepare": "pnpm run typecheck && pnpm run test:dist",
     "ci:publish": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
     "@vitest/coverage-istanbul": "^4.1.11",
     "tsup": "^8.5.1",
+    "tsx": "^4.23.15",
     "type-fest": "^5.10.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"
