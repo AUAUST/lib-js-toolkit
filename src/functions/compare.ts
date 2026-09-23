@@ -1,7 +1,7 @@
+import type { KeyAsString } from "@auaust/toolkit";
+import { empty } from "@auaust/toolkit/empty";
+import { filled } from "@auaust/toolkit/filled";
 import type { IsLiteral } from "type-fest";
-import type { KeyAsString } from "~/types/KeyAsString";
-import { empty } from "./empty";
-import { filled } from "./filled";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 

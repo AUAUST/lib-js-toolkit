@@ -1,5 +1,5 @@
-import { isContainer } from "~/functions/isContainer";
-import type { ProtocolRegistry } from "~/protocols";
+import { isContainer } from "@auaust/toolkit/isContainer";
+import type { ProtocolRegistry } from "@auaust/toolkit/protocols";
 
 export type DefineProtocol<Marker extends symbol, Implementation> = {
   [Protocol in Marker]: Implementation;

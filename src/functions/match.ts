@@ -1,4 +1,4 @@
-import { value, type ResolvedValue } from "./value";
+import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 type Predicate<T> = (value: T) => unknown;
 

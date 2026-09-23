@@ -1,4 +1,5 @@
-import { pipeAsync, PipelineError } from "@auaust/toolkit";
+import { pipeAsync } from "@auaust/toolkit";
+import { PipelineError } from "@auaust/toolkit/errors";
 import { describe, expect, test } from "vitest";
 
 describe("pipeAsync()", () => {
@@ -37,7 +38,7 @@ describe("pipeAsync()", () => {
   test("can conditionally apply functions", async () => {
     const pipedFunction = pipeAsync(
       [true, async (x: number) => x + 10],
-      [false, async (x: number) => x * 2]
+      [false, async (x: number) => x * 2],
     );
 
     return pipedFunction(5).then((result) => {
@@ -64,7 +65,7 @@ describe("pipeAsync()", () => {
 
     const pipedFunction = pipeAsync(
       [isEven, async (x: number) => x + 100],
-      [(x: number) => !isEven(x), async (x: number) => x - 100]
+      [(x: number) => !isEven(x), async (x: number) => x - 100],
     );
 
     return pipedFunction(4).then((result) => {

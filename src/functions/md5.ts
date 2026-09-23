@@ -83,7 +83,7 @@ function rstr2binl(input: string): number[] {
   }
 
   for (let i = 0; i < input.length * 8; i += 8) {
-    output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << i % 32;
+    output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
   }
 
   return output;
@@ -93,14 +93,14 @@ function binl2rstr(input: number[]): string {
   let output = "";
 
   for (let i = 0; i < input.length * 32; i += 8) {
-    output += String.fromCharCode((input[i >> 5] >>> i % 32) & 0xff);
+    output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xff);
   }
 
   return output;
 }
 
 function binl_md5(x: number[], len: number): number[] {
-  x[len >> 5] |= 0x80 << len % 32;
+  x[len >> 5] |= 0x80 << (len % 32);
   x[(((len + 64) >>> 9) << 4) + 14] = len;
 
   let a = 1732584193;

@@ -1,8 +1,8 @@
 import {
-  compare,
   type AvailableOperators,
+  compare,
   type CustomOperators,
-} from "./compare";
+} from "@auaust/toolkit/compare";
 
 export function comparator<C extends CustomOperators>(
   operators: C,

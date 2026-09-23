@@ -13,10 +13,11 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "~/*": ["./src/*"],
-      "@auaust/toolkit": ["./src/index.ts"],
+      "@auaust/toolkit/protocols/*": ["./src/protocols/*"],
       "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
-      "@auaust/toolkit/protocols/*": ["./src/protocols/*"]
+      "@auaust/toolkit/errors": ["./src/errors.ts"],
+      "@auaust/toolkit/*": ["./src/functions/*"],
+      "@auaust/toolkit": ["./src/index.ts"]
     },
     "types": ["node"]
   },

@@ -1,4 +1,5 @@
-import { pipe, PipelineError } from "@auaust/toolkit";
+import { pipe } from "@auaust/toolkit";
+import { PipelineError } from "@auaust/toolkit/errors";
 import { describe, expect, test } from "vitest";
 
 describe("pipe()", () => {
@@ -35,7 +36,7 @@ describe("pipe()", () => {
   test("can conditionally apply functions", () => {
     const pipedFunction = pipe(
       [true, (x: number) => x + 10],
-      [false, (x: number) => x * 2]
+      [false, (x: number) => x * 2],
     );
 
     const result = pipedFunction(5); // 5 + 10 = 15
@@ -44,7 +45,7 @@ describe("pipe()", () => {
 
     const pipedFunction2 = pipe(
       [false, (x: number) => x + 10],
-      [true, (x: number) => x * 2]
+      [true, (x: number) => x * 2],
     );
 
     const result2 = pipedFunction2(5); // 5 * 2 = 10
@@ -57,7 +58,7 @@ describe("pipe()", () => {
 
     const pipedFunction = pipe(
       [isEven, (x: number) => x + 100],
-      [(x: number) => !isEven(x), (x: number) => x - 100]
+      [(x: number) => !isEven(x), (x: number) => x - 100],
     );
 
     const result1 = pipedFunction(4); // 4 is even, so 4 + 100 = 104

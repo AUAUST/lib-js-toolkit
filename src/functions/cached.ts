@@ -1,4 +1,4 @@
-import { isContainer } from "~/functions/isContainer";
+import { isContainer } from "@auaust/toolkit/isContainer";
 
 export type CachedFn<K, R, Fn> = Fn & {
   /**

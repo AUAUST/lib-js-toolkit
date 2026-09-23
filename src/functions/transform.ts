@@ -1,6 +1,6 @@
-import { keyMapper } from "~/functions/keyMapper";
-import { transformKeys } from "~/functions/transformKeys";
-import { transformValues } from "~/functions/transformValues";
+import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { transformKeys } from "@auaust/toolkit/transformKeys";
+import { transformValues } from "@auaust/toolkit/transformValues";
 
 type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map

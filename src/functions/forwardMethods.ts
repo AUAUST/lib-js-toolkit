@@ -1,13 +1,14 @@
-import { forward } from "~/functions/forward";
-import { methodForwarders } from "~/functions/methodForwarders";
 import type {
-  Forwarded,
+  Methods as ExtractMethods,
   MaybeArray,
-  MethodForwarderFor,
-  MethodForwardingInput,
-} from "~/index";
-import type { MaybeArrayElement } from "~/types/MaybeArrayElement";
-import type { Methods as ExtractMethods } from "~/types/Methods";
+  MaybeArrayElement,
+} from "@auaust/toolkit";
+import { forward, type Forwarded } from "@auaust/toolkit/forward";
+import type { MethodForwardingInput } from "@auaust/toolkit/methodForwarder";
+import {
+  methodForwarders,
+  type MethodForwarderFor,
+} from "@auaust/toolkit/methodForwarders";
 
 export function forwardMethods<
   const Target extends object,

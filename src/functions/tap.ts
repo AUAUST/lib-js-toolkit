@@ -3,5 +3,5 @@ export function tap<V, This = any>(
   value: V,
   callback: (this: This, value: V) => void,
 ): V {
-  return callback.call(this, value), value;
+  return (callback.call(this, value), value);
 }

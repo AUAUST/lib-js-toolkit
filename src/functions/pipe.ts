@@ -1,4 +1,4 @@
-import { PipelineError } from "~/errors/PipelineError";
+import { PipelineError } from "@auaust/toolkit/errors";
 
 export type TransformFn<This, In, Out> =
   | ((this: This, value: In) => Out)

@@ -1,4 +1,4 @@
-import { type ResolvedValue, value } from "~/functions/value";
+import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 export function on<const Result, const Arguments extends any[], This = any>(
   this: This,

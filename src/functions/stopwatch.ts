@@ -1,4 +1,4 @@
-import { readonly } from "~/functions/readonly";
+import { readonly } from "@auaust/toolkit/readonly";
 
 /**
  * A utility for measuring elapsed time since the timer was started.

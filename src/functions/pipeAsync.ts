@@ -1,5 +1,5 @@
-import { PipelineError } from "~/errors/PipelineError";
-import type { PipeCondition } from "./pipe";
+import { PipelineError } from "@auaust/toolkit/errors";
+import type { PipeCondition } from "@auaust/toolkit/pipe";
 
 export type AsyncTransformFn<This, In, Out> =
   | ((this: This, value: In) => Promise<Out> | Out)

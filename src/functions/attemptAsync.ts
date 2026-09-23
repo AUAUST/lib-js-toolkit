@@ -1,4 +1,4 @@
-import type { AttemptResult } from "./attempt";
+import type { AttemptResult } from "@auaust/toolkit/attempt";
 
 export async function attemptAsync<T, A extends any[], This>(
   this: This,

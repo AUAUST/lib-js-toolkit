@@ -1,4 +1,4 @@
-import { type Value, value } from "./value";
+import { type Value, value } from "@auaust/toolkit/value";
 
 export function when<T = void, F = undefined, This = any>(
   this: This,

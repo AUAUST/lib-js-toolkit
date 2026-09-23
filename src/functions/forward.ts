@@ -1,19 +1,21 @@
-import { forwardAs } from "~/functions/forwardAs";
+import type {
+  MaybeArray,
+  Simplify,
+  UnionToIntersection,
+} from "@auaust/toolkit";
+import { forwardAs } from "@auaust/toolkit/forwardAs";
 import {
   methodForwarder,
   type MethodForwarded,
   type MethodForwarder,
-} from "~/functions/methodForwarder";
-import { methodForwarders } from "~/functions/methodForwarders";
+} from "@auaust/toolkit/methodForwarder";
+import { methodForwarders } from "@auaust/toolkit/methodForwarders";
 import {
   propertyForwarder,
   type PropertyForwarded,
   type PropertyForwarder,
-} from "~/functions/propertyForwarder";
-import { propertyForwarders } from "~/functions/propertyForwarders";
-import type { MaybeArray } from "~/types/MaybeArray";
-import type { Simplify } from "~/types/Simplify";
-import type { UnionToIntersection } from "~/types/UnionToIntersection";
+} from "@auaust/toolkit/propertyForwarder";
+import { propertyForwarders } from "@auaust/toolkit/propertyForwarders";
 
 export type Forwarded<
   Target extends object,

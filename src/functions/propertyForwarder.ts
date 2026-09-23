@@ -1,6 +1,6 @@
-import type { ForwardAs } from "~/functions/forwardAs";
-import { isPropertyKey } from "~/functions/isPropertyKey";
-import type { IsNever } from "~/types/IsNever";
+import type { IsNever } from "@auaust/toolkit";
+import type { ForwardAs } from "@auaust/toolkit/forwardAs";
+import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 
 export type PropertyForwardingInput<
   Property extends PropertyKey,

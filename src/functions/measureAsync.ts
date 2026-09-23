@@ -1,4 +1,4 @@
-import type { MeasureResult } from "./measure";
+import type { MeasureResult } from "@auaust/toolkit/measure";
 
 export async function measureAsync<T, A extends any[], This>(
   this: This,

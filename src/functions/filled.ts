@@ -1,4 +1,4 @@
-import { empty, type EmptyValue } from "./empty";
+import { type EmptyValue, empty } from "@auaust/toolkit/empty";
 
 export type FilledValue<T> = T extends EmptyValue ? never : T;
 

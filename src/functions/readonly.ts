@@ -1,4 +1,4 @@
-import { ReadonlyError } from "~/errors/ReadonlyError";
+import { ReadonlyError } from "@auaust/toolkit/errors";
 
 const readonlySymbol = Symbol("readonly");
 

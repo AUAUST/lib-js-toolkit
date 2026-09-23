@@ -1,4 +1,4 @@
-import { keyMapper } from "~/functions/keyMapper";
+import { keyMapper } from "@auaust/toolkit/keyMapper";
 
 export type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map

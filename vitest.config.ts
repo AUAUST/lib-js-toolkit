@@ -8,12 +8,31 @@ export default defineConfig(({ mode }) => {
   // run against the dist folder rather than the src folder.
   const shouldTestDist = mode === "build";
 
-  const alias: { [key: string]: string } = {};
+  const alias: Array<{ find: string | RegExp; replacement: string }> = [];
 
   if (!shouldTestDist) {
-    alias["~"] = "/src";
-    alias["@auaust/toolkit"] = "/src";
-    alias["@auaust/toolkit/protocols"] = "/src/protocols";
+    alias.push(
+      {
+        find: /^@auaust\/toolkit$/,
+        replacement: "/src/index.js",
+      },
+      {
+        find: /^@auaust\/toolkit\/errors$/,
+        replacement: "/src/errors.js",
+      },
+      {
+        find: /^@auaust\/toolkit\/protocols$/,
+        replacement: "/src/protocols/index.js",
+      },
+      {
+        find: /^@auaust\/toolkit\/protocols\/(\w+)$/,
+        replacement: "/src/protocols/$1/index.js",
+      },
+      {
+        find: /^@auaust\/toolkit\/(\w+)$/,
+        replacement: "/src/functions/$1.js",
+      },
+    );
   }
 
   return {

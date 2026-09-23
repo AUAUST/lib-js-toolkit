@@ -1,5 +1,5 @@
-import { constant } from "~/functions/constant";
-import type { Maybe } from "~/types/Maybe";
+import type { Maybe } from "@auaust/toolkit";
+import { constant } from "@auaust/toolkit/constant";
 
 export type KeyMapping<NewKey extends PropertyKey = PropertyKey> = Maybe<
   NewKey | boolean

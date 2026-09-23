@@ -1,5 +1,5 @@
-import { implementsProtocol } from "~/protocols";
-import { isEmpty, type Emptiable } from "~/protocols/emptiable";
+import { implementsProtocol } from "@auaust/toolkit/protocols";
+import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
 
 export type EmptyValue =
   | ""

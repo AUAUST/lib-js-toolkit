@@ -1,8 +1,8 @@
-import { keyMapper } from "~/functions/keyMapper";
+import { keyMapper } from "@auaust/toolkit/keyMapper";
 import type {
   FunctionMappedKey,
   RecordMappedKey,
-} from "~/functions/mappedKeys";
+} from "@auaust/toolkit/mappedKeys";
 
 export function transformKeys<Target extends object>(target: Target): Target;
 export function transformKeys<
