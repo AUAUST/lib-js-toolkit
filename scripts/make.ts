@@ -1,4 +1,5 @@
 import { cli, command } from "cleye";
+import { makeFunction } from "../codegen/makeFunction";
 import { makeProtocol } from "../codegen/makeProtocol";
 
 function exit(code: number = 0): never {
@@ -33,6 +34,18 @@ const argv = cli({
           name: argv._[0],
           symbol: argv.flags.symbol,
           interface: argv.flags.interface,
+        });
+      },
+    ),
+    command(
+      {
+        name: "function",
+        parameters: ["<function name>"],
+        strictFlags: true,
+      },
+      async (argv) => {
+        return await makeFunction({
+          name: argv._[0],
         });
       },
     ),
