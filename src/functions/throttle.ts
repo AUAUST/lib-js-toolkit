@@ -6,19 +6,33 @@ export function throttle<T, F extends (this: T, ...args: any[]) => any>(
   callback: F,
   ms: number,
 ): (this: T, ...args: Parameters<F>) => boolean {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const interval = Number(ms);
+
+  if (Number.isNaN(interval)) {
+    throw new TypeError(`Invalid throttle interval: ${String(ms)}`, {
+      cause: ms,
+    });
+  }
+
+  if (interval < 0) {
+    throw new RangeError(`Throttle interval must not be negative`, {
+      cause: ms,
+    });
+  }
+
+  let throttledUntil = 0;
 
   return function (this: T, ...args: Parameters<F>): boolean {
-    if (timeoutId === undefined) {
+    const now = Date.now();
+
+    const shouldRun = now >= throttledUntil;
+
+    if (shouldRun) {
       callback.call(this, ...args);
 
-      timeoutId = setTimeout(() => {
-        timeoutId = undefined;
-      }, ms);
-
-      return true;
+      throttledUntil = now + ms;
     }
 
-    return false;
+    return shouldRun;
   };
 }
