@@ -54,4 +54,32 @@ describe("debounce()", () => {
     expect(callback).toHaveBeenCalledOnce();
     expect(callback.mock.results[0].value).toBe(42);
   });
+
+  test("returns true if the call replaced a pending execution", async () => {
+    const callback = vi.fn();
+
+    const debouncedFunction = debounce(callback, 5);
+
+    const firstCall = debouncedFunction();
+    const secondCall = debouncedFunction();
+    const thirdCall = debouncedFunction();
+
+    expect(firstCall).toBe(false);
+    expect(secondCall).toBe(true);
+    expect(thirdCall).toBe(true);
+
+    await sleep(10);
+
+    expect(callback).toHaveBeenCalledOnce();
+
+    const fourthCall = debouncedFunction();
+    const fifthCall = debouncedFunction();
+
+    expect(fourthCall).toBe(false);
+    expect(fifthCall).toBe(true);
+
+    await sleep(10);
+
+    expect(callback).toHaveBeenCalledTimes(2);
+  });
 });
