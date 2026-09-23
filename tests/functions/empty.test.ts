@@ -1,5 +1,6 @@
 import { empty } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
+import { isEmpty } from "~/protocols/emptiable";
 
 describe("empty()", () => {
   test("returns true for empty values", () => {
@@ -21,5 +22,23 @@ describe("empty()", () => {
     expect(empty(NaN)).toBe(false);
     expect(empty(new Map([["key", "value"]]))).toBe(false);
     expect(empty(new Set([1, 2, 3]))).toBe(false);
+  });
+
+  test("supports the `Emptiable` protocol", () => {
+    const value: any = {
+      value: 1,
+    };
+
+    expect(empty(value)).toBe(false);
+
+    value[isEmpty] = function (this: any) {
+      return this.value === 0;
+    };
+
+    expect(empty(value)).toBe(false);
+
+    value.value = 0;
+
+    expect(empty(value)).toBe(true);
   });
 });
