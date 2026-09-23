@@ -16,9 +16,9 @@ export interface Stopwatch<Identifier = unknown> {
    */
   readonly laps: readonly Lap<Identifier>[];
   /**
-   * Records a new lap and returns the elapsed time since the last lap or the start of the timer.
+   * Records a new lap and returns the elapsed time since the last lap.
    */
-  lap(key?: Identifier): Lap<Identifier>;
+  lap(key?: Identifier): number;
   /**
    * Clears all recorded laps.
    */
@@ -82,22 +82,22 @@ export function stopwatch<Identifier>(
     clear();
   }
 
-  function lap(key?: Identifier): Lap<Identifier> {
+  function lap(key?: Identifier): number {
     const current = now();
 
     const duration = current - previous;
 
     previous = current;
 
-    const lap = Object.freeze({
-      name: key,
-      duration,
-      timestamp: current - start,
-    });
+    laps.push(
+      Object.freeze({
+        name: key,
+        duration,
+        timestamp: current - start,
+      }),
+    );
 
-    laps.push(lap);
-
-    return lap;
+    return duration;
   }
 
   function at(index: number): Lap<Identifier> | undefined {

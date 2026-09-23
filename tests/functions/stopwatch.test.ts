@@ -26,15 +26,15 @@ describe("timer()", () => {
 
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    const lap1 = t.lap();
+    const lapDuration1 = t.lap();
 
-    expect(Math.abs(lap1.duration - delay)).toBeLessThan(5);
+    expect(Math.abs(lapDuration1 - delay)).toBeLessThan(5);
 
     await new Promise((resolve) => setTimeout(resolve, delay * 2));
 
-    const lap2 = t.lap();
+    const lapDuration2 = t.lap();
 
-    expect(Math.abs(lap2.duration - delay * 2)).toBeLessThan(5);
+    expect(Math.abs(lapDuration2 - delay * 2)).toBeLessThan(5);
 
     expect(t.laps.length).toBe(2);
   });
@@ -72,9 +72,9 @@ describe("timer()", () => {
 
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    const lap = t.lap();
+    const lapDuration = t.lap();
 
-    expect(Math.abs(lap.duration - delay)).toBeLessThan(5);
+    expect(Math.abs(lapDuration - delay)).toBeLessThan(5);
   });
 
   test("reads laps by index correctly", async () => {
@@ -84,10 +84,10 @@ describe("timer()", () => {
 
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    const lap1 = t.lap();
+    const lapDuration1 = t.lap();
 
-    expect(t.at(0)).toBe(lap1);
-    expect(t.at(0)).toBe(t.at(-1));
+    expect(t.at(0)?.duration).toBe(lapDuration1);
+    expect(t.at(0)?.duration).toBe(t.at(-1)?.duration);
     expect(t.at(1)).toBeUndefined();
   });
 });
