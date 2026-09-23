@@ -2,4 +2,4 @@
 "@auaust/toolkit": patch
 ---
 
-`isContainer()` check for values that may hold own properties
+Add `isContainer()` to guard values that may hold own properties

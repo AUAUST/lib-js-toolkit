@@ -1,3 +1,5 @@
+import { isContainer } from "~/functions/isContainer";
+
 export type CachedFn<K, R, Fn> = Fn & {
   /**
    * Clears the cached values.
@@ -73,10 +75,7 @@ export function cached<K, A extends any[], R, T = any>(
 
     const value = fn.call(this, key, ...args);
 
-    if (
-      (typeof value === "object" && value !== null) ||
-      typeof value === "function"
-    ) {
+    if (isContainer(value)) {
       if (weakRefs) {
         cache.set(key, new WeakRef(value));
       } else {
@@ -117,7 +116,7 @@ export function cached<K, A extends any[], R, T = any>(
     const value = cache.get(key);
 
     if (value instanceof WeakRef && value.deref() === undefined) {
-      return cache.delete(key), false;
+      return (cache.delete(key), false);
     }
 
     return true;

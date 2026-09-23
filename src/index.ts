@@ -38,6 +38,8 @@ export { forwardProperties } from "~/functions/forwardProperties.js";
 export { identity } from "~/functions/identity.js";
 export { isContainer } from "~/functions/isContainer.js";
 export { isPropertyKey } from "~/functions/isPropertyKey.js";
+export { isRegisteredSymbol } from "~/functions/isRegisteredSymbol.js";
+export { isSymbol } from "~/functions/isSymbol.js";
 export { keyMapper } from "~/functions/keyMapper.js";
 export { mapped } from "~/functions/mapped.js";
 export { mappedKeys } from "~/functions/mappedKeys.js";
