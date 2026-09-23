@@ -1,0 +1,13 @@
+import { {{symbol}}, type {{interface}} } from "@auaust/toolkit/protocols/{{protocol}}";
+import { implementsProtocol } from "@auaust/toolkit/protocols";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+describe("The {{protocol}} protocol", () => {
+  test("is properly recognized by `implementsProtocol()`", () => {
+    const value: unknown = {};
+
+    if (implementsProtocol({{symbol}}, value)) {
+      expectTypeOf(value).toEqualTypeOf<{{interface}}>();
+    }
+  });
+});
