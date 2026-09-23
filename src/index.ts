@@ -37,6 +37,7 @@ export {
 export { forwardProperties } from "@auaust/toolkit/forwardProperties";
 export { identity } from "@auaust/toolkit/identity";
 export { isContainer } from "@auaust/toolkit/isContainer";
+export { isPlainObject } from "@auaust/toolkit/isPlainObject";
 export { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 export { isRegisteredSymbol } from "@auaust/toolkit/isRegisteredSymbol";
 export { isSymbol } from "@auaust/toolkit/isSymbol";
