@@ -1,16 +1,15 @@
 import { defineConfig } from "tsup";
-import { getCompileTimeVariables } from "./codegen";
+import { getCompileTimeVariables, getTsupOptions } from "./codegen";
 
-const define = await getCompileTimeVariables();
+const { outDir, entry } = await getTsupOptions();
+
+const define = getCompileTimeVariables();
 
 export default defineConfig(() => {
   return {
-    entry: {
-      index: "src/index.ts",
-      protocols: "src/protocols/index.ts",
-    },
+    outDir,
+    entry,
     format: ["esm", "cjs"],
-    outDir: "dist",
     dts: true,
     splitting: true,
     sourcemap: true,

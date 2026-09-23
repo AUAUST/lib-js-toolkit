@@ -1,7 +1,7 @@
 import { defineConfig } from "vitest/config";
-import { getCompileTimeVariables } from "./codegen/index.js";
+import { getCompileTimeVariables, getViteDevAliases } from "./codegen/index.js";
 
-const define = await getCompileTimeVariables();
+const define = getCompileTimeVariables();
 
 export default defineConfig(({ mode }) => {
   // If vitest is ran with `--mode build`, the tests will be
@@ -11,28 +11,7 @@ export default defineConfig(({ mode }) => {
   const alias: Array<{ find: string | RegExp; replacement: string }> = [];
 
   if (!shouldTestDist) {
-    alias.push(
-      {
-        find: /^@auaust\/toolkit$/,
-        replacement: "/src/index.js",
-      },
-      {
-        find: /^@auaust\/toolkit\/errors$/,
-        replacement: "/src/errors.js",
-      },
-      {
-        find: /^@auaust\/toolkit\/protocols$/,
-        replacement: "/src/protocols/index.js",
-      },
-      {
-        find: /^@auaust\/toolkit\/protocols\/(\w+)$/,
-        replacement: "/src/protocols/$1/index.js",
-      },
-      {
-        find: /^@auaust\/toolkit\/(\w+)$/,
-        replacement: "/src/functions/$1.js",
-      },
-    );
+    alias.push(...getViteDevAliases());
   }
 
   return {
