@@ -1,16 +1,11 @@
 import { resolve } from "path";
-import tsConfigContent from "../tsconfig.json";
-
-// @ts-expect-error
-import PackageJson from "@npmcli/package-json";
-import { glob } from "fs/promises";
+import packageJsonContent from "../package.json" with { type: "json" };
+import tsConfigContent from "../tsconfig.json" with { type: "json" };
 
 const root = process.cwd();
 
-const packageJson = await PackageJson.load(root);
-
 export function getPackageJsonContent() {
-  return packageJson.content as typeof import("../package.json");
+  return packageJsonContent;
 }
 
 export function getTsConfigContent() {
@@ -36,154 +31,93 @@ export function getCompileTimeVariables(): Record<string, string> {
 }
 
 type Alias = {
-  /**
-   * @auaust/toolkit/*
-   */
-  tsAlias: string;
-  /**
-   * ./src/*
-   */
-  tsPath: string;
+  alias: string;
   hasPattern: boolean;
-  isIndex: boolean;
-  /**
-   * @auaust/toolkit -> ''
-   * @auaust/toolkit/errors -> 'errors'
-   * @auaust/toolkit/* -> '*'
-   */
-  entryName: string;
+  name: string;
+  path: string;
 };
 
-export const getResolvedAliases = (() => {
-  let resolvedAliases: Alias[];
+export function getResolvedAliases() {
+  const { name: packageName } = getPackageJsonContent();
 
-  return () =>
-    (resolvedAliases ??= (() => {
-      const { name: packageName } = getPackageJsonContent();
+  const {
+    compilerOptions: { paths },
+  } = getTsConfigContent();
 
-      const tsconfig = getTsConfigContent();
+  const result: Alias[] = [];
 
-      const paths = tsconfig.compilerOptions.paths;
+  for (const [alias, [tsPath]] of Object.entries(paths)) {
+    const hasPattern = alias.indexOf("*") !== -1;
 
-      const result: Alias[] = [];
+    const name =
+      alias === packageName
+        ? "index"
+        : alias.replace(packageName, "").replace(/^\//, "");
 
-      for (const [tsAlias, [tsPath]] of Object.entries(paths)) {
-        const hasPattern = tsAlias.indexOf("*") !== -1;
+    const path = resolveFromRoot(tsPath);
 
-        const isIndex = tsAlias === packageName;
+    result.push({
+      name,
+      path,
+      hasPattern,
+      alias,
+    });
+  }
 
-        const entryName = isIndex
-          ? "index"
-          : tsAlias.replace(packageName, "").replace(/^\//, "");
+  return result.sort((a, b) => {
+    return Number(a.hasPattern) - Number(b.hasPattern);
+  });
+}
 
-        result.push({
-          entryName,
-          hasPattern,
-          isIndex,
-          tsAlias,
-          tsPath,
-        });
-      }
-
-      return result.sort((a, b) => {
-        return Number(a.hasPattern) - Number(b.hasPattern);
-      });
-    })());
-})();
-
-export async function getTsupOptions() {
-  const tsconfig = getTsConfigContent();
-
+export function getTsdownOptions() {
   const aliases = getResolvedAliases();
-
-  const outDir = tsconfig.compilerOptions.outDir;
 
   const entry: Record<string, string> = Object.create(null);
 
-  function set(entryName: string, fromRoot: string) {
-    if (entryName in entry) {
-      throw new Error(
-        `Duplicate entry "${entryName}", ${fromRoot} and ${entry[entryName]}`,
-      );
-    }
-
+  for (const { name: entryName, path: fromRoot } of aliases) {
     entry[entryName] = fromRoot;
   }
 
-  for (const { hasPattern, tsPath, entryName } of aliases) {
-    const fromRoot = resolveFromRoot(tsPath);
-
-    if (!hasPattern) {
-      set(entryName, fromRoot);
-      continue;
-    }
-
-    for await (const { relative, entryName: starEntryName } of resolveStar(
-      tsPath,
-    )) {
-      const resolvedEntryName = entryName.replace("*", starEntryName);
-
-      set(resolvedEntryName, relative);
-    }
-  }
-
   return {
-    outDir,
     entry,
+    outDir: getOutDir(),
+    define: getCompileTimeVariables(),
   };
 }
 
 export function getViteDevAliases() {
   const aliases = getResolvedAliases();
 
-  const alias: {
+  const replacements: {
     find: RegExp | string;
     replacement: string;
   }[] = [];
 
-  for (const { hasPattern, tsAlias, tsPath } of aliases) {
+  for (const { hasPattern, alias, path } of aliases) {
     if (!hasPattern) {
-      alias.push({
-        find: new RegExp(`^${tsAlias}$`),
-        replacement: "/" + resolveFromRoot(tsPath).replace(/\.ts$/, ".js"),
+      replacements.push({
+        find: new RegExp(`^${alias}$`),
+        replacement: path,
       });
     } else {
-      const resolved = resolveFromRoot(tsPath).replace(/\.ts$/, ".js");
-
-      alias.push({
-        find: tsAlias.slice(0, tsAlias.lastIndexOf("*") - 1),
-        replacement: "/" + resolved.slice(0, resolved.lastIndexOf("*") - 1),
+      replacements.push({
+        find: alias.slice(0, alias.lastIndexOf("*") - 1),
+        replacement: path.slice(0, path.lastIndexOf("*") - 1),
       });
     }
   }
 
-  return alias;
+  return replacements;
 }
 
-export async function* resolveStar(alias: string) {
-  const pattern = resolve(root, alias);
+export function getOutDir(absolute = false) {
+  const {
+    compilerOptions: { outDir },
+  } = getTsConfigContent();
 
-  const start = pattern.lastIndexOf("*");
-
-  const endOffset = pattern.length - start - 1;
-
-  for await (const filename of glob(pattern)) {
-    const relative = resolveFromRoot(filename);
-
-    const entryName = filename.slice(start, filename.length - endOffset);
-
-    yield {
-      filename,
-      relative,
-      entryName,
-    };
-  }
+  return absolute ? resolve(root, outDir) : resolveFromRoot(outDir);
 }
 
-/**
- * Returns a path "absolute relative to the root" without the leading "./" or "/"
- * i.e. "./src/index.ts" becomes "src/index.ts"
- */
 export function resolveFromRoot(...paths: string[]) {
   return resolve(root, ...paths).replace(new RegExp(`^${root}[\\/\\\\]?`), "");
 }

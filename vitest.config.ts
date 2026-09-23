@@ -1,5 +1,10 @@
+import { rmSync } from "fs";
 import { defineConfig } from "vitest/config";
-import { getCompileTimeVariables, getViteDevAliases } from "./codegen/index.js";
+import {
+  getCompileTimeVariables,
+  getOutDir,
+  getViteDevAliases,
+} from "./codegen/index.js";
 
 const define = getCompileTimeVariables();
 
@@ -11,6 +16,12 @@ export default defineConfig(({ mode }) => {
   const alias: Array<{ find: string | RegExp; replacement: string }> = [];
 
   if (!shouldTestDist) {
+    const dist = getOutDir(true);
+
+    try {
+      rmSync(dist, { recursive: true });
+    } catch {}
+
     alias.push(...getViteDevAliases());
   }
 
