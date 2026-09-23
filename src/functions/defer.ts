@@ -12,16 +12,16 @@ export type DeferPromise<T = unknown> = Promise<T> & {
  */
 export function defer<T>(): DeferPromise<T>;
 export function defer(): DeferPromise {
-  let res: PromiseResolver = undefined!;
-  let rej: PromiseRejecter = undefined!;
+  let res: PromiseResolver;
+  let rej: PromiseRejecter;
 
   const promise = <DeferPromise>new Promise((resolve, reject) => {
     res = resolve;
     rej = reject;
   });
 
-  promise.resolve = res;
-  promise.reject = rej;
+  promise.resolve = res!;
+  promise.reject = rej!;
 
   return promise;
 }
