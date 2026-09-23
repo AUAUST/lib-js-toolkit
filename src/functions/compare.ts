@@ -1,7 +1,6 @@
-import type { KeyAsString } from "@auaust/toolkit";
+import type { IsLiteral, KeyAsString } from "@auaust/toolkit";
 import { empty } from "@auaust/toolkit/empty";
 import { filled } from "@auaust/toolkit/filled";
-import type { IsLiteral } from "type-fest";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 
@@ -36,9 +35,11 @@ export type DisabledOperators<C extends CustomOperators> = {
 }[keyof C];
 
 export type AvailableOperators<C extends CustomOperators> =
-  | (IsLiteral<keyof C> extends true
-      ? Exclude<BinaryOperator | UnaryOperator | keyof C, DisabledOperators<C>>
-      : BinaryOperator | UnaryOperator | KeyAsString<C>)
+  | IsLiteral<
+      keyof C,
+      Exclude<BinaryOperator | UnaryOperator | keyof C, DisabledOperators<C>>,
+      BinaryOperator | UnaryOperator | KeyAsString<C>
+    >
   | OperatorFn;
 
 export function compare<C extends CustomOperators>(

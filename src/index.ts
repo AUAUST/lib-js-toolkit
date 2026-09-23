@@ -101,7 +101,11 @@ export { value, type ResolvedValue, type Value } from "@auaust/toolkit/value";
 export { when } from "@auaust/toolkit/when";
 
 export type { IsAny } from "./types/IsAny";
+export type { IsLiteral } from "./types/IsLiteral";
 export type { IsNever } from "./types/IsNever";
+export type { IsNumberLiteral } from "./types/IsNumberLiteral";
+export type { IsStringLiteral } from "./types/IsStringLiteral";
+export type { IsSymbolLiteral } from "./types/IsSymbolLiteral";
 export type { IsUnknown } from "./types/IsUnknown";
 export type { KeyAsString } from "./types/KeyAsString";
 export type { Maybe } from "./types/Maybe";
