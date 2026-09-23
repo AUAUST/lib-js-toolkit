@@ -46,4 +46,26 @@ describe("throttle()", () => {
     expect(callback).toHaveBeenCalledTimes(2);
     expect(callback.mock.results[1].value).toBe(42);
   });
+
+  test("returns true if the call actually happened and false if throttled", async () => {
+    const callback = vi.fn();
+
+    const throttledFunction = throttle(callback, 5);
+
+    const firstCall = throttledFunction(1);
+    const secondCall = throttledFunction(2);
+
+    expect(firstCall).toBe(true);
+    expect(secondCall).toBe(false);
+
+    await sleep(10);
+
+    const thirdCall = throttledFunction(3);
+    const fourthCall = throttledFunction(4);
+    const fifthCall = throttledFunction(5);
+
+    expect(thirdCall).toBe(true);
+    expect(fourthCall).toBe(false);
+    expect(fifthCall).toBe(false);
+  });
 });
