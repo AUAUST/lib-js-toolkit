@@ -1,5 +1,5 @@
 import { isContainer } from "~/functions/isContainer";
-import type { ProtocolRegistry } from "~/protocols/index";
+import type { ProtocolRegistry } from "~/protocols";
 
 export type DefineProtocol<Marker extends symbol, Implementation> = {
   [Protocol in Marker]: Implementation;
@@ -15,5 +15,5 @@ export function implementsProtocol(protocol: symbol, value: unknown): boolean {
 }
 
 export function protocolSymbol(name: string): symbol {
-  return Symbol.for(`@auaust/toolkit/protocol/${name}`);
+  return Symbol.for(`@auaust/toolkit/protocols/${name}`);
 }

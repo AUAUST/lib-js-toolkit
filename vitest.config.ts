@@ -9,8 +9,8 @@ export default defineConfig(({ mode }) => {
 
   if (!shouldTestDist) {
     alias["~"] = "/src";
-    alias["@auaust/toolkit/protocol"] = "/src/protocols/index.ts";
-    alias["@auaust/toolkit"] = "/src/index.ts";
+    alias["@auaust/toolkit"] = "/src";
+    alias["@auaust/toolkit/protocols"] = "/src/protocols";
   }
 
   return {

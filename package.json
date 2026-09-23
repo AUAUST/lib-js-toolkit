@@ -53,10 +53,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./protocol": {
-      "types": "./dist/protocol.d.ts",
-      "import": "./dist/protocol.js",
-      "require": "./dist/protocol.cjs"
+    "./protocols": {
+      "types": "./dist/protocols.d.ts",
+      "import": "./dist/protocols.js",
+      "require": "./dist/protocols.cjs"
     }
   }
 }
