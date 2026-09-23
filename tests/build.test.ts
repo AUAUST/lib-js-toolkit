@@ -3,12 +3,16 @@ import { describe, expect, test } from "vitest";
 
 describe("The package", () => {
   test("exposes build metadata", () => {
-    expect(BUILD.name).toBe("@auaust/toolkit");
-    expect(BUILD.version).toBeTypeOf("string");
-    expect(BUILD.license).toBeTypeOf("string");
+    const { name, version, license, timestamp } = BUILD;
 
-    expect(BUILD.timestamp).toBeTypeOf("string");
+    expect(name).toBe("@auaust/toolkit");
 
-    expect(new Date(BUILD.timestamp).getTime()).not.toBeNaN();
+    expect(version).toBeTypeOf("string");
+
+    expect(license).toBeTypeOf("string");
+
+    expect(timestamp).toBeTypeOf("string");
+
+    expect(new Date(timestamp).getTime()).not.toBeNaN();
   });
 });
