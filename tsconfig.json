@@ -16,6 +16,7 @@
       "@auaust/toolkit/protocols/*": ["./src/protocols/*/index.ts"],
       "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
       "@auaust/toolkit/errors": ["./src/errors.ts"],
+      "@auaust/toolkit/types": ["./src/types.ts"],
       "@auaust/toolkit/*": ["./src/functions/*.ts"],
       "@auaust/toolkit": ["./src/index.ts"]
     },

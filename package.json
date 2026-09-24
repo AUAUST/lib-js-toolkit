@@ -103,6 +103,7 @@
     "./transform": "./dist/transform.mjs",
     "./transformKeys": "./dist/transformKeys.mjs",
     "./transformValues": "./dist/transformValues.mjs",
+    "./types": "./dist/types.mjs",
     "./value": "./dist/value.mjs",
     "./when": "./dist/when.mjs"
   }
