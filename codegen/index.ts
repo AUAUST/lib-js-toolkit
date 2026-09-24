@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import packageJsonContent from "../package.json" with { type: "json" };
 import tsConfigContent from "../tsconfig.json" with { type: "json" };
-import { pathRelativeFrom } from "./utils/pathResolveFrom";
+import { pathRelativeFrom } from "./utils/pathResolveFrom.js";
 
 const root = process.cwd();
 

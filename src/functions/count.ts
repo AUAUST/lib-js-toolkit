@@ -21,7 +21,7 @@ export function count(input: unknown): number | undefined {
     return input.length;
   }
 
-  if (input && typeof input === "object") {
+  if (typeof input === "object" && input !== null) {
     if ("length" in input && typeof input.length === "number") {
       return input.length; // Takes care of arrays, but also several array-like objects
     }

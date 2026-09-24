@@ -3,6 +3,7 @@ export type { CallParameters } from "./types/CallParameters";
 export type { CallReturnType } from "./types/CallReturnType";
 export type { ExtractLiteral } from "./types/ExtractLiteral";
 export type { FlatEntries } from "./types/FlatEntries";
+export type { DeepReadonly } from "./types/Frozen";
 export type { IfAny } from "./types/IfAny";
 export type { IfNever } from "./types/IfNever";
 export type { IfUnknown } from "./types/IfUnknown";

@@ -40,6 +40,7 @@ export {
   forwardMethods,
 } from "@auaust/toolkit/forwardMethods";
 export { forwardProperties } from "@auaust/toolkit/forwardProperties";
+export { frozen } from "@auaust/toolkit/frozen";
 export { identity } from "@auaust/toolkit/identity";
 export { isCallable } from "@auaust/toolkit/isCallable";
 export { isContainer } from "@auaust/toolkit/isContainer";
@@ -83,6 +84,7 @@ export {
   type AsyncPipeEntry,
   type AsyncTransformFn,
 } from "@auaust/toolkit/pipeAsync";
+export { plain } from "@auaust/toolkit/plain";
 export {
   propertyForwarder,
   type AnyPropertyForwarder,
@@ -113,11 +115,11 @@ export { when } from "@auaust/toolkit/when";
 export * from "@auaust/toolkit/errors";
 export * from "@auaust/toolkit/types";
 
-const data = {
+import { frozen } from "@auaust/toolkit/frozen";
+
+export const BUILD = frozen({
   name: __NAME__,
   version: __VERSION__,
   license: __LICENSE__,
   timestamp: __TIMESTAMP__,
-};
-
-export const BUILD: typeof data = Object.assign(Object.create(null), data);
+});
