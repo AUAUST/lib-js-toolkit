@@ -1,5 +1,28 @@
 # @auaust/toolkit
 
+## 0.2.4
+
+### Patch Changes
+
+- e24cd7e: Expose a `@auaust/toolkit/types` entrypoint for global utility types only
+- c3e993b: Add `If*` variants of `Is*` type checks that allow passing quick fallbacks
+- f6d6fcd: Fix type level of method forwarders
+- 14aa014: Add `NullaryMethodName` utility type
+- 8482a92: Add `call()` and `apply()` which allow calling objects that implement `Callable`
+- f944172: Add `isCallable()` that returns true for functions and `Callable`
+- 8482a92: Define the `Callable` protocol
+- 23c4fd4: Add several utility types
+  
+  - `IsNumericString`
+  - `StringToNumber`
+  - `ToArrayKey`
+  - `ToRecordKey`
+- 0f7e8a6: Use `Protocol.${name}` as the key for global protocol symbols
+- 613317a: Add `memberValue()` which is the equivalent of `value()` for properties and methods
+- f90278f: Add `callMethod()` and `applyMethod()` that help calling methods with the correct `this` context while supporting the `Callable` protocol
+- e24cd7e: `MethodName`, `MethodParameters` and `MethodReturnType` utility types
+- 91e4024: Add `Callable` support to `value()`
+
 ## 0.2.3
 
 ### Patch Changes
