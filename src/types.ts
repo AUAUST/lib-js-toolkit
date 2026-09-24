@@ -1,3 +1,6 @@
+export type { Callee } from "./types/Callee";
+export type { CallParameters } from "./types/CallParameters";
+export type { CallReturnType } from "./types/CallReturnType";
 export type { ExtractLiteral } from "./types/ExtractLiteral";
 export type { FlatEntries } from "./types/FlatEntries";
 export type { IsAny } from "./types/IsAny";

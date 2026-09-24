@@ -1,4 +1,5 @@
 export { after } from "@auaust/toolkit/after";
+export { apply } from "@auaust/toolkit/apply";
 export { attempt, type AttemptResult } from "@auaust/toolkit/attempt";
 export { attemptAsync } from "@auaust/toolkit/attemptAsync";
 export {
@@ -6,6 +7,7 @@ export {
   type CachedFn,
   type CachedOptions,
 } from "@auaust/toolkit/cached";
+export { call } from "@auaust/toolkit/call";
 export { comparator } from "@auaust/toolkit/comparator";
 export {
   compare,
