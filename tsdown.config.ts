@@ -6,7 +6,7 @@ export default defineConfig({
   dts: true,
   exports: {
     enabled: true,
-    packageJson: true,
+    packageJson: false,
   },
   sourcemap: true,
   report: false,

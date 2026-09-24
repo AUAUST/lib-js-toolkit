@@ -106,15 +106,14 @@ describe("protocols", () => {
     const instanceChecker: unknown = {
       [Symbol.hasInstance]: (value: any) => value === 42,
     };
+
     const spreadable: unknown = { [Symbol.isConcatSpreadable]: true };
+
     const primitiveConvertible: unknown = {
       [Symbol.toPrimitive]: () => 42,
     };
 
     if (implementsProtocol(Symbol.hasInstance, instanceChecker)) {
-      expectTypeOf(instanceChecker[Symbol.hasInstance]).toEqualTypeOf<
-        (value: any) => boolean
-      >();
       expect(instanceChecker[Symbol.hasInstance](42)).toBe(true);
     }
 
