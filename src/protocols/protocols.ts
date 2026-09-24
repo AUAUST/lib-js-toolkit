@@ -1,7 +1,10 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
 import type { ProtocolRegistry } from "@auaust/toolkit/protocols";
 
-export type DefineProtocol<Marker extends symbol, Implementation> = {
+export type DefineProtocol<
+  Marker extends symbol,
+  Implementation extends { [K in Marker]: unknown },
+> = {
   [Protocol in Marker]: Implementation;
 };
 

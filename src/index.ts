@@ -117,6 +117,7 @@ export type { MaybeAsyncFn } from "./types/MaybeAsyncFn";
 export type { MaybeFn } from "./types/MaybeFn";
 export type { MaybePromise } from "./types/MaybePromise";
 export type { Methods } from "./types/Methods";
+export type { Primitive } from "./types/Primitive";
 export type { ReadonlyRecord } from "./types/ReadonlyRecord";
 export type { Simplify } from "./types/Simplify";
 export type { UnionToIntersection } from "./types/UnionToIntersection";
