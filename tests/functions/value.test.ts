@@ -1,5 +1,6 @@
 import { value } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
+import { assertType, describe, expect, test, vi } from "vitest";
 
 describe("value()", () => {
   test("returns the provided value when it's not a function", () => {
@@ -42,5 +43,19 @@ describe("value()", () => {
     }
 
     expect(value.call(context, multiply, 10)).toBe(30);
+  });
+
+  test("supports the `Callable` protocol", () => {
+    const object = {
+      [callable]: vi.fn(() => 42 as const),
+    };
+
+    const result = value(object);
+
+    expect(result).toBe(42);
+
+    expect(object[callable]).toHaveBeenCalled();
+
+    assertType<42>(result);
   });
 });

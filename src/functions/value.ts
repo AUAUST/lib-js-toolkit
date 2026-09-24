@@ -1,6 +1,12 @@
-export type Value<V, This = any> = V | ((this: This) => V);
+import { apply } from "@auaust/toolkit/apply";
+import { isCallable } from "@auaust/toolkit/isCallable";
+import type { Callee } from "@auaust/toolkit/types";
 
-export type ResolvedValue<V> = V extends (this: any) => infer R ? R : V;
+export type Value<V, This = any, Arguments extends readonly any[] = any> =
+  | V
+  | Callee<Arguments, V, This>;
+
+export type ResolvedValue<V> = V extends Callee<any, infer R> ? R : V;
 
 export function value<V, This = any>(this: This, input: Value<V, This>): V;
 export function value<V, A extends any[], This = any>(
@@ -9,5 +15,5 @@ export function value<V, A extends any[], This = any>(
   ...args: A
 ): V;
 export function value(this: any, input: unknown, ...args: unknown[]): unknown {
-  return typeof input === "function" ? input.apply(this, args) : input;
+  return isCallable(input) ? apply.call(this, input, args) : input;
 }
