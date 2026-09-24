@@ -1,4 +1,5 @@
 export type { ExtractLiteral } from "./types/ExtractLiteral";
+export type { FlatEntries } from "./types/FlatEntries";
 export type { IsAny } from "./types/IsAny";
 export type { IsLiteral } from "./types/IsLiteral";
 export type { IsNever } from "./types/IsNever";

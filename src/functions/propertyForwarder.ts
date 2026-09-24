@@ -37,7 +37,7 @@ export interface PropertyForwardingOptions<
   configurable?: boolean;
 }
 
-export type PropertyForwarded<Forward extends PropertyForwarder> =
+export type ForwardedProperty<Forward extends PropertyForwarder> =
   Forward extends PropertyForwarder<
     infer Source,
     infer Property,

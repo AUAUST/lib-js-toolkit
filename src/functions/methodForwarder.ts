@@ -1,6 +1,6 @@
 import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
-import type { Methods } from "@auaust/toolkit/types";
+import type { MethodName } from "@auaust/toolkit/types";
 
 export type MethodForwardingInput<
   Method extends PropertyKey,
@@ -12,7 +12,7 @@ export type MethodForwardingInput<
 
 export interface MethodForwarder<
   Source extends object = any,
-  Method extends keyof Methods<Source> = keyof Methods<Source>,
+  Method extends MethodName<Source> = MethodName<Source>,
   Name extends PropertyKey = Method,
 > {
   kind: "method";
@@ -32,14 +32,14 @@ export interface MethodForwardingOptions<
   enumerable?: boolean;
 }
 
-export type MethodForwarded<Forward extends MethodForwarder> =
+export type ForwardedMethod<Forward extends MethodForwarder> =
   Forward extends MethodForwarder<infer Source, infer Method, infer Name>
     ? { [K in Name]: Source[Method] }
     : never;
 
 export function methodForwarder<
   const Source extends object,
-  const Method extends keyof Methods<Source>,
+  const Method extends MethodName<Source>,
   const Alias extends PropertyKey = never,
 >(
   source: Source,
@@ -47,7 +47,7 @@ export function methodForwarder<
 ): MethodForwarder<Source, Method, [Alias] extends [never] ? Method : Alias>;
 export function methodForwarder<
   const Source extends object,
-  const Method extends keyof Methods<Source>,
+  const Method extends MethodName<Source>,
   const Alias extends PropertyKey,
 >(
   source: Source,
@@ -56,7 +56,7 @@ export function methodForwarder<
 ): MethodForwarder<Source, Method, Alias>;
 export function methodForwarder<
   const Source extends object,
-  const Method extends keyof Methods<Source>,
+  const Method extends MethodName<Source>,
   const Alias extends PropertyKey = never,
 >(
   source: Source,

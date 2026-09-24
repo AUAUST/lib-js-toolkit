@@ -1,17 +1,18 @@
 import { forwardAs } from "@auaust/toolkit/forwardAs";
 import {
   methodForwarder,
-  type MethodForwarded,
+  type ForwardedMethod,
   type MethodForwarder,
 } from "@auaust/toolkit/methodForwarder";
 import { methodForwarders } from "@auaust/toolkit/methodForwarders";
 import {
   propertyForwarder,
-  type PropertyForwarded,
+  type ForwardedProperty,
   type PropertyForwarder,
 } from "@auaust/toolkit/propertyForwarder";
 import { propertyForwarders } from "@auaust/toolkit/propertyForwarders";
 import type {
+  FlatEntries,
   MaybeArray,
   Simplify,
   UnionToIntersection,
@@ -19,21 +20,26 @@ import type {
 
 export type Forwarded<
   Target extends object,
-  Forwards extends MaybeArray<MethodForwarder | PropertyForwarder>[],
+  Forwards extends (MethodForwarder | PropertyForwarder)[],
 > = Simplify<Target & UnionToIntersection<ForwardedEntry<Forwards[number]>>>;
 
-export type ForwardedEntry<Forward> = Forward extends readonly (infer Entry)[]
-  ? ForwardedEntry<Entry>
-  : Forward extends MethodForwarder
-    ? MethodForwarded<Forward>
-    : Forward extends PropertyForwarder
-      ? PropertyForwarded<Forward>
-      : never;
+export type ForwardedEntry<
+  Forward extends MethodForwarder | PropertyForwarder,
+> = Forward extends infer Entry
+  ? Entry extends MethodForwarder
+    ? ForwardedMethod<Entry>
+    : Entry extends PropertyForwarder
+      ? ForwardedProperty<Entry>
+      : never
+  : never;
 
 function doForward<
   Target extends object,
   Forwards extends MaybeArray<MethodForwarder | PropertyForwarder>[],
->(target: Target, ...forwards: Forwards): Forwarded<Target, Forwards>;
+>(
+  target: Target,
+  ...forwards: Forwards
+): Forwarded<Target, FlatEntries<Forwards>>;
 function doForward(
   target: object,
   ...forwards: MaybeArray<MethodForwarder | PropertyForwarder>[]

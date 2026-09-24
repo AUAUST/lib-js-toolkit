@@ -8,21 +8,18 @@ import {
   type MethodForwarder,
 } from "@auaust/toolkit/methodForwarder";
 import type {
-  Methods as ExtractMethods,
   MaybeArray,
   MaybeArrayElement,
+  MethodName,
 } from "@auaust/toolkit/types";
 
 export type MethodForwarderFor<
   Source extends object,
-  Method extends MethodForwardingInput<
-    keyof ExtractMethods<Source>,
-    PropertyKey
-  >,
+  Method extends MethodForwardingInput<MethodName<Source>, PropertyKey>,
 > = Method extends keyof Source
-  ? MethodForwarder<Source, Method>
+  ? MethodForwarder<Source, Method & MethodName<Source>>
   : Method extends ForwardAs<
-        infer Key extends keyof ExtractMethods<Source>,
+        infer Key extends MethodName<Source>,
         infer Alias extends PropertyKey
       >
     ? MethodForwarder<Source, Key, Alias>
@@ -32,7 +29,7 @@ export type MethodForwarderFor<
         >
       ? MethodForwarder<
           Source,
-          Key,
+          Key & MethodName<Source>,
           Method extends { as: infer Alias extends PropertyKey } ? Alias : Key
         >
       : never;
@@ -40,7 +37,7 @@ export type MethodForwarderFor<
 export function methodForwarders<
   const Source extends object,
   const Methods extends MaybeArray<
-    MethodForwardingInput<keyof ExtractMethods<Source>, PropertyKey>
+    MethodForwardingInput<MethodName<Source>, PropertyKey>
   >[],
 >(
   source: Source,
@@ -49,7 +46,7 @@ export function methodForwarders<
   Source,
   MaybeArrayElement<
     Methods[number],
-    MethodForwardingInput<keyof ExtractMethods<Source>, PropertyKey>
+    MethodForwardingInput<MethodName<Source>, PropertyKey>
   >
 >[];
 export function methodForwarders(
