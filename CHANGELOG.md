@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.2.3
+
+### Patch Changes
+
+- 0c3e94b: List built in protocols to make `implementsProtocol()` also useful with native symbols
+
 ## 0.2.2
 
 ### Patch Changes
