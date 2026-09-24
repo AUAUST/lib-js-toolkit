@@ -1,5 +1,13 @@
 # @auaust/toolkit
 
+## 0.2.5
+
+### Patch Changes
+
+- 070d560: Add `plain()` to return a new empty null prototype object
+- e350094: Make `measure()` and `measureAsync()` `[callable]`-compatible
+- 070d560: Add `frozen()` which returns a shallow, frozen copy of the object applied to a null prototype object
+
 ## 0.2.4
 
 ### Patch Changes
