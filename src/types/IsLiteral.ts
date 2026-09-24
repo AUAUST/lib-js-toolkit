@@ -2,7 +2,7 @@ import type {
   IsNumberLiteral,
   IsStringLiteral,
   IsSymbolLiteral,
-} from "@auaust/toolkit";
+} from "@auaust/toolkit/types";
 
 export type IsLiteral<
   T,

@@ -1,8 +1,3 @@
-import type {
-  MaybeArray,
-  Simplify,
-  UnionToIntersection,
-} from "@auaust/toolkit";
 import { forwardAs } from "@auaust/toolkit/forwardAs";
 import {
   methodForwarder,
@@ -16,6 +11,11 @@ import {
   type PropertyForwarder,
 } from "@auaust/toolkit/propertyForwarder";
 import { propertyForwarders } from "@auaust/toolkit/propertyForwarders";
+import type {
+  MaybeArray,
+  Simplify,
+  UnionToIntersection,
+} from "@auaust/toolkit/types";
 
 export type Forwarded<
   Target extends object,

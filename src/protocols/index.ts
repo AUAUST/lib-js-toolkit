@@ -1,4 +1,4 @@
-import type { Primitive } from "@auaust/toolkit";
+import type { Primitive } from "@auaust/toolkit/types";
 
 export interface ProtocolRegistry {
   [Symbol.asyncDispose]: AsyncDisposable;

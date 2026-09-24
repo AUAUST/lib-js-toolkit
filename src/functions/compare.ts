@@ -1,6 +1,6 @@
-import type { IsLiteral, KeyAsString } from "@auaust/toolkit";
 import { empty } from "@auaust/toolkit/empty";
 import { filled } from "@auaust/toolkit/filled";
+import type { IsLiteral, KeyAsString } from "@auaust/toolkit/types";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 

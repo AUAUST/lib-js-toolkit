@@ -1,10 +1,10 @@
-import type { MaybeArray, MaybeArrayElement } from "@auaust/toolkit";
 import { forward, type Forwarded } from "@auaust/toolkit/forward";
 import type { PropertyForwardingInput } from "@auaust/toolkit/propertyForwarder";
 import {
   type PropertyForwarderFor,
   propertyForwarders,
 } from "@auaust/toolkit/propertyForwarders";
+import type { MaybeArray, MaybeArrayElement } from "@auaust/toolkit/types";
 
 export function forwardProperties<
   const Target extends object,

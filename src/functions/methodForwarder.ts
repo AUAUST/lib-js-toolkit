@@ -1,6 +1,6 @@
-import type { Methods } from "@auaust/toolkit";
 import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
+import type { Methods } from "@auaust/toolkit/types";
 
 export type MethodForwardingInput<
   Method extends PropertyKey,

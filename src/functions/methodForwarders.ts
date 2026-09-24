@@ -1,8 +1,3 @@
-import type {
-  Methods as ExtractMethods,
-  MaybeArray,
-  MaybeArrayElement,
-} from "@auaust/toolkit";
 import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import type {
   MethodForwardingInput,
@@ -12,6 +7,11 @@ import {
   methodForwarder,
   type MethodForwarder,
 } from "@auaust/toolkit/methodForwarder";
+import type {
+  Methods as ExtractMethods,
+  MaybeArray,
+  MaybeArrayElement,
+} from "@auaust/toolkit/types";
 
 export type MethodForwarderFor<
   Source extends object,

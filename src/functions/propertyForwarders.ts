@@ -1,4 +1,3 @@
-import type { MaybeArray, MaybeArrayElement } from "@auaust/toolkit";
 import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import {
   propertyForwarder,
@@ -6,6 +5,7 @@ import {
   type PropertyForwardingInput,
   type PropertyForwardingOptions,
 } from "@auaust/toolkit/propertyForwarder";
+import type { MaybeArray, MaybeArrayElement } from "@auaust/toolkit/types";
 
 export type PropertyForwarderFor<
   Source extends object,
