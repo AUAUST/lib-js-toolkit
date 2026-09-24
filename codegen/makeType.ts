@@ -1,11 +1,7 @@
-import {
-  codeFile,
-  logChanges,
-  makeFromTemplate,
-  prependLine,
-  replacer,
-  testFile,
-} from "./utils/make";
+import { logChanges } from "./utils/logChanges";
+import { codeFile, makeFromTemplate, testFile } from "./utils/make";
+import { prependLine } from "./utils/prependLine";
+import { replacer } from "./utils/replacer";
 
 export async function makeType(options: { name: string }) {
   const typeName = options.name;

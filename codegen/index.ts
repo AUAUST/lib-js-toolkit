@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import packageJsonContent from "../package.json" with { type: "json" };
 import tsConfigContent from "../tsconfig.json" with { type: "json" };
+import { pathRelativeFrom } from "./utils/pathResolveFrom";
 
 const root = process.cwd();
 
@@ -119,5 +120,5 @@ export function getOutDir(absolute = false) {
 }
 
 export function resolveFromRoot(...paths: string[]) {
-  return resolve(root, ...paths).replace(new RegExp(`^${root}[\\/\\\\]?`), "");
+  return pathRelativeFrom(root, ...paths);
 }

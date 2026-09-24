@@ -1,10 +1,6 @@
-import {
-  codeFile,
-  logChanges,
-  makeFromTemplate,
-  replacer,
-  testFile,
-} from "./utils/make";
+import { logChanges } from "./utils/logChanges";
+import { codeFile, makeFromTemplate, testFile } from "./utils/make";
+import { replacer } from "./utils/replacer";
 
 export async function makeProtocol(options: {
   name: string;
