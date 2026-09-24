@@ -26,6 +26,16 @@ export async function makeFromTemplate(
   return paths;
 }
 
+export async function prependLine(file: string, line: string) {
+  const root = process.cwd();
+
+  const path = resolve(root, file);
+
+  await writeFile(path, `${line}\n${await readFile(path, "utf-8")}`);
+
+  return path;
+}
+
 export function codeFile(template: string, file: string | string[]) {
   return {
     template: `${template}.txt`,
@@ -57,4 +67,18 @@ export function replacer(placeholders: Record<string, string>) {
 
     return result;
   };
+}
+
+export function logChanges(
+  message: string,
+  changes: {
+    created?: string[];
+    updated?: string[];
+  },
+) {
+  console.info(
+    message,
+    (changes.created || []).map((file) => `+   ${file}`).join("\n"),
+    (changes.updated || []).map((file) => `~   ${file}`).join("\n"),
+  );
 }

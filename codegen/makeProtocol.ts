@@ -1,4 +1,10 @@
-import { codeFile, makeFromTemplate, replacer, testFile } from "./utils/make";
+import {
+  codeFile,
+  logChanges,
+  makeFromTemplate,
+  replacer,
+  testFile,
+} from "./utils/make";
 
 export async function makeProtocol(options: {
   name: string;
@@ -25,7 +31,7 @@ export async function makeProtocol(options: {
     }),
   );
 
-  console.log(`Protocol ${protocolName} has been created.`);
-
-  console.log(paths.map((file) => "  " + file).join("\n"));
+  logChanges(`Protocol ${protocolName} has been created.`, {
+    created: paths,
+  });
 }

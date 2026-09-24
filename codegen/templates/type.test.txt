@@ -1,0 +1,9 @@
+import { {{type}} } from "@auaust/toolkit/types";
+import { assertType, describe, expect, expectTypeOf, test } from "vitest";
+
+describe("{{type}}", () => {
+  test("works", () => {
+    expectTypeOf({{type}}).toBe<unknown>();
+    assertType({{type}})
+  });
+});
