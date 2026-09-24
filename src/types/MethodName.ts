@@ -1,3 +1,7 @@
 export type MethodName<T extends object> = {
-  [K in keyof T]: ((...args: any[]) => any) extends T[K] ? K : never;
+  [K in keyof T]: T[K] extends infer R
+    ? R extends (...args: any[]) => any
+      ? K
+      : never
+    : never;
 }[keyof T];

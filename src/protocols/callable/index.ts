@@ -7,12 +7,17 @@ declare module "@auaust/toolkit/protocols" {
   > {}
 }
 
-export interface Callable<Arguments extends any[] = any[], Result = any> {
+export interface Callable<
+  Arguments extends readonly any[] = any,
+  Result = any,
+  This = any,
+> {
   [callable](this: this, ...args: Arguments): Result;
+  [callable](this: This, ...args: Arguments): Result;
 }
 
 export type CallableParameters<T extends Callable<any, any>> =
-  T extends Callable<infer Arguments, any> ? Arguments : never;
+  T extends Callable<infer Arguments, any> ? Readonly<Arguments> : never;
 
 export type CallableReturnType<T extends Callable<any, any>> =
   T extends Callable<any, infer Result> ? Result : never;

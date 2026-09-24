@@ -59,16 +59,16 @@ describe("apply()", () => {
     };
 
     for (const receiver of [undefined, apply]) {
-      expect(apply.call(receiver, input, [])).toBe(input);
+      expect(apply.call(receiver, input)).toBe(input);
     }
 
     for (const receiver of [null, false, 0, {}, input[callable], input]) {
-      expect(apply.call(receiver, input, [])).toBe(receiver);
+      expect(apply.call(receiver, input)).toBe(receiver);
     }
 
     const holder = { invoke: apply };
 
-    expect(holder.invoke(input, [])).toBe(holder);
+    expect(holder.invoke(input)).toBe(holder);
 
     const detached = holder.invoke;
 
@@ -82,15 +82,15 @@ describe("apply()", () => {
 
     const context = { value: 42 };
 
-    expect(apply.call(context, fn, [])).toBe(context);
+    expect(apply.call(context, fn)).toBe(context);
 
-    expect(apply(fn, [])).toBeUndefined();
+    expect(apply(fn)).toBeUndefined();
 
-    expect(apply.call(call, fn, [])).toBe(call);
+    expect(apply.call(call, fn)).toBe(call);
 
-    expect(apply.call(apply, fn, [])).toBeUndefined();
+    expect(apply.call(apply, fn)).toBeUndefined();
 
-    expect(apply.call(null, fn, [])).toBeNull();
+    expect(apply.call(null, fn)).toBeNull();
   });
 
   test("prefers the protocol when a function implements it", () => {

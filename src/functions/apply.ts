@@ -7,26 +7,40 @@ import {
 } from "@auaust/toolkit/types";
 
 export interface Apply {
+  <Target extends Callee<[]>>(
+    this: unknown,
+    target: Target,
+    args?: CallParameters<Target>,
+  ): CallReturnType<Target>;
   <Target extends Callee>(
     this: unknown,
     target: Target,
-    args: Readonly<CallParameters<Target>>,
+    args: CallParameters<Target>,
+  ): CallReturnType<Target>;
+  call<Target extends Callee<[]>>(
+    thisArg: unknown,
+    target: Target,
+    args?: CallParameters<Target>,
   ): CallReturnType<Target>;
   call<Target extends Callee>(
     thisArg: unknown,
     target: Target,
-    args: Readonly<CallParameters<Target>>,
+    args: CallParameters<Target>,
+  ): CallReturnType<Target>;
+  apply<Target extends Callee<[]>>(
+    thisArg: unknown,
+    args: [target: Target, args?: CallParameters<Target>],
   ): CallReturnType<Target>;
   apply<Target extends Callee>(
     thisArg: unknown,
-    args: [target: Target, args: Readonly<CallParameters<Target>>],
+    args: [target: Target, args: CallParameters<Target>],
   ): CallReturnType<Target>;
 }
 
 export const apply: Apply = function apply(
   this: unknown,
   target: unknown,
-  args: readonly unknown[],
+  args: readonly unknown[] = [],
 ): unknown {
   const receiver = this === apply ? undefined : this;
 
