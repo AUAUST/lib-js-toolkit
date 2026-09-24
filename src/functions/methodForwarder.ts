@@ -10,6 +10,8 @@ export type MethodForwardingInput<
   | MethodForwardingOptions<Method, Alias>
   | ForwardAs<Method, PropertyKey>;
 
+export type AnyMethodForwarder = MethodForwarder<any, any, PropertyKey>;
+
 export interface MethodForwarder<
   Source extends object = any,
   Method extends MethodName<Source> = MethodName<Source>,
@@ -32,7 +34,7 @@ export interface MethodForwardingOptions<
   enumerable?: boolean;
 }
 
-export type ForwardedMethod<Forward extends MethodForwarder> =
+export type ForwardedMethod<Forward extends AnyMethodForwarder> =
   Forward extends MethodForwarder<infer Source, infer Method, infer Name>
     ? { [K in Name]: Source[Method] }
     : never;
@@ -67,7 +69,7 @@ export function methodForwarder(
   source: any,
   method: MethodForwardingInput<PropertyKey>,
   options?: Record<PropertyKey, any>,
-): MethodForwarder<any, any> {
+): AnyMethodForwarder {
   let targetMethod: PropertyKey;
 
   if (!isPropertyKey(method)) {

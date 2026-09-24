@@ -5,7 +5,6 @@ import {
   type MethodForwarderFor,
 } from "@auaust/toolkit/methodForwarders";
 import type {
-  FlatEntries,
   MaybeArray,
   MaybeArrayElement,
   MethodName,
@@ -26,7 +25,7 @@ export function forwardMethods<
   MethodForwarderFor<
     Source,
     MaybeArrayElement<
-      FlatEntries<Methods>[number],
+      Methods[number],
       MethodForwardingInput<MethodName<Source>, PropertyKey>
     >
   >[]

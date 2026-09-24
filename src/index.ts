@@ -54,6 +54,7 @@ export { memberValue } from "@auaust/toolkit/memberValue";
 export { memoized, type MemoizedFn } from "@auaust/toolkit/memoized";
 export {
   methodForwarder,
+  type AnyMethodForwarder,
   type MethodForwarder,
   type MethodForwardingInput,
   type MethodForwardingOptions,
@@ -79,6 +80,7 @@ export {
 } from "@auaust/toolkit/pipeAsync";
 export {
   propertyForwarder,
+  type AnyPropertyForwarder,
   type PropertyForwarder,
   type PropertyForwardingInput,
   type PropertyForwardingOptions,

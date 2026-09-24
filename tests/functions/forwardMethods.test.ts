@@ -1,5 +1,5 @@
-import { forwardMethods } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { forwardAs, forwardMethods } from "@auaust/toolkit";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("forwardMethods()", () => {
   test("calls methods on the handler object when invoked on the target object", () => {
@@ -95,5 +95,43 @@ describe("forwardMethods()", () => {
 
     expect(resultOne).toBe("Message: Hello Symbol");
     expect(resultMany).toBe("Message: Hello Symbol");
+  });
+
+  test("preserves signatures and aliases across mixed method inputs", () => {
+    const alias = Symbol("alias");
+
+    const handler = {
+      factor: 3,
+      0(value: number) {
+        return value * this.factor;
+      },
+      greet(name: string) {
+        return `Hello, ${name}!`;
+      },
+      enabled() {
+        return true;
+      },
+    };
+
+    const target = { label: "target" };
+
+    const forwarded = forwardMethods(
+      target,
+      handler,
+      [0, { method: "greet", as: alias }],
+      forwardAs("enabled", 1),
+    );
+
+    expectTypeOf(forwarded).toEqualTypeOf<{
+      label: string;
+      "0": (value: number) => number;
+      [alias]: (name: string) => string;
+      "1": () => boolean;
+    }>();
+
+    expect(forwarded).toBe(target);
+    expect(forwarded[0](4)).toBe(12);
+    expect(forwarded[alias]("World")).toBe("Hello, World!");
+    expect(forwarded[1]()).toBe(true);
   });
 });

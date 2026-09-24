@@ -11,6 +11,13 @@ export type PropertyForwardingInput<
   | PropertyForwardingOptions<Property, Alias, Readonly>
   | ForwardAs<Property, PropertyKey>;
 
+export type AnyPropertyForwarder = PropertyForwarder<
+  any,
+  any,
+  PropertyKey,
+  boolean
+>;
+
 export interface PropertyForwarder<
   Source extends object = any,
   Property extends keyof Source = keyof Source,
@@ -37,7 +44,7 @@ export interface PropertyForwardingOptions<
   configurable?: boolean;
 }
 
-export type ForwardedProperty<Forward extends PropertyForwarder> =
+export type ForwardedProperty<Forward extends AnyPropertyForwarder> =
   Forward extends PropertyForwarder<
     infer Source,
     infer Property,
