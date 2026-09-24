@@ -18,7 +18,7 @@ export function forwardMethods<
   >[],
 >(
   target: Target,
-  handler: Source,
+  source: Source,
   ...methods: Methods
 ): Forwarded<
   Target,
@@ -30,5 +30,5 @@ export function forwardMethods<
     >
   >[]
 > {
-  return forward(target, methodForwarders(handler, ...methods));
+  return forward(target, methodForwarders(source, ...methods));
 }

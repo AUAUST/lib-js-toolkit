@@ -1,4 +1,5 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { plain } from "@auaust/toolkit/plain";
 import { transformKeys } from "@auaust/toolkit/transformKeys";
 import { transformValues } from "@auaust/toolkit/transformValues";
 
@@ -95,7 +96,7 @@ export function transform(
     return transformValues(target, transform);
   }
 
-  const originals = { ...target };
+  const originals = plain(target);
 
   const mapper = keyMapper(map);
 

@@ -65,12 +65,15 @@ export function pipeAsync<This, A, B, C, D, E, F, G, H, I>(
 export function pipeAsync<This>(
   ...fns: AsyncPipeEntry<This, any, any>[]
 ): (this: This, value: any) => Promise<any>;
-export function pipeAsync(this: any, ...fns: AsyncPipeEntry<any, any, any>[]) {
+export function pipeAsync(
+  this: any,
+  ...callbacks: AsyncPipeEntry<any, any, any>[]
+) {
   return async function (this: any, initialValue: unknown) {
     let carry = initialValue;
 
-    for (let step = 0; step < fns.length; step++) {
-      const entry = fns[step];
+    for (let step = 0; step < callbacks.length; step++) {
+      const entry = callbacks[step];
 
       let fn: AsyncTransformFn<any, unknown, unknown>;
 

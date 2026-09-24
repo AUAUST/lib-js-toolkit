@@ -10,10 +10,11 @@ export type EmptyValue =
   | Map<any, never>
   | Set<never>
   | null
-  | undefined;
+  | undefined
+  | Emptiable<true>;
 
 export function empty(input: Emptiable): input is Emptiable<true>;
-export function empty<T>(input: T): input is T & EmptyValue;
+export function empty<Value>(input: Value): input is Value & EmptyValue;
 export function empty(input: any): boolean {
   if (input == null) {
     return true;

@@ -1,4 +1,5 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { plain } from "@auaust/toolkit/plain";
 
 export type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map
@@ -45,7 +46,7 @@ export function mappedKeys(source: any, map?: any) {
     return { ...source };
   }
 
-  const result: Record<PropertyKey, unknown> & Object = {};
+  const result: Record<PropertyKey, unknown> & Object = plain();
 
   const mapper = keyMapper(map);
 

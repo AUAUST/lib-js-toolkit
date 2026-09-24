@@ -42,11 +42,11 @@ export type AvailableOperators<C extends CustomOperators> =
     >
   | OperatorFn;
 
-export function compare<C extends CustomOperators>(
+export function compare<Operators extends CustomOperators>(
   a: unknown,
-  operator: AvailableOperators<C>,
+  operator: AvailableOperators<Operators>,
   b: unknown,
-  customOperators: C,
+  customOperators: Operators,
 ): boolean;
 export function compare(
   value: unknown,

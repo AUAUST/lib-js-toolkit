@@ -1,3 +1,5 @@
+import { plain } from "@auaust/toolkit/plain";
+
 export function mappedValues<Source>(source: Source): Source;
 export function mappedValues<Source extends object, Result>(
   source: Source,
@@ -20,7 +22,7 @@ export function mappedValues(
     return source;
   }
 
-  const result: Record<PropertyKey, unknown> = {};
+  const result: Record<PropertyKey, unknown> = plain();
 
   for (const key in source) {
     result[key] = transformer(source[key], key, key);

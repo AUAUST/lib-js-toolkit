@@ -5,13 +5,16 @@
  * `boolean` indicating whether the call replaced a pending execution.
  *
  */
-export function debounce<T, F extends (this: T, ...args: any[]) => any>(
-  callback: F,
-  ms: number,
-): (this: T, ...args: Parameters<F>) => boolean {
+export function debounce<
+  Implementation extends (this: This, ...args: any[]) => any,
+  This,
+>(
+  callback: Implementation,
+  delay: number,
+): (this: This, ...args: Parameters<Implementation>) => boolean {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-  return function (this: T, ...args: Parameters<F>): boolean {
+  return function (this: This, ...args: Parameters<Implementation>): boolean {
     const replaced = timeoutId !== undefined;
 
     clearTimeout(timeoutId);
@@ -20,7 +23,7 @@ export function debounce<T, F extends (this: T, ...args: any[]) => any>(
       timeoutId = undefined;
 
       callback.call(this, ...args);
-    }, ms);
+    }, delay);
 
     return replaced;
   };

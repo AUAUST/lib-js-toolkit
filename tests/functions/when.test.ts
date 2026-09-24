@@ -51,7 +51,9 @@ describe("when()", () => {
   });
 
   test("preserves 'this' context in callbacks", () => {
-    const context = { value: 42 };
+    const context = {
+      value: 42,
+    };
 
     function condition(this: typeof context) {
       return this.value === 42;

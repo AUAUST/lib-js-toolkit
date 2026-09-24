@@ -1,12 +1,12 @@
 import type { AttemptResult } from "@auaust/toolkit/attempt";
 
-export async function attemptAsync<T, A extends any[], This>(
+export async function attemptAsync<Result, Arguments extends any[], This>(
   this: This,
-  fn: (this: This, ...args: A) => Promise<T> | T,
-  ...args: A
-): Promise<AttemptResult<T>> {
+  callback: (this: This, ...args: Arguments) => Promise<Result> | Result,
+  ...args: Arguments
+): Promise<AttemptResult<Result>> {
   try {
-    const result = await fn.apply(this, args);
+    const result = await callback.apply(this, args);
 
     return {
       success: true,

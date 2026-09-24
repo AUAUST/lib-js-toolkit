@@ -1,6 +1,6 @@
 let defaultTarget: Record<PropertyKey, any> | undefined;
 
-interface Expose extends Function {
+export interface Expose extends Function {
   <T extends Record<PropertyKey, any>>(
     pairs: T,
     when?: boolean,

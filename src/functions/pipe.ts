@@ -69,9 +69,9 @@ export function pipe<This, A, B, C, D, E, F, G, H, I>(
 export function pipe<This>(
   ...fns: PipeEntry<This, any, any>[]
 ): (this: This, value: any) => any;
-export function pipe(this: any, ...fns: PipeEntry<any, any, any>[]) {
+export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
   return function (this: any, initialValue: unknown) {
-    return fns.reduce((carry, entry, step) => {
+    return callbacks.reduce((carry, entry, step) => {
       let fn: TransformFn<any, unknown, unknown>;
 
       if (Array.isArray(entry)) {

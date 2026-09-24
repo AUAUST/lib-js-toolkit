@@ -31,7 +31,7 @@ export {
   type PromiseResolver,
 } from "@auaust/toolkit/defer";
 export { empty, type EmptyValue } from "@auaust/toolkit/empty";
-export { expose } from "@auaust/toolkit/expose";
+export { expose, type Expose } from "@auaust/toolkit/expose";
 export { filled, type FilledValue } from "@auaust/toolkit/filled";
 export { forward, type Forwarded } from "@auaust/toolkit/forward";
 export { forwardAs, type ForwardAs } from "@auaust/toolkit/forwardAs";
@@ -109,7 +109,12 @@ export { throttle } from "@auaust/toolkit/throttle";
 export { transform } from "@auaust/toolkit/transform";
 export { transformKeys } from "@auaust/toolkit/transformKeys";
 export { transformValues } from "@auaust/toolkit/transformValues";
-export { value, type ResolvedValue, type Value } from "@auaust/toolkit/value";
+export {
+  value,
+  type ResolvableValue,
+  type ResolvedValue,
+  type ResolvableValue as Value,
+} from "@auaust/toolkit/value";
 export { when } from "@auaust/toolkit/when";
 
 export * from "@auaust/toolkit/errors";

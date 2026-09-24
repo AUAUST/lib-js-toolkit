@@ -1,10 +1,10 @@
-export function after<R, A extends any[], This>(
+export function after<Result, Arguments extends any[], This>(
   this: This,
-  callback: (this: This, ...args: A) => R,
-  ms: number,
-  ...args: NoInfer<A>
-): Promise<R> {
+  callback: (this: This, ...args: Arguments) => Result,
+  delay: number,
+  ...args: Arguments
+): Promise<Result> {
   return new Promise((resolve) =>
-    setTimeout(() => resolve(callback.apply(this, args)), ms),
+    setTimeout(() => resolve(callback.apply(this, args)), delay),
   );
 }

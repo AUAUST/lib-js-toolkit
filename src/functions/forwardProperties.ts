@@ -14,7 +14,7 @@ export function forwardProperties<
   >[],
 >(
   target: Target,
-  handler: Source,
+  source: Source,
   ...properties: Properties
 ): Forwarded<
   Target,
@@ -26,5 +26,5 @@ export function forwardProperties<
     >
   >[]
 > {
-  return forward(target, propertyForwarders(handler, ...properties));
+  return forward(target, propertyForwarders(source, ...properties));
 }

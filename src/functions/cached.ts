@@ -1,6 +1,6 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
 
-export type CachedFn<K, R, Fn> = Fn & {
+export type CachedFn<Key, Result, Implementation> = Implementation & {
   /**
    * Clears the cached values.
    */
@@ -15,18 +15,18 @@ export type CachedFn<K, R, Fn> = Fn & {
    * Returns the cached entry for the given key only if it exists and hasn't been garbage collected.
    * Does not compute the value if it doesn't exist.
    */
-  value(key: K): R | undefined;
+  value(key: Key): Result | undefined;
 
   /**
    * Returns true if the cache contains an entry for the given key.
    * Returns false if the entry has been garbage collected.
    */
-  has(key: K): boolean;
+  has(key: Key): boolean;
 
   /**
    * Deletes the cached entry for the given key.
    */
-  delete(key: K): boolean;
+  delete(key: Key): boolean;
 };
 
 export type CachedOptions = {
@@ -45,16 +45,15 @@ export type CachedOptions = {
   cachePrimitives?: boolean;
 };
 
-export function cached<K, A extends any[], R, T = any>(
-  fn: (this: T, key: K, ...args: A) => R,
-  options?: CachedOptions,
-): CachedFn<K, R, (this: T, key: K, ...args: A) => R> {
-  const weakRefs = options?.weakRefs ?? true;
-  const cachePrimitives = options?.cachePrimitives ?? false;
+export function cached<Key, Result, Arguments extends any[], This = any>(
+  implementation: (this: This, key: Key, ...args: Arguments) => Result,
+  options: CachedOptions = {},
+): CachedFn<Key, Result, (this: This, key: Key, ...args: Arguments) => Result> {
+  const { weakRefs = true, cachePrimitives = false } = options;
 
-  const cache = new Map<K, WeakRef<R & WeakKey> | R>();
+  const cache = new Map<Key, WeakRef<Result & WeakKey> | Result>();
 
-  const accessor = function (this: T, key: K, ...args: A): R {
+  const accessor = function (this: This, key: Key, ...args: Arguments): Result {
     if (cache.has(key)) {
       let value = cache.get(key);
 
@@ -73,7 +72,7 @@ export function cached<K, A extends any[], R, T = any>(
       }
     }
 
-    const value = fn.call(this, key, ...args);
+    const value = implementation.call(this, key, ...args);
 
     if (isContainer(value)) {
       if (weakRefs) {
@@ -94,7 +93,7 @@ export function cached<K, A extends any[], R, T = any>(
     get: () => cache.size,
   });
 
-  accessor.value = (key: K): R | undefined => {
+  accessor.value = (key: Key): Result | undefined => {
     if (!cache.has(key)) {
       return undefined;
     }
@@ -108,7 +107,7 @@ export function cached<K, A extends any[], R, T = any>(
     return value;
   };
 
-  accessor.has = (key: K): boolean => {
+  accessor.has = (key: Key): boolean => {
     if (!cache.has(key)) {
       return false;
     }
@@ -122,7 +121,7 @@ export function cached<K, A extends any[], R, T = any>(
     return true;
   };
 
-  accessor.delete = (key: K): boolean => cache.delete(key);
+  accessor.delete = (key: Key): boolean => cache.delete(key);
 
-  return <CachedFn<K, R, () => any>>accessor;
+  return <CachedFn<Key, Result, () => any>>accessor;
 }

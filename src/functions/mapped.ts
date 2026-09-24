@@ -1,6 +1,7 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { mappedKeys } from "@auaust/toolkit/mappedKeys";
 import { mappedValues } from "@auaust/toolkit/mappedValues";
+import { plain } from "@auaust/toolkit/plain";
 
 type RecordMappedKey<K, M> = M extends object
   ? K extends keyof M
@@ -97,7 +98,7 @@ export function mapped(
 
   const mapper = keyMapper(map);
 
-  const mapped = <any>{};
+  const mapped = plain();
 
   for (const key in source) {
     const newKey = mapper(key, source[key]);

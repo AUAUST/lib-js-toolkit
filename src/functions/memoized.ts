@@ -15,17 +15,21 @@ export type MemoizedFn<K, R, Fn> = Fn & {
   delete(key: K): boolean;
 };
 
-export function memoized<K, A extends any[], R, T = any>(
-  fn: (this: T, key: K, ...args: A) => R,
-): MemoizedFn<K, R, (this: T, key: K, ...args: A) => R> {
-  const cache = new Map<K, R>();
+export function memoized<Key, Result, Arguments extends any[], This = any>(
+  implementation: (this: This, key: Key, ...args: Arguments) => Result,
+): MemoizedFn<
+  Key,
+  Result,
+  (this: This, key: Key, ...args: Arguments) => Result
+> {
+  const cache = new Map<Key, Result>();
 
-  const accessor = function (this: T, key: K, ...args: A): R {
+  const accessor = function (this: This, key: Key, ...args: Arguments): Result {
     if (cache.has(key)) {
       return cache.get(key)!;
     }
 
-    const value = fn.call(this, key, ...args);
+    const value = implementation.call(this, key, ...args);
 
     cache.set(key, value);
 
@@ -38,11 +42,15 @@ export function memoized<K, A extends any[], R, T = any>(
     get: () => cache.size,
   });
 
-  accessor.value = (key: K): R | undefined => cache.get(key);
+  accessor.value = (key: Key): Result | undefined => cache.get(key);
 
-  accessor.has = (key: K): boolean => cache.has(key);
+  accessor.has = (key: Key): boolean => cache.has(key);
 
-  accessor.delete = (key: K): boolean => cache.delete(key);
+  accessor.delete = (key: Key): boolean => cache.delete(key);
 
-  return accessor as MemoizedFn<K, R, (this: T, key: K, ...args: A) => R>;
+  return accessor as MemoizedFn<
+    Key,
+    Result,
+    (this: This, key: Key, ...args: Arguments) => Result
+  >;
 }
