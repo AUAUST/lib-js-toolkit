@@ -205,4 +205,8 @@ describe("protocols", () => {
       false,
     );
   });
+
+  test("registers own protocols in the package namespace", () => {
+    expect(Symbol.keyFor(isEmpty)?.indexOf(__NAME__ + "/")).toBe(0);
+  });
 });

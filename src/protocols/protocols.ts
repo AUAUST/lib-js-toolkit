@@ -18,5 +18,5 @@ export function implementsProtocol(protocol: symbol, value: unknown): boolean {
 }
 
 export function protocolSymbol(name: string): symbol {
-  return Symbol.for(`@auaust/toolkit/protocols/${name}`);
+  return Symbol.for(`${__NAME__}/protocols/${name}`);
 }

@@ -1,9 +1,4 @@
 import type { Primitive } from "@auaust/toolkit";
-export {
-  implementsProtocol,
-  protocolSymbol,
-  type DefineProtocol,
-} from "./protocols";
 
 export interface ProtocolRegistry {
   [Symbol.asyncDispose]: AsyncDisposable;
@@ -51,3 +46,9 @@ export interface ProtocolRegistry {
     readonly [Symbol.unscopables]: object;
   };
 }
+
+export {
+  implementsProtocol,
+  protocolSymbol,
+  type DefineProtocol,
+} from "./protocols";
