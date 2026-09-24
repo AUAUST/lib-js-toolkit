@@ -39,6 +39,7 @@ export {
 } from "@auaust/toolkit/forwardMethods";
 export { forwardProperties } from "@auaust/toolkit/forwardProperties";
 export { identity } from "@auaust/toolkit/identity";
+export { isCallable } from "@auaust/toolkit/isCallable";
 export { isContainer } from "@auaust/toolkit/isContainer";
 export { isPlainObject } from "@auaust/toolkit/isPlainObject";
 export { isPropertyKey } from "@auaust/toolkit/isPropertyKey";

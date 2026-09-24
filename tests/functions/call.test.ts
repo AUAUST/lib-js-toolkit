@@ -60,6 +60,23 @@ describe("call()", () => {
     expect(fn).toHaveBeenCalledTimes(3);
   });
 
+  test("provides the correct this context at all times with `Callable`", () => {
+    const obj = {
+      other: 2,
+      get value() {
+        return this.other * 2;
+      },
+      method: function () {
+        return this.value * 2;
+      },
+      get [callable]() {
+        return this.method;
+      },
+    };
+
+    expect(call(obj)).toBe(8);
+  });
+
   test("preserves argument and return types through native call and apply", () => {
     const input = {
       [callable](value: number, suffix: string) {
