@@ -55,7 +55,7 @@ export { match } from "@auaust/toolkit/match";
 export { md5 } from "@auaust/toolkit/md5";
 export { measure, type MeasureResult } from "@auaust/toolkit/measure";
 export { measureAsync } from "@auaust/toolkit/measureAsync";
-export { memberValue } from "@auaust/toolkit/memberValue";
+export { memberValue, type MemberValue } from "@auaust/toolkit/memberValue";
 export { memoized, type MemoizedFn } from "@auaust/toolkit/memoized";
 export {
   methodForwarder,
