@@ -1,17 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "outDir": "dist",
     "declaration": true,
     "declarationDir": "dist/types",
     "declarationMap": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noUncheckedIndexedAccess": true,
+    "outDir": "dist",
     "paths": {
       "@auaust/toolkit/protocols/*": ["./src/protocols/*/index.ts"],
       "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
@@ -20,7 +17,11 @@
       "@auaust/toolkit/*": ["./src/functions/*.ts"],
       "@auaust/toolkit": ["./src/index.ts"]
     },
-    "types": ["node"]
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["node"],
+    "verbatimModuleSyntax": true
   },
   "exclude": ["node_modules", "dist"]
 }

@@ -55,7 +55,7 @@ export function getResolvedAliases() {
         ? "index"
         : alias.replace(packageName, "").replace(/^\//, "");
 
-    const path = resolveFromRoot(tsPath);
+    const path = resolveFromRoot(tsPath!);
 
     result.push({
       name,
@@ -108,7 +108,17 @@ export function getViteDevAliases() {
     }
   }
 
-  return replacements;
+  const slashes = (str: string) => str.match(/\//g)?.length || 0;
+
+  return replacements.sort((a, b) => {
+    const aReg = a.find instanceof RegExp;
+
+    if (aReg !== b.find instanceof RegExp) {
+      return aReg ? -1 : 1;
+    }
+
+    return slashes(b.find.toString()) - slashes(a.find.toString());
+  });
 }
 
 export function getOutDir(absolute = false) {
