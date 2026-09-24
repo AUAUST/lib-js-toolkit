@@ -1,18 +1,22 @@
+import { apply } from "@auaust/toolkit/apply";
 import type { MeasureResult } from "@auaust/toolkit/measure";
+import type { Callee } from "@auaust/toolkit/types";
 
-export async function measureAsync<T, A extends any[], This>(
+export async function measureAsync<Result, Arguments extends any[], This>(
   this: This,
-  fn: (this: This, ...args: A) => Promise<T> | T,
-  ...args: NoInfer<A>
-): Promise<MeasureResult<T>> {
+  callback: Callee<Arguments, Result, This>,
+  ...args: Arguments
+): Promise<MeasureResult<Result>> {
   const start = performance.now();
 
-  const result = await fn.apply(this, args);
+  const result = await apply.call(this, callback, args);
 
   const end = performance.now();
 
-  return Object.freeze({
+  return {
     result,
+    start,
+    end,
     duration: end - start,
-  });
+  };
 }

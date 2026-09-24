@@ -1,4 +1,4 @@
-import { call } from "@auaust/toolkit/call";
+import { apply } from "@auaust/toolkit/apply";
 import { isCallable } from "@auaust/toolkit/isCallable";
 import type {
   Callee,
@@ -43,10 +43,6 @@ export function applyMethod<
   method: Method,
   args: CallParameters<Method>,
 ): CallReturnType<Method>;
-export function applyMethod(target: any, method: any, args: any = []): unknown {
-  return call.call(
-    target,
-    isCallable(method) ? method : target[method],
-    ...args,
-  );
+export function applyMethod(target: any, method: any, args: any): unknown {
+  return apply.call(target, isCallable(method) ? method : target[method], args);
 }

@@ -1,21 +1,28 @@
+import { apply } from "@auaust/toolkit/apply";
+import type { Callee } from "@auaust/toolkit/types";
+
 export type MeasureResult<T> = {
-  result: T;
-  duration: number;
+  readonly result: T;
+  readonly start: number;
+  readonly end: number;
+  readonly duration: number;
 };
 
-export function measure<T, A extends any[], This>(
+export function measure<Result, Arguments extends any[], This>(
   this: This,
-  fn: (this: This, ...args: A) => T,
-  ...args: NoInfer<A>
-): MeasureResult<T> {
+  callback: Callee<Arguments, Result, This>,
+  ...args: Arguments
+): MeasureResult<Result> {
   const start = performance.now();
 
-  const result = fn.apply(this, args);
+  const result = apply.call(this, callback, args);
 
   const end = performance.now();
 
   return {
     result,
+    start,
+    end,
     duration: end - start,
   };
 }
