@@ -1,5 +1,24 @@
 # @auaust/toolkit
 
+## 0.2.2
+
+### Patch Changes
+
+- e7539f0: Add an extensible protocol registry
+- d5f441b: Add the `Emptiable` protocol and use is in `empty()`
+- 407c3fe: Add `isContainer()` to guard values that may hold own properties
+- fb12286: Add `isPlainObject()` which respects several edge cases
+- 7a9bde6: `stopwatch().lap()` returns the bare duration instead of lap object
+- 12bb34b: Add `Configurable` protocol, `count()` associated helper and use it for `empty()`
+- a3dcc03: Switch from `tsup` tò `tsdown`
+- 1f84895: Drop unused dependencies, cleanup the project's package.json
+- ab5ffc0: `debounce()` returns boolean whether the call cancelled a pending execution
+- a3dcc03: Expose all helpers as direct entrypoints
+- 7988d3b: Add a `BUILD` object that exposes some package metadata
+- d99eb24: Add `isSymbol()` and `isRegisteredSymbol()` to guard values that should be symbols
+- 0a88899: `throttle()` returns boolean whether the call was throttled
+- fee4807: Implement `IsLiteral` and drop `type-fest` from dev dependencies
+
 ## 0.2.1
 
 ### Patch Changes
