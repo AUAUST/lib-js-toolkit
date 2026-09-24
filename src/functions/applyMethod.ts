@@ -32,7 +32,7 @@ export function applyMethod<
   Return,
 >(
   target: Target,
-  method: Callee<Argument, Return, Target>,
+  callback: Callee<Argument, Return, Target>,
   args: Argument,
 ): Return;
 export function applyMethod<

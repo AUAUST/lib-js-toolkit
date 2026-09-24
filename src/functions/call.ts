@@ -9,38 +9,38 @@ import type {
 export interface Call {
   <Target extends Callee>(
     this: unknown,
-    target: Target,
+    callback: Target,
     ...args: CallParameters<Target>
   ): CallReturnType<Target>;
   call<Target extends Callee>(
     thisArg: unknown,
-    target: Target,
+    callback: Target,
     ...args: CallParameters<Target>
   ): CallReturnType<Target>;
   apply<Target extends Callee>(
     thisArg: unknown,
-    args: [target: Target, ...args: CallParameters<Target>],
+    args: [callback: Target, ...args: CallParameters<Target>],
   ): CallReturnType<Target>;
 }
 
 export const call: Call = function call(
   this: unknown,
-  target: unknown,
+  callback: unknown,
   ...args: unknown[]
 ): unknown {
   const receiver = this === call ? undefined : this;
 
-  if (implementsProtocol(callable, target)) {
+  if (implementsProtocol(callable, callback)) {
     return Reflect.apply(
-      target[callable],
-      receiver === undefined ? target : receiver,
+      callback[callable],
+      receiver === undefined ? callback : receiver,
       args,
     );
   }
 
-  if (typeof target === "function") {
-    return Reflect.apply(target, receiver, args);
+  if (typeof callback === "function") {
+    return Reflect.apply(callback, receiver, args);
   }
 
-  throw new TypeError(`${String(target)} is not callable`);
+  throw new TypeError(`${String(callback)} is not callable`);
 } as Call;

@@ -23,7 +23,7 @@ export function callMethod<
   Return,
 >(
   target: Target,
-  method: Callee<Argument, Return, Target>,
+  callback: Callee<Argument, Return, Target>,
   ...args: Argument
 ): Return;
 export function callMethod<
@@ -31,13 +31,13 @@ export function callMethod<
   Method extends Callee<any, any, Target>,
 >(
   target: Target,
-  method: Method,
+  callback: Method,
   ...args: CallParameters<Method>
 ): CallReturnType<Method>;
-export function callMethod(target: any, method: any, ...args: any): unknown {
+export function callMethod(target: any, callback: any, ...args: any): unknown {
   return call.call(
     target,
-    isCallable(method) ? method : target[method],
+    isCallable(callback) ? callback : target[callback],
     ...args,
   );
 }
