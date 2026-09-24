@@ -1,4 +1,4 @@
-import { type DefineProtocol, protocolSymbol } from "@auaust/toolkit/protocols";
+import { type DefineProtocol } from "@auaust/toolkit/protocols";
 
 declare module "@auaust/toolkit/protocols" {
   interface ProtocolRegistry extends DefineProtocol<
@@ -22,6 +22,4 @@ export type CallableParameters<T extends Callable<any, any>> =
 export type CallableReturnType<T extends Callable<any, any>> =
   T extends Callable<any, infer Result> ? Result : never;
 
-export const callable: unique symbol = protocolSymbol(
-  "callable",
-) as typeof callable;
+export const callable: unique symbol = Symbol.for("Protocol.callable");

@@ -1,4 +1,4 @@
-import { type DefineProtocol, protocolSymbol } from "@auaust/toolkit/protocols";
+import { type DefineProtocol } from "@auaust/toolkit/protocols";
 
 declare module "@auaust/toolkit/protocols" {
   interface ProtocolRegistry extends DefineProtocol<
@@ -11,6 +11,4 @@ export interface Countable {
   [countOf](): number;
 }
 
-export const countOf: unique symbol = protocolSymbol(
-  "countable",
-) as typeof countOf;
+export const countOf: unique symbol = Symbol.for("Protocol.countable");

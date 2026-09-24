@@ -1,4 +1,12 @@
+import { isContainer } from "@auaust/toolkit/isContainer";
 import type { Primitive } from "@auaust/toolkit/types";
+
+export type DefineProtocol<
+  Marker extends symbol,
+  Implementation extends { [K in Marker]: unknown },
+> = {
+  [Protocol in Marker]: Implementation;
+};
 
 export interface ProtocolRegistry {
   [Symbol.asyncDispose]: AsyncDisposable;
@@ -47,8 +55,11 @@ export interface ProtocolRegistry {
   };
 }
 
-export {
-  implementsProtocol,
-  protocolSymbol,
-  type DefineProtocol,
-} from "./protocols";
+export function implementsProtocol<Protocol extends keyof ProtocolRegistry>(
+  protocol: Protocol,
+  value: unknown,
+): value is ProtocolRegistry[Protocol];
+export function implementsProtocol(protocol: symbol, value: unknown): boolean;
+export function implementsProtocol(protocol: symbol, value: unknown): boolean {
+  return isContainer(value) && protocol in value;
+}
