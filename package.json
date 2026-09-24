@@ -20,14 +20,13 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "make": "tsx scripts/make.ts",
-    "build": "pnpm run test && pnpm run build:tsdown",
+    "build": "pnpm run build:tsdown && vitest run --config vitest.config.ts --typecheck --mode build --",
     "build:tsdown": "tsdown --config-loader tsx",
     "coverage": "vitest run --coverage",
     "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm run typecheck",
-    "test:dist": "pnpm run build:tsdown && vitest run --config vitest.config.ts --typecheck --mode build --",
     "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
     "watch": "vitest --config vitest.config.ts --typecheck --",
-    "ci:prepare": "pnpm run typecheck && pnpm run test:dist",
+    "ci:prepare": "pnpm run typecheck && pnpm run build",
     "ci:publish": "changeset publish"
   },
   "devDependencies": {
