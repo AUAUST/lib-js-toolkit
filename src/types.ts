@@ -29,6 +29,7 @@ export type { Methods } from "./types/Methods";
 export type { NullaryMethodName } from "./types/NullaryMethodName";
 export type { Primitive } from "./types/Primitive";
 export type { ReadonlyRecord } from "./types/ReadonlyRecord";
+export type { ResolvedCallable } from "./types/ResolvedCallable";
 export type { Simplify } from "./types/Simplify";
 export type { StringToNumber } from "./types/StringToNumber";
 export type { ToArrayKey } from "./types/ToArrayKey";

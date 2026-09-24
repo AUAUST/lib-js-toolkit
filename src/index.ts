@@ -97,6 +97,7 @@ export {
   type PropertyForwarderFor,
 } from "@auaust/toolkit/propertyForwarders";
 export { readonly } from "@auaust/toolkit/readonly";
+export { resolveCallable } from "@auaust/toolkit/resolveCallable";
 export { sleep } from "@auaust/toolkit/sleep";
 export {
   spy,
