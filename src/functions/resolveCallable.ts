@@ -1,15 +1,20 @@
 import { implementsProtocol } from "@auaust/toolkit/protocols";
-import { callable } from "@auaust/toolkit/protocols/callable";
-import type { Callee } from "@auaust/toolkit/types";
+import { callable, type Callable } from "@auaust/toolkit/protocols/callable";
+import type {
+  Callee,
+  CallSignature,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export function resolveCallable<T extends (...args: any[]) => any>(value: T): T;
-export function resolveCallable<Arguments extends any[], Result, This>(
-  value: Callee<Arguments, Result, This>,
-): (this: This, ...args: Arguments) => Result;
-export function resolveCallable<Arguments extends any[], Result, This>(
-  value: Callee<Arguments, Result, This>,
-  thisArg: This,
-): (...args: Arguments) => Result;
+export function resolveCallable<T extends Callable>(
+  value: T,
+  thisArg?: CallThisParameterType<T>,
+): OmitThisParameter<CallSignature<T>>;
+export function resolveCallable<T extends Callee>(
+  value: T,
+  thisArg: CallThisParameterType<T>,
+): OmitThisParameter<CallSignature<T>>;
+export function resolveCallable<T extends Callee>(value: T): CallSignature<T>;
 export function resolveCallable(
   value: Callee,
   thisArg?: any,
