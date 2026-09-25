@@ -1,4 +1,14 @@
-export type MemoizedFn<K, R, Fn> = Fn & {
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type { Callee } from "@auaust/toolkit/types";
+import type { Key } from "readline";
+
+export type MemoizedFn<
+  Key = any,
+  Result = any,
+  Implementation extends (...args: any[]) => Result = (
+    ...args: any[]
+  ) => Result,
+> = Implementation & {
   /** Clears every cached value. */
   clear(): void;
 
@@ -6,30 +16,34 @@ export type MemoizedFn<K, R, Fn> = Fn & {
   get size(): number;
 
   /** Returns a cached value without computing it. */
-  value(key: K): R | undefined;
+  value(key: Key): Result | undefined;
 
   /** Returns whether a value is cached for the given key. */
-  has(key: K): boolean;
+  has(key: Key): boolean;
 
   /** Deletes the cached value for the given key. */
-  delete(key: K): boolean;
+  delete(key: Key): boolean;
 };
 
-export function memoized<Key, Result, Arguments extends any[], This = any>(
-  implementation: (this: This, key: Key, ...args: Arguments) => Result,
-): MemoizedFn<
+export function memoized<
   Key,
   Result,
-  (this: This, key: Key, ...args: Arguments) => Result
-> {
-  const cache = new Map<Key, Result>();
+  Arguments extends [Key, ...any[]],
+  This = any,
+>(
+  implementation: Callee<Arguments, Result, This>,
+): MemoizedFn<Key, Result, (this: This, ...args: Arguments) => Result>;
+export function memoized(implementation: Callee): MemoizedFn {
+  const cache = new Map();
 
-  const accessor = function (this: This, key: Key, ...args: Arguments): Result {
+  const callback = resolveCallable(implementation);
+
+  const accessor = function (this: any, key: Key, ...args: any[]) {
     if (cache.has(key)) {
       return cache.get(key)!;
     }
 
-    const value = implementation.call(this, key, ...args);
+    const value = callback.call(this, key, ...args);
 
     cache.set(key, value);
 
@@ -42,15 +56,11 @@ export function memoized<Key, Result, Arguments extends any[], This = any>(
     get: () => cache.size,
   });
 
-  accessor.value = (key: Key): Result | undefined => cache.get(key);
+  accessor.value = (key: any) => cache.get(key);
 
-  accessor.has = (key: Key): boolean => cache.has(key);
+  accessor.has = (key: any): boolean => cache.has(key);
 
-  accessor.delete = (key: Key): boolean => cache.delete(key);
+  accessor.delete = (key: any): boolean => cache.delete(key);
 
-  return accessor as MemoizedFn<
-    Key,
-    Result,
-    (this: This, key: Key, ...args: Arguments) => Result
-  >;
+  return accessor as MemoizedFn;
 }

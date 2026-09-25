@@ -1,4 +1,5 @@
 import { memoized } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, test } from "vitest";
 
 describe("memoized()", () => {
@@ -47,5 +48,31 @@ describe("memoized()", () => {
 
     fn.clear();
     expect(fn.size).toBe(0);
+  });
+
+  test("supports `Callable` objects", () => {
+    const obj = {
+      [callable](mutliplier: number) {
+        return this.value * mutliplier;
+      },
+      value: 42,
+    };
+
+    const fn = memoized(obj);
+
+    expect(fn(2)).toBe(84);
+
+    expect(fn.has(2)).toBe(true);
+
+    expect(fn.call({ value: 2 }, 4)).toBe(8);
+
+    // TODO: ↓ ↓ ↓
+    // The has been cached by the above call so the
+    // new context does not affect the cached value.
+    // This is a rather unintuitive behavior and prone
+    // to errors. This should be taken into consideration
+    // at some point; maybe only eager `this` binding
+    // should be considered at `memoized`-call time.
+    expect(fn(4)).toBe(8);
   });
 });
