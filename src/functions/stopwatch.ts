@@ -1,3 +1,4 @@
+import { frozen } from "@auaust/toolkit/frozen";
 import { readonly } from "@auaust/toolkit/readonly";
 
 /**
@@ -90,7 +91,7 @@ export function stopwatch<Identifier>(
     previous = current;
 
     laps.push(
-      Object.freeze({
+      frozen({
         name: key,
         duration,
         timestamp: current - start,
@@ -104,7 +105,7 @@ export function stopwatch<Identifier>(
     return laps.at(index);
   }
 
-  return Object.freeze(
+  return frozen(
     Object.assign(stopwatch, {
       get start() {
         return start;
