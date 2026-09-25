@@ -129,5 +129,5 @@ export const BUILD = frozen({
   name: __NAME__,
   version: __VERSION__,
   license: __LICENSE__,
-  timestamp: __TIMESTAMP__,
+  timestamp: new Date(__TIMESTAMP__),
 });

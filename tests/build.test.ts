@@ -19,8 +19,8 @@ describe("The package", () => {
 
     expect(license).toBeTypeOf("string");
 
-    expect(timestamp).toBeTypeOf("string");
+    expect(timestamp).toBeInstanceOf(Date);
 
-    expect(new Date(timestamp).getTime()).not.toBeNaN();
+    expect(timestamp.getTime()).not.toBeNaN();
   });
 });
