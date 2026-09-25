@@ -1,5 +1,25 @@
 # @auaust/toolkit
 
+## 0.3.0
+
+### Minor Changes
+
+- 36b8184: Expand `stopwatch()` with configurable start timestamps, performance-clock selection, and pause, resume, stop, and restart timelines
+
+### Patch Changes
+
+- 8948e90: Add `resolveCallable()` which returns a normal function from a given function or callable object
+- aa2d4cc: The package's `BUILD` constant timestamp is a Date
+- ae32b91: `frozen()` freezes non-plain-objects as well
+- fb08896: `call()` and `apply()` are stricter with the type of `this`
+- eaa4ae1: Fix `value()` call signature to reconcile unions and return all possible types
+- 148afcd: Fix `measureAsync()` at the type level. Result is now the awaited type
+- ae32b91: Add `ReadonlyFunction` and `Signature` utility types
+- fa0692b: Add `[callable]` support to `memoized()`
+- 0aba00b: Add `StateError` and throw more specific errors
+- 27fbb31: Improved type level of `resolveCallable()` and add related utility types
+- 57da485: Fix `readonly()` that didn't respect some `Proxy` invariants
+
 ## 0.2.5
 
 ### Patch Changes
