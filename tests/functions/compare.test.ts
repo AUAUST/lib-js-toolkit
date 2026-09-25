@@ -163,7 +163,7 @@ describe("compare()", () => {
 
   test("throws error for unknown operator", () => {
     expect(() => compare(5, "unknown" as any, 5)).toThrow(
-      "Unknown operator: unknown",
+      "Unknown operator 'unknown'",
     );
   });
 
