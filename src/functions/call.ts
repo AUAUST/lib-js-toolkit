@@ -4,21 +4,22 @@ import type {
   Callee,
   CallParameters,
   CallReturnType,
+  CallThisParameterType,
 } from "@auaust/toolkit/types";
 
 export interface Call {
   <Target extends Callee>(
-    this: unknown,
+    this: CallThisParameterType<Target>,
     callback: Target,
     ...args: CallParameters<Target>
   ): CallReturnType<Target>;
   call<Target extends Callee>(
-    thisArg: unknown,
+    thisArg: CallThisParameterType<Target>,
     callback: Target,
     ...args: CallParameters<Target>
   ): CallReturnType<Target>;
   apply<Target extends Callee>(
-    thisArg: unknown,
+    thisArg: CallThisParameterType<Target>,
     args: [callback: Target, ...args: CallParameters<Target>],
   ): CallReturnType<Target>;
 }
