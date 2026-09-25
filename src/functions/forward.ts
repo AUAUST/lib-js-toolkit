@@ -49,7 +49,7 @@ function doForward(
   for (const forward of forwards.flat()) {
     const { name } = forward;
 
-    if (target.hasOwnProperty(name)) {
+    if (Object.hasOwn(target, name)) {
       throw new Error(
         `Existing property ${String(name)} cannot be forwarded on target.`,
       );
