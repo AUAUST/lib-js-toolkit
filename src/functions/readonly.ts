@@ -1,17 +1,17 @@
 import { ReadonlyError } from "@auaust/toolkit/errors";
+import { isContainer } from "@auaust/toolkit/isContainer";
 
 const readonlySymbol = Symbol("readonly");
 
-const readonlyHandler: ProxyHandler<object> = {
-  get(target, property, receiver) {
-    if (property === readonlySymbol) {
-      return true;
-    }
+const readonlyPropertyDescriptor: PropertyDescriptor = {
+  configurable: true,
+  enumerable: false,
+  writable: false,
+};
 
-    return Reflect.get(target, property, receiver);
-  },
+const readonlyHandler: ProxyHandler<object> = {
   has(target, property) {
-    return Reflect.has(target, property);
+    return Reflect.has(target, property) || property === readonlySymbol;
   },
   set(target, property) {
     throw new ReadonlyError(
@@ -33,11 +33,15 @@ const readonlyHandler: ProxyHandler<object> = {
       `Cannot prevent extensions on readonly '${target}'`,
     );
   },
-  isExtensible(target) {
-    return false;
-  },
   setPrototypeOf(target, prototype) {
     throw new ReadonlyError(`Cannot set prototype of readonly '${target}'`);
+  },
+  getOwnPropertyDescriptor(target, property) {
+    if (property === readonlySymbol) {
+      return readonlyPropertyDescriptor;
+    }
+
+    return Reflect.getOwnPropertyDescriptor(target, property);
   },
 };
 
@@ -47,11 +51,11 @@ function doReadonly<T extends readonly any[]>(array: T): Readonly<T>;
 function doReadonly<T>(array: T[]): ReadonlyArray<T>;
 function doReadonly<T extends object>(object: T): Readonly<T>;
 function doReadonly(object: any): any {
-  if (!object || (typeof object !== "object" && typeof object !== "function")) {
+  if (!isContainer(object)) {
     throw new TypeError("Expected an object or function");
   }
 
-  if (object[readonlySymbol] === true) {
+  if (Object.hasOwn(object, readonlySymbol)) {
     return object;
   }
 
@@ -66,9 +70,8 @@ function doReadonly(object: any): any {
   return proxy;
 }
 
-function isReadonly(object: unknown): boolean;
-function isReadonly(object: any): boolean {
-  return !!(object && object[readonlySymbol] === true);
+function isReadonly(object: unknown): boolean {
+  return object != null && Object.hasOwn(object, readonlySymbol);
 }
 
 export const readonly = Object.assign(doReadonly, {

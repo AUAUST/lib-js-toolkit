@@ -40,6 +40,20 @@ describe("readonly()", () => {
     expect(read.a).toBe(2);
   });
 
+  test("doesn't rewrap an already readonly object", () => {
+    const original = { a: 1 };
+
+    const read1 = readonly(original);
+
+    const read2 = readonly(read1);
+
+    const read3 = readonly(read2);
+
+    expect(read1).toBe(read2);
+
+    expect(read3).toBe(read2);
+  });
+
   test("shares the same proxy for the same object", () => {
     const original = { a: 1 };
 
@@ -52,9 +66,11 @@ describe("readonly()", () => {
 
   test("correctly identifies readonly objects", () => {
     const original = { a: 1 };
+
     const read = readonly(original);
 
     expect(readonly.isReadonly(read)).toBe(true);
+
     expect(readonly.isReadonly(original)).toBe(false);
   });
 
