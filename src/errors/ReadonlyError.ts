@@ -1,3 +1,5 @@
-export class ReadonlyError extends TypeError {
-  public readonly name = "ReadonlyError";
+import { StateError } from "./StateError";
+
+export class ReadonlyError extends StateError {
+  public readonly name: string = "ReadonlyError";
 }

@@ -1,4 +1,5 @@
 import { empty } from "@auaust/toolkit/empty";
+import { StateError } from "@auaust/toolkit/errors";
 import { filled } from "@auaust/toolkit/filled";
 import type { IsLiteral, KeyAsString } from "@auaust/toolkit/types";
 
@@ -72,8 +73,8 @@ export function compare(
     }
 
     if (customOperator == null) {
-      throw new Error(
-        `Attempted to use a disabled operator: ${String(operator)}`,
+      throw new StateError(
+        `Attempted to use a disabled operator '${String(operator)}'`,
       );
     }
 
@@ -153,6 +154,6 @@ export function compare(
     case ">=":
       return a >= b;
     default:
-      throw new Error(`Unknown operator: ${String(operator)}`);
+      throw new TypeError(`Unknown operator '${String(operator)}'`);
   }
 }

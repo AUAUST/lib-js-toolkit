@@ -1,3 +1,4 @@
+import { StateError } from "@auaust/toolkit/errors";
 import { forwardAs } from "@auaust/toolkit/forwardAs";
 import {
   methodForwarder,
@@ -50,7 +51,7 @@ function doForward(
     const { name } = forward;
 
     if (Object.hasOwn(target, name)) {
-      throw new Error(
+      throw new StateError(
         `Existing property ${String(name)} cannot be forwarded on target.`,
       );
     }
