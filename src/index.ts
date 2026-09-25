@@ -104,7 +104,13 @@ export {
   type SafeParameters,
   type SafeReturnType,
 } from "@auaust/toolkit/spy";
-export { stopwatch, type Stopwatch } from "@auaust/toolkit/stopwatch";
+export {
+  stopwatch,
+  type Lap,
+  type Period,
+  type Stopwatch,
+  type StopwatchOptions,
+} from "@auaust/toolkit/stopwatch";
 export { tap } from "@auaust/toolkit/tap";
 export { throttle } from "@auaust/toolkit/throttle";
 export { transform } from "@auaust/toolkit/transform";
