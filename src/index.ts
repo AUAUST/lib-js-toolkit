@@ -115,6 +115,8 @@ export {
   type ResolvableValue,
   type ResolvedValue,
   type ResolvableValue as Value,
+  type ValueInput,
+  type ValueResolver,
 } from "@auaust/toolkit/value";
 export { when } from "@auaust/toolkit/when";
 
