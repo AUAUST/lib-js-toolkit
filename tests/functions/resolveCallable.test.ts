@@ -25,4 +25,18 @@ describe("resolveCallable()", () => {
 
     expect(resolved()).toBe(42);
   });
+
+  test("supports binding a thisArg", () => {
+    const obj = {
+      [callable](this: { value: number }) {
+        return this.value;
+      },
+      value: 42,
+    };
+
+    // @ts-expect-error
+    const resolved = resolveCallable(obj, { value: "wrong" });
+
+    expect(resolved()).toBe("wrong");
+  });
 });

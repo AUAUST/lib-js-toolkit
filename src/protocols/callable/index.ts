@@ -12,7 +12,6 @@ export interface Callable<
   Result = any,
   This = any,
 > {
-  [callable](this: this, ...args: Arguments): Result;
   [callable](this: This, ...args: Arguments): Result;
 }
 
