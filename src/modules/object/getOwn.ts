@@ -1,6 +1,12 @@
 import { hasOwn } from "@auaust/toolkit/object";
+import type { PropertyValue } from "@auaust/toolkit/types";
 
-export function getOwn(target: any, key: PropertyKey) {
+export function getOwn<Target extends {}, Key extends PropertyKey>(
+  target: Target,
+  key: Key,
+): PropertyValue<Target, Key> | undefined;
+export function getOwn<Value>(target: {}, key: PropertyKey): Value | undefined;
+export function getOwn(target: any, key: PropertyKey): any {
   if (hasOwn(target, key)) {
     return target[key];
   }

@@ -25,8 +25,6 @@ export default defineConfig(({ mode }) => {
     alias.push(...getViteDevAliases());
   }
 
-  console.log("Alias configuration:", alias);
-
   return {
     resolve: {
       alias,

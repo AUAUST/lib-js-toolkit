@@ -1,6 +1,29 @@
-import { value } from "@auaust/toolkit/value";
+import type { InitializedProperty } from "@auaust/toolkit/types";
+import {
+  value,
+  type ResolvedValue,
+  type ValueInput,
+} from "@auaust/toolkit/value";
 
-export function getOrSet(target: any, key: PropertyKey, fallback: any) {
+export function getOrSet<Target extends object, Key extends PropertyKey, Value>(
+  target: Target,
+  key: Key,
+  fallback: (key: Key) => Value,
+): InitializedProperty<Target, Key, Value>;
+export function getOrSet<
+  Target extends object,
+  Key extends PropertyKey,
+  Fallback,
+>(
+  target: Target,
+  key: Key,
+  fallback: ValueInput<Fallback, [Key], undefined>,
+): InitializedProperty<Target, Key, ResolvedValue<Fallback>>;
+export function getOrSet(
+  target: any,
+  key: PropertyKey,
+  fallback: unknown,
+): any {
   if (!(key in target)) {
     target[key] = value(fallback, key);
   }
