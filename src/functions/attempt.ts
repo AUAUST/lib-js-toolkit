@@ -10,13 +10,13 @@ export type AttemptResult<T> =
       error: unknown;
     };
 
-export function attempt<Result, Arguments extends any[], This>(
+export function attempt<Result, Arguments extends readonly any[], This>(
   this: This,
   callback: (this: This, ...args: Arguments) => Result,
   ...args: Arguments
 ): AttemptResult<Result> {
   try {
-    const result = callback.apply(this, args);
+    const result = callback.call(this, ...args);
 
     return {
       success: true,

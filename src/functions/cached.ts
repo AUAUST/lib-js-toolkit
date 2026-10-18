@@ -45,7 +45,12 @@ export type CachedOptions = {
   cachePrimitives?: boolean;
 };
 
-export function cached<Key, Return, Arguments extends any[], This = any>(
+export function cached<
+  Key,
+  Return,
+  Arguments extends readonly any[],
+  This = any,
+>(
   implementation: (this: This, key: Key, ...args: Arguments) => Return,
   options: CachedOptions = {},
 ): CachedFn<Key, Return, (this: This, key: Key, ...args: Arguments) => Return> {

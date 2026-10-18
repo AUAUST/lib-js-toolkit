@@ -28,10 +28,10 @@ export type MemoizedFn<
 export function memoized<
   Key,
   Return,
-  Arguments extends [Key, ...any[]],
+  Arguments extends readonly [Key, ...any[]],
   This = any,
 >(
-  implementation: Callee<Arguments, Return, This>,
+  implementation: Callee<Return, Arguments, This>,
 ): MemoizedFn<Key, Return, (this: This, ...args: Arguments) => Return>;
 export function memoized(implementation: Callee): MemoizedFn {
   const cache = new Map();

@@ -1,3 +1,6 @@
+import { isCallable } from "@auaust/toolkit/isCallable";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+
 export type SafeReturnType<F> =
   NonNullable<F> extends (...args: any[]) => infer R ? R : undefined;
 
@@ -28,20 +31,19 @@ export function spy<
 export function spy(
   this: any,
   callback: any,
-  beforeHook?: any,
-  afterHook?: any,
+  before?: any,
+  after?: any,
 ): (...args: any[]) => any {
+  callback = isCallable(callback) ? resolveCallable(callback) : undefined;
+  before = isCallable(before) ? resolveCallable(before) : undefined;
+  after = isCallable(after) ? resolveCallable(after) : undefined;
+
   return function (this: any, ...args: any[]): any {
-    if (typeof beforeHook === "function") {
-      beforeHook.apply(this, args);
-    }
+    before?.apply(this, args);
 
-    const result =
-      typeof callback === "function" ? callback.apply(this, args) : undefined;
+    const result = callback?.apply(this, args);
 
-    if (typeof afterHook === "function") {
-      afterHook.call(this, result, ...args);
-    }
+    after?.call(this, result, ...args);
 
     return result;
   };

@@ -20,7 +20,7 @@ export interface Call {
   ): CallReturnType<Target>;
   apply<Target extends Callee>(
     thisArg: CallThisParameterType<Target>,
-    args: [callback: Target, ...args: CallParameters<Target>],
+    args: readonly [callback: Target, ...args: CallParameters<Target>],
   ): CallReturnType<Target>;
 }
 

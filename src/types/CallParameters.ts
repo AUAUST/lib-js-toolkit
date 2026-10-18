@@ -1,5 +1,9 @@
-import type { Callee, CallSignature } from "@auaust/toolkit/types";
+import type { Callable } from "@auaust/toolkit/protocols/callable";
+import type { Callee } from "@auaust/toolkit/types";
 
-export type CallParameters<Target extends Callee> = Readonly<
-  Parameters<CallSignature<Target>>
->;
+export type CallParameters<Target extends Callee> =
+  Callee extends Callable<any, infer Arguments>
+    ? readonly [...Arguments]
+    : Target extends (...args: infer Arguments) => any
+      ? readonly [...Arguments]
+      : never;

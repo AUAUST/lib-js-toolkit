@@ -7,65 +7,71 @@ import type {
 } from "@auaust/toolkit/types";
 
 export type ResolvableValue<
-  Value,
+  Result,
   Arguments extends readonly any[] = any,
   This = any,
-> = Value | Callee<Arguments, Value, This>;
+> = Result | Callee<Result, Arguments, This>;
 
 export type ResolvedValue<Value> = Value extends Callee
   ? CallReturnType<Value>
   : Value;
 
-export type ValueInput<Input, Arguments extends any[], This> = Input &
+export type ValueInput<Input, Arguments extends readonly any[], This> = Input &
   ([CallSignature<Input>] extends [(this: This, ...args: Arguments) => any]
     ? unknown
     : never);
 
 export interface ValueResolver {
-  <Value, Arguments extends any[], This = any>(
+  <Value, Arguments extends readonly any[], This = any>(
     this: This,
     input: (this: This, ...args: Arguments) => Value,
     ...args: Arguments
   ): Value;
-  <Value, Arguments extends any[], This = any>(
+  <Value, Arguments extends readonly any[], This = any>(
     this: This,
     input: ResolvableValue<Value, Arguments, This>,
     ...args: Arguments
   ): Value;
-  <Input, Arguments extends any[], This = any>(
+  <Input, Arguments extends readonly any[], This = any>(
     this: This,
     input: ValueInput<Input, Arguments, This>,
     ...args: Arguments
   ): ResolvedValue<Input>;
-  call<Value, Arguments extends any[], This = any>(
+  call<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
     input: (this: This, ...args: Arguments) => Value,
     ...args: Arguments
   ): Value;
-  call<Value, Arguments extends any[], This = any>(
+  call<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
     input: ResolvableValue<Value, Arguments, This>,
     ...args: Arguments
   ): Value;
-  call<Input, Arguments extends any[], This = any>(
+  call<Input, Arguments extends readonly any[], This = any>(
     thisArg: This,
     input: ValueInput<Input, Arguments, This>,
     ...args: Arguments
   ): ResolvedValue<Input>;
-  apply<Value, Arguments extends any[], This = any>(
+  apply<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
-    args: [
+    args: readonly [
       input: (this: This, ...args: Arguments) => Value,
       ...args: Arguments,
     ],
   ): Value;
-  apply<Value, Arguments extends any[], This = any>(
+  apply<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
-    args: [input: ResolvableValue<Value, Arguments, This>, ...args: Arguments],
+    args: readonly [
+      input: ResolvableValue<Value, Arguments, This>,
+      ...args: Arguments,
+    ],
   ): Value;
-  apply<Input, Arguments extends any[], This = any>(
+  apply<Input, Arguments extends readonly any[], This = any>(
     thisArg: This,
-    args: [input: ValueInput<Input, Arguments, This>, ...args: Arguments],
+    args: readonly [
+      input: ValueInput<Input, Arguments, This>,
+      ...args: Arguments,
+    ],
   ): ResolvedValue<Input>;
 }
 

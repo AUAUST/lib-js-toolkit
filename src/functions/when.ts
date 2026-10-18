@@ -3,7 +3,7 @@ import { type ResolvableValue, value } from "@auaust/toolkit/value";
 export function when<
   IfTrue = void,
   IfFalse = undefined,
-  Arguments extends any[] = any,
+  Arguments extends readonly any[] = any,
   This = any,
 >(
   this: This,

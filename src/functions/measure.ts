@@ -8,9 +8,9 @@ export type MeasureResult<T> = {
   readonly duration: number;
 };
 
-export function measure<Result, Arguments extends any[], This>(
+export function measure<Result, Arguments extends readonly any[], This>(
   this: This,
-  callback: Callee<Arguments, Result, This>,
+  callback: Callee<Result, Arguments, This>,
   ...args: Arguments
 ): MeasureResult<Result> {
   const start = performance.now();

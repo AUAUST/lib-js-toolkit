@@ -8,7 +8,7 @@ import {
 } from "@auaust/toolkit/types";
 
 export interface Apply {
-  <Target extends Callee<[]>>(
+  <Target extends Callee<any, readonly []>>(
     this: CallThisParameterType<Target>,
     callback: Target,
     args?: CallParameters<Target>,
@@ -18,7 +18,7 @@ export interface Apply {
     callback: Target,
     args: CallParameters<Target>,
   ): CallReturnType<Target>;
-  call<Target extends Callee<[]>>(
+  call<Target extends Callee<any, readonly []>>(
     thisArg: CallThisParameterType<Target>,
     callback: Target,
     args?: CallParameters<Target>,
@@ -28,13 +28,13 @@ export interface Apply {
     callback: Target,
     args: CallParameters<Target>,
   ): CallReturnType<Target>;
-  apply<Target extends Callee<[]>>(
+  apply<Target extends Callee<any, readonly []>>(
     thisArg: CallThisParameterType<Target>,
-    args: [callback: Target, args?: CallParameters<Target>],
+    args: readonly [callback: Target, args?: CallParameters<Target>],
   ): CallReturnType<Target>;
   apply<Target extends Callee>(
     thisArg: CallThisParameterType<Target>,
-    args: [callback: Target, args: CallParameters<Target>],
+    args: readonly [callback: Target, args: CallParameters<Target>],
   ): CallReturnType<Target>;
 }
 

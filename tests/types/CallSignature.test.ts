@@ -6,9 +6,9 @@ import type {
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { assertType, describe, expectTypeOf, test } from "vitest";
 
-type Accepts<Signature, Arguments extends any[]> = [Signature] extends [
-  (...args: Arguments) => any,
-]
+type Accepts<Signature, Arguments extends readonly any[]> = [
+  Signature,
+] extends [(...args: Arguments) => any]
   ? true
   : false;
 

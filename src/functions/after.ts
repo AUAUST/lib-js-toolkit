@@ -1,9 +1,9 @@
 import { apply } from "@auaust/toolkit/apply";
-import type { MaybePromise } from "@auaust/toolkit/types";
+import type { AsyncCallee } from "@auaust/toolkit/types";
 
-export function after<Result, Arguments extends any[], This>(
+export function after<Result, Arguments extends readonly any[], This>(
   this: This,
-  callback: (this: This, ...args: Arguments) => MaybePromise<Result>,
+  callback: AsyncCallee<Result, Arguments, This>,
   delay: number,
   ...args: Arguments
 ): Promise<Result> {
