@@ -68,4 +68,69 @@ describe("throttle()", () => {
     expect(fourthCall).toBe(false);
     expect(fifthCall).toBe(false);
   });
+
+  test("supports resetting to allow immediate subsequent calls", async () => {
+    const callback = vi.fn();
+
+    const throttledFunction = throttle(callback, 5);
+
+    throttledFunction(1);
+    throttledFunction(2);
+
+    expect(callback).toHaveBeenCalledExactlyOnceWith(1);
+
+    throttledFunction.reset();
+
+    const thirdCall = throttledFunction(3);
+    const fourthCall = throttledFunction(4);
+
+    expect(thirdCall).toBe(true);
+    expect(fourthCall).toBe(false);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith(3);
+  });
+
+  test("supports immediate calls that do not affect the throttling behavior", async () => {
+    const callback = vi.fn();
+
+    const throttledFunction = throttle(callback, 5);
+
+    const firstCall = throttledFunction(1);
+    const secondCall = throttledFunction(2);
+    const thirdCall = throttledFunction.immediate(3);
+
+    expect(firstCall).toBe(true);
+    expect(secondCall).toBe(false);
+    expect(thirdCall).toBeUndefined();
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback.mock.calls).toEqual([[1], [3]]);
+
+    await sleep(10);
+
+    const fourthCall = throttledFunction(4);
+    const fifthCall = throttledFunction(5);
+
+    expect(fourthCall).toBe(true);
+    expect(fifthCall).toBe(false);
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenLastCalledWith(4);
+  });
+
+  test("exposes the remaining cooldown", async () => {
+    const callback = vi.fn();
+
+    const throttledFunction = throttle(callback, 5);
+
+    throttledFunction(1);
+
+    const before = throttledFunction.remaining();
+
+    expect(before).toBeGreaterThan(0);
+
+    await sleep(10);
+
+    const after = throttledFunction.remaining();
+
+    expect(after).toBe(0);
+  });
 });
