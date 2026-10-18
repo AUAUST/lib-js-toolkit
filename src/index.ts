@@ -44,6 +44,7 @@ export { frozen } from "@auaust/toolkit/frozen";
 export { identity } from "@auaust/toolkit/identity";
 export { isCallable } from "@auaust/toolkit/isCallable";
 export { isContainer } from "@auaust/toolkit/isContainer";
+export { isFunction } from "@auaust/toolkit/isFunction";
 export { isPlainObject } from "@auaust/toolkit/isPlainObject";
 export { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 export { isRegisteredSymbol } from "@auaust/toolkit/isRegisteredSymbol";
