@@ -73,6 +73,7 @@
     "./identity": "./dist/identity.mjs",
     "./isCallable": "./dist/isCallable.mjs",
     "./isContainer": "./dist/isContainer.mjs",
+    "./isFunction": "./dist/isFunction.mjs",
     "./isPlainObject": "./dist/isPlainObject.mjs",
     "./isPropertyKey": "./dist/isPropertyKey.mjs",
     "./isRegisteredSymbol": "./dist/isRegisteredSymbol.mjs",

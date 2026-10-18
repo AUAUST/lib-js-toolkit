@@ -11,7 +11,9 @@ describe("applyMethod()", () => {
       },
     };
 
-    const result = applyMethod(target, "add", [3, "!"]);
+    const args = [3, "!"] as const;
+
+    const result = applyMethod(target, "add", args);
 
     expect(result).toBe("5!");
 

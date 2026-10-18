@@ -1,14 +1,16 @@
 import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
-export function on<Return, Arguments extends any[], This = any>(
+export function on<Return, Arguments extends readonly any[], This = any>(
   this: This,
   ...args: [
     ...Arguments,
     callback: (
       this: This,
-      ...args: NoInfer<{
-        [Index in keyof Arguments]: ResolvedValue<Arguments[Index]>;
-      }>
+      ...args: NoInfer<[
+        ...{
+          [Index in keyof Arguments]: ResolvedValue<Arguments[Index]>;
+        },
+      ]>
     ) => Return,
   ]
 ): Return;

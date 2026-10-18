@@ -29,6 +29,30 @@ describe("CallSignature", () => {
     >();
   });
 
+  test("extracts readonly protocol parameters with optional and rest entries", () => {
+    type Protocol = {
+      [callable](name: string, count?: number, ...flags: boolean[]): string;
+    };
+
+    expectTypeOf<CallParameters<Protocol>>().toEqualTypeOf<
+      readonly [name: string, count?: number, ...flags: boolean[]]
+    >();
+
+    expectTypeOf<CallParameters<Protocol | (() => number)>>().toEqualTypeOf<
+      | readonly [name: string, count?: number, ...flags: boolean[]]
+      | readonly []
+    >();
+  });
+
+  test("prefers protocol parameters over a native function signature", () => {
+    type Hybrid = (() => number) & {
+      [callable](name: string): string;
+    };
+
+    expectTypeOf<CallParameters<Hybrid>>().toEqualTypeOf<readonly [name: string]>();
+    expectTypeOf<CallReturnType<Hybrid>>().toEqualTypeOf<string>();
+  });
+
   test("preserves shared call constraints across unions", () => {
     type Target =
       | (() => number)

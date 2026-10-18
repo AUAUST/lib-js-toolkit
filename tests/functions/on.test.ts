@@ -22,6 +22,22 @@ describe("on()", () => {
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 
+  test("accepts an explicit readonly argument signature", () => {
+    const result = on<string, readonly [number, () => string]>(
+      42,
+      () => "value",
+      (number, string) => {
+        expectTypeOf(number).toEqualTypeOf<number>();
+        expectTypeOf(string).toEqualTypeOf<string>();
+
+        return `${string}: ${number}`;
+      },
+    );
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("value: 42");
+  });
+
   test("preserves 'this' context in the callback", () => {
     const context = { value: 42 };
 

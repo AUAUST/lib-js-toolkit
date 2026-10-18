@@ -11,7 +11,7 @@ import type {
 export type MemberValue<
   T extends object,
   K extends keyof T,
-> = T[K] extends infer M ? (M extends Callee<any, infer R> ? R : M) : never;
+> = T[K] extends infer M ? (M extends Callee<infer R> ? R : M) : never;
 
 export function memberValue<T extends object, const Name extends keyof T>(
   target: T,

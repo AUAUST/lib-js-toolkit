@@ -1,8 +1,41 @@
 import { apply, call } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
+import type { Callee } from "@auaust/toolkit/types";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("apply()", () => {
+  test("forwards generic readonly arguments to functions and protocol objects", () => {
+    function invoke<Result, Arguments extends readonly unknown[], This>(
+      receiver: This,
+      callback: Callee<Result, Arguments, This>,
+      args: Readonly<Arguments>,
+    ): Result {
+      return apply.call(receiver, callback, args);
+    }
+
+    const receiver = { prefix: "hello" };
+
+    const args = Object.freeze(["world", 2] as const);
+
+    const callback = function (
+      this: typeof receiver,
+      name: string,
+      count: number,
+    ) {
+      return `${this.prefix} ${name}`.repeat(count);
+    };
+
+    const protocol = { [callable]: callback };
+
+    const result = invoke(receiver, protocol, args);
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("hello worldhello world");
+    expect(invoke(receiver, callback, args)).toBe(result);
+    expect(apply.apply(receiver, [protocol, args] as const)).toBe(result);
+    expect(args).toEqual(["world", 2]);
+  });
+
   test("invokes functions with an argument tuple", () => {
     expect(apply(() => 42, [])).toBe(42);
 

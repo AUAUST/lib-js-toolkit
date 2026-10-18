@@ -28,11 +28,11 @@ export function applyMethod<
 ): MethodReturnType<Target, Key>;
 export function applyMethod<
   Target extends object,
-  Argument extends readonly any[],
   Return,
+  Argument extends readonly any[],
 >(
   target: Target,
-  callback: Callee<Argument, Return, Target>,
+  callback: Callee<Return, Argument, Target>,
   args: Argument,
 ): Return;
 export function applyMethod<
