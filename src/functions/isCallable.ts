@@ -7,7 +7,7 @@ export function isCallable(value: unknown): value is Callee;
 export function isCallable<
   Target extends object,
   Method extends MethodName<Target>,
->(value: Target, method: Method): true;
+>(value: Target, method: Method): boolean;
 export function isCallable<Method extends PropertyKey>(
   value: unknown,
   method: Method,

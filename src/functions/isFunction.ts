@@ -7,7 +7,7 @@ export function isFunction(
 export function isFunction<
   Target extends object,
   Method extends MethodName<Target>,
->(target: Target, method: Method): true;
+>(target: Target, method: Method): boolean;
 export function isFunction<Method extends PropertyKey>(
   target: unknown,
   method: Method,

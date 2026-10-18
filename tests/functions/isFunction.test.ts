@@ -1,5 +1,5 @@
 import { isFunction } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { assertType, describe, expect, expectTypeOf, test } from "vitest";
 
 describe("isFunction()", () => {
   test("returns `true` for functions", () => {
@@ -30,6 +30,26 @@ describe("isFunction()", () => {
     if (isFunction(obj, "method")) {
       expect(obj.method()).toBe(0);
       expect(obj.method(1, 2, 3)).toBe(6);
+
+      expectTypeOf<ReturnType<typeof obj.method>>().toBeUnknown();
+    }
+  });
+
+  test("respects known methods", () => {
+    const obj = {
+      method(...nums: number[]) {
+        return nums.reduce((sum, num) => sum + num, 0);
+      },
+    };
+
+    if (isFunction(obj, "method")) {
+      const method = obj.method;
+
+      expect(obj.method()).toBe(0);
+      expect(obj.method(1, 2, 3)).toBe(6);
+
+      assertType<typeof method>(obj.method);
+      assertType<ReturnType<typeof method>>(1 + 1);
     }
   });
 });
