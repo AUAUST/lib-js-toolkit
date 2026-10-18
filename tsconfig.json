@@ -13,7 +13,11 @@
       "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
       "@auaust/toolkit/errors": ["./src/errors.ts"],
       "@auaust/toolkit/types": ["./src/types.ts"],
-      "@auaust/toolkit/*": ["./src/utils/*.ts"],
+      "@auaust/toolkit/*": [
+        "./src/modules/*.ts",
+        "./src/modules/*/index.ts",
+        "./src/utils/*.ts"
+      ],
       "@auaust/toolkit": ["./src/index.ts"]
     },
     "skipLibCheck": true,

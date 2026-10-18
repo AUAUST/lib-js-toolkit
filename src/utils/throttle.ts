@@ -1,3 +1,4 @@
+import { max } from "@auaust/toolkit/math";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -87,7 +88,7 @@ export function throttle<Callback extends Callee>(
   function remaining(): number {
     const now = Date.now();
 
-    return Math.max(throttledUntil - now, 0);
+    return max(throttledUntil - now, 0);
   }
 
   return Object.assign(throttle, {

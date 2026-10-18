@@ -83,6 +83,7 @@
     "./mappedKeys": "./dist/mappedKeys.mjs",
     "./mappedValues": "./dist/mappedValues.mjs",
     "./match": "./dist/match.mjs",
+    "./math": "./dist/math.mjs",
     "./md5": "./dist/md5.mjs",
     "./measure": "./dist/measure.mjs",
     "./measureAsync": "./dist/measureAsync.mjs",
