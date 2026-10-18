@@ -70,7 +70,7 @@ export function pipe<This>(
   ...fns: PipeEntry<This, any, any>[]
 ): (this: This, value: any) => any;
 export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
-  return function (this: any, initialValue: unknown) {
+  return function pipe(this: any, initialValue: unknown) {
     return callbacks.reduce((carry, entry, step) => {
       let fn: TransformFn<any, unknown, unknown>;
 

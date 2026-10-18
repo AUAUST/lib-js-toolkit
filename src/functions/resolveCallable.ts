@@ -26,7 +26,7 @@ export function resolveCallable(
       return callback.bind(thisArg);
     }
 
-    return function (this: any, ...args: any[]) {
+    return function callable(this: any, ...args: any[]) {
       return Reflect.apply(callback, this === undefined ? value : this, args);
     };
   }

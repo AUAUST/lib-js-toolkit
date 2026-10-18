@@ -38,7 +38,7 @@ export function spy(
   before = isCallable(before) ? resolveCallable(before) : undefined;
   after = isCallable(after) ? resolveCallable(after) : undefined;
 
-  return function (this: any, ...args: any[]): any {
+  return function spy(this: any, ...args: any[]): any {
     before?.apply(this, args);
 
     const result = callback?.apply(this, args);

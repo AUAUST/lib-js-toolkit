@@ -2,37 +2,37 @@
  * Returns the throttled function. Calling the returned function returns
  * `true` if the call actually happened, `false` if it was throttled.
  */
-export function throttle<T, F extends (this: T, ...args: any[]) => any>(
+export function throttle<This, F extends (this: This, ...args: any[]) => any>(
   callback: F,
-  ms: number,
-): (this: T, ...args: Parameters<F>) => boolean {
-  const interval = Number(ms);
+  delay: number,
+): (this: This, ...args: Parameters<F>) => boolean {
+  const interval = Number(delay);
 
   if (Number.isNaN(interval)) {
-    throw new TypeError(`Invalid throttle interval: ${String(ms)}`, {
-      cause: ms,
+    throw new TypeError(`Invalid throttle interval: ${String(delay)}`, {
+      cause: delay,
     });
   }
 
   if (interval < 0) {
     throw new RangeError(`Throttle interval must not be negative`, {
-      cause: ms,
+      cause: delay,
     });
   }
 
   let throttledUntil = 0;
 
-  return function (this: T, ...args: Parameters<F>): boolean {
+  return function throttle(this: This, ...args: Parameters<F>): boolean {
     const now = Date.now();
 
-    const shouldRun = now >= throttledUntil;
-
-    if (shouldRun) {
+    if (now >= throttledUntil) {
       callback.call(this, ...args);
 
-      throttledUntil = now + ms;
+      throttledUntil = now + delay;
+
+      return true;
     }
 
-    return shouldRun;
+    return false;
   };
 }
