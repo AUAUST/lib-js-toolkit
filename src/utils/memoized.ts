@@ -1,3 +1,4 @@
+import { assign, defineGetter } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -69,11 +70,9 @@ export function memoized<Callback extends Callee>(
     return cache.delete(key);
   }
 
-  Object.defineProperty(accessor, "size", {
-    get: () => cache.size,
-  });
+  defineGetter(accessor, "size", () => cache.size);
 
-  return Object.assign(accessor, {
+  return assign(accessor, {
     clear,
     value,
     has,

@@ -5,6 +5,7 @@ import {
   propertyForwarder,
   propertyForwarders,
 } from "@auaust/toolkit";
+import { keys } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("forward()", () => {
@@ -84,7 +85,7 @@ describe("forward()", () => {
       {
         value: 6,
         method() {
-          return Object.keys(this);
+          return keys(this);
         },
       },
       forward.property(a, forward.as("aValue", "valueFromA")),
@@ -206,7 +207,7 @@ describe("forward()", () => {
       forward.property(source, "getter", { as: "doubleValue" }),
     );
 
-    expect(Object.keys(api)).toEqual(["read", "doubleValue"]);
+    expect(keys(api)).toEqual(["read", "doubleValue"]);
     expect(api.read()).toBe(42);
     expectTypeOf(api).toEqualTypeOf<{
       readonly answer: number;

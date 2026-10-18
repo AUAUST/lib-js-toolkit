@@ -1,4 +1,5 @@
 import { count } from "@auaust/toolkit";
+import { assign, create, defineProperty } from "@auaust/toolkit/object";
 import { countOf } from "@auaust/toolkit/protocols/countable";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
@@ -24,7 +25,7 @@ describe("count()", () => {
   test("counts own enumerable string keys on plain objects", () => {
     const inherited = { inherited: true };
 
-    const value = Object.assign(Object.create(inherited), {
+    const value = assign(create(inherited), {
       first: 1,
       second: 2,
     });
@@ -32,10 +33,10 @@ describe("count()", () => {
     // Objects with custom prototypes are intentionally not treated as records.
     expect(count(value)).toBeUndefined();
 
-    const record = Object.create(null);
+    const record = create(null);
     record.first = 1;
     record.second = 2;
-    Object.defineProperty(record, "hidden", { value: 3 });
+    defineProperty(record, "hidden", { value: 3 });
     record[Symbol("symbol-key")] = 4;
 
     expect(count({})).toBe(0);

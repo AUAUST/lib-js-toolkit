@@ -1,3 +1,4 @@
+import { assign } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -98,7 +99,7 @@ export function debounce<Callback extends Callee>(
     Reflect.apply(execute, this, args);
   }
 
-  return Object.assign(debounce, {
+  return assign(debounce, {
     cancel,
     flush,
     immediate,

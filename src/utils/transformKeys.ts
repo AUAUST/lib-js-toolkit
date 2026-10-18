@@ -3,6 +3,7 @@ import type {
   FunctionMappedKey,
   RecordMappedKey,
 } from "@auaust/toolkit/mappedKeys";
+import { keys } from "@auaust/toolkit/object";
 import type { Callee } from "@auaust/toolkit/types";
 
 export function transformKeys<Target extends object>(target: Target): Target;
@@ -42,7 +43,7 @@ export function transformKeys(target: any, map?: any) {
 
   const overrides = new Set<PropertyKey>();
 
-  for (const key of Object.keys(originals)) {
+  for (const key of keys(originals)) {
     const wasOverwritten = overrides.has(key);
 
     const value = originals[key];

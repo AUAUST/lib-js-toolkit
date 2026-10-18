@@ -1,3 +1,5 @@
+import { hasOwn, proto } from "@auaust/toolkit/object";
+
 const objectConstructorSource = Function.prototype.toString.call(Object);
 
 export function isPlainObject(
@@ -12,22 +14,22 @@ export function isPlainObject(
     return false;
   }
 
-  const prototype = Object.getPrototypeOf(input);
+  const prototype = proto(input);
 
   if (
     prototype === null ||
     prototype === Object.prototype ||
-    Object.getPrototypeOf(prototype) === null
+    proto(prototype) === null
   ) {
     return true;
   }
 
   if (prototype) {
-    if (Object.getPrototypeOf(prototype) !== null) {
+    if (proto(prototype) !== null) {
       return false;
     }
 
-    if (Object.hasOwn(prototype, "constructor")) {
+    if (hasOwn(prototype, "constructor")) {
       return (
         Function.prototype.toString.call(input.constructor) ===
         objectConstructorSource

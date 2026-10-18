@@ -1,6 +1,7 @@
 import { constant } from "@auaust/toolkit/constant";
 import { isCallable } from "@auaust/toolkit/isCallable";
 import { isNumber } from "@auaust/toolkit/isNumber";
+import { hasOwn } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -77,7 +78,7 @@ export function keyMapper(
   const map = mapper;
 
   function mapKey(key: PropertyKey) {
-    if (Object.hasOwn(map, key)) {
+    if (hasOwn(map, key)) {
       const result = map[key];
 
       if (isNumber(result)) {

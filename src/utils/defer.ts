@@ -1,3 +1,5 @@
+import { assign } from "@auaust/toolkit/object";
+
 export type PromiseResolver<Result = unknown> = (
   value: Result | PromiseLike<Result>,
 ) => void;
@@ -18,7 +20,7 @@ export function defer<Result>(): DeferPromise<Result> {
     reject = rej;
   });
 
-  return Object.assign(promise, {
+  return assign(promise, {
     resolve,
     reject,
   });

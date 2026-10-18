@@ -1,5 +1,6 @@
 import { isArray } from "@auaust/toolkit/isArray";
 import { isPlainObject } from "@auaust/toolkit/isPlainObject";
+import { freeze } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
 import type { ReadonlyFunction } from "@auaust/toolkit/types";
 
@@ -13,12 +14,12 @@ export function frozen<Target extends Function>(
 export function frozen<Target extends object>(value: Target): Readonly<Target>;
 export function frozen(value: any): any {
   if (isArray(value)) {
-    return Object.freeze([...value]);
+    return freeze([...value]);
   }
 
   if (isPlainObject(value)) {
-    return Object.freeze(plain(value));
+    return freeze(plain(value));
   }
 
-  return Object.freeze(value);
+  return freeze(value);
 }

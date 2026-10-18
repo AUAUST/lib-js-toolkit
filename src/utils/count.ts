@@ -2,6 +2,7 @@ import { isNumber } from "@auaust/toolkit/isNumber";
 import { isObject } from "@auaust/toolkit/isObject";
 import { isPlainObject } from "@auaust/toolkit/isPlainObject";
 import { isString } from "@auaust/toolkit/isString";
+import { keys } from "@auaust/toolkit/object";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 
@@ -34,7 +35,7 @@ export function count(input: unknown): number | undefined {
     }
 
     if (isPlainObject(input)) {
-      return Object.keys(input).length;
+      return keys(input).length;
     }
   }
 

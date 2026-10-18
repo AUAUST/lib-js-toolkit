@@ -1,4 +1,5 @@
 import { isObject } from "@auaust/toolkit/isObject";
+import { entries, finalize } from "@auaust/toolkit/object";
 
 let defaultTarget: Record<PropertyKey, any> | undefined;
 
@@ -36,7 +37,7 @@ function doExpose(
   target?: any,
 ): unknown {
   if (isObject(nameOrRecord)) {
-    for (const [k, v] of Object.entries(nameOrRecord)) {
+    for (const [k, v] of entries(nameOrRecord)) {
       doExpose(
         k,
         v,
@@ -57,7 +58,7 @@ function doExpose(
   return valueOrWhen;
 }
 
-export const expose: Expose = Object.assign(doExpose, {
+export const expose: Expose = finalize(doExpose, {
   target(target: Record<PropertyKey, any>) {
     defaultTarget = target;
   },

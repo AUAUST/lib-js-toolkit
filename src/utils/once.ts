@@ -1,3 +1,4 @@
+import { assign, defineGetters } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -47,15 +48,12 @@ export function once<Callback extends Callee<any, readonly []>>(
     value = undefined;
   }
 
-  Object.defineProperty(accessor, "value", {
-    get: () => value,
+  defineGetters(accessor, {
+    value: () => value,
+    called: () => called,
   });
 
-  Object.defineProperty(accessor, "called", {
-    get: () => called,
-  });
-
-  return Object.assign(accessor, {
+  return assign(accessor, {
     reset,
   }) as OnceFn<Return>;
 }

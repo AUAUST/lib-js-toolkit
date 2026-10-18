@@ -1,3 +1,4 @@
+export type { Constructor } from "./types/Constructor";
 export type { AsyncCallee } from "./types/AsyncCallee";
 export type { AsyncFn } from "./types/AsyncFn";
 export type { Callee } from "./types/Callee";

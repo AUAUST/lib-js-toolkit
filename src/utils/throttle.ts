@@ -1,4 +1,5 @@
 import { isNaN, max } from "@auaust/toolkit/math";
+import { assign } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -91,7 +92,7 @@ export function throttle<Callback extends Callee>(
     return max(throttledUntil - now, 0);
   }
 
-  return Object.assign(throttle, {
+  return assign(throttle, {
     reset,
     immediate,
     remaining,

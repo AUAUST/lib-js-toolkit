@@ -14,8 +14,8 @@
       "@auaust/toolkit/errors": ["./src/errors.ts"],
       "@auaust/toolkit/types": ["./src/types.ts"],
       "@auaust/toolkit/*": [
-        "./src/modules/*.ts",
         "./src/modules/*/index.ts",
+        "./src/modules/*.ts",
         "./src/utils/*.ts"
       ],
       "@auaust/toolkit": ["./src/index.ts"]

@@ -1,6 +1,7 @@
 import { call } from "@auaust/toolkit/call";
 import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { keys } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
 import { transformKeys } from "@auaust/toolkit/transformKeys";
 import { transformValues } from "@auaust/toolkit/transformValues";
@@ -111,7 +112,7 @@ export function transform(
 
   const overrides = new Set<PropertyKey>();
 
-  for (const key of Object.keys(originals)) {
+  for (const key of keys(originals)) {
     const wasOverwritten = overrides.has(key);
 
     const value = originals[key];

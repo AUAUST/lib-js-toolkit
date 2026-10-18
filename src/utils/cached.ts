@@ -1,4 +1,5 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
+import { assign, defineProperty } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -104,7 +105,7 @@ export function cached(
     cache.clear();
   }
 
-  Object.defineProperty(accessor, "size", {
+  defineProperty(accessor, "size", {
     get: () => cache.size,
   });
 
@@ -142,7 +143,7 @@ export function cached(
     return cache.delete(key);
   }
 
-  return Object.assign(accessor, {
+  return assign(accessor, {
     clear,
     value,
     has,

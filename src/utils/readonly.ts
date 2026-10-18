@@ -1,5 +1,6 @@
 import { ReadonlyError } from "@auaust/toolkit/errors";
 import { isContainer } from "@auaust/toolkit/isContainer";
+import { finalize, hasOwn } from "@auaust/toolkit/object";
 
 const readonlySymbol = Symbol("readonly");
 
@@ -57,7 +58,7 @@ function doReadonly(object: any): any {
     throw new TypeError("Expected an object or function");
   }
 
-  if (Object.hasOwn(object, readonlySymbol)) {
+  if (hasOwn(object, readonlySymbol)) {
     return object;
   }
 
@@ -73,9 +74,9 @@ function doReadonly(object: any): any {
 }
 
 function isReadonly(object: unknown): boolean {
-  return object != null && Object.hasOwn(object, readonlySymbol);
+  return object != null && hasOwn(object, readonlySymbol);
 }
 
-export const readonly = Object.assign(doReadonly, {
+export const readonly = finalize(doReadonly, {
   isReadonly,
 });

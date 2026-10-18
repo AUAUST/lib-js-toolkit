@@ -6,6 +6,7 @@ import {
   type ForwardedMethod,
 } from "@auaust/toolkit/methodForwarder";
 import { methodForwarders } from "@auaust/toolkit/methodForwarders";
+import { assign, defineProperties, hasOwn } from "@auaust/toolkit/object";
 import {
   propertyForwarder,
   type AnyPropertyForwarder,
@@ -50,7 +51,7 @@ function doForward(
   for (const forward of forwards.flat()) {
     const { name } = forward;
 
-    if (Object.hasOwn(target, name)) {
+    if (hasOwn(target, name)) {
       throw new StateError(
         `Existing property ${String(name)} cannot be forwarded on target.`,
       );
@@ -59,12 +60,12 @@ function doForward(
     descriptors[name] = forward;
   }
 
-  Object.defineProperties(target, descriptors);
+  defineProperties(target, descriptors);
 
   return target;
 }
 
-export const forward = Object.assign(doForward, {
+export const forward = assign(doForward, {
   properties: propertyForwarders,
   property: propertyForwarder,
   methods: methodForwarders,

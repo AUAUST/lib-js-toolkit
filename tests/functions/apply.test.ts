@@ -1,4 +1,5 @@
 import { apply, call } from "@auaust/toolkit";
+import { assign, freeze } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import type { Callee } from "@auaust/toolkit/types";
 import { describe, expect, expectTypeOf, test } from "vitest";
@@ -15,7 +16,7 @@ describe("apply()", () => {
 
     const receiver = { prefix: "hello" };
 
-    const args = Object.freeze(["world", 2] as const);
+    const args = freeze(["world", 2] as const);
 
     const callback = function (
       this: typeof receiver,
@@ -127,7 +128,7 @@ describe("apply()", () => {
   });
 
   test("prefers the protocol when a function implements it", () => {
-    const input = Object.assign(() => 42, {
+    const input = assign(() => 42, {
       [callable](value: string) {
         return value;
       },

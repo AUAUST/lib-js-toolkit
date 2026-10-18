@@ -1,5 +1,6 @@
 import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
+import { getOwnPropertyDescriptor } from "@auaust/toolkit/object";
 import type { IsNever } from "@auaust/toolkit/types";
 
 export type PropertyForwardingInput<
@@ -120,7 +121,7 @@ export function propertyForwarder(
 
   const sourceProperty = property as PropertyKey;
 
-  const descriptor = Object.getOwnPropertyDescriptor(source, sourceProperty);
+  const descriptor = getOwnPropertyDescriptor(source, sourceProperty);
 
   const writable =
     !options?.readonly &&

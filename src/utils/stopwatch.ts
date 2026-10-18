@@ -2,6 +2,7 @@ import { frozen } from "@auaust/toolkit/frozen";
 import { isNumber } from "@auaust/toolkit/isNumber";
 import { isUndefined } from "@auaust/toolkit/isUndefined";
 import { isNaN } from "@auaust/toolkit/math";
+import { defineGetters, finalize, freeze } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
 import { readonly } from "@auaust/toolkit/readonly";
 import { StateError } from "../errors/StateError";
@@ -178,24 +179,18 @@ export function stopwatch<Identifier>(
       start: state.start,
     });
 
-    Object.defineProperties(period, {
-      end: {
-        enumerable: true,
-        get() {
-          return state.end;
-        },
+    defineGetters(period, {
+      end: () => {
+        return state.end;
       },
-      duration: {
-        enumerable: true,
-        get() {
-          return (state.end ?? now()) - state.start;
-        },
+      duration: () => {
+        return (state.end ?? now()) - state.start;
       },
     });
 
     activePeriod = state;
 
-    periods.push(Object.freeze(period));
+    periods.push(freeze(period));
   }
 
   function elapsedSinceStart(at = now()): number {
@@ -281,35 +276,21 @@ export function stopwatch<Identifier>(
     return elapsedSinceStart();
   }
 
-  Object.assign(stopwatch, {
+  defineGetters(stopwatch, {
+    start: () => start,
+    running: () => running,
+    laps: () => readonly(laps),
+    periods: () => readonly(periods),
+  });
+
+  openPeriod(start);
+
+  return finalize(stopwatch, {
     clear,
     pause,
     resume,
     stop,
     restart,
     lap,
-  });
-
-  Object.defineProperties(stopwatch, {
-    start: {
-      enumerable: true,
-      get: () => start,
-    },
-    running: {
-      enumerable: true,
-      get: () => running,
-    },
-    laps: {
-      enumerable: true,
-      get: () => readonly(laps),
-    },
-    periods: {
-      enumerable: true,
-      get: () => readonly(periods),
-    },
-  });
-
-  openPeriod(start);
-
-  return Object.freeze(stopwatch) as Stopwatch<Identifier>;
+  }) as Stopwatch<Identifier>;
 }
