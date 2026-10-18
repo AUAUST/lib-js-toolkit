@@ -1,14 +1,8 @@
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callee } from "@auaust/toolkit/types";
+import type { Callee, Fn, Signature } from "@auaust/toolkit/types";
 import type { Key } from "readline";
 
-export type MemoizedFn<
-  Key = any,
-  Return = any,
-  Implementation extends (...args: any[]) => Return = (
-    ...args: any[]
-  ) => Return,
-> = Implementation & {
+export type Memoized<Key = any, Callback extends Fn = Fn> = Callback & {
   /** Clears every cached value. */
   clear(): void;
 
@@ -16,7 +10,7 @@ export type MemoizedFn<
   get size(): number;
 
   /** Returns a cached value without computing it. */
-  value(key: Key): Return | undefined;
+  value(key: Key): ReturnType<Callback> | undefined;
 
   /** Returns whether a value is cached for the given key. */
   has(key: Key): boolean;
@@ -25,25 +19,20 @@ export type MemoizedFn<
   delete(key: Key): boolean;
 };
 
-export function memoized<
-  Key,
-  Return,
-  Arguments extends readonly [Key, ...any[]],
-  This = any,
->(
-  implementation: Callee<Return, Arguments, This>,
-): MemoizedFn<Key, Return, (this: This, ...args: Arguments) => Return>;
-export function memoized(implementation: Callee): MemoizedFn {
+export function memoized<Key, Callable extends Callee>(
+  callback: Callee,
+): Memoized<Key, Signature<Callable>>;
+export function memoized(callback: Callee): Memoized {
   const cache = new Map();
 
-  const callback = resolveCallable(implementation);
+  const resolve = resolveCallable(callback);
 
   const accessor = function memoized(this: any, key: Key, ...args: any[]) {
     if (cache.has(key)) {
       return cache.get(key)!;
     }
 
-    const value = callback.call(this, key, ...args);
+    const value = resolve.call(this, key, ...args);
 
     cache.set(key, value);
 
@@ -62,5 +51,5 @@ export function memoized(implementation: Callee): MemoizedFn {
 
   accessor.delete = (key: any): boolean => cache.delete(key);
 
-  return accessor as MemoizedFn;
+  return accessor as Memoized;
 }

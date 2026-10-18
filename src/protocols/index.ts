@@ -3,7 +3,7 @@ import type { Primitive } from "@auaust/toolkit/types";
 
 export type DefineProtocol<
   Marker extends symbol,
-  Implementation extends { [K in Marker]: unknown },
+  Implementation extends Record<Marker, unknown>,
 > = {
   [Protocol in Marker]: Implementation;
 };

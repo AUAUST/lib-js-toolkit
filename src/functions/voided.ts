@@ -5,9 +5,9 @@ import type {
   CallThisParameterType,
 } from "@auaust/toolkit/types";
 
-export type Voided<Implementation extends Callee> = (
-  this: CallThisParameterType<Implementation>,
-  ...args: CallParameters<Implementation>
+export type Voided<Callback extends Callee> = (
+  this: CallThisParameterType<Callback>,
+  ...args: CallParameters<Callback>
 ) => void;
 
 export function voided<Callable extends Callee>(

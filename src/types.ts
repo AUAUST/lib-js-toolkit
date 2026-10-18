@@ -31,6 +31,7 @@ export type { MethodName } from "./types/MethodName";
 export type { MethodParameters } from "./types/MethodParameters";
 export type { MethodReturnType } from "./types/MethodReturnType";
 export type { Methods } from "./types/Methods";
+export type { NullaryFn } from "./types/NullaryFn";
 export type { NullaryMethodName } from "./types/NullaryMethodName";
 export type { Primitive } from "./types/Primitive";
 export type { ReadonlyFunction } from "./types/ReadonlyFunction";

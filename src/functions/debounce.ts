@@ -1,8 +1,8 @@
 import type { Fn, WithReturnType } from "@auaust/toolkit/types";
 
-export type Debounced<Implementation extends Fn> = WithReturnType<
+export type Debounced<Callback extends Fn> = WithReturnType<
   boolean,
-  Implementation
+  Callback
 > & {
   /**
    * Cancels any pending execution of the debounced function.
@@ -22,8 +22,8 @@ export type Debounced<Implementation extends Fn> = WithReturnType<
    * or using `flush()` instead to avoid duplicate executions.
    */
   immediate(
-    this: ThisParameterType<Implementation>,
-    ...args: Parameters<Implementation>
+    this: ThisParameterType<Callback>,
+    ...args: Parameters<Callback>
   ): void;
 };
 
@@ -33,17 +33,17 @@ export type Debounced<Implementation extends Fn> = WithReturnType<
  * only if it has not been called again during that delay. It returns a
  * `boolean` indicating whether the call replaced a pending execution.
  */
-export function debounce<Implementation extends Fn>(
-  callback: Implementation,
+export function debounce<Callback extends Fn>(
+  callback: Callback,
   delay: number,
-): Debounced<Implementation> {
+): Debounced<Callback> {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  let withThis: ThisParameterType<Implementation>;
-  let withArgs: Parameters<Implementation>;
+  let withThis: ThisParameterType<Callback>;
+  let withArgs: Parameters<Callback>;
 
   function debounce(
-    this: ThisParameterType<Implementation>,
-    ...args: Parameters<Implementation>
+    this: ThisParameterType<Callback>,
+    ...args: Parameters<Callback>
   ): boolean {
     const pending = clear();
 
@@ -85,8 +85,8 @@ export function debounce<Implementation extends Fn>(
   }
 
   function immediate(
-    this: ThisParameterType<Implementation>,
-    ...args: Parameters<Implementation>
+    this: ThisParameterType<Callback>,
+    ...args: Parameters<Callback>
   ): void {
     callback.apply(this, args);
   }
