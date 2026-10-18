@@ -1,4 +1,6 @@
 import { PipelineError } from "@auaust/toolkit/errors";
+import { isArray } from "@auaust/toolkit/isArray";
+import { isBoolean } from "@auaust/toolkit/isBoolean";
 import type { PipeCondition } from "@auaust/toolkit/pipe";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type { AsyncCallee } from "@auaust/toolkit/types";
@@ -74,14 +76,11 @@ export function pipeAsync(
   ...callbacks: AsyncPipeEntry<any, any, any>[]
 ) {
   const resolved = callbacks.map((entry) => {
-    if (Array.isArray(entry)) {
+    if (isArray(entry)) {
       const [condition, callback] = entry;
 
       return {
-        condition:
-          typeof condition === "boolean"
-            ? condition
-            : resolveCallable(condition),
+        condition: isBoolean(condition) ? condition : resolveCallable(condition),
         callback: resolveCallable(callback),
         original: callback,
       };
@@ -102,10 +101,9 @@ export function pipeAsync(
 
       const { condition, callback, original } = entry;
 
-      const shouldRun =
-        typeof condition === "boolean"
-          ? condition
-          : condition.call(this, carry);
+      const shouldRun = isBoolean(condition)
+        ? condition
+        : condition.call(this, carry);
 
       if (!shouldRun) {
         continue;

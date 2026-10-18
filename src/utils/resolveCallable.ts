@@ -1,3 +1,4 @@
+import { isFunction } from "@auaust/toolkit/isFunction";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { callable, type Callable } from "@auaust/toolkit/protocols/callable";
 import type {
@@ -33,7 +34,7 @@ export function resolveCallable(
     };
   }
 
-  if (typeof value === "function") {
+  if (isFunction(value)) {
     return thisArg === undefined ? value : value.bind(thisArg);
   }
 

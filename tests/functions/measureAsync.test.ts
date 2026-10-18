@@ -1,3 +1,4 @@
+import { isNumber } from "@auaust/toolkit/isNumber";
 import { measureAsync, sleep, type MeasureResult } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { assert, describe, expect, expectTypeOf, test, vi } from "vitest";
@@ -22,7 +23,7 @@ describe("measureAsync()", () => {
 
     expectTypeOf(result).toEqualTypeOf<number | string>();
 
-    expect(typeof duration).toBe("number");
+    expect(isNumber(duration)).toBe(true);
 
     expect(duration).toBeGreaterThanOrEqual(0);
 
@@ -38,7 +39,7 @@ describe("measureAsync()", () => {
 
     const { duration } = await measuring;
 
-    expect(typeof duration).toBe("number");
+    expect(isNumber(duration)).toBe(true);
 
     expect(duration).toBeGreaterThanOrEqual(20);
 
@@ -64,7 +65,7 @@ describe("measureAsync()", () => {
 
     expectTypeOf(result).toEqualTypeOf<number>();
 
-    expect(typeof duration).toBe("number");
+    expect(isNumber(duration)).toBe(true);
 
     expect(duration).toBeGreaterThanOrEqual(0);
 
@@ -77,7 +78,7 @@ describe("measureAsync()", () => {
       x: number,
       y: number,
     ) {
-      if (typeof this.initial !== "number") {
+      if (!isNumber(this.initial)) {
         throw new Error("initial must be a number");
       }
 
@@ -113,7 +114,7 @@ describe("measureAsync()", () => {
 
     expect(result).toBe(6);
 
-    expect(typeof duration).toBe("number");
+    expect(isNumber(duration)).toBe(true);
 
     expect(duration).toBeGreaterThanOrEqual(0);
 

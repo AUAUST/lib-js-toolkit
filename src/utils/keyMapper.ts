@@ -1,5 +1,6 @@
 import { constant } from "@auaust/toolkit/constant";
 import { isCallable } from "@auaust/toolkit/isCallable";
+import { isNumber } from "@auaust/toolkit/isNumber";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -63,7 +64,7 @@ export function keyMapper(
     function mapCallable(...args: [any, any]) {
       const result = resolve(...args);
 
-      if (typeof result === "number") {
+      if (isNumber(result)) {
         return String(result);
       }
 
@@ -79,7 +80,7 @@ export function keyMapper(
     if (Object.hasOwn(map, key)) {
       const result = map[key];
 
-      if (typeof result === "number") {
+      if (isNumber(result)) {
         return String(result);
       }
 

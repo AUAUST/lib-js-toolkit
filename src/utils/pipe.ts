@@ -1,4 +1,6 @@
 import { PipelineError } from "@auaust/toolkit/errors";
+import { isArray } from "@auaust/toolkit/isArray";
+import { isBoolean } from "@auaust/toolkit/isBoolean";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type { Callee } from "@auaust/toolkit/types";
 
@@ -70,14 +72,11 @@ export function pipe<This>(
 ): (this: This, value: any) => any;
 export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
   const resolved = callbacks.map((entry) => {
-    if (Array.isArray(entry)) {
+    if (isArray(entry)) {
       const [condition, callback] = entry;
 
       return {
-        condition:
-          typeof condition === "boolean"
-            ? condition
-            : resolveCallable(condition),
+        condition: isBoolean(condition) ? condition : resolveCallable(condition),
         callback: resolveCallable(callback),
         original: callback,
       };
@@ -94,10 +93,9 @@ export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
     return resolved.reduce((carry, entry, step) => {
       const { condition, callback, original } = entry;
 
-      const shouldRun =
-        typeof condition === "boolean"
-          ? condition
-          : condition.call(this, carry);
+      const shouldRun = isBoolean(condition)
+        ? condition
+        : condition.call(this, carry);
 
       if (!shouldRun) {
         return carry;

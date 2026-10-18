@@ -1,4 +1,7 @@
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isObject } from "@auaust/toolkit/isObject";
 import { isPlainObject } from "@auaust/toolkit/isPlainObject";
+import { isString } from "@auaust/toolkit/isString";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 
@@ -17,16 +20,16 @@ export function count(input: unknown): number | undefined {
     return result;
   }
 
-  if (typeof input === "string") {
+  if (isString(input)) {
     return input.length;
   }
 
-  if (typeof input === "object" && input !== null) {
-    if ("length" in input && typeof input.length === "number") {
+  if (isObject(input)) {
+    if ("length" in input && isNumber(input.length)) {
       return input.length; // Takes care of arrays, but also several array-like objects
     }
 
-    if ("size" in input && typeof input.size === "number") {
+    if ("size" in input && isNumber(input.size)) {
       return input.size; // Takes care of Maps and Sets
     }
 

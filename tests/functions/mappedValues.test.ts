@@ -1,3 +1,4 @@
+import { isArray } from "@auaust/toolkit/isArray";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { mappedValues } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
@@ -46,7 +47,7 @@ describe("mappedValues()", () => {
       2: 6,
     });
 
-    expect(Array.isArray(result)).toBe(false);
+    expect(isArray(result)).toBe(false);
   });
 
   test("accepts callable value transformers and preserves result types", () => {

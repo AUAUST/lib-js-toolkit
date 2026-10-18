@@ -1,3 +1,5 @@
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { compare } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
@@ -170,7 +172,7 @@ describe("compare()", () => {
 
   test("function operator", () => {
     const isGreaterThan = (a: unknown, b: unknown) => {
-      if (typeof a === "number" && typeof b === "number") {
+      if (isNumber(a) && isNumber(b)) {
         return a > b;
       }
       return false;
@@ -182,8 +184,12 @@ describe("compare()", () => {
 
   test("custom operators", () => {
     const customOperators = {
-      startsWithA: (a: unknown) => typeof a === "string" && a.startsWith("A"),
-      isEven: (a: unknown) => typeof a === "number" && a % 2 === 0,
+      startsWithA: (a: unknown) => {
+        return isString(a) && a.startsWith("A");
+      },
+      isEven: (a: unknown) => {
+        return isNumber(a) && a % 2 === 0;
+      },
       alwaysTrue: true,
       alwaysFalse: false,
     };

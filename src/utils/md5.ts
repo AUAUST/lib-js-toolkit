@@ -1,3 +1,5 @@
+import { isString } from "@auaust/toolkit/isString";
+
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
  * Digest Algorithm, as defined in RFC 1321.
@@ -11,7 +13,7 @@
  * @see https://github.com/enyo/md5/blob/master/index.js
  */
 export function md5(input: string): string {
-  if (typeof input !== "string") {
+  if (!isString(input)) {
     throw new TypeError("Input must be a string");
   }
 

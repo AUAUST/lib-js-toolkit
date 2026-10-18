@@ -1,4 +1,4 @@
-import { max } from "@auaust/toolkit/math";
+import { isNaN, max } from "@auaust/toolkit/math";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -41,7 +41,7 @@ export function throttle<Callback extends Callee>(
 ): Throttled<Callback> {
   const interval = Number(delay);
 
-  if (Number.isNaN(interval)) {
+  if (isNaN(interval)) {
     throw new TypeError(`Invalid throttle interval: ${String(delay)}`, {
       cause: delay,
     });

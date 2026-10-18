@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join, resolve } from "path";
+import { isString } from "../../src/utils/isString.js";
 import { pathRelativeFrom } from "./pathResolveFrom";
 
 const root = process.cwd();
@@ -45,15 +46,13 @@ export async function makeFromTemplate(
 export function codeFile(template: string, file: string | string[]) {
   return {
     template: `${template}.txt`,
-    destination:
-      join("src", ...(typeof file === "string" ? [file] : file)) + ".ts",
+    destination: join("src", ...(isString(file) ? [file] : file)) + ".ts",
   };
 }
 
 export function testFile(template: string, file: string | string[]) {
   return {
     template: `${template}.test.txt`,
-    destination:
-      join("tests", ...(typeof file === "string" ? [file] : file)) + ".test.ts",
+    destination: join("tests", ...(isString(file) ? [file] : file)) + ".test.ts",
   };
 }

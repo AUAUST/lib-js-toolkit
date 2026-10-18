@@ -1,3 +1,4 @@
+import { isFunction } from "@auaust/toolkit/isFunction";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import type {
@@ -39,7 +40,7 @@ export const call: Call = function call(
     );
   }
 
-  if (typeof callback === "function") {
+  if (isFunction(callback)) {
     return Reflect.apply(callback, receiver, args);
   }
 

@@ -1,3 +1,5 @@
+import { isObject } from "@auaust/toolkit/isObject";
+
 let defaultTarget: Record<PropertyKey, any> | undefined;
 
 export interface Expose extends Function {
@@ -33,13 +35,13 @@ function doExpose(
   whenOrTarget?: boolean | Record<PropertyKey, any>,
   target?: any,
 ): unknown {
-  if (nameOrRecord && typeof nameOrRecord === "object") {
+  if (isObject(nameOrRecord)) {
     for (const [k, v] of Object.entries(nameOrRecord)) {
       doExpose(
         k,
         v,
         valueOrWhen as boolean,
-        typeof whenOrTarget === "object" ? whenOrTarget : undefined,
+        isObject(whenOrTarget) ? whenOrTarget : undefined,
       );
     }
 

@@ -1,4 +1,7 @@
 import { frozen } from "@auaust/toolkit/frozen";
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isUndefined } from "@auaust/toolkit/isUndefined";
+import { isNaN } from "@auaust/toolkit/math";
 import { plain } from "@auaust/toolkit/plain";
 import { readonly } from "@auaust/toolkit/readonly";
 import { StateError } from "../errors/StateError";
@@ -111,7 +114,8 @@ type PeriodState = {
 function resolveOptions(options: StopwatchOptions) {
   const usePerformance =
     options.usePerformance ??
-    (typeof performance !== "undefined" && !(options.startAt instanceof Date));
+    (!isUndefined(globalThis.performance) &&
+      !(options.startAt instanceof Date));
 
   const now = usePerformance
     ? performance.now.bind(performance)
@@ -133,7 +137,7 @@ function resolveOptions(options: StopwatchOptions) {
     };
   }
 
-  if (Number.isNaN((startAt = Number(startAt)))) {
+  if (isNaN((startAt = Number(startAt)))) {
     throw new TypeError(`Invalid startAt value: '${options.startAt}'`);
   }
 
@@ -147,8 +151,10 @@ export function stopwatch<Identifier>(
   options: StopwatchOptions | Date | number = {},
 ): Stopwatch<Identifier> {
   const { now, startAt } = resolveOptions(
-    typeof options === "number" || options instanceof Date
-      ? { startAt: options }
+    isNumber(options) || options instanceof Date
+      ? {
+          startAt: options,
+        }
       : options,
   );
 

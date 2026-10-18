@@ -1,4 +1,5 @@
 import { call } from "@auaust/toolkit/call";
+import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { mappedKeys } from "@auaust/toolkit/mappedKeys";
 import { mappedValues } from "@auaust/toolkit/mappedValues";
@@ -92,7 +93,7 @@ export function mapped(
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
   transform?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ) {
-  if (!source || typeof source !== "object") {
+  if (!isObject(source)) {
     return source;
   }
 

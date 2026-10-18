@@ -1,4 +1,6 @@
 import { count } from "@auaust/toolkit/count";
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isString } from "@auaust/toolkit/isString";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
 import { value } from "@auaust/toolkit/value";
@@ -20,11 +22,11 @@ export function empty(input: any): boolean {
     return true;
   }
 
-  if (typeof input === "number") {
+  if (isNumber(input)) {
     return false;
   }
 
-  if (typeof input === "string") {
+  if (isString(input)) {
     return input.trim() === "";
   }
 

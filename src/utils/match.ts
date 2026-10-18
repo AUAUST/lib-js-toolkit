@@ -1,5 +1,8 @@
 import { call } from "@auaust/toolkit/call";
+import { isArray } from "@auaust/toolkit/isArray";
 import { isCallable } from "@auaust/toolkit/isCallable";
+import { isString } from "@auaust/toolkit/isString";
+import { isNaN } from "@auaust/toolkit/math";
 import type { Callee } from "@auaust/toolkit/types";
 import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
@@ -53,8 +56,8 @@ export function match(
 
   if (
     arguments.length <= 2 &&
-    Array.isArray(targetOrCases) &&
-    !Array.isArray(casesOrFallback)
+    isArray(targetOrCases) &&
+    !isArray(casesOrFallback)
   ) {
     target = undefined;
     cases = targetOrCases as readonly Case<unknown, unknown>[];
@@ -65,7 +68,7 @@ export function match(
   }
 
   for (let [predicates, result] of cases) {
-    if (!Array.isArray(predicates)) {
+    if (!isArray(predicates)) {
       predicates = [predicates];
     }
 
@@ -80,13 +83,13 @@ export function match(
 
       if (
         predicate instanceof RegExp &&
-        typeof target === "string" &&
+        isString(target) &&
         predicate.test(target)
       ) {
         return value(result);
       }
 
-      if (Number.isNaN(predicate) && Number.isNaN(target)) {
+      if (isNaN(predicate) && isNaN(target)) {
         return value(result);
       }
     }

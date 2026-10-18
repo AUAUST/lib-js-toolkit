@@ -2,7 +2,9 @@ import { call } from "@auaust/toolkit/call";
 import { empty } from "@auaust/toolkit/empty";
 import { StateError } from "@auaust/toolkit/errors";
 import { filled } from "@auaust/toolkit/filled";
+import { isBoolean } from "@auaust/toolkit/isBoolean";
 import { isCallable } from "@auaust/toolkit/isCallable";
+import { isNaN } from "@auaust/toolkit/math";
 import type { Callee, IsLiteral, KeyAsString } from "@auaust/toolkit/types";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
@@ -70,7 +72,7 @@ export function compare(
   if (customOperators && operator in customOperators) {
     const customOperator = customOperators[operator];
 
-    if (typeof customOperator === "boolean") {
+    if (isBoolean(customOperator)) {
       return customOperator;
     }
 
@@ -88,7 +90,7 @@ export function compare(
       return (
         (empty(a) && empty(b)) ||
         a.valueOf() == b.valueOf() ||
-        (Number.isNaN(a) && Number.isNaN(b))
+        (isNaN(a) && isNaN(b))
       );
     }
     case "==":
@@ -116,8 +118,6 @@ export function compare(
   a = a.valueOf();
   b = b.valueOf();
 
-  let comparable = true;
-
   switch (typeof a) {
     case "string":
     case "number":
@@ -125,11 +125,7 @@ export function compare(
     case "boolean":
       break;
     default:
-      comparable = false;
-  }
-
-  if (!comparable) {
-    return false;
+      return false;
   }
 
   switch (typeof b) {
@@ -139,11 +135,7 @@ export function compare(
     case "boolean":
       break;
     default:
-      comparable = false;
-  }
-
-  if (!comparable) {
-    return false;
+      return false;
   }
 
   switch (operator) {
@@ -155,7 +147,7 @@ export function compare(
       return a > b;
     case ">=":
       return a >= b;
-    default:
-      throw new TypeError(`Unknown operator '${String(operator)}'`);
   }
+
+  throw new TypeError(`Unknown operator '${String(operator)}'`);
 }

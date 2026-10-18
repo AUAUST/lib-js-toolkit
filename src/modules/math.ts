@@ -55,6 +55,14 @@ export const hypot = Math.hypot;
 
 export const imul = Math.imul;
 
+export const isNaN = Number.isNaN;
+
+export const isFinite = Number.isFinite;
+
+export const isInteger = Number.isInteger;
+
+export const isSafeInteger = Number.isSafeInteger;
+
 export const log = Math.log;
 
 export const log10 = Math.log10;

@@ -1,4 +1,5 @@
 import { call } from "@auaust/toolkit/call";
+import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { plain } from "@auaust/toolkit/plain";
 import { transformKeys } from "@auaust/toolkit/transformKeys";
@@ -86,13 +87,13 @@ export function transform(
   transformer?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ): Record<string, any>;
 export function transform(
-  target: any,
+  target: Record<PropertyKey, any>,
   map?:
     | Record<string, PropertyKey | boolean>
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
   transform?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ) {
-  if (!target || typeof target !== "object") {
+  if (!isObject(target)) {
     return target;
   }
 

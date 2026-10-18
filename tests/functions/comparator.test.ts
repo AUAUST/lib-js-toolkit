@@ -1,3 +1,5 @@
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { comparator } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
@@ -6,13 +8,13 @@ describe("comparator()", () => {
   test("returns a comparator function which holds the custom operators", () => {
     const customOperators = {
       startsWith: (a: unknown, b: unknown): boolean => {
-        if (typeof a === "string" && typeof b === "string") {
+        if (isString(a) && isString(b)) {
           return a.startsWith(b);
         }
         return false;
       },
       endsWith: (a: unknown, b: unknown): boolean => {
-        if (typeof a === "string" && typeof b === "string") {
+        if (isString(a) && isString(b)) {
           return a.endsWith(b);
         }
         return false;
@@ -30,7 +32,7 @@ describe("comparator()", () => {
   test("allows to disable specific operators", () => {
     const numberComparator = comparator({
       isEven: (a: unknown): boolean => {
-        if (typeof a === "number") {
+        if (isNumber(a)) {
           return a % 2 === 0;
         }
         return false;

@@ -1,3 +1,6 @@
+import { isArray } from "@auaust/toolkit/isArray";
+import { isNumber } from "@auaust/toolkit/isNumber";
+import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { match } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
@@ -37,9 +40,14 @@ describe("match()", () => {
 
   test("matches using functions", () => {
     const cases = [
-      [(x: unknown) => typeof x === "string", "a string"],
-      [(x: unknown) => typeof x === "number" && x > 10, "a big number"],
-      [(x: unknown) => Array.isArray(x), "an array"],
+      [(x: unknown) => isString(x), "a string"],
+      [
+        (x: unknown) => {
+          return isNumber(x) && x > 10;
+        },
+        "a big number",
+      ],
+      [(x: unknown) => isArray(x), "an array"],
     ] as const;
 
     expect(match("hello", cases)).toBe("a string");
@@ -104,7 +112,7 @@ describe("match()", () => {
   test("first matching case is returned", () => {
     const cases = [
       [[1, 2, 3], "small number"],
-      [(x: unknown) => typeof x === "number", "any number"],
+      [(x: unknown) => isNumber(x), "any number"],
       [/^\d+$/, "number string"],
     ] as const;
 

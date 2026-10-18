@@ -1,3 +1,4 @@
+import { isNumber } from "@auaust/toolkit/isNumber";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { measure, type MeasureResult } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
@@ -9,7 +10,7 @@ describe("measure()", () => {
     const { result, duration } = measure(fn, 2, 3);
 
     expect(result).toBe(5);
-    expect(typeof duration).toBe("number");
+    expect(isNumber(duration)).toBe(true);
     expect(duration).toBeGreaterThanOrEqual(0);
     expect(duration).toBeLessThan(25); // 25 is already quite high for such a simple function, but gives a bit of leeway
     expect(fn).toHaveBeenCalledWith(2, 3);

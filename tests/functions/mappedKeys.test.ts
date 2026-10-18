@@ -1,3 +1,4 @@
+import { isArray } from "@auaust/toolkit/isArray";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { mappedKeys } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
@@ -37,7 +38,7 @@ describe("mappedKeys()", () => {
       "item-1": 20,
     });
 
-    expect(Array.isArray(result)).toBe(false);
+    expect(isArray(result)).toBe(false);
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {
