@@ -22,11 +22,11 @@ export async function makeFromTemplate(
 
     await mkdir(resolve(file.destination, ".."), { recursive: true });
 
-    if (!override) {
+    nooverride: if (!override) {
       try {
         await readFile(file.destination, "utf-8");
       } catch {
-        continue;
+        break nooverride;
       }
 
       throw new Error(
