@@ -11,7 +11,7 @@ import type {
 } from "@auaust/toolkit/types";
 
 export function forwardMethods<
-  const Target extends object,
+  Target extends object,
   const Source extends object,
   const Methods extends MaybeArray<
     MethodForwardingInput<MethodName<Source>, PropertyKey>

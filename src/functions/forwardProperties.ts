@@ -7,7 +7,7 @@ import {
 import type { MaybeArray, MaybeArrayElement } from "@auaust/toolkit/types";
 
 export function forwardProperties<
-  const Target extends object,
+  Target extends object,
   const Source extends object,
   const Properties extends MaybeArray<
     PropertyForwardingInput<keyof Source, PropertyKey>

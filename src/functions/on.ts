@@ -1,6 +1,6 @@
 import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
-export function on<const Return, const Arguments extends any[], This = any>(
+export function on<Return, Arguments extends any[], This = any>(
   this: This,
   ...args: [
     ...Arguments,

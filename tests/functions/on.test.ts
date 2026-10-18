@@ -54,10 +54,15 @@ describe("on()", () => {
     const result = on(
       42,
       () => "value" as const,
-      (number, string) => `${string}: ${number}`,
+      (number, string) => {
+        expectTypeOf(number).toEqualTypeOf<number>();
+        expectTypeOf(string).toEqualTypeOf<"value">();
+
+        return `${string}: ${number}`;
+      },
     );
 
-    expectTypeOf(result).toEqualTypeOf<"value: 42">();
+    expectTypeOf(result).toEqualTypeOf<string>();
     expect(result).toBe("value: 42");
   });
 });
