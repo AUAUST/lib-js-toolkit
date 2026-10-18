@@ -1,10 +1,12 @@
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import { PipelineError } from "@auaust/toolkit/errors";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type { Callee } from "@auaust/toolkit/types";
 
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;
 
-export type PipeCondition<This, In> = boolean | Callee<boolean, [value: In], This>;
+export type PipeCondition<This, In> =
+  | boolean
+  | Callee<boolean, [value: In], This>;
 
 export type PipeEntry<This, In, Out> =
   | TransformFn<This, In, Out>
@@ -93,7 +95,9 @@ export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
       const { condition, callback, original } = entry;
 
       const shouldRun =
-        typeof condition === "boolean" ? condition : condition.call(this, carry);
+        typeof condition === "boolean"
+          ? condition
+          : condition.call(this, carry);
 
       if (!shouldRun) {
         return carry;

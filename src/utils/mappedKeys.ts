@@ -28,10 +28,10 @@ export function mappedKeys<
 };
 export function mappedKeys<
   Source extends object,
-  Mapper extends Callee<PropertyKey | boolean | null | undefined, [
-    key: keyof Source,
-    value: Source[keyof Source],
-  ]>,
+  Mapper extends Callee<
+    PropertyKey | boolean | null | undefined,
+    [key: keyof Source, value: Source[keyof Source]]
+  >,
 >(
   source: Source,
   mapper: Mapper,

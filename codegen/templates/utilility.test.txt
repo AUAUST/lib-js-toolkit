@@ -1,0 +1,8 @@
+import { {{util}} } from "@auaust/toolkit";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+describe.todo("{{util}}()", () => {
+  test("placeholder", () => {
+    expect({{util}}).not.toThrow();
+  });
+});

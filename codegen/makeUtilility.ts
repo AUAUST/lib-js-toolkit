@@ -3,19 +3,19 @@ import { codeFile, makeFromTemplate, testFile } from "./utils/make";
 import { prependLine } from "./utils/prependLine";
 import { replacer } from "./utils/replacer";
 
-export async function makeFunction(options: {
+export async function makeUtilility(options: {
   name: string;
   override?: boolean;
 }) {
-  const functionName = options.name;
+  const utililityName = options.name;
 
   const paths = await makeFromTemplate(
     [
-      codeFile("function", ["functions", functionName]),
-      testFile("function", ["functions", functionName]),
+      codeFile("utilility", ["utils", utililityName]),
+      testFile("utilility", ["utils", utililityName]),
     ],
     replacer({
-      function: functionName,
+      utilility: utililityName,
     }),
     {
       override: options.override,
@@ -24,10 +24,10 @@ export async function makeFunction(options: {
 
   const index = await prependLine(
     "src/index.ts",
-    `export { ${functionName} } from "@auaust/toolkit/${functionName}";`,
+    `export { ${utililityName} } from "@auaust/toolkit/${utililityName}";`,
   );
 
-  logChanges(`Function ${functionName} has been created.`, {
+  logChanges(`Function ${utililityName} has been created.`, {
     created: paths,
     updated: [index],
   });

@@ -1,7 +1,7 @@
 import { call } from "@auaust/toolkit/call";
 import { isCallable } from "@auaust/toolkit/isCallable";
-import { type ResolvedValue, value } from "@auaust/toolkit/value";
 import type { Callee } from "@auaust/toolkit/types";
+import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 type Predicate<T> = Callee<unknown, [value: T]>;
 

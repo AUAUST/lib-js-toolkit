@@ -22,29 +22,29 @@ export type SafeParameters<F> = [NonNullable<F>] extends [never]
 
 export function spy<Callback extends Callee>(
   callback: Callback,
-  beforeHook?:
-    | Callee<void, CallParameters<Callback>, CallThisParameterType<Callback>>
-    | null,
-  afterHook?:
-    | Callee<
-        void,
-        [result: CallReturnType<Callback>, ...args: CallParameters<Callback>],
-        CallThisParameterType<Callback>
-      >
-    | null,
+  beforeHook?: Callee<
+    void,
+    CallParameters<Callback>,
+    CallThisParameterType<Callback>
+  > | null,
+  afterHook?: Callee<
+    void,
+    [result: CallReturnType<Callback>, ...args: CallParameters<Callback>],
+    CallThisParameterType<Callback>
+  > | null,
 ): CallSignature<Callback>;
 export function spy<Callback extends Callee | null | undefined>(
   callback: Callback,
-  beforeHook?:
-    | Callee<void, SafeParameters<Callback>, CallThisParameterType<Callback>>
-    | null,
-  afterHook?:
-    | Callee<
-        void,
-        [result: SafeReturnType<Callback>, ...args: SafeParameters<Callback>],
-        CallThisParameterType<Callback>
-      >
-    | null,
+  beforeHook?: Callee<
+    void,
+    SafeParameters<Callback>,
+    CallThisParameterType<Callback>
+  > | null,
+  afterHook?: Callee<
+    void,
+    [result: SafeReturnType<Callback>, ...args: SafeParameters<Callback>],
+    CallThisParameterType<Callback>
+  > | null,
 ): (
   this: CallThisParameterType<Callback>,
   ...args: SafeParameters<Callback>

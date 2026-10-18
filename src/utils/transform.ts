@@ -33,25 +33,28 @@ export function transform<
 };
 export function transform<
   Target extends Record<string, any>,
-  Mapper extends Callee<PropertyKey | boolean | undefined, [
-    key: keyof Target,
-    value: Target[keyof Target],
-  ]>,
+  Mapper extends Callee<
+    PropertyKey | boolean | undefined,
+    [key: keyof Target, value: Target[keyof Target]]
+  >,
 >(
   target: Target,
   mapper: Mapper,
 ): Record<FunctionMappedKey<Target, Mapper>, Target[keyof Target]>;
 export function transform<
   Target extends Record<string, any>,
-  Mapper extends Callee<PropertyKey | boolean | undefined, [
-    key: keyof Target,
-    value: Target[keyof Target],
-  ]>,
-  Transformer extends Callee<any, [
-    value: Target[keyof Target],
-    key: FunctionMappedKey<Target, Mapper>,
-    sourceKey: keyof Target,
-  ]>,
+  Mapper extends Callee<
+    PropertyKey | boolean | undefined,
+    [key: keyof Target, value: Target[keyof Target]]
+  >,
+  Transformer extends Callee<
+    any,
+    [
+      value: Target[keyof Target],
+      key: FunctionMappedKey<Target, Mapper>,
+      sourceKey: keyof Target,
+    ]
+  >,
 >(
   target: Target,
   mapper: Mapper,
@@ -60,11 +63,14 @@ export function transform<
 export function transform<
   Target extends Record<string, any>,
   Map extends Partial<Record<keyof Target, PropertyKey | boolean>> | undefined,
-  Transformer extends Callee<any, [
-    value: Target[keyof Target],
-    key: RecordMappedKey<keyof Target, Map>,
-    sourceKey: keyof Target,
-  ]>,
+  Transformer extends Callee<
+    any,
+    [
+      value: Target[keyof Target],
+      key: RecordMappedKey<keyof Target, Map>,
+      sourceKey: keyof Target,
+    ]
+  >,
 >(
   target: Target,
   map?: Map,

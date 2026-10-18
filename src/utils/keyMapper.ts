@@ -1,6 +1,6 @@
+import { constant } from "@auaust/toolkit/constant";
 import { isCallable } from "@auaust/toolkit/isCallable";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import { constant } from "@auaust/toolkit/constant";
 import type {
   Callee,
   CallParameters,
@@ -46,7 +46,9 @@ export function keyMapper<
   Value = unknown,
   NewKey extends PropertyKey = PropertyKey,
 >(
-  mapper?: KeyMap<Key, NewKey> | Callee<KeyMapping<NewKey>, [key: Key, value: Value]>,
+  mapper?:
+    | KeyMap<Key, NewKey>
+    | Callee<KeyMapping<NewKey>, [key: Key, value: Value]>,
 ): KeyMapper<Key, Value, NormalizedKey<NewKey> & PropertyKey>;
 export function keyMapper(
   mapper?: KeyMap | Callee<KeyMapping, [key: PropertyKey, value: any]>,

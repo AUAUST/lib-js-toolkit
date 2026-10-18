@@ -33,25 +33,28 @@ export function mapped<
 };
 export function mapped<
   Source extends Record<string, any>,
-  Mapper extends Callee<PropertyKey | boolean | undefined, [
-    key: keyof Source,
-    value: Source[keyof Source],
-  ]>,
+  Mapper extends Callee<
+    PropertyKey | boolean | undefined,
+    [key: keyof Source, value: Source[keyof Source]]
+  >,
 >(
   source: Source,
   mapper: Mapper,
 ): Record<FunctionMappedKey<Source, Mapper>, Source[keyof Source]>;
 export function mapped<
   Source extends Record<string, any>,
-  Mapper extends Callee<PropertyKey | boolean | undefined, [
-    key: keyof Source,
-    value: Source[keyof Source],
-  ]>,
-  Transformer extends Callee<any, [
-    value: Source[keyof Source],
-    key: FunctionMappedKey<Source, Mapper>,
-    sourceKey: keyof Source,
-  ]>,
+  Mapper extends Callee<
+    PropertyKey | boolean | undefined,
+    [key: keyof Source, value: Source[keyof Source]]
+  >,
+  Transformer extends Callee<
+    any,
+    [
+      value: Source[keyof Source],
+      key: FunctionMappedKey<Source, Mapper>,
+      sourceKey: keyof Source,
+    ]
+  >,
 >(
   source: Source,
   mapper: Mapper,
@@ -60,11 +63,14 @@ export function mapped<
 export function mapped<
   Source extends Record<string, any>,
   Map extends Partial<Record<keyof Source, PropertyKey | false>> | undefined,
-  Transformer extends Callee<any, [
-    value: Source[keyof Source],
-    key: RecordMappedKey<keyof Source, Map>,
-    sourceKey: keyof Source,
-  ]>,
+  Transformer extends Callee<
+    any,
+    [
+      value: Source[keyof Source],
+      key: RecordMappedKey<keyof Source, Map>,
+      sourceKey: keyof Source,
+    ]
+  >,
 >(
   source: Source,
   map?: Map,

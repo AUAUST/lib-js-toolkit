@@ -1,6 +1,6 @@
 import { apply } from "@auaust/toolkit/apply";
-import { type ResolvedValue, value } from "@auaust/toolkit/value";
 import type { Callee } from "@auaust/toolkit/types";
+import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 export function on<Return, Arguments extends readonly any[], This = any>(
   this: This,
@@ -8,11 +8,13 @@ export function on<Return, Arguments extends readonly any[], This = any>(
     ...Arguments,
     callback: Callee<
       Return,
-      NoInfer<[
-        ...{
-          [Index in keyof Arguments]: ResolvedValue<Arguments[Index]>;
-        },
-      ]>,
+      NoInfer<
+        [
+          ...{
+            [Index in keyof Arguments]: ResolvedValue<Arguments[Index]>;
+          },
+        ]
+      >,
       This
     >,
   ]

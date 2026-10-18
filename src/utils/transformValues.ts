@@ -4,12 +4,15 @@ import type { Callee, CallReturnType } from "@auaust/toolkit/types";
 export function transformValues<Target extends object>(target: Target): Target;
 export function transformValues<
   Target extends object,
-  Transformer extends Callee<any, [
-    value: Target[keyof Target],
-    key: keyof Target,
-    /** @internal */
-    sourceKey: keyof Target,
-  ]>,
+  Transformer extends Callee<
+    any,
+    [
+      value: Target[keyof Target],
+      key: keyof Target,
+      /** @internal */
+      sourceKey: keyof Target,
+    ]
+  >,
 >(
   target: Target,
   transformer: Transformer,

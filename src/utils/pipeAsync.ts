@@ -1,9 +1,13 @@
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import { PipelineError } from "@auaust/toolkit/errors";
-import type { AsyncCallee } from "@auaust/toolkit/types";
 import type { PipeCondition } from "@auaust/toolkit/pipe";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type { AsyncCallee } from "@auaust/toolkit/types";
 
-export type AsyncTransformFn<This, In, Out> = AsyncCallee<Out, [value: In], This>;
+export type AsyncTransformFn<This, In, Out> = AsyncCallee<
+  Out,
+  [value: In],
+  This
+>;
 
 export type AsyncPipeEntry<This, In, Out> =
   | AsyncTransformFn<This, In, Out>
@@ -99,7 +103,9 @@ export function pipeAsync(
       const { condition, callback, original } = entry;
 
       const shouldRun =
-        typeof condition === "boolean" ? condition : condition.call(this, carry);
+        typeof condition === "boolean"
+          ? condition
+          : condition.call(this, carry);
 
       if (!shouldRun) {
         continue;
