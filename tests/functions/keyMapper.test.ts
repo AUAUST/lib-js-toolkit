@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { keyMapper } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
@@ -47,5 +48,21 @@ describe("keyMapper()", () => {
       "1" | boolean | null | undefined
     >();
     expectTypeOf(fromFunction("value", null)).toEqualTypeOf<"2">();
+  });
+
+  test("resolves retained callable mappers and normalizes numeric keys", () => {
+    const callback = {
+      offset: 2,
+      [callable](key: "entry", value: number) {
+        return value + this.offset;
+      },
+    };
+    const mapper = keyMapper(callback);
+
+    callback[callable] = () => 99;
+
+    expectTypeOf(mapper).parameter(0).toEqualTypeOf<"entry">();
+    expectTypeOf(mapper("entry", 4)).toEqualTypeOf<`${number}`>();
+    expect(mapper("entry", 4)).toBe("6");
   });
 });

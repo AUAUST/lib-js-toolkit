@@ -1,32 +1,32 @@
 let defaultTarget: Record<PropertyKey, any> | undefined;
 
 export interface Expose extends Function {
-  <T extends Record<PropertyKey, any>>(
-    pairs: T,
+  <Pairs extends Record<PropertyKey, any>>(
+    pairs: Pairs,
     when?: boolean,
     target?: Record<PropertyKey, any>,
-  ): T;
-  <T>(
+  ): Pairs;
+  <Value>(
     name: PropertyKey,
-    value: T,
+    value: Value,
     when?: boolean,
     target?: Record<PropertyKey, any>,
-  ): T;
+  ): Value;
 
   target(target: Record<PropertyKey, any>): void;
 }
 
-function doExpose<T extends Record<PropertyKey, any>>(
-  pairs: T,
+function doExpose<Pairs extends Record<PropertyKey, any>>(
+  pairs: Pairs,
   when?: boolean,
   target?: Record<PropertyKey, any>,
-): T;
-function doExpose<T>(
+): Pairs;
+function doExpose<Value>(
   name: PropertyKey,
-  value: T,
+  value: Value,
   when?: boolean,
   target?: Record<PropertyKey, any>,
-): T;
+): Value;
 function doExpose(
   nameOrRecord: PropertyKey | Record<PropertyKey, any>,
   valueOrWhen: unknown,

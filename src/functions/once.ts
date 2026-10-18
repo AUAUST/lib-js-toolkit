@@ -1,4 +1,9 @@
-import type { NullaryFn } from "@auaust/toolkit/types";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type {
+  Callee,
+  CallReturnType,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
 export type OnceFn<Return> = (() => Return) & {
   /**
@@ -22,16 +27,16 @@ export type OnceFn<Return> = (() => Return) & {
       }
   );
 
-export function once<Callback extends NullaryFn>(
-  this: ThisParameterType<Callback>,
+export function once<Callback extends Callee<any, readonly []>>(
+  this: CallThisParameterType<Callback>,
   callback: Callback,
-): OnceFn<ReturnType<Callback>> {
-  type Return = ReturnType<Callback>;
+): OnceFn<CallReturnType<Callback>> {
+  type Return = CallReturnType<Callback>;
 
   let value: Return | undefined;
   let called = false;
 
-  const resolve = callback.bind(this) as () => Return;
+  const resolve = resolveCallable(callback, this);
 
   const accessor = function once() {
     return called ? value : ((called = true), (value = resolve()));

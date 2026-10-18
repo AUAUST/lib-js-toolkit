@@ -1,9 +1,15 @@
-import type { Fn } from "@auaust/toolkit/types";
+import { apply } from "@auaust/toolkit/apply";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export type AttemptResult<T> =
+export type AttemptResult<Result> =
   | {
       success: true;
-      result: T;
+      result: Result;
       error: undefined;
     }
   | {
@@ -12,13 +18,13 @@ export type AttemptResult<T> =
       error: unknown;
     };
 
-export function attempt<Callback extends Fn>(
-  this: ThisParameterType<Callback>,
+export function attempt<Callback extends Callee>(
+  this: CallThisParameterType<Callback>,
   callback: Callback,
-  ...args: Parameters<Callback>
-): AttemptResult<ReturnType<Callback>> {
+  ...args: CallParameters<Callback>
+): AttemptResult<CallReturnType<Callback>> {
   try {
-    const result = callback.call(this, ...args);
+    const result = apply.call(this, callback, args);
 
     return {
       success: true,

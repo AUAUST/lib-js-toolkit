@@ -47,9 +47,11 @@ const readonlyHandler: ProxyHandler<object> = {
 
 const readonlyProxies = new WeakMap<object, object>();
 
-function doReadonly<T extends readonly any[]>(array: T): Readonly<T>;
-function doReadonly<T>(array: T[]): ReadonlyArray<T>;
-function doReadonly<T extends object>(object: T): Readonly<T>;
+function doReadonly<Target extends readonly any[]>(
+  array: Target,
+): Readonly<Target>;
+function doReadonly<Target>(array: Target[]): ReadonlyArray<Target>;
+function doReadonly<Target extends object>(object: Target): Readonly<Target>;
 function doReadonly(object: any): any {
   if (!isContainer(object)) {
     throw new TypeError("Expected an object or function");

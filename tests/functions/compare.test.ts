@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { compare } from "@auaust/toolkit";
 import { describe, expect, test } from "vitest";
 
@@ -214,5 +215,18 @@ describe("compare()", () => {
       // @ts-expect-error
       compare("test", "filled", undefined, customOperators),
     ).toThrow(/disabled/);
+  });
+
+  test("accepts callable custom operators", () => {
+    const operator = {
+      offset: 2,
+      [callable](left: unknown, right: unknown) {
+        return Number(left) + this.offset === right;
+      },
+    };
+    expect(compare(2, operator, 4)).toBe(true);
+    expect(compare(2, "custom", 4, {
+      custom: operator,
+    })).toBe(true);
   });
 });

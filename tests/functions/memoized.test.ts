@@ -182,4 +182,30 @@ describe("memoized()", () => {
 
     expect(optional("entry")).toBe("entry");
   });
+
+  test("retains the resolved protocol method and forwards explicit receivers", () => {
+    const callback = {
+      factor: 2,
+      [callable](key: string, count: number) {
+        return {
+          key,
+          value: this.factor * count,
+        };
+      },
+    };
+    const wrapped = memoized(callback);
+
+    callback[callable] = () => {
+      throw new Error("The retained method should be used");
+    };
+
+    expect(wrapped("own", 4).value).toBe(8);
+    expect(wrapped.call({
+      factor: 3,
+    }, "explicit", 4).value).toBe(12);
+
+    wrapped.clear();
+
+    expect(wrapped("own", 5).value).toBe(10);
+  });
 });

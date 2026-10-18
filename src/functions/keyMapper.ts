@@ -1,5 +1,12 @@
+import { isCallable } from "@auaust/toolkit/isCallable";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import { constant } from "@auaust/toolkit/constant";
-import type { Maybe } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  Maybe,
+} from "@auaust/toolkit/types";
 
 export type KeyMapping<NewKey extends PropertyKey = PropertyKey> = Maybe<
   NewKey | boolean
@@ -23,9 +30,11 @@ export type NormalizedKeyMapping<Mapping> = Mapping extends number
   : Mapping;
 
 export function keyMapper(): (key: PropertyKey, value: unknown) => true;
-export function keyMapper<Mapper extends (...args: any[]) => KeyMapping>(
+export function keyMapper<Mapper extends Callee<KeyMapping>>(
   mapper: Mapper,
-): (...args: Parameters<Mapper>) => NormalizedKeyMapping<ReturnType<Mapper>>;
+): (
+  ...args: CallParameters<Mapper>
+) => NormalizedKeyMapping<CallReturnType<Mapper>>;
 export function keyMapper<
   Key extends PropertyKey,
   NewKey extends PropertyKey = PropertyKey,
@@ -37,30 +46,36 @@ export function keyMapper<
   Value = unknown,
   NewKey extends PropertyKey = PropertyKey,
 >(
-  mapper?: KeyMap<Key, NewKey> | KeyMapper<Key, Value, NewKey>,
+  mapper?: KeyMap<Key, NewKey> | Callee<KeyMapping<NewKey>, [key: Key, value: Value]>,
 ): KeyMapper<Key, Value, NormalizedKey<NewKey> & PropertyKey>;
 export function keyMapper(
-  mapper?: KeyMap | KeyMapper<PropertyKey, any>,
+  mapper?: KeyMap | Callee<KeyMapping, [key: PropertyKey, value: any]>,
 ): KeyMapper<PropertyKey, any> {
   if (mapper == null) {
     return constant(true);
   }
 
-  if (typeof mapper === "function") {
-    return (...args: [any, any]) => {
-      const result = mapper(...args);
+  if (isCallable(mapper)) {
+    const resolve = resolveCallable(mapper);
+
+    function mapCallable(...args: [any, any]) {
+      const result = resolve(...args);
 
       if (typeof result === "number") {
         return String(result);
       }
 
       return result;
-    };
+    }
+
+    return mapCallable;
   }
 
-  return (key: PropertyKey) => {
-    if (Object.hasOwn(mapper, key)) {
-      const result = mapper[key];
+  const map = mapper;
+
+  function mapKey(key: PropertyKey) {
+    if (Object.hasOwn(map, key)) {
+      const result = map[key];
 
       if (typeof result === "number") {
         return String(result);
@@ -70,5 +85,7 @@ export function keyMapper(
     }
 
     return true;
-  };
+  }
+
+  return mapKey;
 }

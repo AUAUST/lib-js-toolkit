@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { once } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -98,5 +99,28 @@ describe("once()", () => {
     }
 
     expect(wrapped.value).toBe("entry");
+  });
+
+  test("resolves the callback once and binds the factory receiver", () => {
+    const callback = {
+      factor: 2,
+      [callable]() {
+        return this.factor;
+      },
+    };
+    const wrapped = once(callback);
+    const bound = once.call({
+      factor: 3,
+    }, callback);
+
+    callback[callable] = () => 99;
+
+    expectTypeOf(wrapped()).toEqualTypeOf<number>();
+    expect(wrapped()).toBe(2);
+    expect(bound()).toBe(3);
+
+    wrapped.reset();
+
+    expect(wrapped()).toBe(2);
   });
 });

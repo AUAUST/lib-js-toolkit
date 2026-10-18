@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { mappedValues } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
@@ -46,5 +47,24 @@ describe("mappedValues()", () => {
     });
 
     expect(Array.isArray(result)).toBe(false);
+  });
+
+  test("accepts callable value transformers and preserves result types", () => {
+    const transformer = {
+      factor: 2,
+      [callable](value: number, key: "entry", sourceKey: "entry") {
+        return `${value * this.factor}:${key}:${sourceKey}`;
+      },
+    };
+    const result = mappedValues({
+      entry: 4,
+    }, transformer);
+
+    expectTypeOf(result).toEqualTypeOf<{
+      entry: string;
+    }>();
+    expect(result).toEqual({
+      entry: "8:entry:entry",
+    });
   });
 });

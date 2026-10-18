@@ -1,7 +1,9 @@
+import { call } from "@auaust/toolkit/call";
 import { empty } from "@auaust/toolkit/empty";
 import { StateError } from "@auaust/toolkit/errors";
 import { filled } from "@auaust/toolkit/filled";
-import type { IsLiteral, KeyAsString } from "@auaust/toolkit/types";
+import { isCallable } from "@auaust/toolkit/isCallable";
+import type { Callee, IsLiteral, KeyAsString } from "@auaust/toolkit/types";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 
@@ -24,10 +26,10 @@ export type BinaryOperator =
   // The two values resolve to the same boolean state
   | "!!";
 
-export type OperatorFn = (a: unknown, b: unknown) => boolean;
+export type OperatorFn = Callee<boolean, [a: unknown, b: unknown]>;
 
-export type CustomOperators<T extends string = string> = Record<
-  T,
+export type CustomOperators<OperatorKey extends string = string> = Record<
+  OperatorKey,
   OperatorFn | boolean | null | undefined
 >;
 
@@ -61,8 +63,8 @@ export function compare(
   b?: any,
   customOperators?: CustomOperators,
 ): boolean {
-  if (typeof operator === "function") {
-    return !!operator(a, b);
+  if (isCallable(operator)) {
+    return !!call(operator, a, b);
   }
 
   if (customOperators && operator in customOperators) {
@@ -78,7 +80,7 @@ export function compare(
       );
     }
 
-    return !!customOperator(a, b);
+    return !!call(customOperator, a, b);
   }
 
   switch (operator) {

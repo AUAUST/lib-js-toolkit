@@ -1,8 +1,10 @@
-export class PipelineError<T = unknown> extends Error {
+import type { Callee } from "@auaust/toolkit/types";
+
+export class PipelineError<Input = unknown> extends Error {
   public readonly name = "PipelineError";
 
   /** The function that caused the error in the pipeline. */
-  public readonly fn: Function;
+  public readonly fn: Callee;
 
   /** The index of the function in the pipeline where the error occurred. */
   public readonly step: number;
@@ -11,7 +13,7 @@ export class PipelineError<T = unknown> extends Error {
   public readonly thisValue: unknown;
 
   /** The input that was provided to the function that caused the error. */
-  public readonly input: T;
+  public readonly input: Input;
 
   constructor({
     fn,
@@ -20,9 +22,9 @@ export class PipelineError<T = unknown> extends Error {
     thisValue,
     cause,
   }: {
-    fn: Function;
+    fn: Callee;
     step: number;
-    input: T;
+    input: Input;
     thisValue: unknown;
     cause: unknown;
   }) {

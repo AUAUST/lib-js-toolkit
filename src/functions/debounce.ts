@@ -1,9 +1,14 @@
-import type { Fn, WithReturnType } from "@auaust/toolkit/types";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type {
+  Callee,
+  CallParameters,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export type Debounced<Callback extends Fn> = WithReturnType<
-  boolean,
-  Callback
-> & {
+export type Debounced<Callback extends Callee> = ((
+  this: CallThisParameterType<Callback>,
+  ...args: CallParameters<Callback>
+) => boolean) & {
   /**
    * Cancels any pending execution of the debounced function.
    * Returns `true` if a pending execution was canceled.
@@ -22,8 +27,8 @@ export type Debounced<Callback extends Fn> = WithReturnType<
    * or using `flush()` instead to avoid duplicate executions.
    */
   immediate(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): void;
 };
 
@@ -33,17 +38,19 @@ export type Debounced<Callback extends Fn> = WithReturnType<
  * only if it has not been called again during that delay. It returns a
  * `boolean` indicating whether the call replaced a pending execution.
  */
-export function debounce<Callback extends Fn>(
+export function debounce<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Debounced<Callback> {
+  const execute = resolveCallable(callback);
+
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  let withThis: ThisParameterType<Callback>;
-  let withArgs: Parameters<Callback>;
+  let withThis: CallThisParameterType<Callback>;
+  let withArgs: CallParameters<Callback>;
 
   function debounce(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): boolean {
     const pending = clear();
 
@@ -69,7 +76,7 @@ export function debounce<Callback extends Fn>(
     const pending = clear();
 
     if (pending) {
-      callback.apply(withThis, withArgs);
+      Reflect.apply(execute, withThis, withArgs);
       withThis = undefined!;
       withArgs = undefined!;
     }
@@ -85,10 +92,10 @@ export function debounce<Callback extends Fn>(
   }
 
   function immediate(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): void {
-    callback.apply(this, args);
+    Reflect.apply(execute, this, args);
   }
 
   return Object.assign(debounce, {

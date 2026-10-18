@@ -1,5 +1,6 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { match } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("match()", () => {
   test("matches exact values", () => {
@@ -152,5 +153,34 @@ describe("match()", () => {
         () => ["fallback"]
       )
     ).toEqual(["fallback"]);
+  });
+
+  test("invokes callable predicates, results, and fallbacks", () => {
+    const predicate = {
+      expected: 4,
+      [callable](value: number) {
+        return value === this.expected;
+      },
+    };
+    const result = {
+      [callable]() {
+        return "matched" as const;
+      },
+    };
+    const fallback = {
+      [callable]() {
+        return "fallback" as const;
+      },
+    };
+    const matched = match(4, [[[predicate], result]], fallback);
+
+    expectTypeOf(matched).toEqualTypeOf<"matched" | "fallback">();
+    expect(matched).toBe("matched");
+    expect(match(5, [[predicate, result]], fallback)).toBe("fallback");
+    expect(match([[{
+      [callable](value: undefined) {
+        return value === undefined;
+      },
+    }, result]])).toBe("matched");
   });
 });

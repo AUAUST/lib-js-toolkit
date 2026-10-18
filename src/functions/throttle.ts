@@ -1,9 +1,14 @@
-import type { Fn, WithReturnType } from "@auaust/toolkit/types";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type {
+  Callee,
+  CallParameters,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export type Throttled<Callback extends Fn> = WithReturnType<
-  boolean,
-  Callback
-> & {
+export type Throttled<Callback extends Callee> = ((
+  this: CallThisParameterType<Callback>,
+  ...args: CallParameters<Callback>
+) => boolean) & {
   /**
    * Clears the cooldown and makes any subsequent call happen immediately.
    */
@@ -14,8 +19,8 @@ export type Throttled<Callback extends Fn> = WithReturnType<
    * It doesn't set or affect the cooldown of other calls.
    */
   immediate(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): void;
 
   /**
@@ -29,7 +34,7 @@ export type Throttled<Callback extends Fn> = WithReturnType<
  * Returns the throttled function. Calling the returned function returns
  * `true` if the call actually happened, `false` if it was throttled.
  */
-export function throttle<Callback extends Fn>(
+export function throttle<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Throttled<Callback> {
@@ -47,6 +52,8 @@ export function throttle<Callback extends Fn>(
     });
   }
 
+  const execute = resolveCallable(callback);
+
   let throttledUntil = 0;
 
   function reset(): void {
@@ -54,13 +61,13 @@ export function throttle<Callback extends Fn>(
   }
 
   function throttle(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): boolean {
     const now = Date.now();
 
     if (now >= throttledUntil) {
-      callback.call(this, ...args);
+      execute.call(this, ...args);
 
       throttledUntil = now + delay;
 
@@ -71,10 +78,10 @@ export function throttle<Callback extends Fn>(
   }
 
   function immediate(
-    this: ThisParameterType<Callback>,
-    ...args: Parameters<Callback>
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
   ): void {
-    callback.call(this, ...args);
+    execute.call(this, ...args);
   }
 
   function remaining(): number {

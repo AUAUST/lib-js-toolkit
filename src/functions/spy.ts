@@ -1,52 +1,52 @@
 import { isCallable } from "@auaust/toolkit/isCallable";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Fn } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallSignature,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
 export type SafeReturnType<F> = [NonNullable<F>] extends [never]
   ? undefined
-  : NonNullable<F> extends (...args: any[]) => infer R
-    ? R
+  : NonNullable<F> extends Callee
+    ? CallReturnType<NonNullable<F>>
     : undefined;
 
 export type SafeParameters<F> = [NonNullable<F>] extends [never]
   ? []
-  : NonNullable<F> extends (...args: infer P) => any
-    ? P
+  : NonNullable<F> extends Callee
+    ? Parameters<CallSignature<NonNullable<F>>>
     : [];
 
-export function spy<Callback extends Fn>(
+export function spy<Callback extends Callee>(
   callback: Callback,
   beforeHook?:
-    | ((
-        this: ThisParameterType<Callback>,
-        ...args: Parameters<Callback>
-      ) => void)
+    | Callee<void, CallParameters<Callback>, CallThisParameterType<Callback>>
     | null,
   afterHook?:
-    | ((
-        this: ThisParameterType<Callback>,
-        result: ReturnType<Callback>,
-        ...args: Parameters<Callback>
-      ) => void)
+    | Callee<
+        void,
+        [result: CallReturnType<Callback>, ...args: CallParameters<Callback>],
+        CallThisParameterType<Callback>
+      >
     | null,
-): Callback;
-export function spy<Callback extends Fn | null | undefined>(
+): CallSignature<Callback>;
+export function spy<Callback extends Callee | null | undefined>(
   callback: Callback,
   beforeHook?:
-    | ((
-        this: ThisParameterType<Callback>,
-        ...args: SafeParameters<Callback>
-      ) => void)
+    | Callee<void, SafeParameters<Callback>, CallThisParameterType<Callback>>
     | null,
   afterHook?:
-    | ((
-        this: ThisParameterType<Callback>,
-        result: SafeReturnType<Callback>,
-        ...args: SafeParameters<Callback>
-      ) => void)
+    | Callee<
+        void,
+        [result: SafeReturnType<Callback>, ...args: SafeParameters<Callback>],
+        CallThisParameterType<Callback>
+      >
     | null,
 ): (
-  this: ThisParameterType<Callback>,
+  this: CallThisParameterType<Callback>,
   ...args: SafeParameters<Callback>
 ) => SafeReturnType<Callback>;
 export function spy(

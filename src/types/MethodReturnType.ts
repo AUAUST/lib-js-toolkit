@@ -1,7 +1,7 @@
 export type MethodReturnType<
-  T extends object,
-  K extends keyof T,
-> = T[K] extends infer Fn
+  Target extends object,
+  Name extends keyof Target,
+> = Target[Name] extends infer Fn
   ? Fn extends (...args: any[]) => infer R
     ? R
     : never

@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { transformKeys } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
@@ -71,5 +72,22 @@ describe("transformKeys()", () => {
     expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf(
       "function",
     );
+  });
+
+  test("accepts callable key mappers and preserves literal keys", () => {
+    const mapper = {
+      key: "renamed" as const,
+      [callable](_key: "entry", _value: number) {
+        return this.key;
+      },
+    };
+    const result = transformKeys({
+      entry: 4,
+    }, mapper);
+
+    expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+    expect(result).toEqual({
+      renamed: 4,
+    });
   });
 });

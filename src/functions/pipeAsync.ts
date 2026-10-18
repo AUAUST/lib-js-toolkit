@@ -1,9 +1,9 @@
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import { PipelineError } from "@auaust/toolkit/errors";
+import type { AsyncCallee } from "@auaust/toolkit/types";
 import type { PipeCondition } from "@auaust/toolkit/pipe";
 
-export type AsyncTransformFn<This, In, Out> =
-  | ((this: This, value: In) => Promise<Out> | Out)
-  | ((value: In) => Promise<Out> | Out);
+export type AsyncTransformFn<This, In, Out> = AsyncCallee<Out, [value: In], This>;
 
 export type AsyncPipeEntry<This, In, Out> =
   | AsyncTransformFn<This, In, Out>
@@ -69,35 +69,47 @@ export function pipeAsync(
   this: any,
   ...callbacks: AsyncPipeEntry<any, any, any>[]
 ) {
+  const resolved = callbacks.map((entry) => {
+    if (Array.isArray(entry)) {
+      const [condition, callback] = entry;
+
+      return {
+        condition:
+          typeof condition === "boolean"
+            ? condition
+            : resolveCallable(condition),
+        callback: resolveCallable(callback),
+        original: callback,
+      };
+    }
+
+    return {
+      condition: true,
+      callback: resolveCallable(entry),
+      original: entry,
+    };
+  });
+
   return async function (this: any, initialValue: unknown) {
     let carry = initialValue;
 
-    for (let step = 0; step < callbacks.length; step++) {
-      const entry = callbacks[step];
+    for (let step = 0; step < resolved.length; step++) {
+      const entry = resolved[step];
 
-      let fn: AsyncTransformFn<any, unknown, unknown>;
+      const { condition, callback, original } = entry;
 
-      if (Array.isArray(entry)) {
-        const [condition, func] = entry;
+      const shouldRun =
+        typeof condition === "boolean" ? condition : condition.call(this, carry);
 
-        if (
-          typeof condition === "function"
-            ? condition.call(this, carry)
-            : condition
-        ) {
-          fn = func;
-        } else {
-          continue;
-        }
-      } else {
-        fn = entry;
+      if (!shouldRun) {
+        continue;
       }
 
       try {
-        carry = await fn.call(this, carry);
+        carry = await callback.call(this, carry);
       } catch (error) {
         throw new PipelineError({
-          fn,
+          fn: original,
           step,
           input: carry,
           thisValue: this,

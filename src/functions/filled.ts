@@ -1,7 +1,7 @@
 import { type EmptyValue, empty } from "@auaust/toolkit/empty";
 
-export type FilledValue<T> = T extends EmptyValue ? never : T;
+export type FilledValue<Value> = Value extends EmptyValue ? never : Value;
 
-export function filled<T>(value: T): value is FilledValue<T> {
+export function filled<Value>(value: Value): value is FilledValue<Value> {
   return !empty(value);
 }

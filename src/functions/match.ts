@@ -1,10 +1,13 @@
+import { call } from "@auaust/toolkit/call";
+import { isCallable } from "@auaust/toolkit/isCallable";
 import { type ResolvedValue, value } from "@auaust/toolkit/value";
+import type { Callee } from "@auaust/toolkit/types";
 
-type Predicate<T> = (value: T) => unknown;
+type Predicate<T> = Callee<unknown, [value: T]>;
 
 type FunctionalCase<T, V> =
-  | readonly [readonly Predicate<T>[], (never?: undefined) => V]
-  | readonly [Predicate<T>, (never?: undefined) => V];
+  | readonly [readonly Predicate<T>[], Callee<V, [never?: undefined]>]
+  | readonly [Predicate<T>, Callee<V, [never?: undefined]>];
 
 type LiteralCase<V> = readonly [unknown, V] | readonly [readonly unknown[], V];
 
@@ -67,7 +70,7 @@ export function match(
     }
 
     for (const predicate of <unknown[]>predicates) {
-      if (typeof predicate === "function" && predicate(target)) {
+      if (isCallable(predicate) && call(predicate, target)) {
         return value(result);
       }
 

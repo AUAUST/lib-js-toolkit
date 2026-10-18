@@ -1,5 +1,6 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { sleep, throttle } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("throttle()", () => {
   test("ensures a function is called at most once in the specified wait time", async () => {
@@ -132,5 +133,38 @@ describe("throttle()", () => {
     const after = throttledFunction.remaining();
 
     expect(after).toBe(0);
+  });
+
+  test("resolves retained callbacks and preserves receivers and arguments", () => {
+    vi.useFakeTimers();
+
+    try {
+      const calls: unknown[] = [];
+      const callback = {
+        factor: 2,
+        [callable](count: number, suffix?: string) {
+          calls.push([this.factor * count, suffix]);
+        },
+      };
+      const wrapped = throttle(callback, 10);
+      const context = {
+        factor: 3,
+      };
+
+      callback[callable] = () => {
+        throw new Error("The retained method should be used");
+      };
+
+      expectTypeOf(wrapped).parameter(0).toEqualTypeOf<number>();
+      expectTypeOf(wrapped).parameter(1).toEqualTypeOf<string | undefined>();
+
+      wrapped.call(context, 4, "!");
+      vi.advanceTimersByTime(10);
+      wrapped.immediate.call(undefined, 5);
+
+      expect(calls).toEqual([[12, "!"], [10, undefined]]);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

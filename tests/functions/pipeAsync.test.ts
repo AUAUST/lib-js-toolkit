@@ -1,6 +1,7 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { pipeAsync } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("pipeAsync()", () => {
   test("composes functions from left to right", async () => {
@@ -89,5 +90,69 @@ describe("pipeAsync()", () => {
       expect(error.fn).toBe(throwError);
       expect(error.input).toBe(6);
     });
+  });
+
+  test("resolves callable steps and conditions once", async () => {
+    const callback = {
+      factor: 2,
+      [callable](value: number) {
+        return value * this.factor;
+      },
+    };
+    const condition = {
+      minimum: 3,
+      [callable](value: number) {
+        return value >= this.minimum;
+      },
+    };
+    const wrapped = pipeAsync([condition, callback], (value) => `${value}!`);
+
+    callback[callable] = () => 99;
+    condition[callable] = () => false;
+
+    const result = await wrapped(4);
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("8!");
+    expect(await wrapped(2)).toBe("2!");
+  });
+
+  test("reports the original callable step in pipeline errors", async () => {
+    const cause = new Error("failure");
+    const callback = {
+      [callable](_value: number): number {
+        throw cause;
+      },
+    };
+    const wrapped = pipeAsync(callback);
+
+    try {
+      await wrapped(4);
+      throw new Error("Expected a pipeline failure");
+    } catch (error) {
+      expect(error).toBeInstanceOf(PipelineError);
+      expect(error).toMatchObject({
+        fn: callback,
+        cause,
+        step: 0,
+        input: 4,
+      });
+    }
+  });
+
+  test("awaits callable steps and forwards an explicit receiver", async () => {
+    const context = {
+      factor: 3,
+    };
+    const wrapped = pipeAsync({
+      async [callable](this: typeof context, value: number) {
+        return this.factor * value;
+      },
+    }, (value) => `${value}!`);
+
+    const result = await wrapped.call(context, 4);
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("12!");
   });
 });

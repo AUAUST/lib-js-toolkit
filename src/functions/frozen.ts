@@ -6,8 +6,10 @@ import type { ReadonlyFunction } from "@auaust/toolkit/types";
  * Returns a shallow copy of the given value
  * with all properties marked as readonly.
  */
-export function frozen<T extends Function>(value: T): ReadonlyFunction<T>;
-export function frozen<T extends object>(value: T): Readonly<T>;
+export function frozen<Target extends Function>(
+  value: Target,
+): ReadonlyFunction<Target>;
+export function frozen<Target extends object>(value: Target): Readonly<Target>;
 export function frozen(value: any): any {
   if (Array.isArray(value)) {
     return Object.freeze([...value]);

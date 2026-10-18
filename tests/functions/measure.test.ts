@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { measure, type MeasureResult } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -29,5 +30,21 @@ describe("measure()", () => {
       // @ts-expect-error Callback argument types must be preserved.
       measure(callback, "other");
     }
+  });
+
+  test("invokes callable objects with their receiver and full arguments", () => {
+    const callback = {
+      factor: 2,
+      [callable](count: number, ...extra: number[]) {
+        return this.factor * count + extra.length;
+      },
+    };
+    const result = measure(callback, 4, 9);
+
+    expectTypeOf(result.result).toEqualTypeOf<number>();
+    expect(result.result).toBe(9);
+    expect(measure.call({
+      factor: 3,
+    }, callback, 4).result).toBe(12);
   });
 });

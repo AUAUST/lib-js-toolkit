@@ -1,4 +1,5 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
+import type { Callee } from "@auaust/toolkit/types";
 import type {
   FunctionMappedKey,
   RecordMappedKey,
@@ -16,10 +17,10 @@ export function transformKeys<
 };
 export function transformKeys<
   Target extends object,
-  Mapper extends (
+  Mapper extends Callee<PropertyKey | boolean | null | undefined, [
     key: keyof Target,
     value: Target[keyof Target],
-  ) => PropertyKey | boolean | null | undefined,
+  ]>,
 >(
   target: Target,
   mapper: Mapper,
@@ -28,7 +29,7 @@ export function transformKeys(
   target: Record<string, any>,
   map?:
     | Record<string, PropertyKey | boolean>
-    | ((key: string, value: any) => PropertyKey | boolean | undefined),
+    | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
 ): Record<string, any>;
 export function transformKeys(target: any, map?: any) {
   if (!map) {

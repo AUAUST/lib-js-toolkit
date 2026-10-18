@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { spy } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -111,5 +112,42 @@ describe("spy()", () => {
     };
 
     expect(wrapped.call(context, 3, "!")).toBe("5!");
+  });
+
+  test("resolves callbacks and hooks with their own default receivers", () => {
+    const calls: unknown[] = [];
+    const callback = {
+      factor: 2,
+      [callable](count: number, suffix?: string) {
+        return `${this.factor * count}${suffix ?? ""}`;
+      },
+    };
+    const before = {
+      label: "before",
+      [callable](count: number, suffix?: string) {
+        calls.push([this.label, count, suffix]);
+      },
+    };
+    const after = {
+      label: "after",
+      [callable](result: string, count: number, suffix?: string) {
+        calls.push([this.label, result, count, suffix]);
+      },
+    };
+    const wrapped = spy(callback, before, after);
+
+    callback[callable] = () => "changed";
+
+    expectTypeOf(wrapped).toEqualTypeOf<typeof callback[typeof callable]>();
+    expect(wrapped(4, "!")).toBe("8!");
+    expect(calls).toEqual([["before", 4, "!"], ["after", "8!", 4, "!"]]);
+
+    const absent = spy(null, undefined, {
+      [callable](result) {
+        expectTypeOf(result).toEqualTypeOf<undefined>();
+      },
+    });
+
+    expect(absent()).toBeUndefined();
   });
 });

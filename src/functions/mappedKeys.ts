@@ -1,5 +1,6 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { plain } from "@auaust/toolkit/plain";
+import type { Callee, CallReturnType } from "@auaust/toolkit/types";
 
 export type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map
@@ -11,9 +12,9 @@ export type RecordMappedKey<Key, Map> = Map extends object
     : Key
   : Key;
 
-export type FunctionMappedKey<Source, Mapper extends (...args: any[]) => any> =
-  | Exclude<ReturnType<Mapper>, false | true | null | undefined>
-  | (true extends ReturnType<Mapper> ? keyof Source : never);
+export type FunctionMappedKey<Source, Mapper extends Callee> =
+  | Exclude<CallReturnType<Mapper>, false | true | null | undefined>
+  | (true extends CallReturnType<Mapper> ? keyof Source : never);
 
 export function mappedKeys<Source extends object>(source: Source): Source;
 export function mappedKeys<
@@ -27,10 +28,10 @@ export function mappedKeys<
 };
 export function mappedKeys<
   Source extends object,
-  Mapper extends (
+  Mapper extends Callee<PropertyKey | boolean | null | undefined, [
     key: keyof Source,
     value: Source[keyof Source],
-  ) => PropertyKey | boolean | null | undefined,
+  ]>,
 >(
   source: Source,
   mapper: Mapper,
@@ -39,7 +40,7 @@ export function mappedKeys(
   source: Record<string, any>,
   map?:
     | Record<string, PropertyKey | false>
-    | ((key: string, value: any) => PropertyKey | boolean | undefined),
+    | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
 ): Record<string, any>;
 export function mappedKeys(source: any, map?: any) {
   if (!map) {

@@ -6,8 +6,8 @@ import type {
   CallThisParameterType,
 } from "@auaust/toolkit/types";
 
-export type MeasureResult<T> = {
-  readonly result: T;
+export type MeasureResult<Result> = {
+  readonly result: Result;
   readonly start: number;
   readonly end: number;
   readonly duration: number;

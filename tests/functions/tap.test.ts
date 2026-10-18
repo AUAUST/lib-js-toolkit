@@ -1,5 +1,6 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { tap } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("tap()", () => {
   test("calls the provided function with the value and returns the value", () => {
@@ -24,5 +25,24 @@ describe("tap()", () => {
     // The type level of `fn.call` is too poor to infer `this` correctly here
     // so we any-ify it to ensure the runtime behavior is still tested.
     tap.call<any, any, any>(context, value, callback);
+  });
+
+  test("passes the value and receiver to callable objects", () => {
+    const callback = {
+      seen: 0,
+      [callable](value: number) {
+        this.seen = value;
+      },
+    };
+
+    expectTypeOf(tap(4, callback)).toEqualTypeOf<number>();
+    expect(callback.seen).toBe(4);
+
+    const context = {
+      seen: 0,
+    };
+
+    expect(tap.call(context, 5, callback)).toBe(5);
+    expect(context.seen).toBe(5);
   });
 });

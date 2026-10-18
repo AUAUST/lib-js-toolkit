@@ -6,15 +6,17 @@ import type {
   CallThisParameterType,
 } from "@auaust/toolkit/types";
 
-export function resolveCallable<T extends Callable>(
-  value: T,
-  thisArg?: CallThisParameterType<T>,
-): OmitThisParameter<CallSignature<T>>;
-export function resolveCallable<T extends Callee>(
-  value: T,
-  thisArg: CallThisParameterType<T>,
-): OmitThisParameter<CallSignature<T>>;
-export function resolveCallable<T extends Callee>(value: T): CallSignature<T>;
+export function resolveCallable<Target extends Callable>(
+  value: Target,
+  thisArg?: CallThisParameterType<Target>,
+): OmitThisParameter<CallSignature<Target>>;
+export function resolveCallable<Target extends Callee>(
+  value: Target,
+  thisArg: CallThisParameterType<Target>,
+): OmitThisParameter<CallSignature<Target>>;
+export function resolveCallable<Target extends Callee>(
+  value: Target,
+): CallSignature<Target>;
 export function resolveCallable(
   value: Callee,
   thisArg?: any,

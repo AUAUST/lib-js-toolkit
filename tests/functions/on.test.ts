@@ -1,3 +1,4 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { on } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -80,5 +81,24 @@ describe("on()", () => {
 
     expectTypeOf(result).toEqualTypeOf<string>();
     expect(result).toBe("value: 42");
+  });
+
+  test("resolves callable arguments and invokes a callable final callback", () => {
+    const argument = {
+      result: 4,
+      [callable]() {
+        return this.result;
+      },
+    };
+    const callback = {
+      factor: 2,
+      [callable](count: number, suffix: string) {
+        return `${this.factor * count}${suffix}`;
+      },
+    };
+    const result = on(argument, "!", callback);
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("8!");
   });
 });

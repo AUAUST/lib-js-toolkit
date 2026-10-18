@@ -1,3 +1,3 @@
 import type { MethodName } from "@auaust/toolkit/types";
 
-export type Methods<T extends object> = Pick<T, MethodName<T>>;
+export type Methods<Target extends object> = Pick<Target, MethodName<Target>>;

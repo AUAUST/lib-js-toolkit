@@ -1,5 +1,6 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { mapped } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("mapped()", () => {
   test("returns the input value when it's not an object", () => {
@@ -106,5 +107,62 @@ describe("mapped()", () => {
     ]);
 
     expect(result).toEqual({ renamed: "renamed:1", bar: "bar:2" });
+  });
+
+  test("accepts callable key mappers and preserves literal keys", () => {
+    const mapper = {
+      key: "renamed" as const,
+      [callable](_key: "entry", _value: number) {
+        return this.key;
+      },
+    };
+    const result = mapped({
+      entry: 4,
+    }, mapper);
+
+    expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+    expect(result).toEqual({
+      renamed: 4,
+    });
+  });
+
+  test("accepts callable value transformers and preserves result types", () => {
+    const transformer = {
+      factor: 2,
+      [callable](value: number, key: "entry", sourceKey: "entry") {
+        return `${value * this.factor}:${key}:${sourceKey}`;
+      },
+    };
+    const result = mapped({
+      entry: 4,
+    }, undefined, transformer);
+
+    expectTypeOf(result).toEqualTypeOf<{
+      entry: string;
+    }>();
+    expect(result).toEqual({
+      entry: "8:entry:entry",
+    });
+  });
+
+  test("combines callable key and value transformations", () => {
+    const result = mapped({
+      entry: 4,
+    }, {
+      [callable](key: "entry", _value: number) {
+        return "renamed" as const;
+      },
+    }, {
+      [callable](value, key, sourceKey) {
+        expectTypeOf(value).toEqualTypeOf<number>();
+        expectTypeOf(key).toEqualTypeOf<"renamed">();
+        expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
+
+        return `${value}:${key}:${sourceKey}`;
+      },
+    });
+
+    expectTypeOf(result).toEqualTypeOf<Record<"renamed", string>>();
+    expect(result.renamed).toBe("4:renamed:entry");
   });
 });

@@ -9,20 +9,26 @@ import type {
 } from "@auaust/toolkit/types";
 
 export type MemberValue<
-  T extends object,
-  K extends keyof T,
-> = T[K] extends infer M ? (M extends Callee<infer R> ? R : M) : never;
+  Target extends object,
+  Name extends keyof Target,
+> = Target[Name] extends infer M ? (M extends Callee<infer R> ? R : M) : never;
 
-export function memberValue<T extends object, const Name extends keyof T>(
-  target: T,
+export function memberValue<
+  Target extends object,
+  const Name extends keyof Target,
+>(
+  target: Target,
   property: Name,
-  ...args: IfNever<MethodParameters<T, Name>, []>
-): MemberValue<T, Name>;
-export function memberValue<T extends object, const Name extends MethodName<T>>(
-  target: T,
+  ...args: IfNever<MethodParameters<Target, Name>, []>
+): MemberValue<Target, Name>;
+export function memberValue<
+  Target extends object,
+  const Name extends MethodName<Target>,
+>(
+  target: Target,
   method: Name,
-  ...name: MethodParameters<T, Name>
-): MethodReturnType<T, Name>;
+  ...name: MethodParameters<Target, Name>
+): MethodReturnType<Target, Name>;
 export function memberValue(
   target: any,
   property: PropertyKey,

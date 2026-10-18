@@ -1,6 +1,7 @@
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { pipe } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("pipe()", () => {
   test("composes functions from left to right", () => {
@@ -88,6 +89,54 @@ describe("pipe()", () => {
       expect(error.input).toBe(6);
       expect(error.fn).toBe(fn2);
       expect(error.cause.message).toBe("Intentional failure");
+    }
+  });
+
+  test("resolves callable steps and conditions once", () => {
+    const callback = {
+      factor: 2,
+      [callable](value: number) {
+        return value * this.factor;
+      },
+    };
+    const condition = {
+      minimum: 3,
+      [callable](value: number) {
+        return value >= this.minimum;
+      },
+    };
+    const wrapped = pipe([condition, callback], (value) => `${value}!`);
+
+    callback[callable] = () => 99;
+    condition[callable] = () => false;
+
+    const result = wrapped(4);
+
+    expectTypeOf(result).toEqualTypeOf<string>();
+    expect(result).toBe("8!");
+    expect(wrapped(2)).toBe("2!");
+  });
+
+  test("reports the original callable step in pipeline errors", () => {
+    const cause = new Error("failure");
+    const callback = {
+      [callable](_value: number): number {
+        throw cause;
+      },
+    };
+    const wrapped = pipe(callback);
+
+    try {
+      wrapped(4);
+      throw new Error("Expected a pipeline failure");
+    } catch (error) {
+      expect(error).toBeInstanceOf(PipelineError);
+      expect(error).toMatchObject({
+        fn: callback,
+        cause,
+        step: 0,
+        input: 4,
+      });
     }
   });
 });

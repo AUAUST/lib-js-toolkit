@@ -13,9 +13,9 @@ export type Voided<Callback extends Callee> = (
 export function voided<Callable extends Callee>(
   callback: Callable,
 ): Voided<Callable> {
-  const callable = resolveCallable(callback);
+  const execute = resolveCallable(callback);
 
   return function (this, ...args) {
-    callable.call(this, ...args);
+    execute.call(this, ...args);
   };
 }

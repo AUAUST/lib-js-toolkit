@@ -1,7 +1,9 @@
+import { call } from "@auaust/toolkit/call";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { plain } from "@auaust/toolkit/plain";
 import { transformKeys } from "@auaust/toolkit/transformKeys";
 import { transformValues } from "@auaust/toolkit/transformValues";
+import type { Callee, CallReturnType } from "@auaust/toolkit/types";
 
 type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map
@@ -13,9 +15,9 @@ type RecordMappedKey<Key, Map> = Map extends object
     : Key
   : Key;
 
-type FunctionMappedKey<Target, Mapper extends (...args: any[]) => any> =
-  | Exclude<ReturnType<Mapper>, boolean | undefined>
-  | (true extends ReturnType<Mapper> ? keyof Target : never);
+type FunctionMappedKey<Target, Mapper extends Callee> =
+  | Exclude<CallReturnType<Mapper>, boolean | undefined>
+  | (true extends CallReturnType<Mapper> ? keyof Target : never);
 
 export function transform<Target extends Record<string, any>>(
   target: Target,
@@ -31,58 +33,58 @@ export function transform<
 };
 export function transform<
   Target extends Record<string, any>,
-  Mapper extends (
+  Mapper extends Callee<PropertyKey | boolean | undefined, [
     key: keyof Target,
     value: Target[keyof Target],
-  ) => PropertyKey | boolean | undefined,
+  ]>,
 >(
   target: Target,
   mapper: Mapper,
 ): Record<FunctionMappedKey<Target, Mapper>, Target[keyof Target]>;
 export function transform<
   Target extends Record<string, any>,
-  Mapper extends (
+  Mapper extends Callee<PropertyKey | boolean | undefined, [
     key: keyof Target,
     value: Target[keyof Target],
-  ) => PropertyKey | boolean | undefined,
-  Transformer extends (
+  ]>,
+  Transformer extends Callee<any, [
     value: Target[keyof Target],
     key: FunctionMappedKey<Target, Mapper>,
     sourceKey: keyof Target,
-  ) => any,
+  ]>,
 >(
   target: Target,
   mapper: Mapper,
   transformer: Transformer,
-): Record<FunctionMappedKey<Target, Mapper>, ReturnType<Transformer>>;
+): Record<FunctionMappedKey<Target, Mapper>, CallReturnType<Transformer>>;
 export function transform<
   Target extends Record<string, any>,
   Map extends Partial<Record<keyof Target, PropertyKey | boolean>> | undefined,
-  Transformer extends (
+  Transformer extends Callee<any, [
     value: Target[keyof Target],
     key: RecordMappedKey<keyof Target, Map>,
     sourceKey: keyof Target,
-  ) => any,
+  ]>,
 >(
   target: Target,
   map?: Map,
   transformer?: Transformer,
 ): {
-  [K in keyof Target as RecordMappedKey<K, Map>]: ReturnType<Transformer>;
+  [K in keyof Target as RecordMappedKey<K, Map>]: CallReturnType<Transformer>;
 };
 export function transform(
   target: Record<string, any>,
   mapper?:
     | Record<string, PropertyKey | boolean>
-    | ((key: string, value: any) => PropertyKey | boolean | undefined),
-  transformer?: (value: any, key: PropertyKey, sourceKey: string) => any,
+    | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
+  transformer?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ): Record<string, any>;
 export function transform(
   target: any,
   map?:
     | Record<string, PropertyKey | boolean>
-    | ((key: string, value: any) => PropertyKey | boolean | undefined),
-  transform?: (value: any, key: PropertyKey, sourceKey: string) => any,
+    | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
+  transform?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ) {
   if (!target || typeof target !== "object") {
     return target;
@@ -121,7 +123,7 @@ export function transform(
 
     overrides.add(actualKey);
 
-    target[actualKey] = transform(value, actualKey, key);
+    target[actualKey] = call(transform, value, actualKey, key);
 
     if (actualKey !== key && !wasOverwritten) {
       delete target[key];
