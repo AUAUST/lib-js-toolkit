@@ -1,5 +1,27 @@
 # @auaust/toolkit
 
+## 0.4.0
+
+### Minor Changes
+
+- 336aa9c: Global support for the `[callable]` protocol in callback-taking helpers.
+- 3739bed: Add `object` module with several utility functions around property access, assignment, and general object manipulation.
+- 42c4f98: Add `isArray`, `isString`, `isNumber`, `isBigInt`, `isBoolean`, `isUndefined`, `isNull`, `isNullish`, and non-null `isObject` type guards
+
+### Patch Changes
+
+- b50a76f: Add callable-related types and improve type signatures
+- 23a9061: Scaffold modules entrypoints to group categories of helpers
+- 97c7128: Expose meta-helpers on `throttled()` functions
+- 5d0f275: `isCallable()` supports a method name
+- ae190e4: Add `voided()` utility that wraps a function to void its return type
+- 6796b05: Add meta-methods on `debounce()`'d functions to cancel, flush and immediately invoke.
+- 352319f: Standardize generic order for call signatures and accept readonly arrays for all argument lists
+- 23a9061: Add `math` module
+- cdb7ee9: Add `With*` utility types to modify function signatures
+- 742628a: Standardize function generics to use a single callee rather than spread arguments, result and this types
+- b37a662: Add `isFunction()` sibling to `isCallable()` that ignores the callable protocol
+
 ## 0.3.0
 
 ### Minor Changes
