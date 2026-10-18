@@ -6,6 +6,7 @@ export async function makeProtocol(options: {
   name: string;
   symbol?: string;
   interface?: string;
+  override?: boolean;
 }) {
   const protocolName = options.name;
 
@@ -25,6 +26,9 @@ export async function makeProtocol(options: {
       symbol: symbolName,
       interface: interfaceName,
     }),
+    {
+      override: options.override,
+    },
   );
 
   logChanges(`Protocol ${protocolName} has been created.`, {

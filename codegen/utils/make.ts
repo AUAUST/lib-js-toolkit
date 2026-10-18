@@ -7,7 +7,10 @@ const root = process.cwd();
 export async function makeFromTemplate(
   files: { template: string; destination: string }[],
   transform: (content: string) => Promise<string> | string,
+  options?: { override?: boolean },
 ) {
+  const { override = false } = options ?? {};
+
   const paths: string[] = [];
 
   for (const file of files) {
@@ -18,6 +21,18 @@ export async function makeFromTemplate(
     const replacedContent = await transform(content);
 
     await mkdir(resolve(file.destination, ".."), { recursive: true });
+
+    if (!override) {
+      try {
+        await readFile(file.destination, "utf-8");
+      } catch {
+        continue;
+      }
+
+      throw new Error(
+        `File already exists: ${file.destination}. Use the override option to replace it.`,
+      );
+    }
 
     await writeFile(file.destination, replacedContent);
 

@@ -3,7 +3,7 @@ import { codeFile, makeFromTemplate, testFile } from "./utils/make";
 import { prependLine } from "./utils/prependLine";
 import { replacer } from "./utils/replacer";
 
-export async function makeType(options: { name: string }) {
+export async function makeType(options: { name: string; override?: boolean }) {
   const typeName = options.name;
 
   const paths = await makeFromTemplate(
@@ -14,6 +14,9 @@ export async function makeType(options: { name: string }) {
     replacer({
       type: typeName,
     }),
+    {
+      override: options.override,
+    },
   );
 
   const index = await prependLine(
