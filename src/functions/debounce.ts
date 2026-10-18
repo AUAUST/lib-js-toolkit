@@ -1,6 +1,6 @@
 import type { Fn, WithReturnType } from "@auaust/toolkit/types";
 
-export type DebouncedFn<Implementation extends Fn> = WithReturnType<
+export type Debounced<Implementation extends Fn> = WithReturnType<
   boolean,
   Implementation
 > & {
@@ -36,58 +36,62 @@ export type DebouncedFn<Implementation extends Fn> = WithReturnType<
 export function debounce<Implementation extends Fn>(
   callback: Implementation,
   delay: number,
-): DebouncedFn<Implementation> {
+): Debounced<Implementation> {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  let withThis: ThisParameterType<Implementation>;
+  let withArgs: Parameters<Implementation>;
 
-  let pending: Fn<void>;
-
-  function debounced(
+  function debounce(
     this: ThisParameterType<Implementation>,
     ...args: Parameters<Implementation>
   ): boolean {
-    const replaced = timeoutId !== undefined;
+    const pending = clear();
 
-    clearTimeout(timeoutId);
+    withThis = this;
+    withArgs = args;
+    timeoutId = setTimeout(flush, delay);
 
-    pending = () => {
-      timeoutId = undefined;
-
-      callback.call(this, ...args);
-    };
-
-    timeoutId = setTimeout(pending, delay);
-
-    return replaced;
+    return pending;
   }
 
-  function cancel() {
-    if (timeoutId !== undefined) {
+  function clear() {
+    const pending = timeoutId !== undefined;
+
+    if (pending) {
       clearTimeout(timeoutId);
-
       timeoutId = undefined;
-
-      return true;
     }
 
-    return false;
+    return pending;
   }
 
   function flush() {
-    const cancelled = cancel();
+    const pending = clear();
 
-    cancelled && pending();
+    if (pending) {
+      callback.apply(withThis, withArgs);
+      withThis = undefined!;
+      withArgs = undefined!;
+    }
 
-    return cancelled;
+    return pending;
+  }
+
+  function cancel() {
+    withThis = undefined!;
+    withArgs = undefined!;
+
+    return clear();
   }
 
   function immediate(
     this: ThisParameterType<Implementation>,
     ...args: Parameters<Implementation>
   ): void {
-    callback.call(this, ...args);
+    callback.apply(this, args);
   }
 
-  return Object.assign(debounced, {
+  return Object.assign(debounce, {
     cancel,
     flush,
     immediate,

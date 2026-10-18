@@ -23,7 +23,7 @@ export {
 } from "@auaust/toolkit/compare";
 export { constant } from "@auaust/toolkit/constant";
 export { count } from "@auaust/toolkit/count";
-export { debounce, type DebouncedFn } from "@auaust/toolkit/debounce";
+export { debounce, type Debounced } from "@auaust/toolkit/debounce";
 export {
   defer,
   type DeferPromise,
