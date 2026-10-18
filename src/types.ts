@@ -42,3 +42,6 @@ export type { StringToNumber } from "./types/StringToNumber";
 export type { ToArrayKey } from "./types/ToArrayKey";
 export type { ToRecordKey } from "./types/ToRecordKey";
 export type { UnionToIntersection } from "./types/UnionToIntersection";
+export type { WithParameters } from "./types/WithParameters";
+export type { WithReturnType } from "./types/WithReturnType";
+export type { WithThisParameter } from "./types/WithThisParameter";
