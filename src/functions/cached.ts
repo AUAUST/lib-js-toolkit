@@ -1,6 +1,6 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
 
-export type CachedFn<Key, Result, Implementation> = Implementation & {
+export type CachedFn<Key, Return, Implementation> = Implementation & {
   /**
    * Clears the cached values.
    */
@@ -15,7 +15,7 @@ export type CachedFn<Key, Result, Implementation> = Implementation & {
    * Returns the cached entry for the given key only if it exists and hasn't been garbage collected.
    * Does not compute the value if it doesn't exist.
    */
-  value(key: Key): Result | undefined;
+  value(key: Key): Return | undefined;
 
   /**
    * Returns true if the cache contains an entry for the given key.
@@ -45,15 +45,15 @@ export type CachedOptions = {
   cachePrimitives?: boolean;
 };
 
-export function cached<Key, Result, Arguments extends any[], This = any>(
-  implementation: (this: This, key: Key, ...args: Arguments) => Result,
+export function cached<Key, Return, Arguments extends any[], This = any>(
+  implementation: (this: This, key: Key, ...args: Arguments) => Return,
   options: CachedOptions = {},
-): CachedFn<Key, Result, (this: This, key: Key, ...args: Arguments) => Result> {
+): CachedFn<Key, Return, (this: This, key: Key, ...args: Arguments) => Return> {
   const { weakRefs = true, cachePrimitives = false } = options;
 
-  const cache = new Map<Key, WeakRef<Result & WeakKey> | Result>();
+  const cache = new Map<Key, WeakRef<Return & WeakKey> | Return>();
 
-  const accessor = function (this: This, key: Key, ...args: Arguments): Result {
+  const accessor = function (this: This, key: Key, ...args: Arguments): Return {
     if (cache.has(key)) {
       let value = cache.get(key);
 
@@ -93,7 +93,7 @@ export function cached<Key, Result, Arguments extends any[], This = any>(
     get: () => cache.size,
   });
 
-  accessor.value = (key: Key): Result | undefined => {
+  accessor.value = (key: Key): Return | undefined => {
     if (!cache.has(key)) {
       return undefined;
     }
@@ -123,5 +123,5 @@ export function cached<Key, Result, Arguments extends any[], This = any>(
 
   accessor.delete = (key: Key): boolean => cache.delete(key);
 
-  return <CachedFn<Key, Result, () => any>>accessor;
+  return <CachedFn<Key, Return, () => any>>accessor;
 }

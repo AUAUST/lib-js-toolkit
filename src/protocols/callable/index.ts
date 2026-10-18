@@ -9,16 +9,16 @@ declare module "@auaust/toolkit/protocols" {
 
 export interface Callable<
   Arguments extends readonly any[] = any,
-  Result = any,
+  Return = any,
   This = any,
 > {
-  [callable](this: This, ...args: Arguments): Result;
+  [callable](this: This, ...args: Arguments): Return;
 }
 
-export type CallableParameters<T extends Callable<any, any>> =
+export type CallableParameters<T extends Callable> =
   T extends Callable<infer Arguments, any> ? Readonly<Arguments> : never;
 
-export type CallableReturnType<T extends Callable<any, any>> =
-  T extends Callable<any, infer Result> ? Result : never;
+export type CallableReturnType<T extends Callable> =
+  T extends Callable<any, infer Return> ? Return : never;
 
 export const callable: unique symbol = Symbol.for("Protocol.callable");

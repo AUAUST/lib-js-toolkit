@@ -1,6 +1,6 @@
 export type Signature<T> = T extends (
   this: infer This,
-  ...args: infer Args
+  ...args: infer Arguments
 ) => infer Return
-  ? (this: This, ...args: Args) => Return
+  ? (this: This, ...args: Arguments) => Return
   : never;

@@ -1,15 +1,15 @@
 import { plain } from "@auaust/toolkit/plain";
 
 export function mappedValues<Source>(source: Source): Source;
-export function mappedValues<Source extends object, Result>(
+export function mappedValues<Source extends object, Return>(
   source: Source,
   transformer: (
     value: Source[keyof Source],
     key: keyof Source,
     /** @internal */
     sourceKey: keyof Source,
-  ) => Result,
-): { [Key in keyof Source]: Result };
+  ) => Return,
+): { [Key in keyof Source]: Return };
 export function mappedValues(
   source: Record<string, any>,
   transformer?: (value: any, key: PropertyKey, sourceKey: string) => any,

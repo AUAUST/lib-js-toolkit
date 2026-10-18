@@ -4,10 +4,10 @@ import type { Key } from "readline";
 
 export type MemoizedFn<
   Key = any,
-  Result = any,
-  Implementation extends (...args: any[]) => Result = (
+  Return = any,
+  Implementation extends (...args: any[]) => Return = (
     ...args: any[]
-  ) => Result,
+  ) => Return,
 > = Implementation & {
   /** Clears every cached value. */
   clear(): void;
@@ -16,7 +16,7 @@ export type MemoizedFn<
   get size(): number;
 
   /** Returns a cached value without computing it. */
-  value(key: Key): Result | undefined;
+  value(key: Key): Return | undefined;
 
   /** Returns whether a value is cached for the given key. */
   has(key: Key): boolean;
@@ -27,12 +27,12 @@ export type MemoizedFn<
 
 export function memoized<
   Key,
-  Result,
+  Return,
   Arguments extends [Key, ...any[]],
   This = any,
 >(
-  implementation: Callee<Arguments, Result, This>,
-): MemoizedFn<Key, Result, (this: This, ...args: Arguments) => Result>;
+  implementation: Callee<Arguments, Return, This>,
+): MemoizedFn<Key, Return, (this: This, ...args: Arguments) => Return>;
 export function memoized(implementation: Callee): MemoizedFn {
   const cache = new Map();
 
