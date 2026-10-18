@@ -1,55 +1,82 @@
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callee, Fn, Signature } from "@auaust/toolkit/types";
-import type { Key } from "readline";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallSignature,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export type Memoized<Key = any, Callback extends Fn = Fn> = Callback & {
-  /** Clears every cached value. */
-  clear(): void;
+export type Memoized<Callback extends Callee = Callee> =
+  CallSignature<Callback> & {
+    /** Clears every cached value. */
+    clear(): void;
 
-  /** The number of cached entries. */
-  get size(): number;
+    /** The number of cached entries. */
+    get size(): number;
 
-  /** Returns a cached value without computing it. */
-  value(key: Key): ReturnType<Callback> | undefined;
+    /** Returns a cached value without computing it. */
+    value(
+      key: CallParameters<Callback>[0],
+    ): CallReturnType<Callback> | undefined;
 
-  /** Returns whether a value is cached for the given key. */
-  has(key: Key): boolean;
+    /** Returns whether a value is cached for the given key. */
+    has(key: CallParameters<Callback>[0]): boolean;
 
-  /** Deletes the cached value for the given key. */
-  delete(key: Key): boolean;
-};
+    /** Deletes the cached value for the given key. */
+    delete(key: CallParameters<Callback>[0]): boolean;
+  };
 
-export function memoized<Key, Callable extends Callee>(
-  callback: Callee,
-): Memoized<Key, Signature<Callable>>;
-export function memoized(callback: Callee): Memoized {
-  const cache = new Map();
+export function memoized<Callback extends Callee>(
+  callback: Callback,
+): Memoized<Callback> {
+  type Key = CallParameters<Callback>[0];
+  type Return = CallReturnType<Callback>;
 
   const resolve = resolveCallable(callback);
+  const cache = new Map<Key, Return>();
 
-  const accessor = function memoized(this: any, key: Key, ...args: any[]) {
+  function accessor(
+    this: CallThisParameterType<Callback>,
+    ...args: CallParameters<Callback>
+  ): Return {
+    const key: Key = args[0];
+
     if (cache.has(key)) {
       return cache.get(key)!;
     }
 
-    const value = resolve.call(this, key, ...args);
+    const result = resolve.call(this, ...args);
 
-    cache.set(key, value);
+    cache.set(key, result);
 
-    return value;
-  };
+    return result;
+  }
 
-  accessor.clear = () => cache.clear();
+  function clear(): void {
+    cache.clear();
+  }
+
+  function value(key: Key): Return | undefined {
+    return cache.get(key);
+  }
+
+  function has(key: Key): boolean {
+    return cache.has(key);
+  }
+
+  function deleteEntry(key: Key): boolean {
+    return cache.delete(key);
+  }
 
   Object.defineProperty(accessor, "size", {
     get: () => cache.size,
   });
 
-  accessor.value = (key: any) => cache.get(key);
-
-  accessor.has = (key: any): boolean => cache.has(key);
-
-  accessor.delete = (key: any): boolean => cache.delete(key);
-
-  return accessor as Memoized;
+  return Object.assign(accessor, {
+    clear,
+    value,
+    has,
+    delete: deleteEntry,
+  }) as Memoized<Callback>;
 }

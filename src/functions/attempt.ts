@@ -1,3 +1,5 @@
+import type { Fn } from "@auaust/toolkit/types";
+
 export type AttemptResult<T> =
   | {
       success: true;
@@ -10,11 +12,11 @@ export type AttemptResult<T> =
       error: unknown;
     };
 
-export function attempt<Result, Arguments extends readonly any[], This>(
-  this: This,
-  callback: (this: This, ...args: Arguments) => Result,
-  ...args: Arguments
-): AttemptResult<Result> {
+export function attempt<Callback extends Fn>(
+  this: ThisParameterType<Callback>,
+  callback: Callback,
+  ...args: Parameters<Callback>
+): AttemptResult<ReturnType<Callback>> {
   try {
     const result = callback.call(this, ...args);
 

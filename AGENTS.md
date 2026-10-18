@@ -70,6 +70,7 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 ## Verification
 
 - Keep tests under root `tests/`, organized by source area: `tests/functions/`, `tests/types/`, and `tests/protocols/`, with package and shared protocol tests at the root. Use `<name>.test.ts`; never add tests under `src/`.
+- Keep all tests for a helper, including runtime tests, type assertions, and inference regressions, in that helper's existing `<name>.test.ts` file. Do not create separate files for cross-helper cleanup work or type-only coverage of a runtime helper; split such coverage among the helpers' own test files.
 - Test public behavior through package imports so the existing source and built-package test modes can exercise the same contracts. Add meaningful regression coverage for changed behavior and type assertions with Vitest's `expectTypeOf` or `assertType` for changed type contracts.
 - Cover relevant edge cases such as empty input, optional values, errors, `this` binding, argument preservation, and asynchronous outcomes. For timing changes, prefer deterministic timer control where appropriate and restore timers or mocks after use.
 - Run focused tests with `pnpm exec vitest run --config vitest.config.ts --typecheck <test-path>`. Run `pnpm typecheck` for TypeScript changes and `pnpm test` for the full source suite and compiler checks when warranted by scope.

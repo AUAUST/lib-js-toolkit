@@ -1,16 +1,17 @@
 import { apply } from "@auaust/toolkit/apply";
 import type { AttemptResult } from "@auaust/toolkit/attempt";
-import type { AsyncCallee } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export async function attemptAsync<
-  Result,
-  Arguments extends readonly any[],
-  This,
->(
-  this: This,
-  callback: AsyncCallee<Result, Arguments, This>,
-  ...args: Arguments
-): Promise<AttemptResult<Result>> {
+export async function attemptAsync<Callback extends Callee>(
+  this: CallThisParameterType<Callback>,
+  callback: Callback,
+  ...args: CallParameters<Callback>
+): Promise<AttemptResult<Awaited<CallReturnType<Callback>>>> {
   try {
     const result = await apply.call(this, callback, args);
 

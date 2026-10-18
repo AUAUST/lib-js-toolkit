@@ -1,5 +1,5 @@
 import { once } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("once()", () => {
   test("calls the provided function once and caches the value", () => {
@@ -75,7 +75,6 @@ describe("once()", () => {
       },
     };
 
-    // @ts-expect-error
     const result = once.call(obj, obj.getValue);
 
     expect(result()).toBe(30);
@@ -87,5 +86,17 @@ describe("once()", () => {
     result.reset();
 
     expect(result()).toBe(50);
+  });
+
+  test("infers once results and narrows cached values through called", () => {
+    const wrapped = once(() => "entry" as const);
+
+    expectTypeOf(wrapped()).toEqualTypeOf<"entry">();
+
+    if (wrapped.called) {
+      expectTypeOf(wrapped.value).toEqualTypeOf<"entry">();
+    }
+
+    expect(wrapped.value).toBe("entry");
   });
 });

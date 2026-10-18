@@ -1,16 +1,17 @@
 import { apply } from "@auaust/toolkit/apply";
 import type { MeasureResult } from "@auaust/toolkit/measure";
-import type { AsyncCallee } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
-export async function measureAsync<
-  Result,
-  Arguments extends readonly any[],
-  This,
->(
-  this: This,
-  callback: AsyncCallee<Result, Arguments, This>,
-  ...args: Arguments
-): Promise<MeasureResult<Result>> {
+export async function measureAsync<Callback extends Callee>(
+  this: CallThisParameterType<Callback>,
+  callback: Callback,
+  ...args: CallParameters<Callback>
+): Promise<MeasureResult<Awaited<CallReturnType<Callback>>>> {
   const start = performance.now();
 
   const result = await apply.call(this, callback, args);

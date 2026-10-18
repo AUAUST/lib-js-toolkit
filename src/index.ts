@@ -5,7 +5,8 @@ export { attempt, type AttemptResult } from "@auaust/toolkit/attempt";
 export { attemptAsync } from "@auaust/toolkit/attemptAsync";
 export {
   cached,
-  type CachedFn,
+  type Cached,
+  type Cached as CachedFn,
   type CachedOptions,
 } from "@auaust/toolkit/cached";
 export { call, type Call } from "@auaust/toolkit/call";

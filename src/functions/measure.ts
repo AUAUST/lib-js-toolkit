@@ -1,5 +1,10 @@
 import { apply } from "@auaust/toolkit/apply";
-import type { Callee } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallThisParameterType,
+} from "@auaust/toolkit/types";
 
 export type MeasureResult<T> = {
   readonly result: T;
@@ -8,11 +13,11 @@ export type MeasureResult<T> = {
   readonly duration: number;
 };
 
-export function measure<Result, Arguments extends readonly any[], This>(
-  this: This,
-  callback: Callee<Result, Arguments, This>,
-  ...args: Arguments
-): MeasureResult<Result> {
+export function measure<Callback extends Callee>(
+  this: CallThisParameterType<Callback>,
+  callback: Callback,
+  ...args: CallParameters<Callback>
+): MeasureResult<CallReturnType<Callback>> {
   const start = performance.now();
 
   const result = apply.call(this, callback, args);

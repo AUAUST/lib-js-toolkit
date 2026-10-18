@@ -1,5 +1,6 @@
-import { attemptAsync } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { attemptAsync, type AttemptResult } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("attemptAsync()", () => {
   test("returns the result of a successful function call", async () => {
@@ -29,5 +30,19 @@ describe("attemptAsync()", () => {
     expect(error).toBeInstanceOf(Error);
     expect((error as Error).message).toBe("Test Error");
     expect(fn).toHaveBeenCalled();
+  });
+
+  test("infers awaited return types from callable callbacks", async () => {
+    const callback = {
+      [callable](key: "entry", ...values: number[]) {
+        return Promise.resolve(key);
+      },
+    };
+
+    const result = attemptAsync(callback, "entry", 1, 2);
+
+    expectTypeOf(result).toEqualTypeOf<Promise<AttemptResult<"entry">>>();
+
+    expect((await result).result).toBe("entry");
   });
 });

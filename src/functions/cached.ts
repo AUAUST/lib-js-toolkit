@@ -1,6 +1,13 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallSignature,
+} from "@auaust/toolkit/types";
 
-export type CachedFn<Key, Return, Implementation> = Implementation & {
+export type Cached<Callback extends Callee> = CallSignature<Callback> & {
   /**
    * Clears the cached values.
    */
@@ -15,18 +22,18 @@ export type CachedFn<Key, Return, Implementation> = Implementation & {
    * Returns the cached entry for the given key only if it exists and hasn't been garbage collected.
    * Does not compute the value if it doesn't exist.
    */
-  value(key: Key): Return | undefined;
+  value(key: CallParameters<Callback>[0]): CallReturnType<Callback> | undefined;
 
   /**
    * Returns true if the cache contains an entry for the given key.
    * Returns false if the entry has been garbage collected.
    */
-  has(key: Key): boolean;
+  has(key: CallParameters<Callback>[0]): boolean;
 
   /**
    * Deletes the cached entry for the given key.
    */
-  delete(key: Key): boolean;
+  delete(key: CallParameters<Callback>[0]): boolean;
 };
 
 export type CachedOptions = {
@@ -45,24 +52,23 @@ export type CachedOptions = {
   cachePrimitives?: boolean;
 };
 
-export function cached<
-  Key,
-  Return,
-  Arguments extends readonly any[],
-  This = any,
->(
-  implementation: (this: This, key: Key, ...args: Arguments) => Return,
+export function cached<Callback extends Callee>(
+  callback: Callback,
+  options?: CachedOptions,
+): Cached<Callback>;
+export function cached(
+  callback: Callee,
   options: CachedOptions = {},
-): CachedFn<Key, Return, (this: This, key: Key, ...args: Arguments) => Return> {
+): Cached<Callee> {
   const { weakRefs = true, cachePrimitives = false } = options;
 
-  const cache = new Map<Key, WeakRef<Return & WeakKey> | Return>();
+  const resolve = resolveCallable(callback);
 
-  const accessor = function cached(
-    this: This,
-    key: Key,
-    ...args: Arguments
-  ): Return {
+  const cache = new Map<unknown, unknown>();
+
+  const accessor = function cached(this: unknown, ...args: unknown[]): unknown {
+    const key = args[0];
+
     if (cache.has(key)) {
       let value = cache.get(key);
 
@@ -74,14 +80,12 @@ export function cached<
         } else {
           return value;
         }
-
-        // Fallthrough to recompute value
       } else {
-        return value!;
+        return value;
       }
     }
 
-    const value = implementation.call(this, key, ...args);
+    const value = resolve.call(this, ...args);
 
     if (isContainer(value)) {
       if (weakRefs) {
@@ -96,13 +100,15 @@ export function cached<
     return value;
   };
 
-  accessor.clear = () => cache.clear();
+  function clear(): void {
+    cache.clear();
+  }
 
   Object.defineProperty(accessor, "size", {
     get: () => cache.size,
   });
 
-  accessor.value = (key: Key): Return | undefined => {
+  function value(key: unknown): unknown {
     if (!cache.has(key)) {
       return undefined;
     }
@@ -114,9 +120,9 @@ export function cached<
     }
 
     return value;
-  };
+  }
 
-  accessor.has = (key: Key): boolean => {
+  function has(key: unknown): boolean {
     if (!cache.has(key)) {
       return false;
     }
@@ -124,13 +130,22 @@ export function cached<
     const value = cache.get(key);
 
     if (value instanceof WeakRef && value.deref() === undefined) {
-      return (cache.delete(key), false);
+      cache.delete(key);
+
+      return false;
     }
 
     return true;
-  };
+  }
 
-  accessor.delete = (key: Key): boolean => cache.delete(key);
+  function deleteEntry(key: unknown): boolean {
+    return cache.delete(key);
+  }
 
-  return <CachedFn<Key, Return, () => any>>accessor;
+  return Object.assign(accessor, {
+    clear,
+    value,
+    has,
+    delete: deleteEntry,
+  }) as Cached<Callee>;
 }

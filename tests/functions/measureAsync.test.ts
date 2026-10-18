@@ -1,4 +1,4 @@
-import { measureAsync, sleep } from "@auaust/toolkit";
+import { measureAsync, sleep, type MeasureResult } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { assert, describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -118,5 +118,19 @@ describe("measureAsync()", () => {
     expect(duration).toBeGreaterThanOrEqual(0);
 
     expect(duration).toBeLessThan(10);
+  });
+
+  test("infers awaited return types from callable callbacks", async () => {
+    const callback = {
+      [callable](key: "entry", ...values: number[]) {
+        return Promise.resolve(key);
+      },
+    };
+
+    const result = measureAsync(callback, "entry");
+
+    expectTypeOf(result).toEqualTypeOf<Promise<MeasureResult<"entry">>>();
+
+    expect((await result).result).toBe("entry");
   });
 });

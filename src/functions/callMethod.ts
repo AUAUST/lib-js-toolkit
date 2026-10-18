@@ -19,15 +19,6 @@ export function callMethod<
 ): MethodReturnType<Target, Key>;
 export function callMethod<
   Target extends object,
-  Return,
-  Argument extends readonly any[],
->(
-  target: Target,
-  callback: Callee<Return, Argument, Target>,
-  ...args: Argument
-): Return;
-export function callMethod<
-  Target extends object,
   Method extends Callee<any, any, Target>,
 >(
   target: Target,

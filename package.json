@@ -115,6 +115,7 @@
     "./transformValues": "./dist/transformValues.mjs",
     "./types": "./dist/types.mjs",
     "./value": "./dist/value.mjs",
+    "./voided": "./dist/voided.mjs",
     "./when": "./dist/when.mjs"
   }
 }

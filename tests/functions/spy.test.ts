@@ -1,5 +1,5 @@
 import { spy } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("spy()", () => {
   test("calls the before listener before the closure", () => {
@@ -81,5 +81,35 @@ describe("spy()", () => {
     expect(result).toBeUndefined();
     expect(before).toHaveBeenCalledWith();
     expect(after).toHaveBeenCalledWith(undefined);
+  });
+
+  test("infers spy receivers, hook arguments, and absent callback results", () => {
+    function callback(this: { value: number }, count: number, suffix?: string) {
+      return `${this.value + count}${suffix ?? ""}`;
+    }
+
+    const wrapped = spy(
+      callback,
+      function (count, suffix) {
+        expectTypeOf(this).toEqualTypeOf<{ value: number }>();
+
+        expectTypeOf(count).toEqualTypeOf<number>();
+
+        expectTypeOf(suffix).toEqualTypeOf<string | undefined>();
+      },
+      function (result) {
+        expectTypeOf(result).toEqualTypeOf<string>();
+      },
+    );
+
+    const absent = spy(null);
+
+    expectTypeOf(absent()).toEqualTypeOf<undefined>();
+
+    const context = {
+      value: 2,
+    };
+
+    expect(wrapped.call(context, 3, "!")).toBe("5!");
   });
 });

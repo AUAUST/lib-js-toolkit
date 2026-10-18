@@ -22,10 +22,12 @@ export type OnceFn<Return> = (() => Return) & {
       }
   );
 
-export function once<Return, This>(
-  this: This,
-  callback: NullaryFn<Return, This>,
-): OnceFn<Return> {
+export function once<Callback extends NullaryFn>(
+  this: ThisParameterType<Callback>,
+  callback: Callback,
+): OnceFn<ReturnType<Callback>> {
+  type Return = ReturnType<Callback>;
+
   let value: Return | undefined;
   let called = false;
 
@@ -35,10 +37,10 @@ export function once<Return, This>(
     return called ? value : ((called = true), (value = resolve()));
   };
 
-  accessor.reset = () => {
+  function reset(): void {
     called = false;
     value = undefined;
-  };
+  }
 
   Object.defineProperty(accessor, "value", {
     get: () => value,
@@ -48,5 +50,7 @@ export function once<Return, This>(
     get: () => called,
   });
 
-  return accessor as OnceFn<Return>;
+  return Object.assign(accessor, {
+    reset,
+  }) as OnceFn<Return>;
 }
