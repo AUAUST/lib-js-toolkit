@@ -125,6 +125,7 @@ export {
   type ValueInput,
   type ValueResolver,
 } from "@auaust/toolkit/value";
+export { voided } from "@auaust/toolkit/voided";
 export { when } from "@auaust/toolkit/when";
 
 export * from "@auaust/toolkit/errors";
