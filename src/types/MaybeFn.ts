@@ -1,3 +1,7 @@
-export type MaybeFn<T, Arguments extends any[] = any[], This = any> =
-  | T
-  | ((this: This, ...args: Arguments) => T);
+import type { Fn } from "@auaust/toolkit/types";
+
+export type MaybeFn<
+  Return = any,
+  Arguments extends any[] = any[],
+  This = any,
+> = Return | Fn<Return, Arguments, This>;

@@ -1,3 +1,5 @@
+export type { AsyncCallee } from "./types/AsyncCallee";
+export type { AsyncFn } from "./types/AsyncFn";
 export type { Callee } from "./types/Callee";
 export type { CallParameters } from "./types/CallParameters";
 export type { CallReturnType } from "./types/CallReturnType";
@@ -5,6 +7,7 @@ export type { CallSignature } from "./types/CallSignature";
 export type { CallThisParameterType } from "./types/CallThisParameterType";
 export type { ExtractLiteral } from "./types/ExtractLiteral";
 export type { FlatEntries } from "./types/FlatEntries";
+export type { Fn } from "./types/Fn";
 export type { DeepReadonly } from "./types/Frozen";
 export type { IfAny } from "./types/IfAny";
 export type { IfNever } from "./types/IfNever";

@@ -1,3 +1,7 @@
-export type MaybeAsyncFn<T, Arguments extends any[] = any[], This = any> =
-  | T
-  | ((this: This, ...args: Arguments) => T | Promise<T>);
+import type { AsyncFn } from "@auaust/toolkit/types";
+
+export type MaybeAsyncFn<
+  Return = any,
+  Arguments extends any[] = any[],
+  This = any,
+> = Return | AsyncFn<Return, Arguments, This>;
