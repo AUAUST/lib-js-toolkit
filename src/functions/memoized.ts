@@ -38,7 +38,7 @@ export function memoized(implementation: Callee): MemoizedFn {
 
   const callback = resolveCallable(implementation);
 
-  const accessor = function (this: any, key: Key, ...args: any[]) {
+  const accessor = function memoized(this: any, key: Key, ...args: any[]) {
     if (cache.has(key)) {
       return cache.get(key)!;
     }

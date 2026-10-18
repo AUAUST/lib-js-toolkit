@@ -104,7 +104,7 @@ export function methodForwarder(
       let forwarder = forwarders.get(receiver);
 
       if (!forwarder) {
-        forwarder = function (this: unknown, ...args: unknown[]) {
+        forwarder = function forwarder(this: unknown, ...args: unknown[]) {
           return Reflect.apply(
             Reflect.get(source, sourceMethod, source),
             this == null || this === receiver ? source : this,

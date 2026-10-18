@@ -58,7 +58,11 @@ export function cached<
 
   const cache = new Map<Key, WeakRef<Return & WeakKey> | Return>();
 
-  const accessor = function (this: This, key: Key, ...args: Arguments): Return {
+  const accessor = function cached(
+    this: This,
+    key: Key,
+    ...args: Arguments
+  ): Return {
     if (cache.has(key)) {
       let value = cache.get(key);
 

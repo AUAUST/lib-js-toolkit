@@ -28,15 +28,18 @@ export type OnceFn<T> = (() => T) & {
       }
   );
 
-export function once<R, This>(
+export function once<Return, This>(
   this: This,
-  closure: (this: This) => R,
-): OnceFn<R> {
-  let value: R | undefined;
+  closure: (this: This) => Return,
+): OnceFn<Return> {
+  let value: Return | undefined;
   let called = false;
 
-  const accessor = () =>
-    called ? value! : ((called = true), (value = closure.apply(this)));
+  const callback = closure.bind(this) as () => Return;
+
+  const accessor = function once() {
+    return called ? value : ((called = true), (value = callback()));
+  };
 
   accessor.reset = () => {
     called = false;
@@ -51,5 +54,5 @@ export function once<R, This>(
     get: () => called,
   });
 
-  return <OnceFn<R>>accessor;
+  return <OnceFn<Return>>accessor;
 }
