@@ -2,6 +2,7 @@ import { isNumber } from "@auaust/toolkit/isNumber";
 import { isObject } from "@auaust/toolkit/isObject";
 import { isPlainObject } from "@auaust/toolkit/isPlainObject";
 import { isString } from "@auaust/toolkit/isString";
+import { isSafeInteger } from "@auaust/toolkit/math";
 import { keys } from "@auaust/toolkit/object";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
@@ -14,7 +15,7 @@ export function count(input: unknown): number | undefined {
   if (implementsProtocol(countOf, input)) {
     const result = input[countOf]();
 
-    if (!Number.isSafeInteger(result) || result < 0) {
+    if (!isSafeInteger(result) || result < 0) {
       throw new RangeError("A count must be a non-negative safe integer.");
     }
 

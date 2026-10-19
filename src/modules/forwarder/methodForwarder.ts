@@ -1,5 +1,5 @@
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
-import { getOwnPropertyDescriptor } from "@auaust/toolkit/object";
+import { ownDescriptor } from "@auaust/toolkit/object";
 import type { MethodName } from "@auaust/toolkit/types";
 import type { ForwardAs } from "./forwardAs";
 
@@ -85,7 +85,7 @@ export function methodForwarder(
 
   const sourceMethod = method as PropertyKey;
 
-  const descriptor = getOwnPropertyDescriptor(source, sourceMethod);
+  const descriptor = ownDescriptor(source, sourceMethod);
 
   const {
     configurable = descriptor?.configurable ?? true,
