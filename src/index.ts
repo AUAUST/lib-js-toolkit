@@ -34,7 +34,11 @@ export {
   type PromiseRejecter,
   type PromiseResolver,
 } from "@auaust/toolkit/defer";
-export { empty, type EmptyValue } from "@auaust/toolkit/empty";
+export {
+  empty,
+  type EmptyValue,
+  type EmptyValueOf,
+} from "@auaust/toolkit/empty";
 export { expose, type Expose } from "@auaust/toolkit/expose";
 export { filled, type FilledValue } from "@auaust/toolkit/filled";
 export { frozen } from "@auaust/toolkit/frozen";
