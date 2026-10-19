@@ -6,5 +6,6 @@ export {
   type PropertyComposer,
   type PropertyCompositionDescriptor,
 } from "./propertyComposer";
+export { propertyComposers } from "./propertyComposers";
 export { valueComposer } from "./valueComposer";
 export { valueComposers } from "./valueComposers";

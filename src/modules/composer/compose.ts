@@ -10,6 +10,7 @@ import { getterComposer } from "./getterComposer";
 import { getterComposers } from "./getterComposers";
 import { isPropertyComposer } from "./isPropertyComposer";
 import { propertyComposer, type PropertyComposer } from "./propertyComposer";
+import { propertyComposers } from "./propertyComposers";
 import { valueComposer } from "./valueComposer";
 import { valueComposers } from "./valueComposers";
 
@@ -95,11 +96,13 @@ function doCompose<
   Base extends object,
   const Entries extends readonly CompositionInput[],
 >(
-  base: Base extends { name: PropertyKey }
-    ? Exclude<keyof Base, keyof PropertyDescriptor | "name"> extends never
-      ? never
-      : Base
-    : Base,
+  base: Base extends readonly PropertyComposer[]
+    ? never
+    : Base extends { name: PropertyKey }
+      ? Exclude<keyof Base, keyof PropertyDescriptor | "name"> extends never
+        ? never
+        : Base
+      : Base,
   ...entries: Entries & ValidEntries<Entries>
 ): Composed<Base, Entries>;
 function doCompose(...inputs: readonly object[]): object {
@@ -124,6 +127,7 @@ export const compose = finalize(doCompose, {
   getter: getterComposer,
   getters: getterComposers,
   property: propertyComposer,
+  properties: propertyComposers,
   value: valueComposer,
   values: valueComposers,
   method: valueComposer,

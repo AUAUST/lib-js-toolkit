@@ -3,6 +3,7 @@ import {
   getterComposer,
   getterComposers,
   propertyComposer,
+  propertyComposers,
   valueComposer,
   valueComposers,
 } from "@auaust/toolkit/composer";
@@ -22,6 +23,7 @@ describe("compose()", () => {
     expect(compose.method).toBe(valueComposer);
     expect(compose.methods).toBe(valueComposers);
     expect(compose.property).toBe(propertyComposer);
+    expect(compose.properties).toBe(propertyComposers);
     expect(compose.value).toBe(valueComposer);
     expect(compose.values).toBe(valueComposers);
   });
