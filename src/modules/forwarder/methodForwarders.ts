@@ -48,15 +48,10 @@ export function methodForwarders<
   >
 >[];
 export function methodForwarders(
-  source: any,
+  source: object,
   ...methods: MaybeArray<MethodForwardingInput<PropertyKey, PropertyKey>>[]
 ): MethodForwarder<any, any>[] {
-  const createForwarder = methodForwarder as (
-    source: any,
-    method: MethodForwardingInput<PropertyKey, PropertyKey>,
-  ) => MethodForwarder<any, any>;
-
   return methods.flat().map((method) => {
-    return createForwarder(source, method);
+    return methodForwarder(source, method as any);
   });
 }
