@@ -67,6 +67,7 @@ export {
   memoized,
   type Memoized,
   type Memoized as MemoizedFn,
+  type MemoizedOptions,
 } from "@auaust/toolkit/memoized";
 export { noop } from "@auaust/toolkit/noop";
 export { now } from "@auaust/toolkit/now";
