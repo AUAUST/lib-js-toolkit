@@ -57,6 +57,7 @@
     "./callMethod": "./dist/callMethod.mjs",
     "./comparator": "./dist/comparator.mjs",
     "./compare": "./dist/compare.mjs",
+    "./composer": "./dist/composer/index.mjs",
     "./constant": "./dist/constant.mjs",
     "./count": "./dist/count.mjs",
     "./debounce": "./dist/debounce.mjs",
