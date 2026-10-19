@@ -8,6 +8,8 @@ export {
   type Cached,
   type Cached as CachedFn,
   type CachedOptions,
+  type CacheResolver,
+  type KeyResolver,
 } from "@auaust/toolkit/cached";
 export { call, type Call } from "@auaust/toolkit/call";
 export { callMethod } from "@auaust/toolkit/callMethod";
