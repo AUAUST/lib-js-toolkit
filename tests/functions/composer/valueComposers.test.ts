@@ -38,7 +38,7 @@ test("valueComposers includes own symbols and hidden keys but omits inherited ke
   }>();
 });
 
-test.only("valueComposers preserves optional and rest arguments", () => {
+test("valueComposers preserves optional and rest arguments", () => {
   const methods = {
     collect(first?: string, ...rest: string[]) {
       return [first, ...rest];

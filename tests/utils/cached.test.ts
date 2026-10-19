@@ -1,67 +1,146 @@
 import { cached } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("cached()", () => {
-  test("caches object results with weak references by default", () => {
-    const fn = cached((key: string) => ({ value: Math.random() }));
+  test("caches results for object and function keys by identity", () => {
+    const callback = vi.fn((key: object) => {
+      return {
+        key,
+      };
+    });
+    const fn = cached(callback);
+    const objectKey = {};
+    const otherKey = {};
+    const functionKey = () => {};
 
-    expect(fn("a")).toBe(fn("a"));
-    expect(fn("b").value).toBe(fn("b").value);
+    for (const key of [objectKey, otherKey, functionKey]) {
+      const result = fn(key);
+
+      expect(fn(key)).toBe(result);
+      expect(fn.value(key)).toBe(result);
+      expect(fn.has(key)).toBe(true);
+    }
+
+    expect(fn(objectKey)).not.toBe(fn(otherKey));
+    expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  test("does not cache primitive results by default", () => {
-    const fn = cached((key: string) => Math.random());
+  test.each([undefined, null, false, 0, "", 1n, Symbol("result")])(
+    "caches primitive result %s for object keys",
+    (result) => {
+      const callback = vi.fn((_key: object) => result);
+      const fn = cached(callback);
+      const key = {};
 
-    expect(fn("a")).not.toBe(fn("a"));
-    expect(fn("b")).not.toBe(fn("b"));
-  });
+      expect(fn(key)).toBe(result);
+      expect(fn(key)).toBe(result);
+      expect(fn.value(key)).toBe(result);
+      expect(fn.has(key)).toBe(true);
+      expect(callback).toHaveBeenCalledTimes(1);
+    },
+  );
 
-  test("can cache primitive results when cachePrimitive is true", () => {
-    const fn = cached((key: string) => Math.random(), {
+  test.each([undefined, null, false, 0, NaN, "", 1n, Symbol("key")])(
+    "does not cache primitive key %s by default",
+    (key) => {
+      const callback = vi.fn((_key: unknown) => {
+        return {};
+      });
+      const fn = cached(callback);
+
+      expect(fn(key)).not.toBe(fn(key));
+      expect(fn.value(key)).toBeUndefined();
+      expect(fn.has(key)).toBe(false);
+      expect(fn.delete(key)).toBe(false);
+      expect(callback).toHaveBeenCalledTimes(2);
+    },
+  );
+
+  test.each([
+    undefined,
+    null,
+    false,
+    0,
+    NaN,
+    "",
+    1n,
+    Symbol("key"),
+    Symbol.for("key"),
+  ])("can cache primitive key %s when cachePrimitives is true", (key) => {
+    const callback = vi.fn((_key: unknown) => undefined);
+    const fn = cached(callback, {
       cachePrimitives: true,
     });
 
-    expect(fn("a")).toBe(fn("a"));
-    expect(fn("b")).toBe(fn("b"));
-    expect(fn("a")).not.toBe(fn("b"));
+    expect(fn(key)).toBeUndefined();
+    expect(fn(key)).toBeUndefined();
+    expect(fn.has(key)).toBe(true);
+    expect(fn.value(key)).toBeUndefined();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(fn.delete(key)).toBe(true);
+    expect(fn.has(key)).toBe(false);
   });
 
-  test("exposes a clear method to clear the cache", () => {
-    const fn = cached((key: string) => Math.random(), {
+  test("clears both key stores and allows them to be reused", () => {
+    const callback = vi.fn((_key: unknown) => {
+      return {};
+    });
+    const fn = cached(callback, {
       cachePrimitives: true,
     });
-
-    const firstA = fn("a");
-    const firstB = fn("b");
+    const keys = [{}, () => {}, "entry"];
+    const results = keys.map((key) => fn(key));
 
     fn.clear();
 
-    const secondA = fn("a");
-    const secondB = fn("b");
+    for (const [index, key] of keys.entries()) {
+      expect(fn.has(key)).toBe(false);
+      expect(fn.value(key)).toBeUndefined();
 
-    expect(firstA).not.toBe(secondA);
-    expect(firstB).not.toBe(secondB);
+      const result = fn(key);
+
+      expect(result).not.toBe(results[index]);
+      expect(fn(key)).toBe(result);
+    }
+
+    expect(callback).toHaveBeenCalledTimes(6);
   });
 
-  test("exposes the size of the cache", () => {
-    const fn = cached((key: string) => Math.random(), {
+  test("deletes object and function keys", () => {
+    const fn = cached((key: object) => key);
+    const keys = [{}, () => {}];
+
+    for (const key of keys) {
+      expect(fn.delete(key)).toBe(false);
+      expect(fn.value(key)).toBeUndefined();
+      expect(fn(key)).toBe(key);
+    }
+
+    for (const key of keys) {
+      expect(fn.delete(key)).toBe(true);
+      expect(fn.delete(key)).toBe(false);
+      expect(fn.has(key)).toBe(false);
+      expect(fn.value(key)).toBeUndefined();
+    }
+  });
+
+  test("does not cache thrown errors", () => {
+    const error = new Error("failed");
+    const callback = vi.fn((_key: unknown) => {
+      throw error;
+    });
+    const fn = cached(callback, {
       cachePrimitives: true,
     });
 
-    expect(fn.size).toBe(0);
+    for (const key of [{}, "entry"]) {
+      expect(() => fn(key)).toThrow(error);
+      expect(() => fn(key)).toThrow(error);
+      expect(fn.has(key)).toBe(false);
+    }
 
-    fn("a");
-    expect(fn.size).toBe(1);
-
-    fn("b");
-    expect(fn.size).toBe(2);
-
-    fn("a");
-    expect(fn.size).toBe(2);
-
-    fn.clear();
-    expect(fn.size).toBe(0);
+    expect(callback).toHaveBeenCalledTimes(4);
   });
 
   test("exposes a value method to get the cached value for a key", () => {
@@ -133,7 +212,9 @@ describe("cached()", () => {
       return `${this.prefix}${key}:${count}${suffixes.join("")}`;
     }
 
-    const wrapped = cached(callback);
+    const wrapped = cached(callback, {
+      cachePrimitives: true,
+    });
 
     expectTypeOf(wrapped).parameters.toEqualTypeOf<
       [key: "entry", count?: number, ...suffixes: string[]]
@@ -186,7 +267,9 @@ describe("cached()", () => {
       },
     };
 
-    const wrapped = cached(callback);
+    const wrapped = cached(callback, {
+      cachePrimitives: true,
+    });
     const result = wrapped("entry", 2, "a", "b");
 
     expect(result).toEqual({
@@ -240,19 +323,29 @@ describe("cached()", () => {
         };
       },
     };
-    const wrapped = cached(callback);
+
+    const wrapped = cached(callback, {
+      cachePrimitives: true,
+    });
 
     callback[callable] = () => {
       throw new Error("The retained method should be used");
     };
 
     expect(wrapped("own", 4).value).toBe(8);
-    expect(wrapped.call({
+
+    const context = {
       factor: 3,
-    }, "explicit", 4).value).toBe(12);
+    };
+
+    expect(wrapped.call(context, "explicit", 4).value).toBe(12);
+
+    callback.factor = 10;
+
+    expect(wrapped("new", 4).value).toBe(40);
 
     wrapped.clear();
 
-    expect(wrapped("own", 5).value).toBe(10);
+    expect(wrapped("own", 5).value).toBe(50);
   });
 });

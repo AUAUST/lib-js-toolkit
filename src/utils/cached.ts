@@ -1,5 +1,5 @@
 import { isContainer } from "@auaust/toolkit/isContainer";
-import { assign, defineProperty } from "@auaust/toolkit/object";
+import { assign } from "@auaust/toolkit/object";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
@@ -15,19 +15,13 @@ export type Cached<Callback extends Callee> = CallSignature<Callback> & {
   clear(): void;
 
   /**
-   * Returns the number of cached entries.
-   */
-  get size(): number;
-
-  /**
-   * Returns the cached entry for the given key only if it exists and hasn't been garbage collected.
+   * Returns the cached entry for the given key only if it already exists.
    * Does not compute the value if it doesn't exist.
    */
   value(key: CallParameters<Callback>[0]): CallReturnType<Callback> | undefined;
 
   /**
    * Returns true if the cache contains an entry for the given key.
-   * Returns false if the entry has been garbage collected.
    */
   has(key: CallParameters<Callback>[0]): boolean;
 
@@ -39,20 +33,18 @@ export type Cached<Callback extends Callee> = CallSignature<Callback> & {
 
 export type CachedOptions = {
   /**
-   * If true, caches objects using WeakRef to allow garbage collection.
-   *
-   * @default true
-   */
-  weakRefs?: boolean;
-
-  /**
-   * If true, caches primitive values as well. This may lead to memory leaks.
+   * Caches primitive keys in a strong Map when true.
+   * These entries remain until explicitly deleted or cleared.
    *
    * @default false
    */
   cachePrimitives?: boolean;
 };
 
+/**
+ * Caches results by the first argument, weakly for object and function keys.
+ * Primitive keys are cached only when `cachePrimitives` is true.
+ */
 export function cached<Callback extends Callee>(
   callback: Callback,
   options?: CachedOptions,
@@ -61,86 +53,63 @@ export function cached(
   callback: Callee,
   options: CachedOptions = {},
 ): Cached<Callee> {
-  const { weakRefs = true, cachePrimitives = false } = options;
+  const { cachePrimitives = false } = options;
 
   const resolve = resolveCallable(callback);
 
-  const cache = new Map<unknown, unknown>();
+  const primitiveCache = cachePrimitives ? new Map<any, unknown>() : undefined;
 
-  const accessor = function cached(this: unknown, ...args: unknown[]): unknown {
+  let objectCache = new WeakMap<any, unknown>();
+
+  function accessor(this: unknown, ...args: unknown[]): unknown {
     const key = args[0];
 
+    const isPrimitive = !isContainer(key);
+
+    if (isPrimitive && !primitiveCache) {
+      return resolve.call(this, ...args);
+    }
+
+    const cache = isPrimitive ? primitiveCache! : objectCache;
+
     if (cache.has(key)) {
-      let value = cache.get(key);
-
-      if (value instanceof WeakRef) {
-        value = value.deref();
-
-        if (value === undefined) {
-          cache.delete(key);
-        } else {
-          return value;
-        }
-      } else {
-        return value;
-      }
+      return cache.get(key);
     }
 
-    const value = resolve.call(this, ...args);
+    const result = resolve.call(this, ...args);
 
-    if (isContainer(value)) {
-      if (weakRefs) {
-        cache.set(key, new WeakRef(value));
-      } else {
-        cache.set(key, value);
-      }
-    } else if (cachePrimitives) {
-      cache.set(key, value);
-    }
+    cache.set(key, result);
 
-    return value;
-  };
-
-  function clear(): void {
-    cache.clear();
+    return result;
   }
 
-  defineProperty(accessor, "size", {
-    get: () => cache.size,
-  });
+  function clear(): void {
+    objectCache = new WeakMap();
+    primitiveCache?.clear();
+  }
 
   function value(key: unknown): unknown {
-    if (!cache.has(key)) {
-      return undefined;
-    }
-
-    const value = cache.get(key);
-
-    if (value instanceof WeakRef) {
-      return value.deref();
-    }
-
-    return value;
+    return isContainer(key)
+      ? objectCache.get(key)
+      : primitiveCache
+        ? primitiveCache.get(key)
+        : undefined;
   }
 
   function has(key: unknown): boolean {
-    if (!cache.has(key)) {
-      return false;
-    }
-
-    const value = cache.get(key);
-
-    if (value instanceof WeakRef && value.deref() === undefined) {
-      cache.delete(key);
-
-      return false;
-    }
-
-    return true;
+    return isContainer(key)
+      ? objectCache.has(key)
+      : primitiveCache
+        ? primitiveCache.has(key)
+        : false;
   }
 
   function deleteEntry(key: unknown): boolean {
-    return cache.delete(key);
+    return isContainer(key)
+      ? objectCache.delete(key)
+      : primitiveCache
+        ? primitiveCache.delete(key)
+        : false;
   }
 
   return assign(accessor, {
