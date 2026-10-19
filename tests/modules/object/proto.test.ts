@@ -1,15 +1,35 @@
 import { proto } from "@auaust/toolkit/object";
-import { expect, expectTypeOf, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
-test("proto() permits an explicit prototype type", () => {
-  const target = {
-    inherited: 1,
-  };
+describe("proto()", () => {
+  test("permits an explicit prototype type", () => {
+    const target = {
+      inherited: 1,
+    };
 
-  expectTypeOf(proto<typeof target>({})).toEqualTypeOf<typeof target | null>();
-  expectTypeOf(proto({})).toBeAny();
+    expectTypeOf(proto<typeof target>({})).toEqualTypeOf<
+      typeof target | null
+    >();
 
-  expect(proto).toBe(Object.getPrototypeOf);
-  expect(proto(Object.create(target))).toBe(target);
-  expect(proto(Object.create(null))).toBeNull();
+    expectTypeOf(proto({})).toBeAny();
+
+    expect(proto(Object.create(target))).toBe(target);
+
+    expect(proto(Object.create(null))).toBeNull();
+  });
+
+  test("returns `null` for objects with no prototype", () => {
+    expect(proto(Object.create(null))).toBeNull();
+  });
+
+  test("returns the primitive wrapper prototype for primitive values", () => {
+    expect(proto("string")).toBe(String.prototype);
+    expect(proto(123)).toBe(Number.prototype);
+    expect(proto(true)).toBe(Boolean.prototype);
+  });
+
+  test("returns `undefined` on nullish values", () => {
+    expect(proto(null)).toBeUndefined();
+    expect(proto(undefined)).toBeUndefined();
+  });
 });
