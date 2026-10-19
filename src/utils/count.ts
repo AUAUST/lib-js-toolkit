@@ -26,19 +26,19 @@ export function count(input: unknown): number | undefined {
     return input.length;
   }
 
-  if (isObject(input)) {
-    if ("length" in input && isNumber(input.length)) {
-      return input.length; // Takes care of arrays, but also several array-like objects
-    }
-
-    if ("size" in input && isNumber(input.size)) {
-      return input.size; // Takes care of Maps and Sets
-    }
-
-    if (isPlainObject(input)) {
-      return keys(input).length;
-    }
+  if (isPlainObject(input)) {
+    return keys(input).length;
   }
 
-  return undefined;
+  if (isObject(input)) {
+    let length: unknown;
+
+    if ("length" in input && isNumber((length = input.length))) {
+      return length; // Takes care of arrays, but also several array-like objects
+    }
+
+    if ("size" in input && isNumber((length = input.size))) {
+      return length; // Takes care of Maps and Sets
+    }
+  }
 }
