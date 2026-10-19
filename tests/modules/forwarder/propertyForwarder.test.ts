@@ -1,4 +1,4 @@
-import { propertyForwarder } from "@auaust/toolkit";
+import { propertyForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, test } from "vitest";
 
 describe("propertyForwarder()", () => {

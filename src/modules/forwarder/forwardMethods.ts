@@ -1,14 +1,11 @@
-import { forward, type Forwarded } from "@auaust/toolkit/forward";
-import type { MethodForwardingInput } from "@auaust/toolkit/methodForwarder";
-import {
-  methodForwarders,
-  type MethodForwarderFor,
-} from "@auaust/toolkit/methodForwarders";
 import type {
   MaybeArray,
   MaybeArrayElement,
   MethodName,
 } from "@auaust/toolkit/types";
+import { forward, type Forwarded } from "./forward";
+import type { MethodForwardingInput } from "./methodForwarder";
+import { type MethodForwarderFor, methodForwarders } from "./methodForwarders";
 
 export function forwardMethods<
   Target extends object,

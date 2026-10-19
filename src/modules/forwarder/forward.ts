@@ -1,24 +1,24 @@
 import { StateError } from "@auaust/toolkit/errors";
-import { forwardAs } from "@auaust/toolkit/forwardAs";
-import {
-  methodForwarder,
-  type AnyMethodForwarder,
-  type ForwardedMethod,
-} from "@auaust/toolkit/methodForwarder";
-import { methodForwarders } from "@auaust/toolkit/methodForwarders";
-import { assign, defineProperties, hasOwn } from "@auaust/toolkit/object";
-import {
-  propertyForwarder,
-  type AnyPropertyForwarder,
-  type ForwardedProperty,
-} from "@auaust/toolkit/propertyForwarder";
-import { propertyForwarders } from "@auaust/toolkit/propertyForwarders";
+import { defineProperties, finalize, hasOwn } from "@auaust/toolkit/object";
 import type {
   FlatEntries,
   MaybeArray,
   Simplify,
   UnionToIntersection,
 } from "@auaust/toolkit/types";
+import { forwardAs } from "./forwardAs";
+import {
+  methodForwarder,
+  type AnyMethodForwarder,
+  type ForwardedMethod,
+} from "./methodForwarder";
+import { methodForwarders } from "./methodForwarders";
+import {
+  propertyForwarder,
+  type AnyPropertyForwarder,
+  type ForwardedProperty,
+} from "./propertyForwarder";
+import { propertyForwarders } from "./propertyForwarders";
 
 export type Forwarded<
   Target extends object,
@@ -65,7 +65,7 @@ function doForward(
   return target;
 }
 
-export const forward = assign(doForward, {
+export const forward = finalize(doForward, {
   properties: propertyForwarders,
   property: propertyForwarder,
   methods: methodForwarders,

@@ -1,4 +1,4 @@
-import { forwardProperties } from "@auaust/toolkit";
+import { forwardProperties } from "@auaust/toolkit/forwarder";
 import { describe, expect, test } from "vitest";
 
 describe("forwardProperties()", () => {

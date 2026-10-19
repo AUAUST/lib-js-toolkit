@@ -1,4 +1,4 @@
-import { methodForwarder } from "@auaust/toolkit";
+import { methodForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("methodForwarder()", () => {

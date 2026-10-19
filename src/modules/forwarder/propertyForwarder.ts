@@ -1,7 +1,7 @@
-import type { ForwardAs } from "@auaust/toolkit/forwardAs";
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 import { getOwnPropertyDescriptor } from "@auaust/toolkit/object";
 import type { IsNever } from "@auaust/toolkit/types";
+import type { ForwardAs } from "./forwardAs";
 
 export type PropertyForwardingInput<
   Property extends PropertyKey,

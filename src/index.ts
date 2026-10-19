@@ -34,13 +34,6 @@ export {
 export { empty, type EmptyValue } from "@auaust/toolkit/empty";
 export { expose, type Expose } from "@auaust/toolkit/expose";
 export { filled, type FilledValue } from "@auaust/toolkit/filled";
-export { forward, type Forwarded } from "@auaust/toolkit/forward";
-export { forwardAs, type ForwardAs } from "@auaust/toolkit/forwardAs";
-export {
-  forwardMethods as forwardCalls,
-  forwardMethods,
-} from "@auaust/toolkit/forwardMethods";
-export { forwardProperties } from "@auaust/toolkit/forwardProperties";
 export { frozen } from "@auaust/toolkit/frozen";
 export { identity } from "@auaust/toolkit/identity";
 export { isArray } from "@auaust/toolkit/isArray";
@@ -73,17 +66,6 @@ export {
   type Memoized,
   type Memoized as MemoizedFn,
 } from "@auaust/toolkit/memoized";
-export {
-  methodForwarder,
-  type AnyMethodForwarder,
-  type MethodForwarder,
-  type MethodForwardingInput,
-  type MethodForwardingOptions,
-} from "@auaust/toolkit/methodForwarder";
-export {
-  methodForwarders,
-  type MethodForwarderFor,
-} from "@auaust/toolkit/methodForwarders";
 export { noop } from "@auaust/toolkit/noop";
 export { now } from "@auaust/toolkit/now";
 export { on } from "@auaust/toolkit/on";
@@ -100,17 +82,6 @@ export {
   type AsyncTransformFn,
 } from "@auaust/toolkit/pipeAsync";
 export { plain } from "@auaust/toolkit/plain";
-export {
-  propertyForwarder,
-  type AnyPropertyForwarder,
-  type PropertyForwarder,
-  type PropertyForwardingInput,
-  type PropertyForwardingOptions,
-} from "@auaust/toolkit/propertyForwarder";
-export {
-  propertyForwarders,
-  type PropertyForwarderFor,
-} from "@auaust/toolkit/propertyForwarders";
 export { readonly } from "@auaust/toolkit/readonly";
 export { resolveCallable } from "@auaust/toolkit/resolveCallable";
 export { sleep } from "@auaust/toolkit/sleep";

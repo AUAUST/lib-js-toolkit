@@ -4,7 +4,7 @@ import {
   methodForwarders,
   propertyForwarder,
   propertyForwarders,
-} from "@auaust/toolkit";
+} from "@auaust/toolkit/forwarder";
 import { keys } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
