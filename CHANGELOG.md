@@ -1,5 +1,24 @@
 # @auaust/toolkit
 
+## 0.5.0
+
+### Minor Changes
+
+- 6c678f7: Add `cachedAsync()` with shared pending promises, synchronous fulfilled returns, and lazy, synchronous cache inspection.
+- 1b51350: Add custom key resolvers to `cached()` and expose `keyFor(...args)` to resolve keys from outside.
+- f0129de: Add `composer` module to fluently extend objects.
+- 1bb260a: Add custom key resolvers to `memoized()` and expose `keyFor(...args)` to resolve keys from outside.
+- 653bb91: `cached()` relies on a weak map for object and function keys.
+
+### Patch Changes
+
+- 05e5e35: Fix `proto()` to be null-safe
+- 9d979e9: Add `Whitespace`, `EmptyString` and other type utilities around emptiness
+- 0519e9c: Add `ownKeys()`, `ownNames()` and `ownSymbols()` object helpers
+- 9d979e9: Improve type level of `empty()`
+- 54d0f29: Improve type level of `filled()`
+- 10698d3: Move the forwarding methods to a dedicated module
+
 ## 0.4.0
 
 ### Minor Changes
