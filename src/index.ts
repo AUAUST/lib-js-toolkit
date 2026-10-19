@@ -11,6 +11,7 @@ export {
   type CacheResolver,
   type KeyResolver,
 } from "@auaust/toolkit/cached";
+export { cachedAsync, type CachedAsync } from "@auaust/toolkit/cachedAsync";
 export { call, type Call } from "@auaust/toolkit/call";
 export { callMethod } from "@auaust/toolkit/callMethod";
 export { comparator } from "@auaust/toolkit/comparator";

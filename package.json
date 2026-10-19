@@ -53,6 +53,7 @@
     "./attempt": "./dist/attempt.mjs",
     "./attemptAsync": "./dist/attemptAsync.mjs",
     "./cached": "./dist/cached.mjs",
+    "./cachedAsync": "./dist/cachedAsync.mjs",
     "./call": "./dist/call.mjs",
     "./callMethod": "./dist/callMethod.mjs",
     "./comparator": "./dist/comparator.mjs",
