@@ -1,170 +1,91 @@
 import { propertyForwarder } from "@auaust/toolkit/forwarder";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createDescriptorSource } from "../../fixtures/descriptors";
 
-describe("propertyForwarder()", () => {
-  test("mirrors descriptor flags from the handler", () => {
-    const handler = {} as {
-      readonly locked: number;
-      mutable: number;
-      getter: number;
-      writable: number;
-    };
+describe("propertyForwarder", () => {
+  test.each([
+    ["locked", false, false, false],
+    ["mutable", true, true, true],
+    ["getter", true, true, false],
+    ["writable", false, true, true],
+  ] as const)("mirrors %s flags", (property, enumerable, configurable, writable) => {
+    const source = createDescriptorSource();
 
-    Object.defineProperties(handler, {
-      locked: {
-        value: 1,
-        enumerable: false,
-        configurable: false,
-      },
-      mutable: {
-        value: 2,
-        writable: true,
-        enumerable: true,
-        configurable: true,
-      },
-      getter: {
-        get() {
-          return 3;
-        },
-        enumerable: true,
-        configurable: true,
-      },
-      writable: {
-        get() {
-          return 4;
-        },
-        set(value: number) {},
-        enumerable: false,
-        configurable: true,
-      },
+    const descriptor = propertyForwarder(source, {
+      property,
     });
 
-    const locked = propertyForwarder(handler, "locked");
-
-    const mutable = propertyForwarder(handler, { property: "mutable" });
-
-    const getter = propertyForwarder(handler, { property: "getter" });
-
-    const writable = propertyForwarder(handler, "writable");
-
-    expect(locked.enumerable).toBe(false);
-    expect(locked.configurable).toBe(false);
-    expect(locked.set).toBeUndefined();
-
-    expect(mutable.enumerable).toBe(true);
-    expect(mutable.configurable).toBe(true);
-    expect(mutable.set).toBeTypeOf("function");
-
-    expect(getter.enumerable).toBe(true);
-    expect(getter.configurable).toBe(true);
-    expect(getter.set).toBeUndefined();
-
-    expect(writable.enumerable).toBe(false);
-    expect(writable.configurable).toBe(true);
-    expect(writable.set).toBeTypeOf("function");
+    expect(descriptor.enumerable).toBe(enumerable);
+    expect(descriptor.configurable).toBe(configurable);
+    expect(typeof descriptor.set === "function").toBe(writable);
+    expect(descriptor.get()).toBe(source[property]);
+    expectTypeOf(descriptor.get()).toEqualTypeOf<number>();
   });
 
-  test("allows descriptor flags to be overridden", () => {
-    const handler = { value: 1 };
+  test("overrides flags while respecting readonly source properties", () => {
+    const source = createDescriptorSource();
 
-    const forwarder = propertyForwarder(handler, {
-      property: "value",
+    const descriptor = propertyForwarder(source, "mutable", {
+      readonly: true,
       enumerable: false,
       configurable: false,
-      readonly: true,
     });
 
-    expect(forwarder.enumerable).toBe(false);
-    expect(forwarder.configurable).toBe(false);
-    expect(forwarder.set).toBeUndefined();
+    expect(descriptor.enumerable).toBe(false);
+    expect(descriptor.configurable).toBe(false);
+    expect(descriptor.set).toBeUndefined();
+
+    for (const property of ["locked", "getter"] as const) {
+      expect(
+        propertyForwarder(source, property, {
+          readonly: false,
+        }).set,
+      ).toBeUndefined();
+    }
   });
 
-  test("respects readonly source properties even when overridden", () => {
-    const handler = {
-      get getter() {
-        return 1;
+  test("creates writable descriptors for absent and symbol properties", () => {
+    const source: { later?: string } = {};
+    const descriptor = propertyForwarder(source, "later");
+
+    const symbol = propertyForwarder(
+      {
+        [Symbol.iterator]: 1,
       },
-    } as {
-      getter: number;
-      readonly: boolean;
+      Symbol.iterator,
+    );
+
+    expect(descriptor.enumerable).toBe(true);
+    expect(descriptor.configurable).toBe(true);
+    expect(descriptor.get()).toBeUndefined();
+    expect(descriptor.set).toBeTypeOf("function");
+    expect(symbol.get()).toBe(1);
+    expect(symbol.set).toBeTypeOf("function");
+
+    descriptor.set?.("initialized");
+
+    expect(source.later).toBe("initialized");
+    expect(descriptor.get()).toBe("initialized");
+  });
+
+  test("reads and writes the source live, including deletion", () => {
+    const source: { value?: number } = {
+      value: 42,
     };
+    const descriptor = propertyForwarder(source, "value");
 
-    Object.defineProperty(handler, "readonly", {
-      value: true,
-      writable: false,
-    });
+    expect(descriptor.get()).toBe(42);
 
-    const getter = propertyForwarder(handler, "getter", {
-      readonly: false,
-    });
+    source.value = 100;
 
-    const readonly = propertyForwarder(handler, "readonly", {
-      readonly: false,
-    });
+    expect(descriptor.get()).toBe(100);
 
-    expect(getter.set).toBeUndefined();
-    expect(readonly.set).toBeUndefined();
-  });
+    descriptor.set?.(200);
 
-  test("creates a writable default for missing properties", () => {
-    const handler = {} as { later: string };
+    expect(source.value).toBe(200);
 
-    const forwarder = propertyForwarder(handler, "later");
+    delete source.value;
 
-    expect(forwarder.enumerable).toBe(true);
-    expect(forwarder.configurable).toBe(true);
-    expect(forwarder.set).toBeTypeOf("function");
-    expect(forwarder.get).toBeTypeOf("function");
-  });
-
-  test("supports symbol properties", () => {
-    const property = Symbol("value");
-
-    const handler = { [property]: 1 };
-
-    const forwarder = propertyForwarder(handler, property);
-
-    expect(forwarder.get).toBeTypeOf("function");
-    expect(forwarder.set).toBeTypeOf("function");
-  });
-
-  test("correctly gets values", () => {
-    const handler = { value: 42 } as { value?: number };
-
-    const forwarder = propertyForwarder(handler, "value");
-
-    expect(forwarder.get()).toBe(42);
-
-    handler.value = 100;
-
-    expect(forwarder.get()).toBe(100);
-
-    delete handler.value;
-
-    expect(forwarder.get()).toBeUndefined();
-  });
-
-  test("correctly sets values", () => {
-    const handler = { value: 42 } as { value?: number };
-
-    const forwarder = propertyForwarder(handler, "value");
-
-    forwarder.set?.(100);
-
-    expect(handler.value).toBe(100);
-  });
-
-  test("supports initializing values", () => {
-    const handler = {} as { value?: number };
-
-    const forwarder = propertyForwarder(handler, "value");
-
-    expect(forwarder.get()).toBeUndefined();
-    expect(handler.value).toBeUndefined();
-
-    forwarder.set?.(42);
-
-    expect(handler.value).toBe(42);
-    expect(forwarder.get()).toBe(42);
+    expect(descriptor.get()).toBeUndefined();
   });
 });

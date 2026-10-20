@@ -1,27 +1,26 @@
 import { plain } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createObjects } from "../fixtures/values";
 
-describe("plain()", () => {
-  test("returns a null-prototype object", () => {
+describe("plain", () => {
+  test("creates a fresh null-prototype object", () => {
     const result = plain();
 
     expect(Object.getPrototypeOf(result)).toBeNull();
     expect(result).toEqual({});
+    expect(plain()).not.toBe(result);
   });
 
-  test("returns a new object each time", () => {
-    const result1 = plain();
-    const result2 = plain();
+  test.for(createObjects())("copies own enumerable properties from %s", (input) => {
+    const result = plain(input);
 
-    expect(result1).not.toBe(result2);
-  });
-
-  test("assigns the properties correctly", () => {
-    const result = plain({
-      a: 1,
-      b: 2,
+    expect(Object.getPrototypeOf(result)).toBeNull();
+    expect(result).not.toBe(input);
+    expect({
+      ...result,
+    }).toEqual({
+      ...input,
     });
-
-    expect(result).toEqual({ a: 1, b: 2 });
+    expectTypeOf(result).toEqualTypeOf<typeof input>();
   });
 });

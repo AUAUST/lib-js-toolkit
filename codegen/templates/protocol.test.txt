@@ -1,10 +1,14 @@
-import { {{symbol}}, type {{interface}} } from "@auaust/toolkit/protocols/{{protocol}}";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
+import { {{symbol}}, type {{interface}} } from "@auaust/toolkit/protocols/{{protocol}}";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe.todo("The {{protocol}} protocol", () => {
-  test("is properly recognized by `implementsProtocol()`", () => {
-    const value: unknown = {};
+describe("{{protocol}}", () => {
+  test("recognizes implementations and narrows their type", () => {
+    const value: unknown = {
+      [{{symbol}}]: undefined,
+    };
+
+    expect(implementsProtocol({{symbol}}, value)).toBe(true);
 
     if (implementsProtocol({{symbol}}, value)) {
       expectTypeOf(value).toEqualTypeOf<{{interface}}>();

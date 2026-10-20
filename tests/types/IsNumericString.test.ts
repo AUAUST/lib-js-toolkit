@@ -15,8 +15,8 @@ describe("IsNumericString", () => {
 
     assertType<IsNumericString<"123abc", "yes", "no">>("no");
 
-    expectTypeOf<
-      IsNumericString<`${number}` | "foo", "numeric", "not numeric">
-    >().toEqualTypeOf<"numeric" | "not numeric">();
+    expectTypeOf<IsNumericString<`${number}` | "foo", "numeric", "not numeric">>().toEqualTypeOf<
+      "numeric" | "not numeric"
+    >();
   });
 });

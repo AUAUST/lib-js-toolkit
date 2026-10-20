@@ -1,18 +1,24 @@
 import { applyMethod, call, callMethod, isCallable } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, expectTypeOf } from "vitest";
+import { createFunctions, createObjects, primitiveValues } from "../fixtures/values";
 
-describe("isCallable()", () => {
-  test("returns `true` for functions", () => {
-    expect(isCallable(() => {})).toBe(true);
-    expect(isCallable(function () {})).toBe(true);
-    expect(isCallable(async function () {})).toBe(true);
-    expect(isCallable(class {})).toBe(true);
+describe("isCallable", () => {
+  test.for(createFunctions())("recognizes function %s", (input) => {
+    expect(isCallable(input)).toBe(true);
+    expectTypeOf(isCallable(input)).toEqualTypeOf<boolean>();
+  });
+
+  test.for([...primitiveValues, ...createObjects()])("rejects non-callable %s", (input) => {
+    expect(isCallable(input)).toBe(false);
   });
 
   test("returns `true` for objects that implement the `Callable` protocol", () => {
-    expect(isCallable({ [callable]: () => {} })).toBe(true);
-
+    expect(
+      isCallable({
+        [callable]: () => {},
+      }),
+    ).toBe(true);
     expect(
       isCallable({
         get [callable]() {
@@ -20,14 +26,6 @@ describe("isCallable()", () => {
         },
       }),
     ).toBe(true);
-  });
-
-  test("returns `false` for non-callable values", () => {
-    expect(isCallable(null)).toBe(false);
-    expect(isCallable(undefined)).toBe(false);
-    expect(isCallable(123)).toBe(false);
-    expect(isCallable("string")).toBe(false);
-    expect(isCallable({})).toBe(false);
   });
 
   test("supports passing a method name", () => {

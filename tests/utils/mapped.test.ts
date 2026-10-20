@@ -1,124 +1,89 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { mapped } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+import { createKeyMapper, createValueTransformer, createTriple } from "../fixtures/objects";
+import { primitiveValues } from "../fixtures/values";
+import { mappingCases } from "../fixtures/mapping";
 
-describe("mapped()", () => {
-  test("returns the input value when it's not an object", () => {
-    // @ts-expect-error
-    expect(mapped(null)).toBeNull();
-    // @ts-expect-error
-    expect(mapped(undefined)).toBeUndefined();
-    // @ts-expect-error
-    expect(mapped(42)).toBe(42);
-    // @ts-expect-error
-    expect(mapped("string")).toBe("string");
-    // @ts-expect-error
-    expect(mapped(true)).toBe(true);
+describe("mapped", () => {
+  test.for(primitiveValues)("preserves non-object input %s", (input) => {
+    // @ts-expect-error Non-object inputs are tolerated at runtime.
+    expect(mapped(input)).toBe(input);
   });
 
-  test("returns a shallow copy of the source object when no map or transform is provided", () => {
-    const source = { a: 1, b: 2, c: { nested: true } };
-    const result = mapped(source);
+  test.each(mappingCases)("mapped handles %s", (_name, map, transformer, expected) => {
+    const source = createTriple();
+    const result = mapped(source, map, transformer);
 
-    expect(result).toEqual(source);
     expect(result).not.toBe(source);
-    expect(result.c).toBe(source.c);
+    expect(result).toEqual(Object.fromEntries(expected));
+    expect(source).toEqual(createTriple());
   });
 
-  test("renames keys based on the provided map object", () => {
-    const source = { a: 1, b: 2, c: 3 };
-    const result = mapped(source, { a: "alpha", b: "beta" });
+  test("copies shallowly and types explicit names and exclusions", () => {
+    const nested = {};
 
-    expect(result).toEqual({ alpha: 1, beta: 2, c: 3 });
+    const source = {
+      a: 1,
+      b: 2,
+      nested,
+    };
 
-    // @ts-expect-error
-    result.a;
-    result.alpha;
-  });
-
-  test("renames keys based on the provided map function", () => {
-    const source = { a: 1, b: 2, c: 3 };
-    const result = mapped(source, (key) => key.toUpperCase());
-
-    expect(result).toEqual({ A: 1, B: 2, C: 3 });
-  });
-
-  test("transforms values using the provided transform function", () => {
-    const source = { a: 1, b: 2, c: 3 };
-    const result = mapped(source, undefined, (value) => value * 10);
-
-    expect(result).toEqual({ a: 10, b: 20, c: 30 });
-  });
-
-  test("renames keys and transforms values simultaneously", () => {
-    const source = { a: 1, b: 2, c: 3 };
-    const result = mapped(
-      source,
-      { a: "alpha", b: "beta" },
-      (value) => value + 5,
-    );
-
-    expect(result).toEqual({ alpha: 6, beta: 7, c: 8 });
-  });
-
-  test("excludes keys marked false in an explicit map", () => {
-    const result = mapped({ foo: 1, bar: 2 }, { foo: false });
-
-    expect(result).toEqual({ bar: 2 });
-    // @ts-expect-error
-    result.foo;
-    result.bar;
-  });
-
-  test("excludes or retains keys based on mapper function control values", () => {
-    const result = mapped({ foo: 1, bar: 2, baz: 3 }, (key) => {
-      if (key === "foo") return undefined;
-      if (key === "bar") return true;
-      return "renamed";
+    const result = mapped(source, {
+      a: "alpha",
+      b: false,
     });
 
-    expect(result).toEqual({ bar: 2, renamed: 3 });
+    expect(mapped(source).nested).toBe(nested);
+    expect(result.nested).toBe(nested);
+    expect(result.alpha).toBe(1);
+    expectTypeOf(result).toEqualTypeOf<{ alpha: number; nested: {} }>();
+
+    if (false) {
+      // @ts-expect-error Renamed keys are removed from the result type.
+      result.a;
+      // @ts-expect-error Excluded keys are removed from the result type.
+      result.b;
+    }
   });
 
-  test("passes values to the key mapper and both keys to the transformer", () => {
-    const mapperCalls: unknown[][] = [];
-    const transformerCalls: unknown[][] = [];
+  test("passes values to mappers and original and mapped keys to transformers", () => {
+    const mapper = vi.fn((key: string, _value: number) => {
+      return key === "a" ? "renamed" : true;
+    });
 
-    const result = mapped(
-      { foo: 1, bar: 2 },
-      (key, value) => {
-        mapperCalls.push([key, value]);
-        return key === "foo" ? "renamed" : true;
-      },
-      (value, key, sourceKey) => {
-        transformerCalls.push([value, key, sourceKey]);
-        return `${String(key)}:${value}`;
-      },
-    );
+    const transformer = vi.fn((value: number, key: PropertyKey, _sourceKey: string) => {
+      return String(key) + ":" + value;
+    });
 
-    expect(mapperCalls).toEqual([
-      ["foo", 1],
-      ["bar", 2],
+    const result = mapped(createTriple(), mapper, transformer);
+
+    expect(mapper.mock.calls).toEqual([
+      ["a", 1],
+      ["b", 2],
+      ["c", 3],
     ]);
-
-    expect(transformerCalls).toEqual([
-      [1, "renamed", "foo"],
-      [2, "bar", "bar"],
+    expect(transformer.mock.calls).toEqual([
+      [1, "renamed", "a"],
+      [2, "b", "b"],
+      [3, "c", "c"],
     ]);
-
-    expect(result).toEqual({ renamed: "renamed:1", bar: "bar:2" });
+    expect(result).toEqual({
+      renamed: "renamed:1",
+      b: "b:2",
+      c: "c:3",
+    });
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {
-    const mapper = {
-      key: "renamed" as const,
-      [callable](_key: "entry", _value: number) {
-        return this.key;
+    const mapper = createKeyMapper();
+
+    const result = mapped(
+      {
+        entry: 4,
       },
-    };
-    const result = mapped({
-      entry: 4,
-    }, mapper);
+      mapper,
+    );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
     expect(result).toEqual({
@@ -127,15 +92,15 @@ describe("mapped()", () => {
   });
 
   test("accepts callable value transformers and preserves result types", () => {
-    const transformer = {
-      factor: 2,
-      [callable](value: number, key: "entry", sourceKey: "entry") {
-        return `${value * this.factor}:${key}:${sourceKey}`;
+    const transformer = createValueTransformer();
+
+    const result = mapped(
+      {
+        entry: 4,
       },
-    };
-    const result = mapped({
-      entry: 4,
-    }, undefined, transformer);
+      undefined,
+      transformer,
+    );
 
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
@@ -146,21 +111,25 @@ describe("mapped()", () => {
   });
 
   test("combines callable key and value transformations", () => {
-    const result = mapped({
-      entry: 4,
-    }, {
-      [callable](key: "entry", _value: number) {
-        return "renamed" as const;
+    const result = mapped(
+      {
+        entry: 4,
       },
-    }, {
-      [callable](value, key, sourceKey) {
-        expectTypeOf(value).toEqualTypeOf<number>();
-        expectTypeOf(key).toEqualTypeOf<"renamed">();
-        expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
+      {
+        [callable](key: "entry", _value: number) {
+          return "renamed" as const;
+        },
+      },
+      {
+        [callable](value, key, sourceKey) {
+          expectTypeOf(value).toEqualTypeOf<number>();
+          expectTypeOf(key).toEqualTypeOf<"renamed">();
+          expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
 
-        return `${value}:${key}:${sourceKey}`;
+          return `${value}:${key}:${sourceKey}`;
+        },
       },
-    });
+    );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", string>>();
     expect(result.renamed).toBe("4:renamed:entry");

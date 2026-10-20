@@ -2,27 +2,30 @@ import { isNumber } from "@auaust/toolkit/isNumber";
 import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { comparator } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, expectTypeOf } from "vitest";
 
-describe("comparator()", () => {
+describe("comparator", () => {
   test("returns a comparator function which holds the custom operators", () => {
     const customOperators = {
       startsWith: (a: unknown, b: unknown): boolean => {
         if (isString(a) && isString(b)) {
           return a.startsWith(b);
         }
+
         return false;
       },
       endsWith: (a: unknown, b: unknown): boolean => {
         if (isString(a) && isString(b)) {
           return a.endsWith(b);
         }
+
         return false;
       },
     };
 
     const stringComparator = comparator(customOperators);
 
+    expectTypeOf(stringComparator).returns.toEqualTypeOf<boolean>();
     expect(stringComparator("AUAUST", "startsWith", "AUA")).toBe(true);
     expect(stringComparator("AUAUST", "startsWith", "UST")).toBe(false);
     expect(stringComparator("AUAUST", "endsWith", "UST")).toBe(true);
@@ -35,6 +38,7 @@ describe("comparator()", () => {
         if (isNumber(a)) {
           return a % 2 === 0;
         }
+
         return false;
       },
       "==": null,
@@ -43,12 +47,16 @@ describe("comparator()", () => {
 
     expect(numberComparator(4, "isEven")).toBe(true);
     expect(numberComparator(5, "isEven")).toBe(false);
+    expect(() => {
+      // @ts-expect-error
 
-    // @ts-expect-error
-    expect(() => numberComparator(5, "==", 5)).toThrow(/disabled/);
+      return numberComparator(5, "==", 5);
+    }).toThrow(/disabled/);
+    expect(() => {
+      // @ts-expect-error
 
-    // @ts-expect-error
-    expect(() => numberComparator(3, "<=", 5)).toThrow(/disabled/);
+      return numberComparator(3, "<=", 5);
+    }).toThrow(/disabled/);
   });
 
   test("accepts callable custom operators", () => {
@@ -58,6 +66,7 @@ describe("comparator()", () => {
         return Number(left) + this.offset === right;
       },
     };
+
     const compare = comparator({
       custom: operator,
     });

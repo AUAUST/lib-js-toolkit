@@ -1,11 +1,16 @@
 import { identity } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("identity()", () => {
-  test("returns the first argument", () => {
+describe("identity", () => {
+  test.for(createValues())("preserves identity for %s", (input) => {
+    const result = identity(input, "ignored");
+    expect(result).toBe(input);
+    expectTypeOf(result).toEqualTypeOf<typeof input>();
+  });
+
+  test("supports omitted arguments and literals", () => {
     expect(identity()).toBeUndefined();
-    expect(identity(1, 2, 3)).toBe(1);
-    expect(identity("a", "b", "c")).toBe("a");
-    expect(identity({ key: "value" })).toEqual({ key: "value" });
+    expectTypeOf(identity("literal" as const)).toEqualTypeOf<"literal">();
   });
 });

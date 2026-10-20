@@ -1,11 +1,16 @@
 import { noop } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("noop()", () => {
-  test("ignores all arguments and returns undefined", () => {
+describe("noop", () => {
+  test.for(createValues())("preserves no result for %s", (input) => {
+    const result = noop(input, "ignored");
+    expect(result).toBe(undefined);
+    expectTypeOf(result).toEqualTypeOf<void>();
+  });
+
+  test("supports omitted arguments", () => {
     expect(noop()).toBeUndefined();
-    expect(noop(1, 2, 3)).toBeUndefined();
-    expect(noop("a", "b", "c")).toBeUndefined();
-    expect(noop({ key: "value" })).toBeUndefined();
+    expectTypeOf(noop).parameters.toEqualTypeOf<unknown[]>();
   });
 });

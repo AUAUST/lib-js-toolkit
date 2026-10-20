@@ -1,8 +1,5 @@
 import { empty, value as resolve } from "@auaust/toolkit";
-import {
-  type DefineProtocol,
-  implementsProtocol,
-} from "@auaust/toolkit/protocols";
+import { type DefineProtocol, implementsProtocol } from "@auaust/toolkit/protocols";
 import { type Emptiable, isEmpty } from "@auaust/toolkit/protocols/emptiable";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
@@ -13,10 +10,7 @@ interface CustomImplementation {
 }
 
 declare module "@auaust/toolkit/protocols" {
-  interface ProtocolRegistry extends DefineProtocol<
-    typeof customProtocol,
-    CustomImplementation
-  > {}
+  interface ProtocolRegistry extends DefineProtocol<typeof customProtocol, CustomImplementation> {}
 }
 
 describe("protocols", () => {
@@ -33,7 +27,6 @@ describe("protocols", () => {
       const typed = value[isEmpty];
 
       expectTypeOf(typed).toEqualTypeOf<(() => boolean) | boolean>();
-
       expect(resolve(typed)).toBe(true);
     }
 
@@ -51,15 +44,14 @@ describe("protocols", () => {
       const typed = value[customProtocol];
 
       expectTypeOf(value).toEqualTypeOf<CustomImplementation>();
-
       expect(typed).toBe("implemented");
-
       expectTypeOf(typed).toEqualTypeOf<string>();
     }
   });
 
   test("narrows synchronous and asynchronous iteration protocols", () => {
     const iterable: unknown = [1, 2, 3];
+
     const asyncIterable: unknown = (async function* () {
       yield 1;
     })();
@@ -75,15 +67,18 @@ describe("protocols", () => {
       expectTypeOf(asyncIterable).toEqualTypeOf<AsyncIterable<any>>();
       expectTypeOf(asyncIterable[Symbol.asyncIterator]).toBeFunction();
     } else {
-      expect.unreachable(
-        "The async generator should implement Symbol.asyncIterator.",
-      );
+      expect.unreachable("The async generator should implement Symbol.asyncIterator.");
     }
   });
 
   test("narrows synchronous and asynchronous disposal protocols", () => {
-    const disposable: unknown = { [Symbol.dispose]() {} };
-    const asyncDisposable: unknown = { async [Symbol.asyncDispose]() {} };
+    const disposable: unknown = {
+      [Symbol.dispose]() {},
+    };
+
+    const asyncDisposable: unknown = {
+      async [Symbol.asyncDispose]() {},
+    };
 
     if (implementsProtocol(Symbol.dispose, disposable)) {
       expectTypeOf(disposable).toEqualTypeOf<Disposable>();
@@ -94,9 +89,7 @@ describe("protocols", () => {
 
     if (implementsProtocol(Symbol.asyncDispose, asyncDisposable)) {
       expectTypeOf(asyncDisposable).toEqualTypeOf<AsyncDisposable>();
-      expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<
-        () => PromiseLike<void>
-      >();
+      expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<() => PromiseLike<void>>();
     } else {
       expect.unreachable("The value should implement Symbol.asyncDispose.");
     }
@@ -107,7 +100,9 @@ describe("protocols", () => {
       [Symbol.hasInstance]: (value: any) => value === 42,
     };
 
-    const spreadable: unknown = { [Symbol.isConcatSpreadable]: true };
+    const spreadable: unknown = {
+      [Symbol.isConcatSpreadable]: true,
+    };
 
     const primitiveConvertible: unknown = {
       [Symbol.toPrimitive]: () => 42,
@@ -118,16 +113,12 @@ describe("protocols", () => {
     }
 
     if (implementsProtocol(Symbol.isConcatSpreadable, spreadable)) {
-      expectTypeOf(
-        spreadable[Symbol.isConcatSpreadable],
-      ).toEqualTypeOf<boolean>();
+      expectTypeOf(spreadable[Symbol.isConcatSpreadable]).toEqualTypeOf<boolean>();
       expect(spreadable[Symbol.isConcatSpreadable]).toBe(true);
     }
 
     if (implementsProtocol(Symbol.toPrimitive, primitiveConvertible)) {
-      expectTypeOf(
-        primitiveConvertible[Symbol.toPrimitive],
-      ).returns.toEqualTypeOf<
+      expectTypeOf(primitiveConvertible[Symbol.toPrimitive]).returns.toEqualTypeOf<
         bigint | boolean | null | number | string | symbol | undefined
       >();
       expect(primitiveConvertible[Symbol.toPrimitive]("number")).toBe(42);
@@ -144,15 +135,11 @@ describe("protocols", () => {
     };
 
     if (implementsProtocol(Symbol.match, pattern)) {
-      expectTypeOf(
-        pattern[Symbol.match],
-      ).returns.toEqualTypeOf<RegExpMatchArray | null>();
+      expectTypeOf(pattern[Symbol.match]).returns.toEqualTypeOf<RegExpMatchArray | null>();
     }
 
     if (implementsProtocol(Symbol.matchAll, pattern)) {
-      expectTypeOf(pattern[Symbol.matchAll]).returns.toEqualTypeOf<
-        IterableIterator<RegExpMatchArray>
-      >();
+      expectTypeOf(pattern[Symbol.matchAll]).returns.toEqualTypeOf<IterableIterator<RegExpMatchArray>>();
     }
 
     if (implementsProtocol(Symbol.replace, pattern)) {
@@ -169,9 +156,19 @@ describe("protocols", () => {
   });
 
   test("narrows metadata protocols", () => {
-    const species: unknown = { [Symbol.species]: Array };
-    const tagged: unknown = { [Symbol.toStringTag]: "Tagged" };
-    const scoped: unknown = { [Symbol.unscopables]: { hidden: true } };
+    const species: unknown = {
+      [Symbol.species]: Array,
+    };
+
+    const tagged: unknown = {
+      [Symbol.toStringTag]: "Tagged",
+    };
+
+    const scoped: unknown = {
+      [Symbol.unscopables]: {
+        hidden: true,
+      },
+    };
 
     if (implementsProtocol(Symbol.species, species)) {
       expectTypeOf(species[Symbol.species]).toEqualTypeOf<Function | null>();
@@ -185,7 +182,9 @@ describe("protocols", () => {
 
     if (implementsProtocol(Symbol.unscopables, scoped)) {
       expectTypeOf(scoped[Symbol.unscopables]).toEqualTypeOf<object>();
-      expect(scoped[Symbol.unscopables]).toEqual({ hidden: true });
+      expect(scoped[Symbol.unscopables]).toEqual({
+        hidden: true,
+      });
     }
   });
 
@@ -201,8 +200,6 @@ describe("protocols", () => {
     expect(implementsProtocol(isEmpty, null)).toBe(false);
     expect(implementsProtocol(isEmpty, "value")).toBe(false);
     expect(implementsProtocol(Symbol.iterator, {})).toBe(false);
-    expect(implementsProtocol(Symbol.iterator, "iterable primitive")).toBe(
-      false,
-    );
+    expect(implementsProtocol(Symbol.iterator, "iterable primitive")).toBe(false);
   });
 });

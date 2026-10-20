@@ -2,13 +2,11 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import { spy } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("spy()", () => {
+describe("spy", () => {
   test("calls the before listener before the closure", () => {
     const closure = vi.fn((x: number) => x * 2);
     const before = vi.fn();
-
     const spiedFunction = spy(closure, before);
-
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
@@ -19,9 +17,7 @@ describe("spy()", () => {
   test("calls the after listener after the closure", () => {
     const closure = vi.fn((x: number) => x * 2);
     const after = vi.fn();
-
     const spiedFunction = spy(closure, null, after);
-
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
@@ -34,9 +30,7 @@ describe("spy()", () => {
     const closure = vi.fn((x: number) => x * 2);
     const before = vi.fn();
     const after = vi.fn();
-
     const spiedFunction = spy(closure, before, after);
-
     const result = spiedFunction(5);
 
     expect(result).toBe(10);
@@ -65,7 +59,6 @@ describe("spy()", () => {
     });
 
     const spiedFunction = spy(obj.method, before, after);
-
     const result = spiedFunction.call(obj, 5);
 
     expect(result).toBe(10);
@@ -74,9 +67,7 @@ describe("spy()", () => {
   test("handles null or undefined closure gracefully", () => {
     const before = vi.fn();
     const after = vi.fn();
-
     const spiedFunction = spy(null, before, after);
-
     const result = spiedFunction();
 
     expect(result).toBeUndefined();
@@ -93,9 +84,7 @@ describe("spy()", () => {
       callback,
       function (count, suffix) {
         expectTypeOf(this).toEqualTypeOf<{ value: number }>();
-
         expectTypeOf(count).toEqualTypeOf<number>();
-
         expectTypeOf(suffix).toEqualTypeOf<string | undefined>();
       },
       function (result) {
@@ -116,31 +105,38 @@ describe("spy()", () => {
 
   test("resolves callbacks and hooks with their own default receivers", () => {
     const calls: unknown[] = [];
+
     const callback = {
       factor: 2,
       [callable](count: number, suffix?: string) {
         return `${this.factor * count}${suffix ?? ""}`;
       },
     };
+
     const before = {
       label: "before",
       [callable](count: number, suffix?: string) {
         calls.push([this.label, count, suffix]);
       },
     };
+
     const after = {
       label: "after",
       [callable](result: string, count: number, suffix?: string) {
         calls.push([this.label, result, count, suffix]);
       },
     };
+
     const wrapped = spy(callback, before, after);
 
     callback[callable] = () => "changed";
 
-    expectTypeOf(wrapped).toEqualTypeOf<typeof callback[typeof callable]>();
+    expectTypeOf(wrapped).toEqualTypeOf<(typeof callback)[typeof callable]>();
     expect(wrapped(4, "!")).toBe("8!");
-    expect(calls).toEqual([["before", 4, "!"], ["after", "8!", 4, "!"]]);
+    expect(calls).toEqual([
+      ["before", 4, "!"],
+      ["after", "8!", 4, "!"],
+    ]);
 
     const absent = spy(null, undefined, {
       [callable](result) {

@@ -1,6 +1,17 @@
 import { isArray } from "@auaust/toolkit";
-import { expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-test("isArray()", () => {
-  expect(isArray([])).toBe(true);
+describe("isArray", () => {
+  test.for(createValues())("classifies case %# (%s) and narrows its type", (value) => {
+    const input: unknown = value;
+    const expected = Array.isArray(input);
+
+    expect(isArray(input)).toBe(expected);
+    expectTypeOf(createValues().filter(isArray)).toEqualTypeOf<any[][]>();
+
+    if (isArray(input)) {
+      expectTypeOf(input).toEqualTypeOf<any[]>();
+    }
+  });
 });

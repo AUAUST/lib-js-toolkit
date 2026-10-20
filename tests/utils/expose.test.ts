@@ -1,48 +1,61 @@
 import { expose } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, expectTypeOf, test } from "vitest";
+import { createObjects, primitiveValues } from "../fixtures/values";
 
-describe("expose()", () => {
-  test("conditionally exposes a value on a target", () => {
-    expose("testValueA", 42);
+describe("expose", () => {
+  const key = Symbol("exposed");
 
-    // @ts-expect-error
-    expect(globalThis.testValueA).toBe(42);
+  afterEach(() => {
+    expose.target(globalThis);
+    Reflect.deleteProperty(globalThis, key);
   });
 
-  test("does not expose a value when the condition is false", () => {
-    expose("testValueB", 42, false);
-
-    // @ts-expect-error
-    expect(globalThis.testValueB).toBeUndefined();
+  test.each([true, false])("exposes on the global target when %s", (condition) => {
+    expect(expose(key, 42, condition)).toBe(42);
+    expect(Reflect.get(globalThis, key)).toBe(condition ? 42 : undefined);
   });
 
-  test("exposes multiple values from an object", () => {
-    expose({ testValue1: 1, testValue2: 2 });
+  test.for(createObjects())("accepts native target %s", (target) => {
+    const result = expose(key, "value" as const, true, target);
 
-    // @ts-expect-error
-    expect(globalThis.testValue1).toBe(1);
-    // @ts-expect-error
-    expect(globalThis.testValue2).toBe(2);
+    expect(Reflect.get(target, key)).toBe("value");
+    expect(Reflect.has(globalThis, key)).toBe(false);
+    expectTypeOf(result).toEqualTypeOf<"value">();
   });
 
-  test("sets properties on a custom target", () => {
-    const customTarget: Record<PropertyKey, any> = {};
+  test.for(primitiveValues)("preserves exposed value %s", (value) => {
+    const target = {};
 
-    expose("foo", 123, true, customTarget);
+    const pairs = {
+      first: value,
+      second: 2,
+    };
 
-    expect(customTarget.foo).toBe(123);
-    // @ts-expect-error
-    expect(globalThis.foo).toBeUndefined();
+    expect(expose(pairs, true, target)).toBe(pairs);
+    expect(target).toEqual(pairs);
+    expectTypeOf(expose(pairs, false, target)).toEqualTypeOf<typeof pairs>();
+    expect(expose("absent", value, false, target)).toBe(value);
+    expect(Reflect.has(target, "absent")).toBe(false);
   });
 
-  test("sets the default target for subsequent exposures", () => {
-    const defaultTarget: Record<PropertyKey, any> = {};
+  describe("target", () => {
+    test("sets the default for subsequent single and multiple exposures", () => {
+      const target = {};
 
-    expose.target(defaultTarget);
-    expose("bar", 456);
+      expectTypeOf(expose.target).parameter(0).toEqualTypeOf<Record<PropertyKey, any>>();
 
-    expect(defaultTarget.bar).toBe(456);
-    // @ts-expect-error
-    expect(globalThis.bar).toBeUndefined();
+      expose.target(target);
+
+      expose("first", 1);
+
+      expose({
+        second: 2,
+      });
+
+      expect(target).toEqual({
+        first: 1,
+        second: 2,
+      });
+    });
   });
 });

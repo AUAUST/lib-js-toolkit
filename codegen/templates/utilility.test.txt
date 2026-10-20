@@ -1,8 +1,10 @@
-import { {{util}} } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { {{utilility}} } from "@auaust/toolkit";
+import { describe, expectTypeOf, test } from "vitest";
 
-describe.todo("{{util}}()", () => {
-  test("placeholder", () => {
-    expect({{util}}).not.toThrow();
+describe("{{utilility}}", () => {
+  test.todo("covers runtime behavior and edge cases");
+
+  test("declares its result type", () => {
+    expectTypeOf({{utilility}}).returns.toBeUnknown();
   });
 });

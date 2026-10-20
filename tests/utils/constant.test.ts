@@ -1,11 +1,16 @@
 import { constant } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("constant()", () => {
-  test("returns a function that returns the first argument", () => {
+describe("constant", () => {
+  test.for(createValues())("preserves identity for %s", (input) => {
+    const result = constant(input, "ignored")();
+    expect(result).toBe(input);
+    expectTypeOf(result).toEqualTypeOf<typeof input>();
+  });
+
+  test("supports omitted arguments and literals", () => {
     expect(constant()()).toBeUndefined();
-    expect(constant(1, 2, 3)()).toBe(1);
-    expect(constant("a", "b", "c")()).toBe("a");
-    expect(constant({ key: "value" })()).toEqual({ key: "value" });
+    expectTypeOf(constant("literal" as const)()).toEqualTypeOf<"literal">();
   });
 });

@@ -1,19 +1,28 @@
 import {
   forward,
+  forwardAs,
   methodForwarder,
   methodForwarders,
   propertyForwarder,
   propertyForwarders,
 } from "@auaust/toolkit/forwarder";
-import { keys } from "@auaust/toolkit/object";
+import { entries, keys } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("forward()", () => {
-  test("exposes the forwarding API as methods", () => {
-    expect(forward.properties).toBe(propertyForwarders);
-    expect(forward.property).toBe(propertyForwarder);
-    expect(forward.methods).toBe(methodForwarders);
-    expect(forward.method).toBe(methodForwarder);
+describe("forward", () => {
+  describe.each(
+    entries({
+      properties: propertyForwarders,
+      property: propertyForwarder,
+      methods: methodForwarders,
+      method: methodForwarder,
+      as: forwardAs,
+    }),
+  )("%s", (name, helper) => {
+    test("exposes the standalone helper with its signature", () => {
+      expect(forward[name]).toBe(helper);
+      expectTypeOf(forward[name]).toEqualTypeOf<typeof helper>();
+    });
   });
 
   test("forwards single calls", () => {
@@ -26,11 +35,7 @@ describe("forward()", () => {
 
     const target = {};
 
-    const forwarded = forward(
-      target,
-      forward.method(handler, "greet"),
-      forward.property(handler, "value"),
-    );
+    const forwarded = forward(target, forward.method(handler, "greet"), forward.property(handler, "value"));
 
     expect(target).toBe(forwarded);
 
@@ -41,10 +46,14 @@ describe("forward()", () => {
     forwarded.value = 100;
 
     expect(handler.value).toBe(100);
-
-    expect(forwarded.greet.call({ value: 200 }, "World")).toBe(
-      "200 times hello, World!",
-    );
+    expect(
+      forwarded.greet.call(
+        {
+          value: 200,
+        },
+        "World",
+      ),
+    ).toBe("200 times hello, World!");
   });
 
   test("forwards multiple sources at once", () => {
@@ -95,11 +104,7 @@ describe("forward()", () => {
       forward.properties(b, ["bValue", "bOtherValue"]),
       forward.methods(b, ["bMethod", "bOtherMethod"]),
       forward.properties(c, "cValue", "cOtherValue"),
-      forward.methods(
-        c,
-        "cMethod",
-        forward.as("cOtherMethod", "myAliasedCOtherMethod"),
-      ),
+      forward.methods(c, "cMethod", forward.as("cOtherMethod", "myAliasedCOtherMethod")),
     );
 
     expect(api.method()).toEqual(
@@ -120,7 +125,6 @@ describe("forward()", () => {
         "myAliasedCOtherMethod",
       ]),
     );
-
     expect(api.valueFromA).toBe(a.aValue);
     // @ts-expect-error
     expect(api.aValue).toBeUndefined();
@@ -141,10 +145,15 @@ describe("forward()", () => {
     };
 
     const api = forward(
-      { own: true },
+      {
+        own: true,
+      },
       forward.properties(source, [
         "mutable",
-        { property: "immutable", readonly: true },
+        {
+          property: "immutable",
+          readonly: true,
+        },
       ]),
       forward.method(source, "method"),
     );
@@ -204,7 +213,9 @@ describe("forward()", () => {
       forward.method(source, forward.as("method", "read"), {
         enumerable: true,
       }),
-      forward.property(source, "getter", { as: "doubleValue" }),
+      forward.property(source, "getter", {
+        as: "doubleValue",
+      }),
     );
 
     expect(keys(api)).toEqual(["read", "doubleValue"]);
@@ -250,7 +261,6 @@ describe("forward()", () => {
     const handler = {
       value: 42,
     };
-
     const target = {
       value: 100,
     };

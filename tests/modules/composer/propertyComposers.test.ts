@@ -2,31 +2,34 @@ import { compose, propertyComposers } from "@auaust/toolkit/composer";
 import { ownDescriptor, proto } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("propertyComposers()", () => {
+describe("propertyComposers", () => {
   test("infers data and accessor descriptors independently", () => {
     let stored = 1;
-    const result = compose(compose.properties({
-      fixed: {
-        value: "fixed",
-      },
-      mutable: {
-        value: 1,
-        writable: true,
-      },
-      doubled: {
-        get() {
-          return stored * 2;
+
+    const result = compose(
+      compose.properties({
+        fixed: {
+          value: "fixed",
         },
-      },
-      stored: {
-        get() {
-          return stored;
+        mutable: {
+          value: 1,
+          writable: true,
         },
-        set(value: number) {
-          stored = value;
+        doubled: {
+          get() {
+            return stored * 2;
+          },
         },
-      },
-    }));
+        stored: {
+          get() {
+            return stored;
+          },
+          set(value: number) {
+            stored = value;
+          },
+        },
+      }),
+    );
 
     result.stored = 3;
 
@@ -43,6 +46,7 @@ describe("propertyComposers()", () => {
       result.fixed = "fixed";
       // @ts-expect-error Getter-only descriptors produce readonly properties.
       result.doubled = 1;
+
       propertyComposers({
         // @ts-expect-error Data descriptors cannot contain accessors.
         invalid: {
@@ -55,14 +59,17 @@ describe("propertyComposers()", () => {
 
   test("preserves symbol keys and descriptor flags", () => {
     const token = Symbol("token");
-    const result = compose(propertyComposers({
-      [token]: {
-        value: true,
-        enumerable: false,
-        configurable: false,
-        writable: true,
-      },
-    }));
+
+    const result = compose(
+      propertyComposers({
+        [token]: {
+          value: true,
+          enumerable: false,
+          configurable: false,
+          writable: true,
+        },
+      }),
+    );
 
     expect(ownDescriptor(result, token)).toEqual({
       value: true,
@@ -77,6 +84,7 @@ describe("propertyComposers()", () => {
     const base = {
       value: false,
     };
+
     const result = compose(
       base,
       compose.properties({
@@ -100,12 +108,15 @@ describe("propertyComposers()", () => {
 
     if (false) {
       // @ts-expect-error A known non-configurable property cannot be overwritten.
-      compose(compose.properties({
-        fixed: {
-          value: 1,
-          configurable: false,
-        },
-      }), compose.value("fixed", 2));
+      compose(
+        compose.properties({
+          fixed: {
+            value: 1,
+            configurable: false,
+          },
+        }),
+        compose.value("fixed", 2),
+      );
     }
   });
 

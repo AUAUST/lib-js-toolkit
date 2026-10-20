@@ -19,7 +19,7 @@ export async function makeProtocol(options: {
   const paths = await makeFromTemplate(
     [
       codeFile("protocol", ["protocols", protocolName, "index"]),
-      testFile("protocol", ["protocols", protocolName]),
+      testFile("protocol", ["protocols", protocolName, "index"]),
     ],
     replacer({
       protocol: protocolName,

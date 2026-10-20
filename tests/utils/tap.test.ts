@@ -2,11 +2,10 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import { tap } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("tap()", () => {
+describe("tap", () => {
   test("calls the provided function with the value and returns the value", () => {
     const value = 42;
     const callback = vi.fn();
-
     const result = tap(value, callback);
 
     expect(callback).toHaveBeenCalledWith(value);
@@ -14,7 +13,9 @@ describe("tap()", () => {
   });
 
   test("preserves 'this' context in the callback", () => {
-    const context = { multiplier: 2 };
+    const context = {
+      multiplier: 2,
+    };
     const value = 21;
 
     function callback(this: typeof context, val: number) {

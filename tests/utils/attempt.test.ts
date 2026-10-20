@@ -2,10 +2,9 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import { attempt, type AttemptResult } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("attempt()", () => {
+describe("attempt", () => {
   test("returns the result of a successful function call", () => {
     const fn = vi.fn((x: number, y: number) => x + y);
-
     const { success, result, error } = attempt(fn, 2, 3);
 
     expect(success).toBe(true);
@@ -34,14 +33,13 @@ describe("attempt()", () => {
     }
 
     const attempted = attempt(callback, "entry", 2, 3);
+
     const promised = attempt(() => {
       return Promise.resolve("entry" as const);
     });
 
     expectTypeOf(attempted).toEqualTypeOf<AttemptResult<number>>();
-
     expectTypeOf(promised).toEqualTypeOf<AttemptResult<Promise<"entry">>>();
-
     expect(attempted.result).toBe(8);
 
     if (false) {
@@ -57,17 +55,25 @@ describe("attempt()", () => {
         return this.factor * count + extra.length;
       },
     };
+
     const result = attempt(callback, 4, 9);
 
     expectTypeOf(result.result).toEqualTypeOf<number | undefined>();
     expect(result.result).toBe(9);
-    expect(attempt.call({
-      factor: 3,
-    }, callback, 4).result).toBe(12);
+    expect(
+      attempt.call(
+        {
+          factor: 3,
+        },
+        callback,
+        4,
+      ).result,
+    ).toBe(12);
   });
 
   test("captures errors thrown by callable objects", () => {
     const error = new Error("failure");
+
     const result = attempt({
       [callable]() {
         throw error;

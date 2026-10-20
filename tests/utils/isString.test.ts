@@ -1,6 +1,17 @@
 import { isString } from "@auaust/toolkit";
-import { expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-test("isString()", () => {
-  expect(isString("hello")).toBe(true);
+describe("isString", () => {
+  test.for(createValues())("classifies case %# (%s) and narrows its type", (value) => {
+    const input: unknown = value;
+    const expected = typeof input === "string";
+
+    expect(isString(input)).toBe(expected);
+    expectTypeOf(createValues().filter(isString)).toEqualTypeOf<string[]>();
+
+    if (isString(input)) {
+      expectTypeOf(input).toEqualTypeOf<string>();
+    }
+  });
 });

@@ -2,7 +2,7 @@ import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("The countable protocol", () => {
+describe("countable", () => {
   test("is properly recognized and narrowed by `implementsProtocol()`", () => {
     const value: unknown = {
       [countOf]: () => 3,

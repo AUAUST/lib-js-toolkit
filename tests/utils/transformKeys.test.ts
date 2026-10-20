@@ -1,8 +1,9 @@
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { transformKeys } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createPair, createKeyMapper } from "../fixtures/objects";
 
-describe("transformKeys()", () => {
+describe("transformKeys", () => {
   test("renames keys on the original object", () => {
     const target = {
       a: 1,
@@ -14,19 +15,20 @@ describe("transformKeys()", () => {
     });
 
     expect(result).toBe(target);
-
     expect(target).toEqual({
       alpha: 1,
       b: "two",
     });
-
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; b: string }>();
   });
 
   test("uses a value snapshot when keys overlap", () => {
-    const target = { a: 1, b: 2 };
+    const target = createPair();
 
-    transformKeys(target, { a: "b", b: "a" });
+    transformKeys(target, {
+      a: "b",
+      b: "a",
+    });
 
     expect(target).toEqual({
       a: 2,
@@ -35,24 +37,41 @@ describe("transformKeys()", () => {
   });
 
   test("normalizes numeric keys when tracking overwritten values", () => {
-    const target = { 0: "zero", value: "value" };
+    const target = {
+      0: "zero",
+      value: "value",
+    };
 
-    transformKeys(target, { 0: "value", value: 0 });
+    transformKeys(target, {
+      0: "value",
+      value: 0,
+    });
 
-    expect(target).toEqual({ 0: "value", value: "zero" });
+    expect(target).toEqual({
+      0: "value",
+      value: "zero",
+    });
   });
 
   test("preserves an earlier mapped value when its source key is ignored", () => {
-    const target = { a: 1, b: 2 };
+    const target = createPair();
 
-    transformKeys(target, { a: "b", b: false });
+    transformKeys(target, {
+      a: "b",
+      b: false,
+    });
 
-    expect(target).toEqual({ b: 1 });
+    expect(target).toEqual({
+      b: 1,
+    });
   });
 
   test("preserves accessors while snapshotting overwritten values", () => {
     const writes: number[] = [];
-    const target = { a: 1 } as { a: number; b: number };
+
+    const target = {
+      a: 1,
+    } as { a: number; b: number };
 
     Object.defineProperty(target, "b", {
       enumerable: true,
@@ -69,21 +88,18 @@ describe("transformKeys()", () => {
     expect(target.a).toBe(2);
     expect(target.b).toBe(2);
     expect(writes).toEqual([1]);
-    expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf(
-      "function",
-    );
+    expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf("function");
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {
-    const mapper = {
-      key: "renamed" as const,
-      [callable](_key: "entry", _value: number) {
-        return this.key;
+    const mapper = createKeyMapper();
+
+    const result = transformKeys(
+      {
+        entry: 4,
       },
-    };
-    const result = transformKeys({
-      entry: 4,
-    }, mapper);
+      mapper,
+    );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
     expect(result).toEqual({

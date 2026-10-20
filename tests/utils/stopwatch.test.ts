@@ -1,11 +1,11 @@
 import { stopwatch } from "@auaust/toolkit";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi, expectTypeOf } from "vitest";
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+describe("stopwatch", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
-describe("stopwatch()", () => {
   test("uses the performance timeline by default", () => {
     let time = 100;
 
@@ -15,8 +15,8 @@ describe("stopwatch()", () => {
 
     time = 125;
 
+    expectTypeOf(timer()).toEqualTypeOf<number>();
     expect(timer.start).toBe(100);
-
     expect(timer()).toBe(25);
   });
 
@@ -26,8 +26,12 @@ describe("stopwatch()", () => {
     vi.spyOn(Date, "now").mockReturnValue(1_000);
 
     expect(stopwatch(100)()).toBe(25);
-
-    expect(stopwatch({ startAt: 900, usePerformance: false })()).toBe(100);
+    expect(
+      stopwatch({
+        startAt: 900,
+        usePerformance: false,
+      })(),
+    ).toBe(100);
   });
 
   test("uses the date timeline when a Date is passed directly", () => {
@@ -36,7 +40,6 @@ describe("stopwatch()", () => {
     const timer = stopwatch(new Date(900));
 
     expect(timer.start).toBe(900);
-
     expect(timer()).toBe(100);
   });
 
@@ -69,14 +72,12 @@ describe("stopwatch()", () => {
 
     expect(timer.lap("second")).toBe(20);
     expect(timer.laps).toHaveLength(2);
-
     expect(timer.laps[0]).toEqual({
       index: 0,
       name: "first",
       duration: 10,
       timestamp: 10,
     });
-
     expect(timer.laps.at(-1)?.name).toBe("second");
     expect(timer.laps.at(2)).toBeUndefined();
   });
@@ -93,9 +94,7 @@ describe("stopwatch()", () => {
     timer.pause();
 
     expect(timer.running).toBe(false);
-
     expect(timer()).toBe(10);
-
     expect(timer.periods[0]).toMatchObject({
       start: 0,
       end: 10,
@@ -115,7 +114,6 @@ describe("stopwatch()", () => {
 
     expect(timer()).toBe(25);
     expect(timer.lap()).toBe(25);
-
     expect(timer.periods[1]).toMatchObject({
       start: 30,
       end: undefined,
@@ -131,7 +129,9 @@ describe("stopwatch()", () => {
     timer.pause();
 
     expect(() => timer.lap()).toThrow(
-      expect.objectContaining({ name: "StateError" }),
+      expect.objectContaining({
+        name: "StateError",
+      }),
     );
   });
 
@@ -145,6 +145,7 @@ describe("stopwatch()", () => {
     time = 10;
 
     timer.lap();
+
     timer.pause();
 
     time = 20;
@@ -184,6 +185,7 @@ describe("stopwatch()", () => {
     time = 10;
 
     timer.lap();
+
     timer.clear();
 
     time = 15;

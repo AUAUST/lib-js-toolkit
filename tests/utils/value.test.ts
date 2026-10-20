@@ -2,15 +2,19 @@ import { value } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { assertType, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("value()", () => {
+describe("value", () => {
   test("returns the provided value when it's not a function", () => {
     expect(value(42)).toBe(42);
     expect(value("Hello")).toBe("Hello");
 
-    const obj = { a: 1 };
+    const obj = {
+      a: 1,
+    };
+
     expect(value(obj)).toBe(obj);
 
     const sym = Symbol("test");
+
     expect(value(sym)).toBe(sym);
   });
 
@@ -18,10 +22,14 @@ describe("value()", () => {
     expect(value(() => 42)).toBe(42);
     expect(value(() => "Hello")).toBe("Hello");
 
-    const obj = { a: 1 };
+    const obj = {
+      a: 1,
+    };
+
     expect(value(() => obj)).toBe(obj);
 
     const sym = Symbol("test");
+
     expect(value(() => sym)).toBe(sym);
   });
 
@@ -29,14 +37,14 @@ describe("value()", () => {
     const sum = vi.fn((a: number, b: number) => a + b);
 
     expect(value(sum, 2, 3)).toBe(5);
-
     expect(sum).toHaveBeenCalledWith(2, 3);
-
     expect(value(sum, 10, 15)).toBe(25);
   });
 
   test("preserves 'this' context in the provided function", () => {
-    const context = { multiplier: 3 };
+    const context = {
+      multiplier: 3,
+    };
 
     function multiply(this: typeof context, value: number): number {
       return value * this.multiplier;
@@ -52,6 +60,7 @@ describe("value()", () => {
         const applied = value.apply(this, [input]);
 
         assertType<T>(called);
+
         assertType<T>(applied);
 
         return called;
@@ -61,7 +70,6 @@ describe("value()", () => {
     const context = new Context();
 
     expect(context.resolve(42)).toBe(42);
-
     expect(
       context.resolve(function () {
         return this;
@@ -70,14 +78,9 @@ describe("value()", () => {
   });
 
   test("resolves unions using their shared callable arguments", () => {
-    type Source =
-      | (() => number)
-      | ((name: string) => string)
-      | boolean
-      | ((something: unknown) => number);
+    type Source = (() => number) | ((name: string) => string) | boolean | ((something: unknown) => number);
 
     const source = ((something: unknown) => Number(something)) as Source;
-
     const result = value(source, "name");
 
     expect(result).toBeNaN();
@@ -88,14 +91,11 @@ describe("value()", () => {
   });
 
   test("preserves generic results through native methods", () => {
-    const input = <const V extends number, const S extends string>(
-      value: V,
-      suffix: S,
-    ): `${V}${S}` => `${value}${suffix}` as const;
+    const input = <const V extends number, const S extends string>(value: V, suffix: S): `${V}${S}` => {
+      return `${value}${suffix}` as const;
+    };
 
-    assertType<`${number}${string}` | 32>(
-      value(input as typeof input | 32, 1, "!"),
-    );
+    assertType<`${number}${string}` | 32>(value(input as typeof input | 32, 1, "!"));
 
     assertType<`${number}${string}`>(value(input, 1, "!"));
 
@@ -112,7 +112,6 @@ describe("value()", () => {
     const result = value(object);
 
     expect(result).toBe(42);
-
     expect(object[callable]).toHaveBeenCalled();
 
     assertType<42>(result);

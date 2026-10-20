@@ -2,30 +2,15 @@ import { empty, type EmptyValueOf } from "@auaust/toolkit";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createEmptyValues, createFilledValues } from "../fixtures/values";
 
-describe("empty()", () => {
-  test("returns true for empty values", () => {
-    expect(empty("")).toBe(true);
-    expect(empty(" \t\n\u00a0\ufeff")).toBe(true);
-    expect(empty([])).toBe(true);
-    expect(empty({})).toBe(true);
-    expect(empty(null)).toBe(true);
-    expect(empty(undefined)).toBe(true);
-    expect(empty(new Map())).toBe(true);
-    expect(empty(new Set())).toBe(true);
+describe("empty", () => {
+  test.for(createEmptyValues())("recognizes empty value %s", (input) => {
+    expect(empty(input)).toBe(true);
   });
 
-  test("returns false for non-empty values", () => {
-    expect(empty("non-empty")).toBe(false);
-    expect(empty([1, 2, 3])).toBe(false);
-    expect(empty({ key: "value" })).toBe(false);
-    expect(empty(42)).toBe(false);
-    expect(empty(0)).toBe(false);
-    expect(empty(NaN)).toBe(false);
-    expect(empty(new Date())).toBe(false);
-    expect(empty(() => {})).toBe(false);
-    expect(empty(new Map([["key", "value"]]))).toBe(false);
-    expect(empty(new Set([1, 2, 3]))).toBe(false);
+  test.for(createFilledValues())("recognizes filled value %s", (input) => {
+    expect(empty(input)).toBe(false);
   });
 
   test("supports the `Emptiable` protocol", () => {
@@ -56,9 +41,13 @@ describe("empty()", () => {
     }
 
     check("");
+
     check(" ");
+
     check("\t\n");
+
     check("hello");
+
     check(" hello ");
 
     function checkBroad(input: string) {
@@ -80,10 +69,10 @@ describe("empty()", () => {
     }
 
     checkTemplate(" ");
+
     checkTemplate(" hello");
-    expectTypeOf<
-      EmptyValueOf<"\u00a0\ufeff">
-    >().toEqualTypeOf<"\u00a0\ufeff">();
+
+    expectTypeOf<EmptyValueOf<"\u00a0\ufeff">>().toEqualTypeOf<"\u00a0\ufeff">();
     expectTypeOf<EmptyValueOf<"\u200b">>().toBeNever();
   });
 
@@ -97,9 +86,13 @@ describe("empty()", () => {
     }
 
     check("");
+
     check("hello");
+
     check(0);
+
     check(null);
+
     check(undefined);
 
     expectTypeOf<EmptyValueOf<number>>().toBeNever();
@@ -120,53 +113,43 @@ describe("empty()", () => {
     }
 
     check([]);
+
     check([1]);
+
     check(["value"]);
 
     expectTypeOf<EmptyValueOf<string[]>>().toEqualTypeOf<string[] & []>();
-    expectTypeOf<EmptyValueOf<readonly string[]>>().toEqualTypeOf<
-      readonly string[] & readonly []
-    >();
+    expectTypeOf<EmptyValueOf<readonly string[]>>().toEqualTypeOf<readonly string[] & readonly []>();
     expectTypeOf<EmptyValueOf<[number?]>>().toEqualTypeOf<[number?] & []>();
   });
 
   test("narrows collections without introducing unrelated types", () => {
     function check(input: Map<string, number> | Set<number>) {
       if (empty(input)) {
-        expectTypeOf(input).toEqualTypeOf<
-          | (Map<string, number> & Map<string, never>)
-          | (Set<number> & Set<never>)
-        >();
+        expectTypeOf(input).toEqualTypeOf<(Map<string, number> & Map<string, never>) | (Set<number> & Set<never>)>();
       }
     }
 
     check(new Map());
+
     check(new Set());
 
     expectTypeOf<EmptyValueOf<ReadonlyMap<string, number>>>().toEqualTypeOf<
       ReadonlyMap<string, number> & ReadonlyMap<string, never>
     >();
-    expectTypeOf<EmptyValueOf<ReadonlySet<number>>>().toEqualTypeOf<
-      ReadonlySet<number> & ReadonlySet<never>
+    expectTypeOf<EmptyValueOf<ReadonlySet<number>>>().toEqualTypeOf<ReadonlySet<number> & ReadonlySet<never>>();
+    expectTypeOf<EmptyValueOf<{ length: number; label: string }>>().toEqualTypeOf<
+      { length: number; label: string } & { length: 0 }
     >();
-    expectTypeOf<
-      EmptyValueOf<{ length: number; label: string }>
-    >().toEqualTypeOf<{ length: number; label: string } & { length: 0 }>();
-    expectTypeOf<EmptyValueOf<{ size: number }>>().toEqualTypeOf<
-      { size: number } & { size: 0 }
-    >();
-    expectTypeOf<EmptyValueOf<{ optional?: string }>>().toEqualTypeOf<
-      { optional?: string } & Record<string, never>
-    >();
+    expectTypeOf<EmptyValueOf<{ size: number }>>().toEqualTypeOf<{ size: number } & { size: 0 }>();
+    expectTypeOf<EmptyValueOf<{ optional?: string }>>().toEqualTypeOf<{ optional?: string } & Record<string, never>>();
   });
 
   test("preserves custom protocols and their own properties", () => {
     function check(input: Emptiable & { label: string }) {
       if (empty(input)) {
         expectTypeOf(input.label).toEqualTypeOf<string>();
-        expectTypeOf(input).toEqualTypeOf<
-          Emptiable & { label: string } & Emptiable<true>
-        >();
+        expectTypeOf(input).toEqualTypeOf<Emptiable & { label: string } & Emptiable<true>>();
       }
     }
 
@@ -183,13 +166,9 @@ describe("empty()", () => {
     };
 
     expect(empty(counted)).toBe(true);
-    expectTypeOf<EmptyValueOf<Countable>>().toEqualTypeOf<
-      Countable & { [countOf](): 0 }
-    >();
+    expectTypeOf<EmptyValueOf<Countable>>().toEqualTypeOf<Countable & { [countOf](): 0 }>();
     expectTypeOf<EmptyValueOf<Emptiable<false>>>().toBeNever();
-    expectTypeOf<EmptyValueOf<Emptiable & [number]>>().toEqualTypeOf<
-      Emptiable & [number] & Emptiable<true>
-    >();
+    expectTypeOf<EmptyValueOf<Emptiable & [number]>>().toEqualTypeOf<Emptiable & [number] & Emptiable<true>>();
 
     function checkCounted(input: Countable) {
       if (empty(input)) {

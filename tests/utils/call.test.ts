@@ -2,7 +2,7 @@ import { apply, call } from "@auaust/toolkit";
 import { callable, type Callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("call()", () => {
+describe("call", () => {
   test("executes the given callback", () => {
     expect(call(() => 42)).toBe(42);
   });
@@ -17,7 +17,9 @@ describe("call()", () => {
   });
 
   test("uses the provided this context when calling the function", () => {
-    const context = { value: 42 };
+    const context = {
+      value: 42,
+    };
 
     function fn(this: typeof context) {
       return this.value;
@@ -34,7 +36,6 @@ describe("call()", () => {
     };
 
     expect(call(object)).toBe(object);
-
     expect(call.call(1, object)).toBe(1);
   });
 
@@ -44,9 +45,7 @@ describe("call()", () => {
     } as (() => any) & Callable);
 
     expect(fn()).toBe(1);
-
     expect(call(fn)).toBe(1);
-
     expect(fn).toHaveBeenCalledTimes(2);
 
     fn[callable] = function () {
@@ -54,9 +53,7 @@ describe("call()", () => {
     };
 
     expect(fn()).toBe(1);
-
     expect(call(fn)).toBe(fn);
-
     expect(fn).toHaveBeenCalledTimes(3);
   });
 
@@ -85,11 +82,8 @@ describe("call()", () => {
     };
 
     expectTypeOf(call(input, 1, "!")).toEqualTypeOf<string>();
-
     expectTypeOf(call.call(null, input, 1, "!")).toEqualTypeOf<string>();
-
     expectTypeOf(call.apply(null, [input, 1, "!"])).toEqualTypeOf<string>();
-
     expectTypeOf(call.call(null, (n: number) => n, 1)).toEqualTypeOf<number>();
 
     if (false) {
@@ -117,7 +111,9 @@ describe("call()", () => {
       expect(call.call(receiver, input)).toBe(receiver);
     }
 
-    const holder = { invoke: call };
+    const holder = {
+      invoke: call,
+    };
 
     expect(holder.invoke(input)).toBe(holder);
 
@@ -132,11 +128,8 @@ describe("call()", () => {
     }
 
     expect(call(fn)).toBeUndefined();
-
     expect(call.call(call, fn)).toBeUndefined();
-
     expect(call.call(apply, fn)).toBe(apply);
-
     expect(call.call(null, fn)).toBeNull();
   });
 });

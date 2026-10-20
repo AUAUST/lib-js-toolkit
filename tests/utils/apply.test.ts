@@ -4,7 +4,7 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import type { Callee } from "@auaust/toolkit/types";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("apply()", () => {
+describe("apply", () => {
   test("forwards generic readonly arguments to functions and protocol objects", () => {
     function invoke<Result, Arguments extends readonly unknown[], This>(
       receiver: This,
@@ -14,19 +14,18 @@ describe("apply()", () => {
       return apply.call(receiver, callback, args);
     }
 
-    const receiver = { prefix: "hello" };
-
+    const receiver = {
+      prefix: "hello",
+    };
     const args = freeze(["world", 2] as const);
 
-    const callback = function (
-      this: typeof receiver,
-      name: string,
-      count: number,
-    ) {
+    const callback = function (this: typeof receiver, name: string, count: number) {
       return `${this.prefix} ${name}`.repeat(count);
     };
 
-    const protocol = { [callable]: callback };
+    const protocol = {
+      [callable]: callback,
+    };
 
     const result = invoke(receiver, protocol, args);
 
@@ -41,11 +40,9 @@ describe("apply()", () => {
     expect(apply(() => 42, [])).toBe(42);
 
     const add = (a: number, b: number) => a + b;
-
     const result = apply(add, [1, 2]);
 
     expect(result).toBe(3);
-
     expectTypeOf(result).toEqualTypeOf<number>();
   });
 
@@ -59,21 +56,15 @@ describe("apply()", () => {
 
     expect(apply(input, ["world", 1])).toBe("hello world");
 
-    const context = { prefix: "goodbye" };
-
+    const context = {
+      prefix: "goodbye",
+    };
     const result = apply.call(context, input, ["world", 1]);
 
     expect(result).toBe("goodbye world");
-
     expectTypeOf(result).toEqualTypeOf<string>();
-
-    expectTypeOf(
-      apply.apply(context, [input, ["world", 1]]),
-    ).toEqualTypeOf<string>();
-
-    expectTypeOf(
-      apply.call(null, (n: number) => n, [1]),
-    ).toEqualTypeOf<number>();
+    expectTypeOf(apply.apply(context, [input, ["world", 1]])).toEqualTypeOf<string>();
+    expectTypeOf(apply.call(null, (n: number) => n, [1])).toEqualTypeOf<number>();
 
     if (false) {
       // @ts-expect-error Missing required argument.
@@ -100,7 +91,9 @@ describe("apply()", () => {
       expect(apply.call(receiver, input)).toBe(receiver);
     }
 
-    const holder = { invoke: apply };
+    const holder = {
+      invoke: apply,
+    };
 
     expect(holder.invoke(input)).toBe(holder);
 
@@ -114,16 +107,14 @@ describe("apply()", () => {
       return this;
     }
 
-    const context = { value: 42 };
+    const context = {
+      value: 42,
+    };
 
     expect(apply.call(context, fn)).toBe(context);
-
     expect(apply(fn)).toBeUndefined();
-
     expect(apply.call(call, fn)).toBe(call);
-
     expect(apply.call(apply, fn)).toBeUndefined();
-
     expect(apply.call(null, fn)).toBeNull();
   });
 
@@ -135,9 +126,7 @@ describe("apply()", () => {
     });
 
     expectTypeOf(apply(input, ["protocol"])).toEqualTypeOf<string>();
-
     expect(apply(input, ["protocol"])).toBe("protocol");
-
     expectTypeOf(call.call(null, input, "protocol")).toEqualTypeOf<string>();
   });
 

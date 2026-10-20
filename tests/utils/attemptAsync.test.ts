@@ -2,10 +2,9 @@ import { attemptAsync, type AttemptResult } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("attemptAsync()", () => {
+describe("attemptAsync", () => {
   test("returns the result of a successful function call", async () => {
     const fn = vi.fn((x: number, y: number) => x + y);
-
     const attempting = attemptAsync(fn, 2, 3);
 
     expect(attempting).toBeInstanceOf(Promise);
@@ -42,7 +41,6 @@ describe("attemptAsync()", () => {
     const result = attemptAsync(callback, "entry", 1, 2);
 
     expectTypeOf(result).toEqualTypeOf<Promise<AttemptResult<"entry">>>();
-
     expect((await result).result).toBe("entry");
   });
 });

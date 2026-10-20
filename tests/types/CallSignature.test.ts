@@ -1,21 +1,14 @@
-import type {
-  CallParameters,
-  CallReturnType,
-  CallSignature,
-} from "@auaust/toolkit";
+import type { CallParameters, CallReturnType, CallSignature } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { assertType, describe, expectTypeOf, test } from "vitest";
 
-type Accepts<Signature, Arguments extends readonly any[]> = [
-  Signature,
-] extends [(...args: Arguments) => any]
+type Accepts<Signature, Arguments extends readonly any[]> = [Signature] extends [(...args: Arguments) => any]
   ? true
   : false;
 
 describe("CallSignature", () => {
   test("preserves native function signatures", () => {
     type Guard = (input: unknown) => input is string;
-
     expectTypeOf<CallSignature<Guard>>().toEqualTypeOf<Guard>();
   });
 
@@ -24,9 +17,7 @@ describe("CallSignature", () => {
       [callable](input: unknown): input is string;
     };
 
-    expectTypeOf<CallSignature<Protocol>>().toEqualTypeOf<
-      (input: unknown) => input is string
-    >();
+    expectTypeOf<CallSignature<Protocol>>().toEqualTypeOf<(input: unknown) => input is string>();
   });
 
   test("extracts readonly protocol parameters with optional and rest entries", () => {
@@ -37,10 +28,8 @@ describe("CallSignature", () => {
     expectTypeOf<CallParameters<Protocol>>().toEqualTypeOf<
       readonly [name: string, count?: number, ...flags: boolean[]]
     >();
-
     expectTypeOf<CallParameters<Protocol | (() => number)>>().toEqualTypeOf<
-      | readonly [name: string, count?: number, ...flags: boolean[]]
-      | readonly []
+      readonly [name: string, count?: number, ...flags: boolean[]] | readonly []
     >();
   });
 
@@ -76,7 +65,6 @@ describe("CallSignature", () => {
       | readonly [thing: unknown]
       | readonly [input: number | string, condition: boolean]
     >();
-
     expectTypeOf<CallReturnType<Target>>().toEqualTypeOf<number | string>();
   });
 });

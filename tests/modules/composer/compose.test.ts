@@ -7,25 +7,35 @@ import {
   valueComposer,
   valueComposers,
 } from "@auaust/toolkit/composer";
-import {
-  create,
-  defineProperty,
-  hasOwn,
-  ownDescriptor,
-  proto,
-} from "@auaust/toolkit/object";
+import { create, entries, defineProperty, hasOwn, ownDescriptor, proto } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createInstances } from "../../fixtures/values";
 
-describe("compose()", () => {
-  test("exposes its helpers", () => {
-    expect(compose.getter).toBe(getterComposer);
-    expect(compose.getters).toBe(getterComposers);
-    expect(compose.method).toBe(valueComposer);
-    expect(compose.methods).toBe(valueComposers);
-    expect(compose.property).toBe(propertyComposer);
-    expect(compose.properties).toBe(propertyComposers);
-    expect(compose.value).toBe(valueComposer);
-    expect(compose.values).toBe(valueComposers);
+describe("compose", () => {
+  test.for(createInstances())("accepts native target %s", (target) => {
+    const result = compose(target, compose.value("fixture", "value"));
+
+    expect(result).toBe(target);
+    expect(result.fixture).toBe("value");
+    expectTypeOf(result.fixture).toEqualTypeOf<"value">();
+  });
+
+  describe.each(
+    entries({
+      getter: getterComposer,
+      getters: getterComposers,
+      method: valueComposer,
+      methods: valueComposers,
+      property: propertyComposer,
+      properties: propertyComposers,
+      value: valueComposer,
+      values: valueComposers,
+    }),
+  )("%s", (name, helper) => {
+    test("exposes the standalone helper with its signature", () => {
+      expect(compose[name]).toBe(helper);
+      expectTypeOf(compose[name]).toEqualTypeOf<typeof helper>();
+    });
   });
 
   test("creates null-prototype objects without a base", () => {
@@ -53,7 +63,6 @@ describe("compose()", () => {
     };
 
     const extended = compose(base, compose.value("added", 1));
-
     const empty = {};
 
     expect(proto(result)).toBeNull();
@@ -101,6 +110,7 @@ describe("compose()", () => {
     const prototype = {
       inherited: true,
     };
+
     const base = create(prototype, {
       hidden: {
         value: 1,
@@ -120,9 +130,7 @@ describe("compose()", () => {
     expect(result).toBe(base);
     expect(reads).toBe(0);
     expect(proto(result)).toBe(prototype);
-    expect(ownDescriptor(result, "hidden")).toEqual(
-      ownDescriptor(base, "hidden"),
-    );
+    expect(ownDescriptor(result, "hidden")).toEqual(ownDescriptor(base, "hidden"));
     expect(result.lazy).toBe(2);
     expect(hasOwn(base, "value")).toBe(true);
   });
@@ -152,6 +160,7 @@ describe("compose()", () => {
 
   test("infers mixed entries and preserves function signatures", async () => {
     const token = Symbol("token");
+
     const result = compose(
       {},
       compose.value(token, undefined),
@@ -188,19 +197,15 @@ describe("compose()", () => {
   });
 
   test("reuses entries and preserves receivers", () => {
-    const getter = compose.getter(
-      "doubled",
-      function (this: { count: number }) {
-        return this.count * 2;
-      },
-    );
-    const method = compose.method(
-      "add",
-      function (this: { count: number }, amount: number) {
-        this.count += amount;
-        return this.count;
-      },
-    );
+    const getter = compose.getter("doubled", function (this: { count: number }) {
+      return this.count * 2;
+    });
+
+    const method = compose.method("add", function (this: { count: number }, amount: number) {
+      this.count += amount;
+      return this.count;
+    });
+
     const first = compose(
       {
         count: 2,
@@ -208,6 +213,7 @@ describe("compose()", () => {
       getter,
       method,
     );
+
     const second = compose(
       {
         count: 10,
@@ -237,7 +243,9 @@ describe("compose()", () => {
       value: 1,
     });
 
-    expect(() => compose(base, compose.value("value", 2))).toThrow(TypeError);
+    expect(() => {
+      return compose(base, compose.value("value", 2));
+    }).toThrow(TypeError);
     expect(ownDescriptor(base, "value")?.value).toBe(1);
   });
 
@@ -257,6 +265,7 @@ describe("compose()", () => {
         value: "readonly",
       }),
     );
+
     const getter = compose(
       compose.property("value", {
         get() {
@@ -297,11 +306,15 @@ describe("compose()", () => {
     );
 
     expect(composed(3)).toBe("xxx");
-
-    expect(composed.call({ str: "y" }, 2)).toBe("yy");
-
+    expect(
+      composed.call(
+        {
+          str: "y",
+        },
+        2,
+      ),
+    ).toBe("yy");
     expect(composed.count).toBe(5);
-
     expect(composed.pow2(4)).toBe(16);
   });
 });

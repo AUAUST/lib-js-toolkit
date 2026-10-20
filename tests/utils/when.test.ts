@@ -1,63 +1,32 @@
 import { when } from "@auaust/toolkit";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("when()", () => {
-  test("returns the callback result when the condition is true", () => {
-    const callback = vi.fn(() => "Callback Result");
-    const fallback = vi.fn(() => "Fallback Result");
+describe("when", () => {
+  test.each([true, false])("evaluates only the selected branch when %s", (condition) => {
+    const callback = vi.fn(() => "callback" as const);
+    const fallback = vi.fn(() => "fallback" as const);
+    const result = when(condition, callback, fallback);
 
-    expect(when(true, callback, fallback)).toBe("Callback Result");
-
-    expect(callback).toHaveBeenCalledOnce();
-    expect(fallback).not.toHaveBeenCalled();
+    expect(result).toBe(condition ? "callback" : "fallback");
+    expect(callback).toHaveBeenCalledTimes(Number(condition));
+    expect(fallback).toHaveBeenCalledTimes(Number(!condition));
+    expectTypeOf(result).toEqualTypeOf<"callback" | "fallback">();
   });
 
-  test("returns the fallback result when the condition is false", () => {
-    const callback = vi.fn(() => "Callback Result");
-    const fallback = vi.fn(() => "Fallback Result");
-
-    expect(when(false, callback, fallback)).toBe("Fallback Result");
-
-    expect(callback).not.toHaveBeenCalled();
-    expect(fallback).toHaveBeenCalledOnce();
-  });
-
-  test("returns undefined when the condition is false and no fallback is provided", () => {
-    const callback = vi.fn(() => "Callback Result");
-
+  test("returns undefined without evaluating an unselected callback", () => {
+    const callback = vi.fn();
     expect(when(false, callback)).toBeUndefined();
-
     expect(callback).not.toHaveBeenCalled();
   });
 
-  test("handles callbacks on all arguments", () => {
-    const condition = vi.fn(() => false);
-    const callback = vi.fn(() => "Callback Result");
-    const fallback = vi.fn(() => "Fallback Result");
-
-    expect(when(condition, callback, fallback)).toBe("Fallback Result");
-
-    expect(condition).toHaveBeenCalledOnce();
-    expect(callback).not.toHaveBeenCalled();
-    expect(fallback).toHaveBeenCalledOnce();
-
-    condition.mockReturnValue(true);
-
-    expect(when(condition, callback, fallback)).toBe("Callback Result");
-
-    expect(condition).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenCalledOnce();
-    expect(fallback).toHaveBeenCalledOnce();
-  });
-
-  test("preserves 'this' context in callbacks", () => {
+  test("evaluates condition callbacks anew and preserves receivers", () => {
     const context = {
       value: 42,
     };
 
-    function condition(this: typeof context) {
+    const condition = vi.fn(function (this: typeof context) {
       return this.value === 42;
-    }
+    });
 
     function callback(this: typeof context) {
       return this.value + 1;
@@ -68,6 +37,16 @@ describe("when()", () => {
     }
 
     expect(when.call(context, condition, callback, fallback)).toBe(43);
-    expect(when.call({ value: 0 }, condition, callback, fallback)).toBe(-1);
+    expect(
+      when.call(
+        {
+          value: 0,
+        },
+        condition,
+        callback,
+        fallback,
+      ),
+    ).toBe(-1);
+    expect(condition).toHaveBeenCalledTimes(2);
   });
 });

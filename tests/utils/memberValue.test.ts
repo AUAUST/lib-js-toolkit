@@ -2,7 +2,7 @@ import { memberValue } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("memberValue()", () => {
+describe("memberValue", () => {
   test("returns the value of the specified property if it exists", () => {
     expect(
       memberValue(
@@ -27,7 +27,6 @@ describe("memberValue()", () => {
     const value = memberValue(obj, "a");
 
     expect(value).toBe(42);
-
     expectTypeOf(value).toBeNumber();
   });
 
@@ -49,24 +48,21 @@ describe("memberValue()", () => {
     const value = memberValue(obj, "value");
 
     expect(value).toBe(42);
-
     expectTypeOf(value).toBeNumber();
+    expect(() => {
+      // @ts-expect-error
 
-    // @ts-expect-error
-    expect(() => memberValue(obj, "getValue")).toThrow(
-      "Multiplier is required",
-    );
+      return memberValue(obj, "getValue");
+    }).toThrow("Multiplier is required");
 
     const getValue = memberValue(obj, "getValue", 0.5);
 
     expect(getValue).toBe(21);
-
     expectTypeOf(getValue).toBeNumber();
 
     const doubleValue = memberValue(obj, "doubleValue");
 
     expect(doubleValue).toBe(84);
-
     expectTypeOf(doubleValue).toBeNumber();
 
     const obj2 = {
@@ -86,7 +82,6 @@ describe("memberValue()", () => {
     const method = memberValue(obj2, "method");
 
     expect(method).toBe(16);
-
     expectTypeOf(method).toBeNumber();
   });
 
@@ -117,7 +112,6 @@ describe("memberValue()", () => {
     };
 
     expect(memberValue(obj, "doubleValue")).toBe(6);
-
     expect(memberValue(obj, "simpleProperty")).toBe(simpleObject);
   });
 

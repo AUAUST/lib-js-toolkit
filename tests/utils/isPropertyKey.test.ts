@@ -1,20 +1,17 @@
 import { isPropertyKey } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("isPropertyKey()", () => {
-  test("accepts strings", () => {
-    expect(isPropertyKey("property")).toBe(true);
-  });
+describe("isPropertyKey", () => {
+  test.for(createValues())("classifies case %# (%s) and narrows its type", (value) => {
+    const input: unknown = value;
+    const expected = ["string", "number", "symbol"].includes(typeof input);
 
-  test("accepts numbers", () => {
-    expect(isPropertyKey(42)).toBe(true);
-  });
+    expect(isPropertyKey(input)).toBe(expected);
+    expectTypeOf(createValues().filter(isPropertyKey)).toEqualTypeOf<PropertyKey[]>();
 
-  test("accepts symbols", () => {
-    expect(isPropertyKey(Symbol("property"))).toBe(true);
-  });
-
-  test("rejects other values", () => {
-    expect(isPropertyKey({ random: true })).toBe(false);
+    if (isPropertyKey(input)) {
+      expectTypeOf(input).toEqualTypeOf<PropertyKey>();
+    }
   });
 });

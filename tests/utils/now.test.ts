@@ -1,14 +1,18 @@
 import { now } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("now()", () => {
-  test("returns a Date object representing the current date and time", () => {
+describe("now", () => {
+  afterEach(() => vi.useRealTimers());
+
+  test("returns a fresh Date at the current time", () => {
+    vi.useFakeTimers();
+
+    vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
+
     const result = now();
 
-    expect(result).toBeInstanceOf(Date);
-
-    const nowDate = new Date();
-
-    expect(result.getTime()).toBeCloseTo(nowDate.getTime(), -2);
+    expectTypeOf(result).toEqualTypeOf<Date>();
+    expect(result.getTime()).toBe(Date.now());
+    expect(now()).not.toBe(result);
   });
 });

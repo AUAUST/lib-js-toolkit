@@ -1,12 +1,12 @@
-import {
-  propertyForwarders,
-  type PropertyForwarder,
-} from "@auaust/toolkit/forwarder";
+import { propertyForwarders, type PropertyForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("propertyForwarders()", () => {
+describe("propertyForwarders", () => {
   test("handles the spread call form", () => {
-    const source = { foo: 1, bar: "bar" };
+    const source = {
+      foo: 1,
+      bar: "bar",
+    };
 
     const forwarders = propertyForwarders(source, "foo", {
       property: "bar",
@@ -19,11 +19,17 @@ describe("propertyForwarders()", () => {
   });
 
   test("handles the array call form", () => {
-    const source = { foo: 1, bar: "bar" };
+    const source = {
+      foo: 1,
+      bar: "bar",
+    };
 
     const forwarders = propertyForwarders(source, [
       "foo",
-      { property: "bar", readonly: true },
+      {
+        property: "bar",
+        readonly: true,
+      },
     ]);
 
     expect(forwarders).toHaveLength(2);
@@ -32,12 +38,19 @@ describe("propertyForwarders()", () => {
   });
 
   test("preserves the property and readonly pairs", () => {
-    const source = { foo: 1, bar: "bar", baz: true };
+    const source = {
+      foo: 1,
+      bar: "bar",
+      baz: true,
+    };
 
     const forwarders = propertyForwarders(
       source,
       ["foo"],
-      { property: "bar", readonly: true },
+      {
+        property: "bar",
+        readonly: true,
+      },
       ["baz"],
     );
 

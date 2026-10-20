@@ -1,20 +1,15 @@
 import { isFunction } from "@auaust/toolkit";
 import { assertType, describe, expect, expectTypeOf, test } from "vitest";
+import { createFunctions, createObjects, primitiveValues } from "../fixtures/values";
 
-describe("isFunction()", () => {
-  test("returns `true` for functions", () => {
-    expect(isFunction(() => {})).toBe(true);
-    expect(isFunction(function () {})).toBe(true);
-    expect(isFunction(async function () {})).toBe(true);
-    expect(isFunction(class {})).toBe(true);
+describe("isFunction", () => {
+  test.for(createFunctions())("recognizes function %s", (input) => {
+    expect(isFunction(input)).toBe(true);
+    expectTypeOf(isFunction(input)).toEqualTypeOf<boolean>();
   });
 
-  test("returns `false` for non-callable values", () => {
-    expect(isFunction(null)).toBe(false);
-    expect(isFunction(undefined)).toBe(false);
-    expect(isFunction(123)).toBe(false);
-    expect(isFunction("string")).toBe(false);
-    expect(isFunction({})).toBe(false);
+  test.for([...primitiveValues, ...createObjects()])("rejects non-callable %s", (input) => {
+    expect(isFunction(input)).toBe(false);
   });
 
   test("supports passing a method name", () => {
@@ -30,7 +25,6 @@ describe("isFunction()", () => {
     if (isFunction(obj, "method")) {
       expect(obj.method()).toBe(0);
       expect(obj.method(1, 2, 3)).toBe(6);
-
       expectTypeOf<ReturnType<typeof obj.method>>().toBeUnknown();
     }
   });
@@ -49,6 +43,7 @@ describe("isFunction()", () => {
       expect(obj.method(1, 2, 3)).toBe(6);
 
       assertType<typeof method>(obj.method);
+
       assertType<ReturnType<typeof method>>(1 + 1);
     }
   });

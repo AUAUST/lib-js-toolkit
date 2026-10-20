@@ -1,37 +1,24 @@
-import { defer } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { defer, type DeferPromise } from "@auaust/toolkit";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { primitiveValues } from "../fixtures/values";
 
-describe("defer()", () => {
-  test("creates a promise that can be resolved externally", () => {
-    const deferred = defer<number>();
+describe("defer", () => {
+  test.for(primitiveValues)("resolves externally to %s", async (value) => {
+    const deferred = defer<typeof value>();
 
-    let resolvedValue: number | undefined;
+    expectTypeOf(deferred).toEqualTypeOf<DeferPromise<typeof value>>();
 
-    deferred.then((value) => {
-      resolvedValue = value;
-    });
+    deferred.resolve(value);
 
-    deferred.resolve(42);
-
-    return deferred.then(() => {
-      expect(resolvedValue).toBe(42);
-    });
+    await expect(deferred).resolves.toBe(value);
   });
 
-  test("creates a promise that can be rejected externally", () => {
-    const deferred = defer<number>();
+  test.for(primitiveValues)("rejects externally with %s", async (reason) => {
+    const deferred = defer<never>();
+    const rejected = expect(deferred).rejects.toBe(reason);
 
-    let rejectedReason: any;
+    deferred.reject(reason);
 
-    deferred.catch((reason) => {
-      rejectedReason = reason;
-    });
-
-    deferred.reject(new Error("Test Error"));
-
-    return deferred.catch(() => {
-      expect(rejectedReason).toBeInstanceOf(Error);
-      expect(rejectedReason.message).toBe("Test Error");
-    });
+    await rejected;
   });
 });

@@ -5,108 +5,68 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import { match } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("match()", () => {
-  test("matches exact values", () => {
-    const cases = [
-      [1, "one"],
-      ["number two", "two"],
-      [Symbol.for("three"), "three"],
-      [true, "four"],
-      [undefined, "five"],
-      [null, "six"],
-      [NaN, "seven"],
-    ] as const;
-
-    expect(match(1, cases)).toBe("one");
-    expect(match("number two", cases)).toBe("two");
-    expect(match(Symbol.for("three"), cases)).toBe("three");
-    expect(match(true, cases)).toBe("four");
-    expect(match(undefined, cases)).toBe("five");
-    expect(match(null, cases)).toBe("six");
-    expect(match(NaN, cases)).toBe("seven");
+describe("match", () => {
+  test.each([
+    [1, "one"],
+    ["number two", "two"],
+    [Symbol.for("three"), "three"],
+    [true, "four"],
+    [undefined, "five"],
+    [null, "six"],
+    [NaN, "seven"],
+  ] as const)("matches exact value %s", (input, expected) => {
+    expect(match(input, [[input, expected]])).toBe(expected);
   });
 
-  test("handles multiple predicates", () => {
-    const cases = [
-      [[1, 2, 3], "small number"],
-      [[4, 5, 6], "medium number"],
-      [[7, 8, 9], "large number"],
-    ] as const;
-
-    expect(match(2, cases)).toBe("small number");
-    expect(match(5, cases)).toBe("medium number");
-    expect(match(8, cases)).toBe("large number");
-  });
-
-  test("matches using functions", () => {
-    const cases = [
-      [(x: unknown) => isString(x), "a string"],
+  test.each([
+    [2, [[1, 2, 3], "small number"]],
+    [5, [[4, 5, 6], "medium number"]],
+    [8, [[7, 8, 9], "large number"]],
+    ["hello", [isString, "a string"]],
+    [
+      42,
       [
-        (x: unknown) => {
-          return isNumber(x) && x > 10;
+        (value: unknown) => {
+          return isNumber(value) && value > 10;
         },
         "a big number",
       ],
-      [(x: unknown) => isArray(x), "an array"],
-    ] as const;
-
-    expect(match("hello", cases)).toBe("a string");
-    expect(match(42, cases)).toBe("a big number");
-    expect(match([1, 2, 3], cases)).toBe("an array");
+    ],
+    [
+      [1, 2, 3],
+      [isArray, "an array"],
+    ],
+    ["hello there", [/^hello/, "greeting"]],
+    ["goodbye world!", [/world!$/, "farewell"]],
+    ["12345", [/^\d+$/, "number string"]],
+  ] as const)("matches predicate for %s", (input, [predicate, expected]) => {
+    expect(match(input, [[predicate, expected]])).toBe(expected);
   });
 
-  test("matches using regular expressions", () => {
-    const cases = [
-      [/^hello/, "greeting"],
-      [/world!$/, "farewell"],
-      [/^\d+$/, "number string"],
-    ] as const;
-
-    expect(match("hello there", cases)).toBe("greeting");
-    expect(match("goodbye world!", cases)).toBe("farewell");
-    expect(match("12345", cases)).toBe("number string");
-  });
-
-  test("returns fallback when no match is found", () => {
+  test.each([3, "hello"])("uses fallbacks for unmatched %s", (input) => {
     const cases = [
       [1, "one"],
       [2, "two"],
     ] as const;
 
-    expect(match(3, cases, "unknown")).toBe("unknown");
-    expect(match("hello", cases, "no match")).toBe("no match");
+    expect(match(input, cases)).toBeUndefined();
+    expect(match(input, cases, "unknown")).toBe("unknown");
+    expect(match(input, cases, () => "unknown")).toBe("unknown");
   });
 
-  test("returns undefined when no match is found and no fallback is provided", () => {
-    const cases = [
-      [1, "one"],
-      [2, "two"],
-    ] as const;
+  test.each([
+    [1, "one"],
+    ["hello", "greeting"],
+    ["world", "farewell"],
+  ] as const)("invokes matching result callbacks for %s", (input, expected) => {
+    const result = match(input, [
+      [1, (): "one" => "one"],
+      ["hello", (): "greeting" => "greeting"],
+      [/world/, (): "farewell" => "farewell"],
+    ]);
 
-    expect(match(3, cases)).toBeUndefined();
-    expect(match("hello", cases)).toBeUndefined();
-  });
-
-  test("supports callbacks as results", () => {
-    const cases = [
-      [1, () => "one" as const],
-      ["hello", () => "greeting" as const],
-      [/world/, () => "farewell" as const],
-    ] as const;
-
-    expect(match(1, cases)).toBe("one");
-    expect(match("hello", cases)).toBe("greeting");
-    expect(match("world", cases)).toBe("farewell");
-  });
-
-  test("supports callbacks as fallback", () => {
-    const cases = [
-      [1, "one"],
-      [2, "two"],
-    ] as const;
-
-    expect(match(3, cases, () => "unknown")).toBe("unknown");
-    expect(match("hello", cases, () => "no match")).toBe("no match");
+    expect(result).toBe(expected);
+    expectTypeOf(result).toEqualTypeOf<"one" | "greeting" | "farewell" | undefined>();
   });
 
   test("first matching case is returned", () => {
@@ -126,19 +86,25 @@ describe("match()", () => {
       match([
         [() => false, () => "never"],
         [() => true, () => "matched"],
-      ])
+      ]),
     ).toBe("matched");
-
     expect(
       match([
         [[() => false, () => false], "never"],
         [() => false, () => NaN],
         [[() => false, () => true], () => "matched"],
-      ])
+      ]),
     ).toBe("matched");
 
-    // @ts-expect-error
-    match([[(x) => expect(x).toBeUndefined(), 0]]);
+    match([
+      [
+        // @ts-expect-error A targetless predicate has no contextual input type.
+        (x) => {
+          return expect(x).toBeUndefined();
+        },
+        0,
+      ],
+    ]);
   });
 
   test("supports fallbacks without target value", () => {
@@ -148,18 +114,17 @@ describe("match()", () => {
           [() => false, "never"],
           [() => false, "also never"],
         ],
-        "fallback"
-      )
+        "fallback",
+      ),
     ).toBe("fallback");
-
     expect(
       match(
         [
           [() => false, "never"],
           [[() => false, () => false], "also never"],
         ],
-        () => ["fallback"]
-      )
+        () => ["fallback"],
+      ),
     ).toEqual(["fallback"]);
   });
 
@@ -170,25 +135,35 @@ describe("match()", () => {
         return value === this.expected;
       },
     };
+
     const result = {
       [callable]() {
         return "matched" as const;
       },
     };
+
     const fallback = {
       [callable]() {
         return "fallback" as const;
       },
     };
+
     const matched = match(4, [[[predicate], result]], fallback);
 
     expectTypeOf(matched).toEqualTypeOf<"matched" | "fallback">();
     expect(matched).toBe("matched");
     expect(match(5, [[predicate, result]], fallback)).toBe("fallback");
-    expect(match([[{
-      [callable](value: undefined) {
-        return value === undefined;
-      },
-    }, result]])).toBe("matched");
+    expect(
+      match([
+        [
+          {
+            [callable](value: undefined) {
+              return value === undefined;
+            },
+          },
+          result,
+        ],
+      ]),
+    ).toBe("matched");
   });
 });

@@ -6,13 +6,10 @@ describe("NullaryFn", () => {
     type Callback = NullaryFn<"value", { count: number }>;
 
     expectTypeOf<Parameters<Callback>>().toEqualTypeOf<[]>();
-
     expectTypeOf<ReturnType<Callback>>().toEqualTypeOf<"value">();
-
     expectTypeOf<ThisParameterType<Callback>>().toEqualTypeOf<{
       count: number;
     }>();
-
     expectTypeOf<(value: number) => void>().not.toExtend<NullaryFn>();
   });
 });

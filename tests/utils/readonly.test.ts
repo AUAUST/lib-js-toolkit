@@ -1,95 +1,72 @@
 import { readonly } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { ReadonlyError } from "@auaust/toolkit/errors";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("readonly()", () => {
-  test("prevents modifications to the underlying object", () => {
-    const obj = readonly({ a: 1 });
-
-    expect(() => {
-      // @ts-expect-error
-      obj.a = 2;
-    }).toThrow();
-
-    expect(() => {
-      // @ts-expect-error
-      delete obj.a;
-    }).toThrow();
-
-    expect(() => {
-      Object.defineProperty(obj, "a", { value: 2 });
-    }).toThrow();
-
-    expect(() => {
-      Object.preventExtensions(obj);
-    }).toThrow();
-  });
-
-  test("does not impact the original object", () => {
-    const original = { a: 1 };
+describe("readonly", () => {
+  test.each([
+    (target: object) => {
+      return Reflect.set(target, "value", 2);
+    },
+    (target: object) => {
+      return Reflect.deleteProperty(target, "value");
+    },
+    (target: object) => {
+      return Object.defineProperty(target, "value", {
+        value: 2,
+      });
+    },
+    (target: object) => {
+      return Object.preventExtensions(target);
+    },
+    (target: object) => {
+      return Object.setPrototypeOf(target, null);
+    },
+  ])("rejects mutation %s", (mutate) => {
+    const original = {
+      value: 1,
+    };
     const read = readonly(original);
 
-    expect(() => {
-      // @ts-expect-error
-      read.a = 2;
-    }).toThrow();
+    expect(() => mutate(read)).toThrow(ReadonlyError);
+    expect(original.value).toBe(1);
+    expectTypeOf(read).toEqualTypeOf<Readonly<typeof original>>();
 
-    expect(original.a).toBe(1);
+    original.value = 3;
 
-    original.a = 2;
-
-    expect(read.a).toBe(2);
+    expect(read.value).toBe(3);
   });
 
-  test("doesn't rewrap an already readonly object", () => {
-    const original = { a: 1 };
-
-    const read1 = readonly(original);
-
-    const read2 = readonly(read1);
-
-    const read3 = readonly(read2);
-
-    expect(read1).toBe(read2);
-
-    expect(read3).toBe(read2);
-  });
-
-  test("shares the same proxy for the same object", () => {
-    const original = { a: 1 };
-
-    const read1 = readonly(original);
-
-    const read2 = readonly(original);
-
-    expect(read1).toBe(read2);
-  });
-
-  test("correctly identifies readonly objects", () => {
-    const original = { a: 1 };
-
+  test("reuses proxies and already readonly values", () => {
+    const original = {};
     const read = readonly(original);
 
-    expect(readonly.isReadonly(read)).toBe(true);
-
-    expect(readonly.isReadonly(original)).toBe(false);
+    expect(read).not.toBe(original);
+    expect(readonly(original)).toBe(read);
+    expect(readonly(read)).toBe(read);
+    expect(readonly(readonly(read))).toBe(read);
   });
 
-  test("prevents array modifications", () => {
-    const arr = readonly([1, 2, 3]);
+  test("preserves readonly tuples and rejects array mutations", () => {
+    const read = readonly([1, 2, 3] as const);
 
-    expect(() => {
-      // @ts-expect-error
-      arr[0] = 4;
-    }).toThrow();
+    expectTypeOf(read).toEqualTypeOf<readonly [1, 2, 3]>();
+    // @ts-expect-error Readonly array indices cannot be assigned.
+    expect(() => (read[0] = 4)).toThrow(ReadonlyError);
+    // @ts-expect-error Readonly arrays cannot be extended.
+    expect(() => read.push(4)).toThrow(ReadonlyError);
+    // @ts-expect-error Readonly arrays cannot be shortened.
+    expect(() => read.pop()).toThrow(ReadonlyError);
+  });
 
-    expect(() => {
-      // @ts-expect-error
-      arr.push(4);
-    }).toThrow();
+  describe("isReadonly", () => {
+    test.for(createValues())("recognizes only toolkit proxies for %s", (input) => {
+      expect(readonly.isReadonly(input)).toBe(false);
+      expectTypeOf(readonly.isReadonly(input)).toEqualTypeOf<boolean>();
 
-    expect(() => {
-      // @ts-expect-error
-      arr.pop();
-    }).toThrow();
+      if (input !== null && (typeof input === "object" || typeof input === "function")) {
+        expect(readonly.isReadonly(readonly(input))).toBe(true);
+      }
+    });
   });
 });

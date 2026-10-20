@@ -1,78 +1,89 @@
 import { assign } from "@auaust/toolkit/object";
-import { expect, expectTypeOf, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createObjects } from "../../fixtures/values";
 
-test("assign() retains native identity and infers successive overwrites", () => {
-  const target = {
-    value: 1,
-  };
+describe("assign", () => {
+  test.for(createObjects())("accepts native target %s", (target) => {
+    const result = assign(target, {
+      fixture: "value" as const,
+    });
 
-  const result = assign(
-    target,
-    {
-      a: true,
-    },
-    {
-      b: 2,
-    },
-    null,
-    {
-      value: "last" as const,
-    },
-    {
-      c: 3,
-    },
-  );
-
-  expectTypeOf(result).toEqualTypeOf<{
-    value: "last";
-    a: boolean;
-    b: number;
-    c: number;
-  }>();
-
-  expect(assign).toBe(Object.assign);
-  expect(result).toBe(target);
-  expect(result.value).toBe("last");
-});
-
-test("assign() preserves generic call signatures and accepts an empty source list", () => {
-  const target = <Value>(value: Value) => value;
-  const result = assign(target, {
-    label: "entry",
+    expect(result).toBe(target);
+    expect(result.fixture).toBe("value");
+    expectTypeOf(result.fixture).toEqualTypeOf<"value">();
   });
 
-  expectTypeOf(result("literal" as const)).toEqualTypeOf<"literal">();
-  expectTypeOf(
-    assign({
+  test("retains native identity and infers successive overwrites", () => {
+    const target = {
       value: 1,
-    }),
-  ).toEqualTypeOf<{ value: number }>();
+    };
 
-  expect(result).toBe(target);
-});
+    const result = assign(
+      target,
+      {
+        a: true,
+      },
+      {
+        b: 2,
+      },
+      null,
+      {
+        value: "last" as const,
+      },
+      {
+        c: 3,
+      },
+    );
 
-test("assign() models optional properties and a variable number of sources", () => {
-  const optional: { value?: number } = {};
-  const sources: { value: number }[] = [];
-  const target = {
-    value: "initial",
-  };
+    expectTypeOf(result).toEqualTypeOf<{
+      value: "last";
+      a: boolean;
+      b: number;
+      c: number;
+    }>();
+    expect(assign).toBe(Object.assign);
+    expect(result).toBe(target);
+    expect(result.value).toBe("last");
+  });
 
-  const result = assign(target, optional);
-  const variable = assign(
-    {
+  test("preserves generic call signatures and accepts an empty source list", () => {
+    const target = <Value,>(value: Value) => value;
+
+    const result = assign(target, {
+      label: "entry",
+    });
+
+    expectTypeOf(result("literal" as const)).toEqualTypeOf<"literal">();
+    expectTypeOf(
+      assign({
+        value: 1,
+      }),
+    ).toEqualTypeOf<{ value: number }>();
+    expect(result).toBe(target);
+  });
+
+  test("models optional properties and a variable number of sources", () => {
+    const optional: { value?: number } = {};
+    const sources: { value: number }[] = [];
+    const target = {
       value: "initial",
-    },
-    ...sources,
-  );
+    };
+    const result = assign(target, optional);
 
-  expectTypeOf(result.value).toEqualTypeOf<string | number | undefined>();
-  expectTypeOf(variable.value).toEqualTypeOf<string | number | undefined>();
+    const variable = assign(
+      {
+        value: "initial",
+      },
+      ...sources,
+    );
 
-  expect(result.value).toBe("initial");
-  expect(variable.value).toBe("initial");
-  expect(assign({}, "ab")).toEqual({
-    0: "a",
-    1: "b",
+    expectTypeOf(result.value).toEqualTypeOf<string | number | undefined>();
+    expectTypeOf(variable.value).toEqualTypeOf<string | number | undefined>();
+    expect(result.value).toBe("initial");
+    expect(variable.value).toBe("initial");
+    expect(assign({}, "ab")).toEqual({
+      0: "a",
+      1: "b",
+    });
   });
 });

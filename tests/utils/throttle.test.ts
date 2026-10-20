@@ -1,170 +1,130 @@
+import { throttle } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { sleep, throttle } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("throttle()", () => {
-  test("ensures a function is called at most once in the specified wait time", async () => {
-    const callback = vi.fn();
-
-    const throttledFunction = throttle(callback, 5);
-
-    throttledFunction(1);
-    throttledFunction(2);
-    throttledFunction(3);
-
-    expect(callback).toHaveBeenCalledOnce();
-    expect(callback).toHaveBeenCalledWith(1);
-
-    await sleep(10);
-
-    throttledFunction(4);
-    throttledFunction(5);
-    throttledFunction(6);
-
-    expect(callback).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenLastCalledWith(4);
+describe("throttle", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
   });
 
-  test("maintains the context of 'this' when called", async () => {
-    const context = { value: 42 };
+  afterEach(() => vi.useRealTimers());
+
+  test("uses the first arguments during each cooldown", () => {
+    const callback = vi.fn();
+    const fn = throttle(callback, 10);
+
+    expect(fn(1)).toBe(true);
+    expect(fn(2)).toBe(false);
+    expect(fn(3)).toBe(false);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(1);
+    expect(fn.remaining()).toBe(10);
+
+    vi.advanceTimersByTime(9);
+
+    expect(fn.remaining()).toBe(1);
+    expect(fn(4)).toBe(false);
+
+    vi.advanceTimersByTime(1);
+
+    expect(fn.remaining()).toBe(0);
+    expect(fn(5)).toBe(true);
+    expect(fn(6)).toBe(false);
+    expect(callback.mock.calls).toEqual([[1], [5]]);
+  });
+
+  test("preserves receivers across cooldowns", () => {
+    const context = {
+      value: 42,
+    };
+
     const callback = vi.fn(function (this: typeof context) {
       return this.value;
     });
 
-    const throttledFunction = throttle(callback, 5);
+    const fn = throttle(callback, 10);
 
-    throttledFunction.call(context);
-    throttledFunction.call(context);
+    fn.call(context);
+
+    fn.call(context);
 
     expect(callback).toHaveBeenCalledOnce();
     expect(callback.mock.results[0].value).toBe(42);
 
-    await sleep(10);
+    vi.advanceTimersByTime(10);
 
-    throttledFunction.call(context);
-    throttledFunction.call(context);
+    fn.call(context);
+
+    fn.call(context);
 
     expect(callback).toHaveBeenCalledTimes(2);
     expect(callback.mock.results[1].value).toBe(42);
   });
 
-  test("returns true if the call actually happened and false if throttled", async () => {
+  test("reset permits another call immediately", () => {
     const callback = vi.fn();
+    const fn = throttle(callback, 10);
 
-    const throttledFunction = throttle(callback, 5);
+    fn(1);
 
-    const firstCall = throttledFunction(1);
-    const secondCall = throttledFunction(2);
-
-    expect(firstCall).toBe(true);
-    expect(secondCall).toBe(false);
-
-    await sleep(10);
-
-    const thirdCall = throttledFunction(3);
-    const fourthCall = throttledFunction(4);
-    const fifthCall = throttledFunction(5);
-
-    expect(thirdCall).toBe(true);
-    expect(fourthCall).toBe(false);
-    expect(fifthCall).toBe(false);
-  });
-
-  test("supports resetting to allow immediate subsequent calls", async () => {
-    const callback = vi.fn();
-
-    const throttledFunction = throttle(callback, 5);
-
-    throttledFunction(1);
-    throttledFunction(2);
+    fn(2);
 
     expect(callback).toHaveBeenCalledExactlyOnceWith(1);
 
-    throttledFunction.reset();
+    fn.reset();
 
-    const thirdCall = throttledFunction(3);
-    const fourthCall = throttledFunction(4);
-
-    expect(thirdCall).toBe(true);
-    expect(fourthCall).toBe(false);
-    expect(callback).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenLastCalledWith(3);
+    expect(fn(3)).toBe(true);
+    expect(fn(4)).toBe(false);
+    expect(callback.mock.calls).toEqual([[1], [3]]);
   });
 
-  test("supports immediate calls that do not affect the throttling behavior", async () => {
+  test("immediate calls leave the cooldown unchanged", () => {
     const callback = vi.fn();
+    const fn = throttle(callback, 10);
 
-    const throttledFunction = throttle(callback, 5);
-
-    const firstCall = throttledFunction(1);
-    const secondCall = throttledFunction(2);
-    const thirdCall = throttledFunction.immediate(3);
-
-    expect(firstCall).toBe(true);
-    expect(secondCall).toBe(false);
-    expect(thirdCall).toBeUndefined();
-    expect(callback).toHaveBeenCalledTimes(2);
+    expect(fn(1)).toBe(true);
+    expect(fn(2)).toBe(false);
+    expect(fn.immediate(3)).toBeUndefined();
+    expect(fn(4)).toBe(false);
     expect(callback.mock.calls).toEqual([[1], [3]]);
 
-    await sleep(10);
+    vi.advanceTimersByTime(10);
 
-    const fourthCall = throttledFunction(4);
-    const fifthCall = throttledFunction(5);
-
-    expect(fourthCall).toBe(true);
-    expect(fifthCall).toBe(false);
-    expect(callback).toHaveBeenCalledTimes(3);
-    expect(callback).toHaveBeenLastCalledWith(4);
+    expect(fn(5)).toBe(true);
+    expect(fn(6)).toBe(false);
+    expect(callback).toHaveBeenLastCalledWith(5);
   });
 
-  test("exposes the remaining cooldown", async () => {
-    const callback = vi.fn();
+  test("retains callable methods and forwards arguments and receivers", () => {
+    const calls: unknown[] = [];
 
-    const throttledFunction = throttle(callback, 5);
+    const callback = {
+      factor: 2,
+      [callable](count: number, suffix?: string) {
+        calls.push([this.factor * count, suffix]);
+      },
+    };
 
-    throttledFunction(1);
+    const fn = throttle(callback, 10);
+    const context = {
+      factor: 3,
+    };
 
-    const before = throttledFunction.remaining();
+    callback[callable] = () => {
+      throw new Error("retained method expected");
+    };
 
-    expect(before).toBeGreaterThan(0);
+    expectTypeOf(fn).parameter(0).toEqualTypeOf<number>();
+    expectTypeOf(fn).parameter(1).toEqualTypeOf<string | undefined>();
 
-    await sleep(10);
+    fn.call(context, 4, "!");
 
-    const after = throttledFunction.remaining();
+    vi.advanceTimersByTime(10);
 
-    expect(after).toBe(0);
-  });
+    fn.immediate.call(undefined, 5);
 
-  test("resolves retained callbacks and preserves receivers and arguments", () => {
-    vi.useFakeTimers();
-
-    try {
-      const calls: unknown[] = [];
-      const callback = {
-        factor: 2,
-        [callable](count: number, suffix?: string) {
-          calls.push([this.factor * count, suffix]);
-        },
-      };
-      const wrapped = throttle(callback, 10);
-      const context = {
-        factor: 3,
-      };
-
-      callback[callable] = () => {
-        throw new Error("The retained method should be used");
-      };
-
-      expectTypeOf(wrapped).parameter(0).toEqualTypeOf<number>();
-      expectTypeOf(wrapped).parameter(1).toEqualTypeOf<string | undefined>();
-
-      wrapped.call(context, 4, "!");
-      vi.advanceTimersByTime(10);
-      wrapped.immediate.call(undefined, 5);
-
-      expect(calls).toEqual([[12, "!"], [10, undefined]]);
-    } finally {
-      vi.useRealTimers();
-    }
+    expect(calls).toEqual([
+      [12, "!"],
+      [10, undefined],
+    ]);
   });
 });

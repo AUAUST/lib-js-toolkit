@@ -1,126 +1,85 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { once } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("once()", () => {
-  test("calls the provided function once and caches the value", () => {
-    const callback = vi.fn(() => 42);
+describe("once", () => {
+  test.for(createValues())("caches %s until reset and exposes its state", (value) => {
+    const callback = vi.fn(() => value);
+    const fn = once(callback);
 
-    const result = once(callback);
-
+    expect(fn.called).toBe(false);
+    expect(fn.value).toBeUndefined();
     expect(callback).not.toHaveBeenCalled();
-
-    expect(result()).toBe(42);
-
+    expect(fn()).toBe(value);
+    expect(fn()).toBe(value);
+    expect(fn.called).toBe(true);
+    expect(fn.value).toBe(value);
     expect(callback).toHaveBeenCalledOnce();
+    expectTypeOf(fn()).toEqualTypeOf<typeof value>();
 
-    expect(result()).toBe(42);
-    expect(result()).toBe(42);
-    expect(result()).toBe(42);
-
-    expect(callback).toHaveBeenCalledOnce();
-  });
-
-  test("indicates whether it has been called", () => {
-    const callback = vi.fn(() => 42);
-
-    const result = once(callback);
-
-    expect(result.called).toBe(false);
-
-    result();
-
-    expect(result.called).toBe(true);
-  });
-
-  test("allows accessing the cached value without triggering the function", () => {
-    const callback = vi.fn(() => 42);
-
-    const result = once(callback);
-
-    expect(result.value).toBeUndefined();
-
-    result();
-
-    expect(result.value).toBe(42);
-  });
-
-  test("resetting allows to call the function again", () => {
-    const callback = vi.fn(() => 42);
-
-    const result = once(callback);
-
-    expect(result()).toBe(42);
-    expect(callback).toHaveBeenCalledOnce();
-
-    expect(result.value).toBe(42);
-    expect(result.called).toBe(true);
-
-    result.reset();
-
-    expect(result.value).toBeUndefined();
-    expect(result.called).toBe(false);
-
-    expect(result()).toBe(42);
-    expect(callback).toHaveBeenCalledTimes(2);
-
-    expect(result.value).toBe(42);
-    expect(result.called).toBe(true);
-  });
-
-  test("maintains the context of 'this'", () => {
-    const obj = {
-      factor: 3,
-      getValue(this: { factor: number }) {
-        return 10 * this.factor;
-      },
-    };
-
-    const result = once.call(obj, obj.getValue);
-
-    expect(result()).toBe(30);
-
-    obj.factor = 5;
-
-    expect(result()).toBe(30);
-
-    result.reset();
-
-    expect(result()).toBe(50);
-  });
-
-  test("infers once results and narrows cached values through called", () => {
-    const wrapped = once(() => "entry" as const);
-
-    expectTypeOf(wrapped()).toEqualTypeOf<"entry">();
-
-    if (wrapped.called) {
-      expectTypeOf(wrapped.value).toEqualTypeOf<"entry">();
+    if (fn.called) {
+      expectTypeOf(fn.value).toEqualTypeOf<typeof value>();
     }
 
-    expect(wrapped.value).toBe("entry");
+    fn.reset();
+
+    expect(fn.called).toBe(false);
+    expect(fn.value).toBeUndefined();
+    expect(fn()).toBe(value);
+    expect(callback).toHaveBeenCalledTimes(2);
   });
 
-  test("resolves the callback once and binds the factory receiver", () => {
+  test("retains the callable method and binds the factory receiver", () => {
     const callback = {
       factor: 2,
       [callable]() {
         return this.factor;
       },
     };
+
     const wrapped = once(callback);
-    const bound = once.call({
+    const context = {
       factor: 3,
-    }, callback);
+    };
+    const bound = once.call(context, callback);
 
     callback[callable] = () => 99;
 
-    expectTypeOf(wrapped()).toEqualTypeOf<number>();
     expect(wrapped()).toBe(2);
     expect(bound()).toBe(3);
 
+    context.factor = 5;
+
+    expect(bound()).toBe(3);
+
+    bound.reset();
+
     wrapped.reset();
 
+    expect(bound()).toBe(5);
     expect(wrapped()).toBe(2);
+  });
+
+  test("binds ordinary functions to the factory receiver", () => {
+    const context = {
+      factor: 3,
+    };
+
+    function callback(this: typeof context) {
+      return this.factor * 10;
+    }
+
+    const fn = once.call(context, callback);
+
+    expect(fn()).toBe(30);
+
+    context.factor = 5;
+
+    expect(fn()).toBe(30);
+
+    fn.reset();
+
+    expect(fn()).toBe(50);
   });
 });

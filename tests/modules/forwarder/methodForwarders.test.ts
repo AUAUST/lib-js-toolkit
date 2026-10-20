@@ -1,11 +1,7 @@
-import {
-  forwardAs,
-  methodForwarders,
-  type MethodForwarder,
-} from "@auaust/toolkit/forwarder";
+import { forwardAs, methodForwarders, type MethodForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-describe("methodForwarders()", () => {
+describe("methodForwarders", () => {
   test("handles the spread call form", () => {
     const source = {
       foo(): number {
@@ -35,7 +31,12 @@ describe("methodForwarders()", () => {
       },
     };
 
-    const forwarders = methodForwarders(source, ["foo", { method: "bar" }]);
+    const forwarders = methodForwarders(source, [
+      "foo",
+      {
+        method: "bar",
+      },
+    ]);
 
     expect(forwarders).toHaveLength(2);
     expect(forwarders[0].get()()).toBe(1);
@@ -52,18 +53,18 @@ describe("methodForwarders()", () => {
       },
     };
 
-    const forwarders = methodForwarders(source, ["foo"], { method: "bar" });
+    const forwarders = methodForwarders(source, ["foo"], {
+      method: "bar",
+    });
 
     expectTypeOf(forwarders).toEqualTypeOf<
-      (
-        | MethodForwarder<typeof source, "foo">
-        | MethodForwarder<typeof source, "bar">
-      )[]
+      (MethodForwarder<typeof source, "foo"> | MethodForwarder<typeof source, "bar">)[]
     >();
   });
 
   test("preserves numeric and symbol methods across every input form", () => {
     const token = Symbol("method");
+
     const source = {
       value: 1,
       0() {
@@ -96,26 +97,9 @@ describe("methodForwarders()", () => {
       forwardAs(token, "aliasedSymbol"),
     );
 
-    expect(forwarders.map((entry) => entry.name)).toEqual([
-      0,
-      token,
-      "renamed",
-      "zero",
-      "symbol",
-      "aliasedSymbol",
-    ]);
-
-    expect(forwarders.map((entry) => entry.get()())).toEqual([
-      0,
-      "symbol",
-      true,
-      0,
-      "symbol",
-      "symbol",
-    ]);
-
+    expect(forwarders.map((entry) => entry.name)).toEqual([0, token, "renamed", "zero", "symbol", "aliasedSymbol"]);
+    expect(forwarders.map((entry) => entry.get()())).toEqual([0, "symbol", true, 0, "symbol", "symbol"]);
     expect(forwarders[4].enumerable).toBe(true);
-
     expectTypeOf(forwarders).toEqualTypeOf<
       (
         | MethodForwarder<typeof source, 0>

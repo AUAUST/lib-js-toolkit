@@ -1,12 +1,15 @@
 import { forwardProperties } from "@auaust/toolkit/forwarder";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, expectTypeOf } from "vitest";
+import { createDescriptorSource } from "../../fixtures/descriptors";
 
-describe("forwardProperties()", () => {
+describe("forwardProperties", () => {
   test("reads and writes through the handler", () => {
-    const handler = { value: 1 };
-
+    const handler = {
+      value: 1,
+    };
     const forwarded = forwardProperties({}, handler, ["value"]);
 
+    expectTypeOf(forwarded.value).toEqualTypeOf<number>();
     expect(forwarded.value).toBe(1);
 
     forwarded.value = 2;
@@ -40,26 +43,9 @@ describe("forwardProperties()", () => {
   });
 
   test("mirrors descriptor flags from the handler", () => {
-    const handler = {} as { readonly locked: number; mutable: number };
-
-    Object.defineProperties(handler, {
-      locked: {
-        value: 1,
-        enumerable: false,
-        configurable: false,
-      },
-      mutable: {
-        value: 2,
-        writable: true,
-        enumerable: true,
-        configurable: true,
-      },
-    });
-
+    const handler = createDescriptorSource();
     const forwarded = forwardProperties({}, handler, ["locked", "mutable"]);
-
     const locked = Object.getOwnPropertyDescriptor(forwarded, "locked")!;
-
     const mutable = Object.getOwnPropertyDescriptor(forwarded, "mutable")!;
 
     expect(locked.enumerable).toBe(false);
@@ -71,7 +57,9 @@ describe("forwardProperties()", () => {
   });
 
   test("allows descriptor flags to be overridden", () => {
-    const handler = { value: 1 };
+    const handler = {
+      value: 1,
+    };
 
     const forwarded = forwardProperties({}, handler, [
       {
@@ -91,9 +79,7 @@ describe("forwardProperties()", () => {
 
   test("uses JavaScript descriptor defaults for missing handler properties", () => {
     const handler = {} as { later: string };
-
     const forwarded = forwardProperties({}, handler, ["later"]);
-
     const descriptor = Object.getOwnPropertyDescriptor(forwarded, "later")!;
 
     expect(descriptor.enumerable).toBe(true);
@@ -105,15 +91,21 @@ describe("forwardProperties()", () => {
   test("supports symbol properties and rejects target collisions", () => {
     const property = Symbol("value");
 
-    const handler = { [property]: 1 };
+    const handler = {
+      [property]: 1,
+    };
 
     const forwarded = forwardProperties({}, handler, [property]);
 
     expect(forwarded[property]).toBe(1);
-    expect(() =>
-      forwardProperties({ [property]: 0 }, handler, [property]),
-    ).toThrow(
-      `Existing property ${String(property)} cannot be forwarded on target.`,
-    );
+    expect(() => {
+      return forwardProperties(
+        {
+          [property]: 0,
+        },
+        handler,
+        [property],
+      );
+    }).toThrow(`Existing property ${String(property)} cannot be forwarded on target.`);
   });
 });

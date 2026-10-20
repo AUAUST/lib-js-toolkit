@@ -1,7 +1,14 @@
 import { forwardAs, forwardMethods } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createKeyedCollections } from "../../fixtures/values";
 
-describe("forwardMethods()", () => {
+describe("forwardMethods", () => {
+  test.for(createKeyedCollections())("accepts native target %s", (target) => {
+    const result = forwardMethods({}, target, "get");
+    expect(result.get("key")).toBe(target.get("key"));
+    expectTypeOf(result.get("key")).toEqualTypeOf<string | null | undefined>();
+  });
+
   test("calls methods on the handler object when invoked on the target object", () => {
     const handler = {
       value: 42,
@@ -11,9 +18,7 @@ describe("forwardMethods()", () => {
     };
 
     const target = {};
-
     const forwarded = forwardMethods(target, handler, "greet");
-
     const result = forwarded.greet("World");
 
     expect(result).toBe("42 times hello, World!");
@@ -30,9 +35,7 @@ describe("forwardMethods()", () => {
     };
 
     const target = {};
-
     const forwarded = forwardMethods(target, handler, ["add", "multiply"]);
-
     const sum = forwarded.add(2, 3);
     const product = forwarded.multiply(4, 5);
 
@@ -49,9 +52,7 @@ describe("forwardMethods()", () => {
     };
 
     const target = {};
-
     const forwarded = forwardMethods(target, handler, "scale");
-
     const result = forwarded.scale(5);
 
     expect(result).toBe(50);
@@ -86,10 +87,8 @@ describe("forwardMethods()", () => {
 
     const targetOne = {};
     const targetMany = {};
-
     const forwardedOne = forwardMethods(targetOne, handler, sym);
     const forwardedMany = forwardMethods(targetMany, handler, [sym]);
-
     const resultOne = forwardedOne[sym]("Hello Symbol");
     const resultMany = forwardedMany[sym]("Hello Symbol");
 
@@ -113,12 +112,20 @@ describe("forwardMethods()", () => {
       },
     };
 
-    const target = { label: "target" };
+    const target = {
+      label: "target",
+    };
 
     const forwarded = forwardMethods(
       target,
       handler,
-      [0, { method: "greet", as: alias }],
+      [
+        0,
+        {
+          method: "greet",
+          as: alias,
+        },
+      ],
       forwardAs("enabled", 1),
     );
 
@@ -128,7 +135,6 @@ describe("forwardMethods()", () => {
       [alias]: (name: string) => string;
       "1": () => boolean;
     }>();
-
     expect(forwarded).toBe(target);
     expect(forwarded[0](4)).toBe(12);
     expect(forwarded[alias]("World")).toBe("Hello, World!");

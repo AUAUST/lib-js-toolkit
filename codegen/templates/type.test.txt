@@ -1,9 +1,8 @@
 import type { {{type}} } from "@auaust/toolkit/types";
-import { assertType, describe, expect, expectTypeOf, test } from "vitest";
+import { describe, expectTypeOf, test } from "vitest";
 
-describe.todo("{{type}}", () => {
-  test("works", () => {
-    expectTypeOf<{{type}}>().toEqualTypeOf<unknown>();
-    assertType<{{type}}>()
+describe("{{type}}", () => {
+  test("preserves its input type", () => {
+    expectTypeOf<{{type}}<"literal">>().toEqualTypeOf<"literal">();
   });
 });

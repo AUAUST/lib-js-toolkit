@@ -1,137 +1,85 @@
-import { isNumber } from "@auaust/toolkit/isNumber";
 import { measureAsync, sleep, type MeasureResult } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { assert, describe, expect, expectTypeOf, test, vi } from "vitest";
+import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("measureAsync()", () => {
-  test("returns the result of a successful function call along with the duration", async () => {
-    const fn = vi.fn(async (x: number, y: number) => x + y || String(x));
+describe("measureAsync", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  test.each([false, true])("measures a callback with asynchronous return %s", async (asynchronous) => {
+    vi.spyOn(performance, "now").mockReturnValueOnce(10).mockReturnValue(35);
+
+    const fn = vi.fn((x: number, y: number) => {
+      return asynchronous ? Promise.resolve(x + y) : x + y;
+    });
 
     const measuring = measureAsync(fn, 2, 3);
 
     expect(measuring).toBeInstanceOf(Promise);
+    expectTypeOf(measuring).toEqualTypeOf<Promise<MeasureResult<number>>>();
 
-    expectTypeOf(measuring).toExtend<
-      Promise<{
-        result: number | string;
-      }>
-    >();
+    await expect(measuring).resolves.toEqual({
+      result: 5,
+      start: 10,
+      end: 35,
+      duration: 25,
+    });
 
-    const { result, duration } = await measuring;
-
-    expect(result).toBe(5);
-
-    expectTypeOf(result).toEqualTypeOf<number | string>();
-
-    expect(isNumber(duration)).toBe(true);
-
-    expect(duration).toBeGreaterThanOrEqual(0);
-
-    expect(duration).toBeLessThan(10); // 10 is already quite high for such a simple function, but constrains the tests the scale
-
-    expect(fn).toHaveBeenCalledWith(2, 3);
+    expect(fn).toHaveBeenCalledExactlyOnceWith(2, 3);
   });
 
-  test("measures asynchronous functions correctly", async () => {
+  test("waits for asynchronous work before stopping the clock", async () => {
+    vi.useFakeTimers({
+      toFake: ["performance", "setTimeout"],
+    });
+
     const measuring = measureAsync(() => sleep(25));
 
-    expect(measuring).toBeInstanceOf(Promise);
+    await vi.advanceTimersByTimeAsync(25);
 
-    const { duration } = await measuring;
-
-    expect(isNumber(duration)).toBe(true);
-
-    expect(duration).toBeGreaterThanOrEqual(20);
-
-    expect(duration).toBeLessThan(30);
+    expect((await measuring).duration).toBe(25);
   });
 
-  test("handles synchronous functions as well", async () => {
-    const fn = vi.fn((x: number, y: number) => x + y);
-
-    const measuring = measureAsync(fn, 2, 3);
-
-    expect(measuring).toBeInstanceOf(Promise);
-
-    expectTypeOf(measuring).toExtend<
-      Promise<{
-        result: number;
-      }>
-    >();
-
-    const { result, duration } = await measuring;
-
-    expect(result).toBe(5);
-
-    expectTypeOf(result).toEqualTypeOf<number>();
-
-    expect(isNumber(duration)).toBe(true);
-
-    expect(duration).toBeGreaterThanOrEqual(0);
-
-    expect(fn).toHaveBeenCalledWith(2, 3);
-  });
-
-  test("supports `Callable` objects", async () => {
-    const fn = vi.fn(function (
-      this: { initial: number },
-      x: number,
-      y: number,
-    ) {
-      if (!isNumber(this.initial)) {
-        throw new Error("initial must be a number");
-      }
-
-      return this.initial + x + y;
-    });
-
-    await expect(
-      async () => await measureAsync({ [callable]: fn }, 2, 3),
-    ).rejects.toThrow("initial must be a number");
-
-    const context = { initial: 1 };
-
-    fn.mockImplementation(function (
-      this: { initial: number },
-      x: number,
-      y: number,
-    ) {
-      assert(
-        this === context,
-        "bound calls should pass the `this` context to the callback",
-      );
-
-      return this.initial + x + y;
-    });
-
-    const measuring = measureAsync.call(context, { [callable]: fn }, 2, 3);
-
-    expect(fn).toHaveBeenCalledWith(2, 3);
-
-    expect(measuring).toBeInstanceOf(Promise);
-
-    const { result, duration } = await measuring;
-
-    expect(result).toBe(6);
-
-    expect(isNumber(duration)).toBe(true);
-
-    expect(duration).toBeGreaterThanOrEqual(0);
-
-    expect(duration).toBeLessThan(10);
-  });
-
-  test("infers awaited return types from callable callbacks", async () => {
+  test("preserves callable receivers, argument lists, and awaited literal types", async () => {
     const callback = {
+      initial: 1,
       [callable](key: "entry", ...values: number[]) {
-        return Promise.resolve(key);
+        return Promise.resolve(`${key}:${this.initial + values.length}` as const);
       },
     };
 
-    const result = measureAsync(callback, "entry");
+    const result = measureAsync(callback, "entry", 2, 3);
 
-    expectTypeOf(result).toEqualTypeOf<Promise<MeasureResult<"entry">>>();
+    expectTypeOf(result).toEqualTypeOf<Promise<MeasureResult<`entry:${number}`>>>();
+    expect((await result).result).toBe("entry:3");
+    expect(
+      (
+        await measureAsync.call(
+          {
+            initial: 10,
+          },
+          callback,
+          "entry" as const,
+        )
+      ).result,
+    ).toBe("entry:10");
+  });
 
-    expect((await result).result).toBe("entry");
+  test("propagates callback failures", async () => {
+    const failure = new Error("failure");
+
+    await expect(
+      measureAsync(() => {
+        throw failure;
+      }),
+    ).rejects.toBe(failure);
+
+    await expect(
+      measureAsync(async () => {
+        throw failure;
+      }),
+    ).rejects.toBe(failure);
   });
 });

@@ -1,11 +1,10 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { on } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("on()", () => {
+describe("on", () => {
   test("calls the final argument with all preceding arguments", () => {
     const callback = vi.fn((left: number, right: number) => left + right);
-
     const result = on(20, 22, callback);
 
     expect(callback).toHaveBeenCalledOnce();
@@ -19,7 +18,6 @@ describe("on()", () => {
 
   test("preserves the callback return type", () => {
     const result = on(42, (value) => value.toString());
-
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 
@@ -30,7 +28,6 @@ describe("on()", () => {
       (number, string) => {
         expectTypeOf(number).toEqualTypeOf<number>();
         expectTypeOf(string).toEqualTypeOf<string>();
-
         return `${string}: ${number}`;
       },
     );
@@ -40,11 +37,12 @@ describe("on()", () => {
   });
 
   test("preserves 'this' context in the callback", () => {
-    const context = { value: 42 };
+    const context = {
+      value: 42,
+    };
 
     function callback(this: typeof context, increment: number) {
       expect(this).toBe(context);
-
       return this.value + increment;
     }
 
@@ -57,7 +55,6 @@ describe("on()", () => {
     const arg1 = vi.fn(() => 20);
     const arg2 = vi.fn(() => 22);
     const callback = vi.fn((left: number, right: number) => left + right);
-
     const result = on(arg1, arg2, callback);
 
     expect(arg1).toHaveBeenCalledOnce();
@@ -74,7 +71,6 @@ describe("on()", () => {
       (number, string) => {
         expectTypeOf(number).toEqualTypeOf<number>();
         expectTypeOf(string).toEqualTypeOf<"value">();
-
         return `${string}: ${number}`;
       },
     );
@@ -90,12 +86,14 @@ describe("on()", () => {
         return this.result;
       },
     };
+
     const callback = {
       factor: 2,
       [callable](count: number, suffix: string) {
         return `${this.factor * count}${suffix}`;
       },
     };
+
     const result = on(argument, "!", callback);
 
     expectTypeOf(result).toEqualTypeOf<string>();

@@ -1,14 +1,30 @@
 import { sleep } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("sleep()", () => {
-  test("returns a promise that resolves after the specified time", async () => {
-    const start = Date.now();
+describe("sleep", () => {
+  afterEach(() => vi.useRealTimers());
 
-    return sleep(100).then(() => {
-      const duration = Date.now() - start;
+  test.each([0, 1, 100])("resolves after %i milliseconds", async (delay) => {
+    vi.useFakeTimers();
 
-      expect(duration).toBeGreaterThanOrEqual(99);
-    });
+    const settled = vi.fn();
+    const promise = sleep(delay);
+
+    expectTypeOf(promise).toEqualTypeOf<Promise<void>>();
+
+    void promise.then(settled);
+
+    expect(settled).not.toHaveBeenCalled();
+
+    if (delay > 0) {
+      await vi.advanceTimersByTimeAsync(delay - 1);
+      expect(settled).not.toHaveBeenCalled();
+    }
+
+    await vi.advanceTimersByTimeAsync(1);
+
+    await expect(promise).resolves.toBeUndefined();
+
+    expect(settled).toHaveBeenCalledExactlyOnceWith(undefined);
   });
 });

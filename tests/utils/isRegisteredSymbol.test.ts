@@ -1,19 +1,17 @@
 import { isRegisteredSymbol } from "@auaust/toolkit";
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createValues } from "../fixtures/values";
 
-describe("isRegisteredSymbol()", () => {
-  test("returns `true` for registered symbols", () => {
-    expect(isRegisteredSymbol(Symbol.for("property"))).toBe(true);
-  });
+describe("isRegisteredSymbol", () => {
+  test.for(createValues())("classifies case %# (%s) and narrows its type", (value) => {
+    const input: unknown = value;
+    const expected = typeof input === "symbol" && Symbol.keyFor(input) !== undefined;
 
-  test("returns `false` for non-registered symbols", () => {
-    expect(isRegisteredSymbol(Symbol("property"))).toBe(false);
-  });
+    expect(isRegisteredSymbol(input)).toBe(expected);
+    expectTypeOf(createValues().filter(isRegisteredSymbol)).toEqualTypeOf<symbol[]>();
 
-  test("returns `false` for non-symbols", () => {
-    expect(isRegisteredSymbol(null)).toBe(false);
-    expect(isRegisteredSymbol("property")).toBe(false);
-    expect(isRegisteredSymbol(42)).toBe(false);
-    expect(isRegisteredSymbol({ random: true })).toBe(false);
+    if (isRegisteredSymbol(input)) {
+      expectTypeOf(input).toEqualTypeOf<symbol>();
+    }
   });
 });

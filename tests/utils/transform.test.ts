@@ -1,172 +1,74 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { transform } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+import { createKeyMapper, createValueTransformer, createTriple } from "../fixtures/objects";
+import { primitiveValues } from "../fixtures/values";
+import { mappingCases } from "../fixtures/mapping";
 
-describe("transform()", () => {
-  test("returns non-object input values unchanged", () => {
-    // @ts-expect-error
-    expect(transform(null)).toBeNull();
-    // @ts-expect-error
-    expect(transform(42)).toBe(42);
+describe("transform", () => {
+  test.for(primitiveValues)("preserves non-object input %s", (input) => {
+    // @ts-expect-error Non-object inputs are tolerated at runtime.
+    expect(transform(input)).toBe(input);
   });
 
-  test("transforms the original object in place", () => {
-    const source = {
-      a: 1,
-      b: 2,
-      c: 3,
-    };
-
-    const result = transform(
-      source,
-      {
-        a: "alpha",
-        b: "beta",
-      },
-      (value) => value + 5,
-    );
+  test.each(mappingCases)("transform handles %s", (_name, map, transformer, expected) => {
+    const source = createTriple();
+    const result = transform(source, map, transformer);
 
     expect(result).toBe(source);
-    expect(source).toEqual({
-      alpha: 6,
-      beta: 7,
-      c: 8,
-    });
+    expect(result).toEqual(Object.fromEntries(expected));
   });
 
-  test("supports a key mapping function", () => {
-    const source = {
-      a: 1,
-      b: 2,
-    };
-
-    expect(transform(source, (key) => key.toUpperCase())).toEqual({
-      A: 1,
-      B: 2,
+  test("types explicit exclusions", () => {
+    const result = transform(createTriple(), {
+      a: false,
     });
 
-    expect(source).toEqual({
-      A: 1,
-      B: 2,
-    });
+    expectTypeOf(result).toEqualTypeOf<{ b: number; c: number }>();
+
+    if (false) {
+      // @ts-expect-error Excluded keys are removed from the result type.
+      result.a;
+    }
   });
 
-  test("deletes keys marked false in an explicit map", () => {
-    const source = {
-      foo: 1,
-      bar: 2,
-    };
-    const result = transform(source, {
-      foo: false,
+  test("passes values to mappers and original and mapped keys to transformers", () => {
+    const mapper = vi.fn((key: string, _value: number) => {
+      return key === "a" ? "renamed" : true;
     });
 
-    expect(result).toBe(source);
-
-    expect(source).toEqual({
-      bar: 2,
+    const transformer = vi.fn((value: number, key: PropertyKey, _sourceKey: string) => {
+      return String(key) + ":" + value;
     });
 
-    // @ts-expect-error
-    result.foo;
-    result.bar;
-  });
+    const result = transform(createTriple(), mapper, transformer);
 
-  test("deletes false or undefined mapper results and keeps true results", () => {
-    const source = {
-      foo: 1,
-      bar: 2,
-      baz: 3,
-      qux: 4,
-    };
-
-    transform(source, (key) => {
-      if (key === "foo") {
-        return undefined;
-      }
-
-      if (key === "bar") {
-        return false;
-      }
-
-      if (key === "baz") {
-        return true;
-      }
-
-      return "renamed";
-    });
-
-    expect(source).toEqual({
-      baz: 3,
-      renamed: 4,
-    });
-  });
-
-  test("passes values to the key mapper and both keys to the transformer", () => {
-    const source = { foo: 1, bar: 2 };
-    const mapperCalls: unknown[][] = [];
-    const transformerCalls: unknown[][] = [];
-
-    transform(
-      source,
-      (key, value) => {
-        mapperCalls.push([key, value]);
-        return key === "foo" ? "renamed" : true;
-      },
-      (value, key, sourceKey) => {
-        transformerCalls.push([value, key, sourceKey]);
-        return `${String(key)}:${value}`;
-      },
-    );
-
-    expect(mapperCalls).toEqual([
-      ["foo", 1],
-      ["bar", 2],
+    expect(mapper.mock.calls).toEqual([
+      ["a", 1],
+      ["b", 2],
+      ["c", 3],
     ]);
-
-    expect(transformerCalls).toEqual([
-      [1, "renamed", "foo"],
-      [2, "bar", "bar"],
+    expect(transformer.mock.calls).toEqual([
+      [1, "renamed", "a"],
+      [2, "b", "b"],
+      [3, "c", "c"],
     ]);
-
-    expect(source).toEqual({ renamed: "renamed:1", bar: "bar:2" });
-  });
-
-  test("transforms original values when mapped keys overlap", () => {
-    const source = { a: 1, b: 2 };
-
-    transform(source, { a: "b", b: "a" }, (value) => value * 10);
-
-    expect(source).toEqual({ a: 20, b: 10 });
-  });
-
-  test("keeps a mapped value when the overwritten source is excluded", () => {
-    const source = {
-      a: 1,
-      b: 2,
-    };
-
-    transform(
-      source,
-      {
-        a: "b",
-        b: false,
-      },
-      (value) => value * 10,
-    );
-
-    expect(source).toEqual({ b: 10 });
+    expect(result).toEqual({
+      renamed: "renamed:1",
+      b: "b:2",
+      c: "c:3",
+    });
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {
-    const mapper = {
-      key: "renamed" as const,
-      [callable](_key: "entry", _value: number) {
-        return this.key;
+    const mapper = createKeyMapper();
+
+    const result = transform(
+      {
+        entry: 4,
       },
-    };
-    const result = transform({
-      entry: 4,
-    }, mapper);
+      mapper,
+    );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
     expect(result).toEqual({
@@ -175,15 +77,15 @@ describe("transform()", () => {
   });
 
   test("accepts callable value transformers and preserves result types", () => {
-    const transformer = {
-      factor: 2,
-      [callable](value: number, key: "entry", sourceKey: "entry") {
-        return `${value * this.factor}:${key}:${sourceKey}`;
+    const transformer = createValueTransformer();
+
+    const result = transform(
+      {
+        entry: 4,
       },
-    };
-    const result = transform({
-      entry: 4,
-    }, undefined, transformer);
+      undefined,
+      transformer,
+    );
 
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
@@ -194,21 +96,25 @@ describe("transform()", () => {
   });
 
   test("combines callable key and value transformations", () => {
-    const result = transform({
-      entry: 4,
-    }, {
-      [callable](key: "entry", _value: number) {
-        return "renamed" as const;
+    const result = transform(
+      {
+        entry: 4,
       },
-    }, {
-      [callable](value, key, sourceKey) {
-        expectTypeOf(value).toEqualTypeOf<number>();
-        expectTypeOf(key).toEqualTypeOf<"renamed">();
-        expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
+      {
+        [callable](key: "entry", _value: number) {
+          return "renamed" as const;
+        },
+      },
+      {
+        [callable](value, key, sourceKey) {
+          expectTypeOf(value).toEqualTypeOf<number>();
+          expectTypeOf(key).toEqualTypeOf<"renamed">();
+          expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
 
-        return `${value}:${key}:${sourceKey}`;
+          return `${value}:${key}:${sourceKey}`;
+        },
       },
-    });
+    );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", string>>();
     expect(result.renamed).toBe("4:renamed:entry");

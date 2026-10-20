@@ -2,15 +2,13 @@ import { isArray } from "@auaust/toolkit/isArray";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { mappedValues } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createPair, createValueTransformer } from "../fixtures/objects";
 
-describe("mappedValues()", () => {
+describe("mappedValues", () => {
   test("returns a copy with transformed values", () => {
-    const source = {
-      a: 1,
-      b: 2,
-    };
-
+    const source = createPair();
     const calls: unknown[][] = [];
+
     const result = mappedValues(source, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
       return `${String(key)}:${value}`;
@@ -20,19 +18,15 @@ describe("mappedValues()", () => {
       a: "a:1",
       b: "b:2",
     });
-
     expect(result).not.toBe(source);
-
     expect(source).toEqual({
       a: 1,
       b: 2,
     });
-
     expect(calls).toEqual([
       [1, "a", "a"],
       [2, "b", "b"],
     ]);
-
     expectTypeOf(result).toEqualTypeOf<{ a: string; b: string }>();
   });
 
@@ -46,20 +40,18 @@ describe("mappedValues()", () => {
       1: 4,
       2: 6,
     });
-
     expect(isArray(result)).toBe(false);
   });
 
   test("accepts callable value transformers and preserves result types", () => {
-    const transformer = {
-      factor: 2,
-      [callable](value: number, key: "entry", sourceKey: "entry") {
-        return `${value * this.factor}:${key}:${sourceKey}`;
+    const transformer = createValueTransformer();
+
+    const result = mappedValues(
+      {
+        entry: 4,
       },
-    };
-    const result = mappedValues({
-      entry: 4,
-    }, transformer);
+      transformer,
+    );
 
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;

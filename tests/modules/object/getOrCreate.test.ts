@@ -1,36 +1,43 @@
 import { getOrCreate } from "@auaust/toolkit/object";
-import { expect, expectTypeOf, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { createObjects } from "../../fixtures/values";
 
-test("getOrCreate() infers the instance and reuses existing values", () => {
-  const target = {};
-  const result = getOrCreate(target, "items", Map<string, number>);
+describe("getOrCreate", () => {
+  test.for(createObjects())("accepts native target %s", (target) => {
+    const result = getOrCreate(target, "fixture", Map<string, number>);
 
-  expectTypeOf(result).toEqualTypeOf<Map<string, number>>();
+    expect(result).toBeInstanceOf(Map);
+    expect(getOrCreate(target, "fixture", Map)).toBe(result);
+    expectTypeOf(result).toEqualTypeOf<Map<string, number>>();
+  });
 
-  expect(result).toBeInstanceOf(Map);
-  expect(getOrCreate(target, "items", Map)).toBe(result);
-});
+  test("infers the instance and reuses existing values", () => {
+    const target = {};
+    const result = getOrCreate(target, "items", Map<string, number>);
 
-test("getOrCreate() preserves present and optional types", () => {
-  const target: { value?: number } = {};
-  const present = {
-    value: undefined,
-  };
+    expectTypeOf(result).toEqualTypeOf<Map<string, number>>();
+    expect(result).toBeInstanceOf(Map);
+    expect(getOrCreate(target, "items", Map)).toBe(result);
+  });
 
-  expectTypeOf(getOrCreate(target, "value", Date)).toEqualTypeOf<
-    number | Date | undefined
-  >();
-  expectTypeOf(getOrCreate(present, "value", Date)).toEqualTypeOf<undefined>();
+  test("preserves present and optional types", () => {
+    const target: { value?: number } = {};
+    const present = {
+      value: undefined,
+    };
 
-  expect(getOrCreate(present, "value", Date)).toBeUndefined();
-  expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
+    expectTypeOf(getOrCreate(target, "value", Date)).toEqualTypeOf<number | Date | undefined>();
+    expectTypeOf(getOrCreate(present, "value", Date)).toEqualTypeOf<undefined>();
+    expect(getOrCreate(present, "value", Date)).toBeUndefined();
+    expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
 
-  if (false) {
-    class RequiresArgument {
-      constructor(value: number) {}
+    if (false) {
+      class RequiresArgument {
+        constructor(value: number) {}
+      }
+
+      // @ts-expect-error The constructor is called without arguments.
+      getOrCreate({}, "value", RequiresArgument);
     }
-
-    // @ts-expect-error The constructor is called without arguments.
-    getOrCreate({}, "value", RequiresArgument);
-  }
+  });
 });

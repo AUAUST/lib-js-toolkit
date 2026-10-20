@@ -1,7 +1,14 @@
 import { callMethod } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { createKeyedCollections } from "../fixtures/values";
 
-describe("callMethod()", () => {
+describe("callMethod", () => {
+  test.for(createKeyedCollections())("accepts native target %s", (target) => {
+    const result = callMethod(target, "get", "key");
+    expect(result).toBe(target.get("key"));
+    expectTypeOf(result).toEqualTypeOf<string | null | undefined>();
+  });
+
   test("calls a named method with its target as receiver", () => {
     const target = {
       value: 2,
@@ -14,14 +21,14 @@ describe("callMethod()", () => {
     const result = callMethod(target, "add", 3, "!");
 
     expect(result).toBe("5!");
-
     expect(target.value).toBe(5);
-
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 
   test("types the receiver of supplied functions and infers their signatures", () => {
-    const target = { value: 2 };
+    const target = {
+      value: 2,
+    };
 
     const fn = function (this: typeof target, amount: number) {
       return this.value + amount;
@@ -30,7 +37,6 @@ describe("callMethod()", () => {
     const result = callMethod(target, fn, 3);
 
     expect(result).toBe(5);
-
     expectTypeOf(result).toEqualTypeOf<number>();
 
     const contextual = callMethod(target, function () {
@@ -39,9 +45,7 @@ describe("callMethod()", () => {
     });
 
     expect(contextual).toBe(2);
-
     expectTypeOf(contextual).toEqualTypeOf<number>();
-
     expect(callMethod(target, (n: number) => n * 2, 2)).toBe(4);
   });
 
@@ -59,9 +63,7 @@ describe("callMethod()", () => {
     };
 
     expect(callMethod(target, symbol)).toBe(2);
-
     expect(callMethod(target, 0)).toBe("value: 2");
-
     expect(callMethod(target, 0, "sum", 3, 4)).toBe("sum: 9");
   });
 
@@ -76,10 +78,10 @@ describe("callMethod()", () => {
         return this.method;
       }
     }
+
     const target = new Target();
 
     expect(callMethod(target, "method")).toBe(7);
-
     expect(callMethod(target, "action")).toBe(7);
   });
 
@@ -91,7 +93,10 @@ describe("callMethod()", () => {
       },
     };
 
-    const other = { value: 99, invoke: callMethod };
+    const other = {
+      value: 99,
+      invoke: callMethod,
+    };
 
     expect(other.invoke(target, "method")).toBe(target);
   });
@@ -105,15 +110,26 @@ describe("callMethod()", () => {
       },
     };
 
-    expect(() => callMethod(target, "fail")).toThrow(error);
+    expect(() => {
+      return callMethod(target, "fail");
+    }).toThrow(error);
   });
 
   test("rejects missing and non-function members", () => {
-    const target = { value: 2 };
-    // @ts-expect-error A data property is not a method.
-    expect(() => callMethod(target, "value")).toThrow(TypeError);
-    // @ts-expect-error The method does not exist.
-    expect(() => callMethod(target, "missing")).toThrow(TypeError);
+    const target = {
+      value: 2,
+    };
+
+    expect(() => {
+      // @ts-expect-error A data property is not a method.
+
+      return callMethod(target, "value");
+    }).toThrow(TypeError);
+    expect(() => {
+      // @ts-expect-error The method does not exist.
+
+      return callMethod(target, "missing");
+    }).toThrow(TypeError);
   });
 
   test("rejects incorrect arguments and incompatible receiver types", () => {
