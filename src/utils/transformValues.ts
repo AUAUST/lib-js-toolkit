@@ -27,6 +27,10 @@ export function transformValues(
   target: any,
   transform: Callee = (value) => value,
 ) {
+  if (!transform) {
+    return target;
+  }
+
   const transformer = resolveCallable(transform);
 
   for (const key in target) {

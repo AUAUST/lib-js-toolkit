@@ -44,10 +44,10 @@ export function mappedKeys(
 ): Record<string, any>;
 export function mappedKeys(source: any, map?: any) {
   if (!map) {
-    return { ...source };
+    return plain(source);
   }
 
-  const result: Record<PropertyKey, unknown> & Object = plain();
+  const result = plain();
 
   const mapper = keyMapper(map);
 

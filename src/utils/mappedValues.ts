@@ -24,10 +24,10 @@ export function mappedValues(
   transform: Callee = (value) => value,
 ) {
   if (!transform) {
-    return source;
+    return plain(source);
   }
 
-  const result: Record<PropertyKey, unknown> = plain();
+  const result = plain();
 
   const transformer = resolveCallable(transform);
 
