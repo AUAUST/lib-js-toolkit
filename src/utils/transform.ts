@@ -1,8 +1,8 @@
-import { call } from "@auaust/toolkit/call";
 import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { keys } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import { transformKeys } from "@auaust/toolkit/transformKeys";
 import { transformValues } from "@auaust/toolkit/transformValues";
 import type { Callee, CallReturnType } from "@auaust/toolkit/types";
@@ -110,6 +110,8 @@ export function transform(
 
   const mapper = keyMapper(map);
 
+  const transformer = resolveCallable(transform);
+
   const overrides = new Set<PropertyKey>();
 
   for (const key of keys(originals)) {
@@ -131,7 +133,7 @@ export function transform(
 
     overrides.add(actualKey);
 
-    target[actualKey] = call(transform, value, actualKey, key);
+    target[actualKey] = transformer(value, actualKey, key);
 
     if (actualKey !== key && !wasOverwritten) {
       delete target[key];

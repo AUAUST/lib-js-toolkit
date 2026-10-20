@@ -1,9 +1,9 @@
-import { call } from "@auaust/toolkit/call";
 import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { mappedKeys } from "@auaust/toolkit/mappedKeys";
 import { mappedValues } from "@auaust/toolkit/mappedValues";
 import { plain } from "@auaust/toolkit/plain";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type { Callee, CallReturnType } from "@auaust/toolkit/types";
 
 type RecordMappedKey<K, M> = M extends object
@@ -107,6 +107,8 @@ export function mapped(
 
   const mapper = keyMapper(map);
 
+  const transformer = resolveCallable(transform);
+
   const mapped = plain();
 
   for (const key in source) {
@@ -118,7 +120,7 @@ export function mapped(
 
     const actualKey = newKey === true ? key : newKey;
 
-    mapped[actualKey] = call(transform, source[key], actualKey, key);
+    mapped[actualKey] = transformer(source[key], actualKey, key);
   }
 
   return mapped;

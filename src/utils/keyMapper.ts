@@ -62,7 +62,7 @@ export function keyMapper(
   if (isCallable(mapper)) {
     const resolve = resolveCallable(mapper);
 
-    function mapCallable(...args: [any, any]) {
+    return function (...args: [any, any]) {
       const result = resolve(...args);
 
       if (isNumber(result)) {
@@ -70,16 +70,12 @@ export function keyMapper(
       }
 
       return result;
-    }
-
-    return mapCallable;
+    };
   }
 
-  const map = mapper;
-
-  function mapKey(key: PropertyKey) {
-    if (hasOwn(map, key)) {
-      const result = map[key];
+  return function (key: PropertyKey) {
+    if (hasOwn(mapper, key)) {
+      const result = mapper[key];
 
       if (isNumber(result)) {
         return String(result);
@@ -89,7 +85,5 @@ export function keyMapper(
     }
 
     return true;
-  }
-
-  return mapKey;
+  };
 }

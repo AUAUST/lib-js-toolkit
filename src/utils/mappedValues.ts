@@ -1,5 +1,5 @@
-import { call } from "@auaust/toolkit/call";
 import { plain } from "@auaust/toolkit/plain";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type { Callee } from "@auaust/toolkit/types";
 
 export function mappedValues<Source>(source: Source): Source;
@@ -21,16 +21,18 @@ export function mappedValues(
 ): Record<string, any>;
 export function mappedValues(
   source: any,
-  transformer: Callee = (value) => value,
+  transform: Callee = (value) => value,
 ) {
-  if (!transformer) {
+  if (!transform) {
     return source;
   }
 
   const result: Record<PropertyKey, unknown> = plain();
 
+  const transformer = resolveCallable(transform);
+
   for (const key in source) {
-    result[key] = call(transformer, source[key], key, key);
+    result[key] = transformer(source[key], key, key);
   }
 
   return result;
