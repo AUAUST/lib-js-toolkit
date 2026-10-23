@@ -1,5 +1,17 @@
 # @auaust/toolkit
 
+## 0.5.1
+
+### Patch Changes
+
+- 2402b0a: Fix `after()` to reject its promise when a delayed callback throws synchronously instead of leaving the promise pending
+- 6bfcbbb: Fix protocol declarations to preserve `DefineProtocol` references
+- 579de61: Add `isPromise()` and `isPromiseLike()` guards, expose `isNaN` from the root
+- 6b078f9: Fix `once()` not to be marked as called on failure
+- 001fbc0: Export all utility-related types from the index
+- 48208a7: Fox `mapped()`, `mappedKeys()`, and `mappedValues()` types to describe record results for arrays and omit symbols
+- 579de61: Make `isNaN()`, `isFinite()` and `isInteger()` type guards
+
 ## 0.5.0
 
 ### Minor Changes
