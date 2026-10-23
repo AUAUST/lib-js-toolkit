@@ -1,6 +1,5 @@
-import { isArray } from "@auaust/toolkit/isArray";
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { mappedKeys } from "@auaust/toolkit";
+import { isArray } from "@auaust/toolkit/isArray";
 import { describe, expect, expectTypeOf, test } from "vitest";
 import { createKeyMapper } from "../fixtures/objects";
 
@@ -50,7 +49,10 @@ describe("mappedKeys", () => {
   });
 
   test("uses Object.keys semantics for arrays", () => {
-    const result = mappedKeys([10, 20], (key) => {
+    const result = mappedKeys([10, 20], (key, value) => {
+      expectTypeOf(key).toEqualTypeOf<`${number}`>();
+      expectTypeOf(value).toEqualTypeOf<number>();
+
       return `item-${String(key)}`;
     });
 
@@ -59,6 +61,66 @@ describe("mappedKeys", () => {
       "item-1": 20,
     });
     expect(isArray(result)).toBe(false);
+  });
+
+  test("copies tuple indices into records and supports numeric mapping keys", () => {
+    const source = [10, "twenty"] as const;
+    const copied = mappedKeys(source);
+
+    const result = mappedKeys(source, {
+      0: "first",
+      1: false,
+    });
+
+    expectTypeOf(copied).toEqualTypeOf<{
+      readonly "0": 10;
+      readonly "1": "twenty";
+    }>();
+    expectTypeOf(result).toEqualTypeOf<{
+      readonly first: 10;
+    }>();
+    expect(result).toEqual({
+      first: 10,
+    });
+    expect(isArray(copied)).toBe(false);
+  });
+
+  test("copies symbols only when no mapper is supplied", () => {
+    const marker = Symbol("marker");
+
+    const source = {
+      entry: 4,
+      [marker]: "symbol value",
+    };
+
+    const copied = mappedKeys(source);
+
+    const result = mappedKeys(source, (key, value) => {
+      expectTypeOf(key).toEqualTypeOf<"entry">();
+      expectTypeOf(value).toEqualTypeOf<number>();
+
+      return true;
+    });
+
+    expectTypeOf(copied).toEqualTypeOf<typeof source>();
+    expectTypeOf(result).toEqualTypeOf<Record<"entry", number>>();
+    expect(copied[marker]).toBe("symbol value");
+    expect(Reflect.ownKeys(result)).toEqual(["entry"]);
+  });
+
+  test("normalizes numeric source and destination names", () => {
+    const result = mappedKeys({
+      0: "zero",
+    }, {
+      "0": 1,
+    });
+
+    expectTypeOf(result).toEqualTypeOf<{
+      "1": string;
+    }>();
+    expect(result).toEqual({
+      1: "zero",
+    });
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {

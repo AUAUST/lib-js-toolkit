@@ -1,75 +1,89 @@
 import { isObject } from "@auaust/toolkit/isObject";
 import { keyMapper } from "@auaust/toolkit/keyMapper";
-import { mappedKeys } from "@auaust/toolkit/mappedKeys";
+import {
+  mappedKeys,
+  type FunctionMappedKey,
+  type MappedSource,
+  type RecordMappedKey,
+} from "@auaust/toolkit/mappedKeys";
 import { mappedValues } from "@auaust/toolkit/mappedValues";
 import { plain } from "@auaust/toolkit/plain";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callee, CallReturnType } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallReturnType,
+  ObjectKey,
+  ObjectValue,
+  ToRecordKey,
+} from "@auaust/toolkit/types";
 
-type RecordMappedKey<K, M> = M extends object
-  ? K extends keyof M
-    ? M[K] extends false
-      ? never
-      : M[K] extends PropertyKey
-        ? M[K]
-        : K
-    : K
-  : K;
-
-type FunctionMappedKey<S, M extends Callee> =
-  | Exclude<CallReturnType<M>, false | true | undefined>
-  | (true extends CallReturnType<M> ? keyof S : never);
-
+/**
+ * Copies properties into a null-prototype record, optionally mapping keys and
+ * values. Mapping visits enumerable string keys, including inherited ones.
+ * Without either mapper, copies own enumerable strings and symbols.
+ */
 export function mapped<Source extends Record<string, any>>(
   source: Source,
-): Source;
+  map?: undefined,
+  transformer?: undefined,
+): MappedSource<Source>;
 export function mapped<
   Source extends Record<string, any>,
-  Map extends Partial<Record<keyof Source, PropertyKey | false>>,
+  Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>,
 >(
   source: Source,
   map: Map,
+  transformer?: undefined,
 ): {
-  [K in keyof Source as RecordMappedKey<K, Map>]: Source[K];
+  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
+    Key,
+    Map
+  >]: MappedSource<Source, false>[Key];
 };
 export function mapped<
   Source extends Record<string, any>,
   Mapper extends Callee<
-    PropertyKey | boolean | undefined,
-    [key: keyof Source, value: Source[keyof Source]]
+    PropertyKey | boolean | null | undefined,
+    [key: ObjectKey<Source>, value: ObjectValue<Source>]
   >,
 >(
   source: Source,
   mapper: Mapper,
-): Record<FunctionMappedKey<Source, Mapper>, Source[keyof Source]>;
+): Record<
+  ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
+  ObjectValue<Source>
+>;
 export function mapped<
   Source extends Record<string, any>,
   Mapper extends Callee<
-    PropertyKey | boolean | undefined,
-    [key: keyof Source, value: Source[keyof Source]]
+    PropertyKey | boolean | null | undefined,
+    [key: ObjectKey<Source>, value: ObjectValue<Source>]
   >,
   Transformer extends Callee<
     any,
     [
-      value: Source[keyof Source],
-      key: FunctionMappedKey<Source, Mapper>,
-      sourceKey: keyof Source,
+      value: ObjectValue<Source>,
+      key: ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
+      sourceKey: ObjectKey<Source>,
     ]
   >,
 >(
   source: Source,
   mapper: Mapper,
   transformer: Transformer,
-): Record<FunctionMappedKey<Source, Mapper>, CallReturnType<Transformer>>;
+): Record<
+  ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
+  CallReturnType<Transformer>
+>;
 export function mapped<
   Source extends Record<string, any>,
-  Map extends Partial<Record<keyof Source, PropertyKey | false>> | undefined,
+  Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>> | undefined,
   Transformer extends Callee<
     any,
     [
-      value: Source[keyof Source],
-      key: RecordMappedKey<keyof Source, Map>,
-      sourceKey: keyof Source,
+      value: ObjectValue<Source>,
+      key: RecordMappedKey<keyof MappedSource<Source, false>, Map>,
+      sourceKey: ObjectKey<Source>,
     ]
   >,
 >(
@@ -77,7 +91,10 @@ export function mapped<
   map?: Map,
   transformer?: Transformer,
 ): {
-  [K in keyof Source as RecordMappedKey<K, Map>]: CallReturnType<Transformer>;
+  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
+    Key,
+    Map
+  >]: CallReturnType<Transformer>;
 };
 export function mapped(
   source: Record<string, any>,

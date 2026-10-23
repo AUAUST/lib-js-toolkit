@@ -1,9 +1,13 @@
 import { mapped } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
-import { createKeyMapper, createValueTransformer, createTriple } from "../fixtures/objects";
-import { primitiveValues } from "../fixtures/values";
 import { mappingCases } from "../fixtures/mapping";
+import {
+  createKeyMapper,
+  createTriple,
+  createValueTransformer,
+} from "../fixtures/objects";
+import { primitiveValues } from "../fixtures/values";
 
 describe("mapped", () => {
   test.for(primitiveValues)("preserves non-object input %s", (input) => {
@@ -11,14 +15,17 @@ describe("mapped", () => {
     expect(mapped(input)).toBe(input);
   });
 
-  test.each(mappingCases)("mapped handles %s", (_name, map, transformer, expected) => {
-    const source = createTriple();
-    const result = mapped(source, map, transformer);
+  test.each(mappingCases)(
+    "mapped handles %s",
+    (_name, map, transformer, expected) => {
+      const source = createTriple();
+      const result = mapped(source, map, transformer);
 
-    expect(result).not.toBe(source);
-    expect(result).toEqual(Object.fromEntries(expected));
-    expect(source).toEqual(createTriple());
-  });
+      expect(result).not.toBe(source);
+      expect(result).toEqual(Object.fromEntries(expected));
+      expect(source).toEqual(createTriple());
+    },
+  );
 
   test("copies shallowly and types explicit names and exclusions", () => {
     const nested = {};
@@ -47,14 +54,78 @@ describe("mapped", () => {
     }
   });
 
+  test("copies arrays and tuples into records without array metadata", () => {
+    const copied = mapped([1, 2]);
+
+    const result = mapped(
+      [1, 2] as const,
+      {
+        0: "first",
+        1: false,
+      },
+      (value, key, sourceKey) => {
+        expectTypeOf(value).toEqualTypeOf<1 | 2>();
+        expectTypeOf(key).toEqualTypeOf<"first">();
+        expectTypeOf(sourceKey).toEqualTypeOf<`${number}`>();
+
+        return String(value);
+      },
+    );
+
+    expectTypeOf(copied).toEqualTypeOf<Record<`${number}`, number>>();
+    expectTypeOf(result).toEqualTypeOf<{
+      readonly first: string;
+    }>();
+    expect(Array.isArray(copied)).toBe(false);
+    expect(result).toEqual({
+      first: "1",
+    });
+  });
+
+  test("omits source symbols when mapping while allowing symbol destinations", () => {
+    const sourceSymbol = Symbol("source");
+    const destinationSymbol = Symbol("destination");
+
+    const source = {
+      entry: 4,
+      [sourceSymbol]: "symbol value",
+    };
+
+    const copied = mapped(source);
+
+    const result = mapped(
+      source,
+      {
+        entry: destinationSymbol,
+      },
+      (value, key, sourceKey) => {
+        expectTypeOf(value).toEqualTypeOf<number>();
+        expectTypeOf(key).toEqualTypeOf<typeof destinationSymbol>();
+        expectTypeOf(sourceKey).toEqualTypeOf<"entry">();
+
+        return String(value);
+      },
+    );
+
+    expectTypeOf(copied).toEqualTypeOf<typeof source>();
+    expectTypeOf(result).toEqualTypeOf<{
+      [destinationSymbol]: string;
+    }>();
+    expect(copied[sourceSymbol]).toBe("symbol value");
+    expect(Reflect.ownKeys(result)).toEqual([destinationSymbol]);
+    expect(result[destinationSymbol]).toBe("4");
+  });
+
   test("passes values to mappers and original and mapped keys to transformers", () => {
     const mapper = vi.fn((key: string, _value: number) => {
       return key === "a" ? "renamed" : true;
     });
 
-    const transformer = vi.fn((value: number, key: PropertyKey, _sourceKey: string) => {
-      return String(key) + ":" + value;
-    });
+    const transformer = vi.fn(
+      (value: number, key: PropertyKey, _sourceKey: string) => {
+        return String(key) + ":" + value;
+      },
+    );
 
     const result = mapped(createTriple(), mapper, transformer);
 

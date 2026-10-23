@@ -1,41 +1,93 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
 import { plain } from "@auaust/toolkit/plain";
-import type { Callee, CallReturnType } from "@auaust/toolkit/types";
+import type {
+  Callee,
+  CallReturnType,
+  ObjectKey,
+  ObjectValue,
+  ToRecordKey,
+} from "@auaust/toolkit/types";
 
-export type RecordMappedKey<Key, Map> = Map extends object
-  ? Key extends keyof Map
-    ? Map[Key] extends false
-      ? never
-      : Map[Key] extends PropertyKey
-        ? Map[Key]
-        : Key
-    : Key
-  : Key;
+/** Projects copied properties into a record, excluding array methods and metadata. */
+export type MappedSource<
+  Source,
+  IncludeSymbols extends boolean = true,
+> = Source extends readonly unknown[]
+  ? number extends Source["length"]
+    ? Record<`${number}`, Source[number]>
+    : {
+        [Key in keyof Source as Key extends `${number}`
+          ? Key
+          : never]: Source[Key];
+      }
+  : Source extends string
+    ? Record<`${number}`, string>
+    : Source extends object
+      ? {
+          [Key in keyof Source as Key extends symbol
+            ? IncludeSymbols extends true
+              ? Key
+              : never
+            : Key]: Source[Key];
+        }
+      : {};
+
+type NormalizedMap<Map> = {
+  [Key in keyof Map as Key extends PropertyKey
+    ? ToRecordKey<Key>
+    : never]: Map[Key];
+};
+
+export type RecordMappedKey<Key, Map> = Key extends PropertyKey
+  ? Map extends object
+    ? ToRecordKey<Key> extends keyof NormalizedMap<Map>
+      ? NormalizedMap<Map>[ToRecordKey<Key>] extends false
+        ? never
+        : NormalizedMap<Map>[ToRecordKey<Key>] extends PropertyKey
+          ? ToRecordKey<NormalizedMap<Map>[ToRecordKey<Key>]>
+          : ToRecordKey<Key>
+      : ToRecordKey<Key>
+    : ToRecordKey<Key>
+  : never;
 
 export type FunctionMappedKey<Source, Mapper extends Callee> =
   | Exclude<CallReturnType<Mapper>, false | true | null | undefined>
   | (true extends CallReturnType<Mapper> ? keyof Source : never);
 
-export function mappedKeys<Source extends object>(source: Source): Source;
+/**
+ * Copies properties into a null-prototype record. Without a mapper, copies own
+ * enumerable strings and symbols. With a mapper, visits enumerable string keys,
+ * including inherited keys. Arrays produce records of indexed values.
+ */
+export function mappedKeys<Source extends object>(
+  source: Source,
+  map?: undefined,
+): MappedSource<Source>;
 export function mappedKeys<
   Source extends object,
-  Map extends Partial<Record<keyof Source, PropertyKey | false>>,
+  Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>,
 >(
   source: Source,
   map: Map,
 ): {
-  [Key in keyof Source as RecordMappedKey<Key, Map>]: Source[Key];
+  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
+    Key,
+    Map
+  >]: MappedSource<Source, false>[Key];
 };
 export function mappedKeys<
   Source extends object,
   Mapper extends Callee<
     PropertyKey | boolean | null | undefined,
-    [key: keyof Source, value: Source[keyof Source]]
+    [key: ObjectKey<Source>, value: ObjectValue<Source>]
   >,
 >(
   source: Source,
   mapper: Mapper,
-): Record<FunctionMappedKey<Source, Mapper>, Source[keyof Source]>;
+): Record<
+  ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
+  ObjectValue<Source>
+>;
 export function mappedKeys(
   source: Record<string, any>,
   map?:
