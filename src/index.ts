@@ -61,9 +61,21 @@ export { isRegisteredSymbol } from "@auaust/toolkit/isRegisteredSymbol";
 export { isString } from "@auaust/toolkit/isString";
 export { isSymbol } from "@auaust/toolkit/isSymbol";
 export { isUndefined } from "@auaust/toolkit/isUndefined";
-export { keyMapper } from "@auaust/toolkit/keyMapper";
+export {
+  keyMapper,
+  type KeyMap,
+  type KeyMapper,
+  type KeyMapping,
+  type NormalizedKey,
+  type NormalizedKeyMapping,
+} from "@auaust/toolkit/keyMapper";
 export { mapped } from "@auaust/toolkit/mapped";
-export { mappedKeys } from "@auaust/toolkit/mappedKeys";
+export {
+  mappedKeys,
+  type FunctionMappedKey,
+  type MappedSource,
+  type RecordMappedKey,
+} from "@auaust/toolkit/mappedKeys";
 export { mappedValues } from "@auaust/toolkit/mappedValues";
 export { match } from "@auaust/toolkit/match";
 export { isNaN } from "@auaust/toolkit/math";
@@ -109,7 +121,7 @@ export {
   type StopwatchOptions,
 } from "@auaust/toolkit/stopwatch";
 export { tap } from "@auaust/toolkit/tap";
-export { throttle } from "@auaust/toolkit/throttle";
+export { throttle, type Throttled } from "@auaust/toolkit/throttle";
 export { transform } from "@auaust/toolkit/transform";
 export { transformKeys } from "@auaust/toolkit/transformKeys";
 export { transformValues } from "@auaust/toolkit/transformValues";
@@ -121,7 +133,7 @@ export {
   type ValueInput,
   type ValueResolver,
 } from "@auaust/toolkit/value";
-export { voided } from "@auaust/toolkit/voided";
+export { voided, type Voided } from "@auaust/toolkit/voided";
 export { when } from "@auaust/toolkit/when";
 
 export * from "@auaust/toolkit/errors";

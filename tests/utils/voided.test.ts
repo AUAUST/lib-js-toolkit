@@ -1,4 +1,4 @@
-import { voided } from "@auaust/toolkit";
+import { voided, type Voided } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("voided", () => {
@@ -12,6 +12,8 @@ describe("voided", () => {
     });
 
     const fn = voided(runnable);
+
+    expectTypeOf(fn).toEqualTypeOf<Voided<typeof runnable>>();
 
     expect(fn(1, 2, 3)).toBeUndefined();
     expect(runnable).toHaveBeenCalledExactlyOnceWith(1, 2, 3);

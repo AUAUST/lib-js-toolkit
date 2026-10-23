@@ -1,4 +1,4 @@
-import { throttle } from "@auaust/toolkit";
+import { throttle, type Throttled } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import { afterEach, beforeEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
@@ -12,6 +12,8 @@ describe("throttle", () => {
   test("uses the first arguments during each cooldown", () => {
     const callback = vi.fn();
     const fn = throttle(callback, 10);
+
+    expectTypeOf(fn).toEqualTypeOf<Throttled<typeof callback>>();
 
     expect(fn(1)).toBe(true);
     expect(fn(2)).toBe(false);

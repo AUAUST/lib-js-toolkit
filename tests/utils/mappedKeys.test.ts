@@ -1,4 +1,9 @@
-import { mappedKeys } from "@auaust/toolkit";
+import {
+  mappedKeys,
+  type FunctionMappedKey,
+  type MappedSource,
+  type RecordMappedKey,
+} from "@auaust/toolkit";
 import { isArray } from "@auaust/toolkit/isArray";
 import { describe, expect, expectTypeOf, test } from "vitest";
 import { createKeyMapper } from "../fixtures/objects";
@@ -76,6 +81,8 @@ describe("mappedKeys", () => {
       readonly "0": 10;
       readonly "1": "twenty";
     }>();
+    expectTypeOf(copied).toEqualTypeOf<MappedSource<typeof source>>();
+    expectTypeOf<RecordMappedKey<"0", { 0: "first" }>>().toEqualTypeOf<"first">();
     expectTypeOf(result).toEqualTypeOf<{
       readonly first: 10;
     }>();
@@ -134,6 +141,9 @@ describe("mappedKeys", () => {
     );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+    expectTypeOf<
+      FunctionMappedKey<{ entry: number }, typeof mapper>
+    >().toEqualTypeOf<"renamed">();
     expect(result).toEqual({
       renamed: 4,
     });
