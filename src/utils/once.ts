@@ -40,7 +40,15 @@ export function once<Callback extends Callee<any, readonly []>>(
   const resolve = resolveCallable(callback, this);
 
   const accessor = function once() {
-    return called ? value : ((called = true), (value = resolve()));
+    if (called) {
+      return value;
+    }
+
+    value = resolve();
+
+    called = true;
+
+    return value;
   };
 
   function reset(): void {
