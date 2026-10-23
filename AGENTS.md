@@ -50,7 +50,7 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 ## Source organization and public API
 
-- Default to one primary utility per `src/functions/<name>.ts`, one reusable type per `src/types/<Name>.ts`, and one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads, and utility-specific types with their owner; split independent concepts into separate modules.
+- Default to one primary utility per `src/utils/<name>.ts`, one reusable type per `src/types/<Name>.ts`, and one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads, and utility-specific types with their owner; split independent concepts into separate modules.
 - Protocols live in `src/protocols/<name>/index.ts`. Preserve their symbol identities, `Symbol.for` keys, module augmentation, and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection where appropriate.
 - Maintain the appropriate public barrels: `src/index.ts`, `src/types.ts`, and `src/errors.ts`. Keep root and subpath exports consistent with the intended API; do not expose internal helpers accidentally.
 - Preserve observable behavior such as `this` binding, argument forwarding, return values, property descriptors, mutation, error causes, and promise settlement. Treat changes to these behaviors or to exported types as API changes.
@@ -69,7 +69,7 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 ## Verification
 
-- Keep tests under root `tests/`, organized by source area: `tests/functions/`, `tests/types/`, and `tests/protocols/`, with package and shared protocol tests at the root. Use `<name>.test.ts`; never add tests under `src/`.
+- Keep tests under root `tests/`, organized by source area: `tests/utils/`, `tests/types/`, and `tests/protocols/`, with package and shared protocol tests at the root. Use `<name>.test.ts`; never add tests under `src/`.
 - Keep all tests for a helper, including runtime tests, type assertions, and inference regressions, in that helper's existing `<name>.test.ts` file. Do not create separate files for cross-helper cleanup work or type-only coverage of a runtime helper; split such coverage among the helpers' own test files.
 - Test public behavior through package imports so the existing source and built-package test modes can exercise the same contracts. Add meaningful regression coverage for changed behavior and type assertions with Vitest's `expectTypeOf` or `assertType` for changed type contracts.
 - Cover relevant edge cases such as empty input, optional values, errors, `this` binding, argument preservation, and asynchronous outcomes. For timing changes, prefer deterministic timer control where appropriate and restore timers or mocks after use.
