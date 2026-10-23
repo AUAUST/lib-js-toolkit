@@ -12,7 +12,7 @@ describe("sleep", () => {
 
     expectTypeOf(promise).toEqualTypeOf<Promise<void>>();
 
-    void promise.then(settled);
+    promise.then(settled);
 
     expect(settled).not.toHaveBeenCalled();
 

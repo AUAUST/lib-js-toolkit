@@ -44,4 +44,63 @@ describe("after", () => {
 
     await expect(result).resolves.toBe("entry");
   });
+
+  test.each(["function", "callable"] as const)("rejects synchronous %s errors without throwing from the timer", async (kind) => {
+    vi.useFakeTimers();
+
+    const error = new Error("Delayed failure");
+
+    const context = {
+      value: 42,
+    };
+
+    const execute = vi.fn(function (this: typeof context, suffix: string) {
+      expect(this).toBe(context);
+      expect(suffix).toBe("entry");
+
+      throw error;
+    });
+
+    const callback =
+      kind === "function"
+        ? execute
+        : {
+            [callable]: execute,
+          };
+
+    const promise = after.call(context, callback, 10, "entry");
+
+    const rejection = expect(promise).rejects.toBe(error);
+
+    vi.advanceTimersByTime(9);
+
+    expect(execute).not.toHaveBeenCalled();
+    expect(() => {
+      vi.advanceTimersByTime(1);
+    }).not.toThrow();
+
+    await rejection;
+
+    expect(execute).toHaveBeenCalledExactlyOnceWith("entry");
+  });
+
+  test("rejects when the delayed callback returns a rejected promise", async () => {
+    vi.useFakeTimers();
+
+    const error = new Error("Asynchronous failure");
+
+    const callback = vi.fn(async () => {
+      throw error;
+    });
+
+    const promise = after(callback, 10);
+
+    const rejection = expect(promise).rejects.toBe(error);
+
+    await vi.advanceTimersByTimeAsync(10);
+
+    await rejection;
+
+    expect(callback).toHaveBeenCalledOnce();
+  });
 });
