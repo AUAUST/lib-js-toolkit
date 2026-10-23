@@ -81,6 +81,8 @@
     "./isNumber": "./dist/isNumber.mjs",
     "./isObject": "./dist/isObject.mjs",
     "./isPlainObject": "./dist/isPlainObject.mjs",
+    "./isPromise": "./dist/isPromise.mjs",
+    "./isPromiseLike": "./dist/isPromiseLike.mjs",
     "./isPropertyKey": "./dist/isPropertyKey.mjs",
     "./isRegisteredSymbol": "./dist/isRegisteredSymbol.mjs",
     "./isString": "./dist/isString.mjs",

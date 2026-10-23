@@ -2,4 +2,4 @@
 "@auaust/toolkit": patch
 ---
 
-Fix protocol declarations to preserve `DefineProtocol` references.
+Fix protocol declarations to preserve `DefineProtocol` references

@@ -55,13 +55,25 @@ export const hypot = Math.hypot;
 
 export const imul = Math.imul;
 
-export const isNaN = Number.isNaN;
+export const isNaN = Number.isNaN as {
+  (number: number): boolean;
+  (number: unknown): number is number;
+};
 
-export const isFinite = Number.isFinite;
+export const isFinite = Number.isFinite as {
+  (number: number): boolean;
+  (number: unknown): number is number;
+};
 
-export const isInteger = Number.isInteger;
+export const isInteger = Number.isInteger as {
+  (number: number): boolean;
+  (number: unknown): number is number;
+};
 
-export const isSafeInteger = Number.isSafeInteger;
+export const isSafeInteger = Number.isSafeInteger as {
+  (number: number): boolean;
+  (number: unknown): number is number;
+};
 
 export const log = Math.log;
 
