@@ -14,6 +14,14 @@ declare module "@auaust/toolkit/protocols" {
 }
 
 describe("protocols", () => {
+  test("preserves the protocol definition contract", () => {
+    type Definition = DefineProtocol<typeof customProtocol, CustomImplementation>;
+
+    expectTypeOf<Definition>().toEqualTypeOf<{
+      [customProtocol]: CustomImplementation;
+    }>();
+  });
+
   test("recognizes and narrows built-in protocols", () => {
     const value: unknown = {
       [isEmpty]: () => true,

@@ -35,5 +35,6 @@ export default defineConfig(({ mode }) => {
         provider: "istanbul",
       },
     },
+    tsconfig: shouldTestDist ? "tsconfig.dist.json" : "tsconfig.json",
   };
 });

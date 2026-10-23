@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {},
+    "rootDir": ".",
+    "skipLibCheck": false
+  },
+  "include": ["tests/**/*.ts", "src/ambient.d.ts"]
+}

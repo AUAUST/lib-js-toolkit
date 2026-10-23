@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "make": "tsx scripts/make.ts",
-    "build": "pnpm run build:tsdown && vitest run --config vitest.config.ts --typecheck --mode build --",
+    "build": "pnpm run build:tsdown && tsc --noEmit --project tsconfig.dist.json && vitest run --config vitest.config.ts --typecheck --mode build --",
     "build:tsdown": "tsdown --config-loader tsx",
     "coverage": "vitest run --coverage",
     "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm run typecheck",
