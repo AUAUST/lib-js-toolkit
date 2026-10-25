@@ -8,6 +8,7 @@
   },
   "description": "What you need, I provide.",
   "sideEffects": false,
+  "prettier": "@auaust/engrenage/prettier",
   "packageManager": "pnpm@10.26.0",
   "author": {
     "name": "Aurian Aubert",
@@ -23,22 +24,28 @@
     "build": "pnpm run build:tsdown && tsc --noEmit --project tsconfig.dist.json && vitest run --config vitest.config.ts --typecheck --mode build --",
     "build:tsdown": "tsdown --config-loader tsx",
     "coverage": "vitest run --coverage",
+    "format": "prettier --write --ignore-unknown",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm run typecheck",
     "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
     "watch": "vitest --config vitest.config.ts --typecheck --",
-    "ci:prepare": "pnpm run typecheck && pnpm run build",
+    "ci:prepare": "pnpm run typecheck && pnpm run lint && engrenage agents sync --check && pnpm run build",
     "ci:publish": "changeset publish"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
+    "@auaust/engrenage": "^0.0.1",
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.2",
     "@vitest/coverage-istanbul": "^4.1.11",
     "cleye": "^2.7.0",
+    "eslint": "^10.13.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.9.10",
     "publint": "^0.3.24",
     "tsdown": "0.22.14",
     "tsx": "^4.23.15",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.11"
   },
   "files": [

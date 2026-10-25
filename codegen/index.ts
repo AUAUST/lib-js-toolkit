@@ -1,8 +1,9 @@
+import { resolvePathAliases } from "@auaust/engrenage/typescript";
+import { createViteAliases } from "@auaust/engrenage/vite";
 import { resolve } from "path";
 import packageJsonContent from "../package.json" with { type: "json" };
 import tsConfigContent from "../tsconfig.json" with { type: "json" };
 import { pathRelativeFrom } from "./utils/pathResolveFrom.js";
-import { resolveAliases } from "./utils/resolveAliases.js";
 
 const root = process.cwd();
 
@@ -39,7 +40,7 @@ export function getResolvedAliases() {
     compilerOptions: { paths },
   } = getTsConfigContent();
 
-  return resolveAliases(packageName, paths, root);
+  return resolvePathAliases(packageName, paths, root);
 }
 
 export function getTsdownOptions() {
@@ -59,16 +60,7 @@ export function getTsdownOptions() {
 }
 
 export function getViteDevAliases() {
-  const aliases = getResolvedAliases();
-
-  return aliases.map(({ alias, path }) => {
-    const escapedAlias = alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    return {
-      find: new RegExp(`^${escapedAlias}$`),
-      replacement: resolve(root, path),
-    };
-  });
+  return createViteAliases(getResolvedAliases(), root);
 }
 
 export function getOutDir(absolute = false) {

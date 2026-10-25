@@ -1,0 +1,331 @@
+{
+  "codegen/index.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "codegen/utils/logChanges.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "codegen/utils/make.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    }
+  },
+  "codegen/utils/replacer.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "src/errors/PipelineError.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    }
+  },
+  "src/index.ts": {
+    "import-x/export": {
+      "count": 6
+    }
+  },
+  "src/modules/forwarder/methodForwarder.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    },
+    "@typescript-eslint/no-this-alias": {
+      "count": 1
+    }
+  },
+  "src/modules/forwarder/propertyForwarder.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    }
+  },
+  "src/protocols/countable/index.ts": {
+    "@typescript-eslint/no-import-type-side-effects": {
+      "count": 1
+    }
+  },
+  "src/protocols/emptiable/index.ts": {
+    "@typescript-eslint/no-import-type-side-effects": {
+      "count": 1
+    }
+  },
+  "src/utils/apply.ts": {
+    "@typescript-eslint/no-import-type-side-effects": {
+      "count": 1
+    }
+  },
+  "src/utils/debounce.ts": {
+    "@typescript-eslint/no-this-alias": {
+      "count": 1
+    }
+  },
+  "src/utils/match.ts": {
+    "prefer-const": {
+      "count": 1
+    }
+  },
+  "src/utils/md5.ts": {
+    "@typescript-eslint/no-array-constructor": {
+      "count": 1
+    },
+    "prefer-const": {
+      "count": 8
+    }
+  },
+  "src/utils/stopwatch.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "src/utils/transformKeys.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    }
+  },
+  "tests/modules/composer/compose.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 3
+    }
+  },
+  "tests/modules/composer/getterComposer.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/forwarder/forward.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/forwarder/forwardProperties.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/forwarder/propertyForwarder.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/assign.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 2
+    }
+  },
+  "tests/modules/object/defineGetter.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 2
+    },
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/defineGetters.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/finalize.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/getOrCreate.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/getOrSet.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/ownDescriptor.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/protocols/index.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/apply.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 2
+    }
+  },
+  "tests/utils/applyMethod.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 3
+    }
+  },
+  "tests/utils/cached.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 3
+    }
+  },
+  "tests/utils/cachedAsync.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/callMethod.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 3
+    }
+  },
+  "tests/utils/count.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/debounce.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/frozen.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/isNull.test.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "tests/utils/isPlainObject.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/isUndefined.test.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "tests/utils/keyMapper.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/mapped.test.ts": {
+    "@typescript-eslint/no-unused-expressions": {
+      "count": 2
+    }
+  },
+  "tests/utils/mappedValues.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    },
+    "@typescript-eslint/no-unused-expressions": {
+      "count": 2
+    }
+  },
+  "tests/utils/match.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/memoized.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 4
+    }
+  },
+  "tests/utils/on.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 3
+    },
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/once.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 2
+    }
+  },
+  "tests/utils/pipe.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/pipeAsync.test.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "tests/utils/plain.test.ts": {
+    "@typescript-eslint/no-misused-promises": {
+      "count": 2
+    }
+  },
+  "tests/utils/readonly.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    },
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/spy.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/tap.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/throttle.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/transform.test.ts": {
+    "@typescript-eslint/no-unused-expressions": {
+      "count": 1
+    }
+  },
+  "tests/utils/transformValues.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 1
+    }
+  },
+  "tests/utils/value.test.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "tests/utils/voided.test.ts": {
+    "@stylistic/padding-line-between-statements": {
+      "count": 2
+    }
+  },
+  "tests/utils/when.test.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "tsdown.config.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    },
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "vitest.config.ts": {
+    "@stylistic/object-curly-newline": {
+      "count": 2
+    },
+    "no-empty": {
+      "count": 1
+    }
+  }
+}

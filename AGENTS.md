@@ -1,79 +1,134 @@
 # AGENTS.md
 
-Apply throughout the repository. Follow these rules in changed code; preserve unrelated work. Existing code may predate these standards and is not a reason to repeat a conflicting pattern or reformat unrelated files.
+Apply throughout the repository. Follow these rules in changed code; preserve unrelated work.
 
-## Project and tooling
+<!-- @reference @auaust/engrenage/agents/sections/instruction-maintenance.md -->
 
-- This is `@auaust/toolkit`, a TypeScript utility library published as an ESM package. Use the actual source, configuration, and package scripts for current project details.
-- Use pnpm and the version declared in `package.json`. The project uses TypeScript, Vitest, tsdown, and tsx; CI uses Node.js 24. Preserve the existing build and test pipelines.
-- Keep runtime utilities independent of application frameworks and platform-specific integrations. Reuse existing utilities within this package rather than importing the published package as an external dependency or adding a dependency for functionality already provided here.
-- Keep Node-only filesystem, process, and build operations in `scripts/`, `codegen/`, and tooling configuration. Do not introduce Node-only dependencies into general-purpose runtime utilities.
+## Instruction maintenance
 
-## Implementation
+- Never modify AGENTS.md or `.claude/rules/` unless the user explicitly asks to change agent instructions. Finishing a feature, refactor or new convention does not authorize it; mention the suggested change in your report instead.
+- A `<!-- @reference <reference> -->` marker opens a block that `engrenage agents sync` fills with the referenced file, up to the next `@reference` or `<!-- @end -->` marker. Never edit blocks in place: add project rules after an `@end` marker, or change the referenced source.
+- AGENTS.md holds only rules every agent needs. Surface-specific detail lives in `.claude/rules/`, one file per surface. Neither holds feature documentation, file inventories, API details or records of recent changes.
+- When a rule becomes mechanically enforced, list it under the matching "Enforced by tooling" line and keep prose only for what tools cannot check.
 
-- Read surrounding code and involved utilities, types, protocols, and tests before editing. Match their vocabulary and abstractions; keep changes focused.
-- Use small functions and descriptive intermediate values. Reuse existing utilities and contracts rather than duplicating knowledge or introducing parallel implementations.
-- Fail clearly on missing invariants. Use fallbacks only when they belong to the intended contract. Preserve distinctions between missing values, `undefined`, `null`, and other falsy values where the API distinguishes them.
-- Avoid implementation comments. First improve legibility by extracting a named function or introducing a descriptive intermediate variable. Reserve comments for essential intent or constraints that cannot be expressed clearly in code.
-- Use concise JSDoc to document public contracts when needed: behavior, options, return values, mutation, timing, and error semantics. Keep it accurate when changing behavior; do not narrate the implementation.
-- Do not add README files for newly added features or create a `docs/` directory. Update existing documentation when the public contract needs clarification.
-- Keep configuration and build knowledge in their existing owners. Do not duplicate alias maps, entry-point discovery, package metadata, or compile-time variables across modules.
+<!-- @reference @auaust/engrenage/agents/sections/precedence.md -->
 
-## Formatting
+## Precedence and conflicts
 
-- Use TypeScript for authored library, test, and tooling code.
-- Use two-space indentation, double quotes, semicolons, LF, and a final newline. Keep JSON, YAML, and other file formats valid in their own syntax.
-- Use camelCase for functions and variables and PascalCase for classes, interfaces, and types. Name files after their primary concept, following the existing function, type, error, and protocol conventions.
-- Prefer named exports. Preserve default exports required by tooling configuration.
-- Always brace control-flow bodies, including single-statement conditions, loops, and guards. Keep normal `else if` chains.
-- Non-empty object literals are multiline, with each property or spread on its own line, including arguments, nested expressions, and returns. Empty objects are allowed. This rule does not apply to destructuring, imports, or object types.
-- Default to one blank line between sibling statements at any nesting depth. No blank line immediately inside a block's opening or closing brace. Keep `else`, `catch`, and `finally` attached.
-- Group declarations and assignments by nature and purpose: acquired dependencies, locally created helpers, constants, and reassignable bookkeeping. Adapt groups to the code and preserve execution order. Do not group by keyword or function prefix alone.
-- Within a coherent group, short declarations and assignments may stay together: literals, references, property accesses, simple operators, and synchronous setup calls. Nested arguments alone do not require separation.
-- Separate substantial computation, awaited operations, method chains, mapped or filtered arrays, and multiline expressions when they form distinct steps.
-- Very small functions or callbacks whose statements are all short and simple may omit blank lines between statements, including between an assignment and a call. Prefer compact spacing when blank lines reduce legibility. This exception does not relax braces, object layout, or callback-body rules.
-- Keep imports together. Prefer contiguous exports in export-only barrel files. Do not insert statement-spacing blanks between object properties, array items, or arguments, or between overload signatures and their implementation.
-- Arrow functions use blocks and explicit returns for produced values. Concise bodies are allowed only for single-line expressions roughly 20 characters or fewer. Wrapped bodies and object returns always use blocks; returned object literals are multiline.
-- Factories returning APIs, including callable objects with attached methods, define methods as named local function declarations and expose them through shorthand properties or references. Do not implement API methods inline in returned objects or assignments. Preserve getters and setters when property access belongs to the contract.
-- Format only changed files. If Prettier is available, run it only on changed files and inspect its output for compliance; it does not enforce all these rules. The repository currently has no configured formatter or lint script; do not invent commands or add tooling merely to format a change.
+- Precedence: an explicit user decision for the current task, then the project's own instructions, then shared instructions from `@auaust/engrenage`, then existing code patterns. Existing code never justifies repeating a violation.
+- When a request contradicts these rules, would create debt, or asks for an inappropriate abstraction, stop before implementing it: explain the issue and propose an alternative. If the user confirms, implement it as a one-time exception, never a precedent, and keep every other rule.
+- When a conflict between rules, code and request has no clear resolution, ask instead of guessing.
 
-## Imports and types
+<!-- @reference @auaust/engrenage/agents/sections/decision-protocol.md -->
 
-- Use static imports and the aliases configured in `tsconfig.json`. Import sibling utilities through their `@auaust/toolkit/<function>` subpaths, reusable types through `@auaust/toolkit/types`, and errors and protocols through their existing subpaths. Avoid importing the root barrel from runtime implementation modules.
-- Preserve relative imports where appropriate for tooling and type or error barrels. Keep tooling imports compatible with the configured ESM loaders.
-- Consolidate imports from each module and mark type-only imports and exports, respecting `verbatimModuleSyntax`.
-- Preserve strict compiler settings and actual optional or undefined contracts. Narrow required values or establish an invariant before asserting them.
-- Prefer inference and existing utility types over duplicated signatures. Keep reusable type complexity in `src/types/`; keep types specific to a single utility alongside that utility.
-- Treat types as part of the public API. Preserve generic inference, literal types, overloads, type predicates, readonly tuples, optional and rest parameters, `this` parameters, and synchronous or asynchronous return contracts where applicable.
-- Prefer `unknown` for unconstrained data that must be narrowed. Use `any` only where needed for a generic function constraint or another supported type contract; do not mechanically replace it where doing so changes assignability or inference.
-- Do not copy existing casts, non-null assertions, or suppressions without a supported invariant. Validate unknown input when the utility's contract requires it; do not add schema libraries or defensive conversions without a concrete need.
+## Decision protocol
+
+Pause on real choices: ask the questions and wait for the answers before continuing. When pausing is impossible, end the turn with the questions rather than proceeding on a guess.
+
+- Obvious choice: one option is clearly better and fits the established architecture. Proceed, and report the decision with the alternative you discarded.
+- Real choice: options are comparably good, each has significant costs, or a needed architectural contract is missing. Finish only work no open question affects, then pause with the batched questions (options, trade-offs, your recommendation), a short done/pending/blocked state, and enough context that the reply can contain only the answers.
+- Follow implications as far ahead as possible before pausing, so questions arrive together rather than one patch at a time.
+- When answers arrive, resume the same task. If they change earlier assumptions, pause again with a new batch. Silence never settles a real choice.
+- Real choices include new infrastructure patterns, ownership boundaries, shared lifecycles, new role directories or namespaces, and unresolved behavioral policy. Propose the smallest coherent prerequisite instead of a temporary bypass or a silently created framework.
+
+<!-- @end -->
+
+## Project and tools
+
+- `@auaust/toolkit` is an ESM-only TypeScript utility library. Read the actual source, configuration and package scripts for current details.
+- Use pnpm and the scripts in `package.json`. CI uses Node.js 24. TypeScript stays on the major required by `@auaust/engrenage`.
+- Runtime utilities stay independent of application frameworks and platform-specific integrations. Node-only filesystem, process and build operations belong in `scripts/`, `codegen/` and tooling configuration, never in runtime utilities.
+- Toolkit is the package other AUAUST projects reuse. Inside it, reuse sibling utilities through their subpaths; never depend on the published package or add a dependency for functionality provided here.
+- Shared tooling configuration comes from `@auaust/engrenage`: the tsconfig preset, the `prettier` key in `package.json`, `eslint.config.ts` and the alias resolution in `codegen/`. Extend its builders and presets locally instead of copying or redefining them.
 
 ## Source organization and public API
 
-- Default to one primary utility per `src/utils/<name>.ts`, one reusable type per `src/types/<Name>.ts`, and one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads, and utility-specific types with their owner; split independent concepts into separate modules.
-- Protocols live in `src/protocols/<name>/index.ts`. Preserve their symbol identities, `Symbol.for` keys, module augmentation, and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection where appropriate.
-- Maintain the appropriate public barrels: `src/index.ts`, `src/types.ts`, and `src/errors.ts`. Keep root and subpath exports consistent with the intended API; do not expose internal helpers accidentally.
-- Preserve observable behavior such as `this` binding, argument forwarding, return values, property descriptors, mutation, error causes, and promise settlement. Treat changes to these behaviors or to exported types as API changes.
-- Keep asynchronous and stateful utilities explicit about pending work, cleanup, and errors. Follow each utility's documented scheduling and state contract rather than silently swallowing failures or changing timing semantics.
-- Preserve tree shaking and the package's `sideEffects: false` contract. Avoid new observable initialization side effects and unnecessary imports between independent utilities.
-- Keep build-time metadata declarations in `src/ambient.d.ts` aligned with substitutions defined in `codegen/index.ts`.
+- One primary utility per `src/utils/<name>.ts`, one reusable type per `src/types/<Name>.ts`, one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads and utility-specific types with their owner; split independent concepts into separate modules.
+- Protocols live in `src/protocols/<name>/index.ts`. Preserve their symbol identities, `Symbol.for` keys, module augmentation and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection.
+- Maintain the public barrels `src/index.ts`, `src/types.ts` and `src/errors.ts`. Keep root and subpath exports consistent with the intended API; never expose internal helpers.
+- Preserve observable behavior: `this` binding, argument forwarding, return values, property descriptors, mutation, error causes and promise settlement. Changes to these or to exported types are API changes.
+- Asynchronous and stateful utilities stay explicit about pending work, cleanup and errors. Follow each utility's documented scheduling and state contract rather than swallowing failures or changing timing.
+- Preserve tree shaking and `sideEffects: false`: no observable initialization side effects, no unnecessary imports between independent utilities.
+- The `is<Type>` helpers and the `object` module implement what the shared lint restrictions point to, so only they use native `typeof` checks and `Object.*`. Everywhere else in `src/`, use them.
+- Keep build-time metadata declarations in `src/ambient.d.ts` aligned with the substitutions defined in `codegen/index.ts`.
 
-## Scaffolding, build, and packaging
+## Imports and types
 
-- Use the existing scaffolding when helpful: `pnpm make function <name>`, `pnpm make type <Name>`, and `pnpm make protocol <name>`. These commands create source and test files and may update barrels; inspect their output and replace placeholders before considering the work complete.
-- Scaffolded source and tests are authored files after creation. Edit them normally. Update `codegen/templates/` when changing scaffold conventions, rather than treating templates as a separate standard.
-- `codegen/index.ts` derives build entries and test aliases from `tsconfig.json`. Keep new entry points consistent with that configuration and the existing discovery workflow.
-- Package exports are generated by tsdown. Run `pnpm build:tsdown` to regenerate them after entry-point changes and review the resulting `package.json` diff. Do not hand-edit `dist/` or maintain a parallel generated export map.
-- Preserve declaration generation, source maps, publint, and Are the Types Wrong checks in the build configuration. Do not disable checks to make a change pass.
-- Use the existing Changesets workflow for release notes and versioning when a change requires a release. Do not hand-edit generated changelog entries or publish as part of routine implementation work.
+- Import sibling utilities through `@auaust/toolkit/<function>`, reusable types through `@auaust/toolkit/types`, and errors and protocols through their existing subpaths, as configured in `tsconfig.json`. Never import the root barrel from runtime modules.
+- Keep relative imports where tooling or type and error barrels need them, and keep tooling imports compatible with the configured ESM loaders.
+- Types are public API. Preserve generic inference, literal types, overloads, type predicates, readonly tuples, optional and rest parameters, `this` parameters and synchronous or asynchronous return contracts.
+- Prefer `unknown` for data that must be narrowed. Use `any` only where a generic constraint or another supported type contract needs it; do not replace it where that changes assignability or inference.
+- Reusable type complexity lives in `src/types/`; types specific to one utility stay with it.
+
+<!-- @reference @auaust/engrenage/agents/sections/implementation.md -->
+
+## Implementation
+
+- Quality takes precedence over feature completion. A functional workaround that introduces architectural debt is not a completed feature.
+- Before editing, inspect the execution path, authoritative definitions and available abstractions. Place code with its established owner and reuse its models, utilities, configuration and contracts rather than building parallel implementations.
+- Judge quality by clear ownership, authoritative definitions, explicit contracts, predictable execution and state lifetime, readability and minimal necessary complexity. Neither fewer lines nor more abstractions is inherently better.
+- Extend established extension points autonomously. Several small utilities or files must not disguise a missing abstraction.
+- Derive behavior from authoritative configuration, definitions, metadata or live data. Do not invent hardcoded catalogues, lists, status flags or example data.
+- Fail clearly on missing invariants. Use fallbacks only when they belong to the intended contract.
+- Avoid code comments; prefer a named function or descriptive variable. Comment only essential intent or constraints.
+- Delete obsolete starter code and commented-out implementations. Do not add READMEs for features or a `docs/` directory.
+- When work would build on or deepen an architectural violation, correcting it is a prerequisite: stop under the decision protocol with what is required, what exists, the recommended fix and its scope. Correct existing violations you touch.
+- Report relevant nearby inconsistencies without fixing them. Do not do unsolicited cleanup.
+- `.claude/backlog.md` holds deferred work: architectural debt, upstream bugs and failing checks left unfixed. Add an entry when you report such an issue or the user defers work, under the matching numbered category. Point `N.M` is entry `M` of category `N`; remove resolved entries and renumber the rest.
+- Keep secrets in `.env` (documented by `.env.example`), out of source, logs and runtime code.
+- Propose missing or outdated skills, MCP servers, scripts, dependencies or abstractions when they would help. Never add, remove or upgrade them without the user's approval.
+
+<!-- @reference @auaust/engrenage/agents/sections/typescript.md -->
+
+## TypeScript
+
+- Infer types from schemas, factories and API definitions instead of duplicating them. Preserve strict compiler settings and real optional contracts.
+- Use interfaces for object shapes and type aliases for unions, functions and mapped types. Name types after the concept they carry; do not wrap a plain list of an existing type in a new name.
+- Do not add `any`, casts, assertions, `@ts-*` directives or `eslint-disable` comments without a supported invariant. Disabled lint rules are not permission. Never add entries to `eslint-suppressions.json` unless explicitly requested.
+- Validate data at external boundaries. Never hand-edit generated code, bundles or WebAssembly; change their sources and regenerate.
+
+<!-- @end -->
+
+## Toolkit implementation
+
+- Preserve distinctions between missing values, `undefined`, `null` and other falsy values where the API distinguishes them.
+- Document public contracts with concise JSDoc when needed: behavior, options, return values, mutation, timing and error semantics. Keep it accurate when behavior changes; never narrate the implementation.
+- Keep configuration and build knowledge in its existing owner. Do not duplicate alias maps, entry-point discovery, package metadata or compile-time variables across modules.
+
+## Code conventions
+
+- Code style: `.claude/rules/code-style.md`.
+
+## Scaffolding, build and packaging
+
+- `pnpm make function <name>`, `pnpm make type <Name>` and `pnpm make protocol <name>` create source and test files and may update barrels. Inspect their output and replace placeholders. Change scaffold conventions in `codegen/templates/`.
+- `codegen/index.ts` derives build entries and test aliases from `tsconfig.json` through engrenage. Keep new entry points consistent with it.
+- Package exports are generated by tsdown. Run `pnpm build:tsdown` after entry-point changes and review the `package.json` diff; never hand-edit `exports` or `dist/`.
+- Preserve declaration generation, source maps, publint and Are the Types Wrong checks.
+
+<!-- @reference @auaust/engrenage/agents/sections/verification.md -->
 
 ## Verification
 
-- Keep tests under root `tests/`, organized by source area: `tests/utils/`, `tests/types/`, and `tests/protocols/`, with package and shared protocol tests at the root. Use `<name>.test.ts`; never add tests under `src/`.
-- Keep all tests for a helper, including runtime tests, type assertions, and inference regressions, in that helper's existing `<name>.test.ts` file. Do not create separate files for cross-helper cleanup work or type-only coverage of a runtime helper; split such coverage among the helpers' own test files.
-- Test public behavior through package imports so the existing source and built-package test modes can exercise the same contracts. Add meaningful regression coverage for changed behavior and type assertions with Vitest's `expectTypeOf` or `assertType` for changed type contracts.
-- Cover relevant edge cases such as empty input, optional values, errors, `this` binding, argument preservation, and asynchronous outcomes. For timing changes, prefer deterministic timer control where appropriate and restore timers or mocks after use.
-- Run focused tests with `pnpm exec vitest run --config vitest.config.ts --typecheck <test-path>`. Run `pnpm typecheck` for TypeScript changes and `pnpm test` for the full source suite and compiler checks when warranted by scope.
-- Run `pnpm build` for public exports, aliases, imports, declarations, compile-time metadata, or bundling changes. It builds with tsdown, validates packaging, and runs tests against `dist/`. `pnpm ci:prepare` runs type checking followed by this build workflow.
-- Source-mode Vitest removes `dist/` during configuration; run source tests before the final build when both are needed. Review generated package changes after building and preserve unrelated work.
-- Review changed files against these standards even when automated checks pass. Report actual results and blockers, including unavailable tools and skipped checks. Do not weaken compiler settings or change unrelated tooling to hide failures.
+- Before delivery, review the work against architectural boundaries and quality requirements, not only behavior.
+- Tests live under the root `tests/`, organized by the area they exercise. Write the minimum needed for confidence, usually one expected case and one meaningful edge case. Reuse existing tests before adding new ones.
+- Format only changed files, never the whole repository.
+- Report actual results and blockers, including unavailable integrations and skipped checks. Never weaken compiler or lint settings to hide failures.
+
+<!-- @end -->
+
+## Toolkit tests
+
+- Tests mirror the source areas: `tests/utils/`, `tests/types/`, `tests/protocols/`, with package and shared protocol tests at the root. Never add tests under `src/`.
+- All tests for a helper, including type assertions and inference regressions, stay in its `<name>.test.ts`. Split cross-helper work among each helper's own file.
+- Test public behavior through package imports so source and built-package modes exercise the same contracts. Assert changed type contracts with `expectTypeOf` or `assertType`.
+- Cover the relevant edge cases: empty input, optional values, errors, `this` binding, argument preservation and asynchronous outcomes. Control timers deterministically and restore timers and mocks after use.
+
+## Commands
+
+- `pnpm exec vitest run --config vitest.config.ts --typecheck <test-path>` for focused tests.
+- `pnpm lint` and `pnpm typecheck` for source changes; `pnpm test` runs the source suite and type checking. Source-mode Vitest removes `dist/`, so run it before a final build.
+- `pnpm build` for exports, aliases, declarations, compile-time metadata or bundling changes. It builds, validates packaging and reruns the tests against `dist/`. `pnpm ci:prepare` runs type checking, lint and the build.
+- `pnpm format <files>` on changed files only.
+- `pnpm exec engrenage agents sync` after upgrading `@auaust/engrenage`.
+- Add a changeset for any change that should be released.
