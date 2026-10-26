@@ -34,7 +34,7 @@ const readonlyHandler: ProxyHandler<object> = {
       `Cannot prevent extensions on readonly '${target}'`,
     );
   },
-  setPrototypeOf(target, prototype) {
+  setPrototypeOf(target) {
     throw new ReadonlyError(`Cannot set prototype of readonly '${target}'`);
   },
   getOwnPropertyDescriptor(target, property) {

@@ -9,6 +9,7 @@ describe("isRegisteredSymbol", () => {
     "classifies case %# (%s) and narrows its type",
     (value) => {
       const input: unknown = value;
+
       const expected =
         typeof input === "symbol" && Symbol.keyFor(input) !== undefined;
 

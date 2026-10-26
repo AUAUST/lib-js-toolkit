@@ -104,6 +104,7 @@ export function methodForwarder(
     configurable,
     enumerable,
     get() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const receiver = this;
 
       let forwarder = forwarders.get(receiver);

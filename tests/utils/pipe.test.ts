@@ -37,6 +37,7 @@ describe("pipe", () => {
       [true, (x: number) => x + 10],
       [false, (x: number) => x * 2],
     );
+
     const result = pipedFunction(5); // 5 + 10 = 15
 
     expect(result).toBe(15);
@@ -45,6 +46,7 @@ describe("pipe", () => {
       [false, (x: number) => x + 10],
       [true, (x: number) => x * 2],
     );
+
     const result2 = pipedFunction2(5); // 5 * 2 = 10
 
     expect(result2).toBe(10);

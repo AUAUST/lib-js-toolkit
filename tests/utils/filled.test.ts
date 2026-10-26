@@ -217,6 +217,7 @@ describe("filled", () => {
       null,
       0,
     ];
+
     const result = values.filter(filled);
 
     expect(result).toEqual(["value", 0]);

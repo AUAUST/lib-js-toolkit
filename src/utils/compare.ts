@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { call } from "@auaust/toolkit/call";
 import { empty } from "@auaust/toolkit/empty";
 import { StateError } from "@auaust/toolkit/errors";

@@ -1,6 +1,5 @@
 import { frozen } from "@auaust/toolkit/frozen";
 import { isNumber } from "@auaust/toolkit/isNumber";
-import { isUndefined } from "@auaust/toolkit/isUndefined";
 import { isNaN } from "@auaust/toolkit/math";
 import { defineGetters, finalize, freeze } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
@@ -116,7 +115,7 @@ type PeriodState = {
 function resolveOptions(options: StopwatchOptions) {
   const usePerformance =
     options.usePerformance ??
-    (!isUndefined(globalThis.performance) &&
+    (globalThis.performance !== undefined &&
       !(options.startAt instanceof Date));
 
   const now = usePerformance

@@ -9,6 +9,7 @@ describe("isContainer", () => {
     "classifies case %# (%s) and narrows its type",
     (value) => {
       const input: unknown = value;
+
       const expected =
         input !== null &&
         (typeof input === "object" || typeof input === "function");

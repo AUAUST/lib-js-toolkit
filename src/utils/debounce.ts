@@ -55,6 +55,7 @@ export function debounce<Callback extends Callee>(
   ): boolean {
     const pending = clear();
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     withThis = this;
     withArgs = args;
     timeoutId = setTimeout(flush, delay);

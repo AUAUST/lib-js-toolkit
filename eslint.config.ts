@@ -5,4 +5,7 @@ export default defineEslintConfig({
     noArrayIsArray: false,
     noObjectStatics: false,
   },
+  comparisons: {
+    noRuntimeTypeof: false,
+  },
 });

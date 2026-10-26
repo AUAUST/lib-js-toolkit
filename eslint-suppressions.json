@@ -1,104 +1,11 @@
 {
-  "codegen/utils/logChanges.ts": {
+  "scripts/make/utils/logChanges.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 2
-    }
-  },
-  "codegen/utils/replacer.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "src/index.ts": {
-    "import-x/export": {
-      "count": 6
-    }
-  },
-  "src/modules/forwarder/methodForwarder.ts": {
-    "@typescript-eslint/no-this-alias": {
-      "count": 1
-    }
-  },
-  "src/utils/compare.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 2
-    },
-    "eqeqeq": {
-      "count": 3
-    }
-  },
-  "src/utils/debounce.ts": {
-    "@typescript-eslint/no-this-alias": {
-      "count": 1
-    }
-  },
-  "src/utils/isBigInt.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isBoolean.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isCallable.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isContainer.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 2
-    }
-  },
-  "src/utils/isFunction.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 2
-    }
-  },
-  "src/utils/isNumber.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isObject.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isPlainObject.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isPropertyKey.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 3
-    }
-  },
-  "src/utils/isRegisteredSymbol.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isString.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "src/utils/isSymbol.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
     }
   },
   "src/utils/match.ts": {
     "prefer-const": {
-      "count": 1
-    }
-  },
-  "src/utils/stopwatch.ts": {
-    "auaust/no-is-undefined": {
       "count": 1
     }
   },
@@ -124,11 +31,6 @@
   },
   "tests/modules/forwarder/methodForwarders.test.ts": {
     "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/forwarder/propertyForwarder.test.ts": {
-    "auaust/no-runtime-typeof": {
       "count": 1
     }
   },
@@ -215,64 +117,14 @@
       "count": 1
     }
   },
-  "tests/utils/count.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
   "tests/utils/frozen.test.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 1
     }
   },
-  "tests/utils/isBigInt.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isBoolean.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isContainer.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 2
-    }
-  },
   "tests/utils/isNull.test.ts": {
     "auaust/no-is-null": {
       "count": 2
-    }
-  },
-  "tests/utils/isNumber.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isObject.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isPropertyKey.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isRegisteredSymbol.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isString.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
-    }
-  },
-  "tests/utils/isSymbol.test.ts": {
-    "auaust/no-runtime-typeof": {
-      "count": 1
     }
   },
   "tests/utils/isUndefined.test.ts": {
@@ -303,11 +155,6 @@
   },
   "tests/utils/match.test.ts": {
     "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/md5.test.ts": {
-    "auaust/no-runtime-typeof": {
       "count": 1
     }
   },
@@ -344,9 +191,6 @@
   "tests/utils/readonly.test.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 1
-    },
-    "auaust/no-runtime-typeof": {
-      "count": 2
     }
   },
   "tests/utils/transform.test.ts": {
