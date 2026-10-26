@@ -7,7 +7,7 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 ## Instruction maintenance
 
 - Never modify AGENTS.md or `.claude/rules/` unless the user explicitly asks to change agent instructions. Finishing a feature, refactor or new convention does not authorize it; mention the suggested change in your report instead.
-- A `<!-- @reference <reference> -->` marker opens a block that `engrenage agents sync` fills with the referenced file, up to the next `@reference` or `<!-- @end -->` marker. Never edit blocks in place: add project rules after an `@end` marker, or change the referenced source.
+- A `<!-- @reference <reference> -->` marker opens a block that `engrenage sync agents` fills with the referenced file, up to the next `@reference` or `<!-- @end -->` marker. Never edit blocks in place: add project rules after an `@end` marker, or change the referenced source.
 - AGENTS.md holds only rules every agent needs. Surface-specific detail lives in `.claude/rules/`, one file per surface. Neither holds feature documentation, file inventories, API details or records of recent changes.
 - When a rule becomes mechanically enforced, list it under the matching "Enforced by tooling" line and keep prose only for what tools cannot check.
 
@@ -50,7 +50,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 - Asynchronous and stateful utilities stay explicit about pending work, cleanup and errors. Follow each utility's documented scheduling and state contract rather than swallowing failures or changing timing.
 - Preserve tree shaking and `sideEffects: false`: no observable initialization side effects, no unnecessary imports between independent utilities.
 - The `is<Type>` helpers and the `object` module implement what the shared lint restrictions point to, so only they use native `typeof` checks and `Object.*`. Everywhere else in `src/`, use them.
-- Keep build-time metadata declarations in `src/ambient.d.ts` aligned with the substitutions defined in `codegen/index.ts`.
+- Keep build-time metadata declarations in `src/env.d.ts` aligned with the substitutions defined in `codegen/index.ts`.
 
 ## Imports and types
 
@@ -83,7 +83,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 ## TypeScript
 
 - Infer types from schemas, factories and API definitions instead of duplicating them. Preserve strict compiler settings and real optional contracts.
-- Use interfaces for object shapes and type aliases for unions, functions and mapped types. Name types after the concept they carry; do not wrap a plain list of an existing type in a new name.
+- Use interfaces for object shapes and type aliases for unions, functions and mapped types. Name types after the concept they carry. Never alias a mutable list (`Type[]`) under a new name; a read-only list (`readonly Type[]` or `ReadonlyArray<Type>`) may get one.
 - Do not add `any`, casts, assertions, `@ts-*` directives or `eslint-disable` comments without a supported invariant. Disabled lint rules are not permission. Never add entries to `eslint-suppressions.json` unless explicitly requested.
 - Validate data at external boundaries. Never hand-edit generated code, bundles or WebAssembly; change their sources and regenerate.
 
