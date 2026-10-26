@@ -1,8 +1,8 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join, resolve } from "path";
 
-import { isString } from "../../src/utils/isString.js";
-import { pathRelativeFrom } from "./pathResolveFrom";
+import { isString } from "../../../src/utils/isString.js";
+import { pathRelativeFrom } from "./pathResolveFrom.js";
 
 const root = process.cwd();
 
@@ -16,7 +16,7 @@ export async function makeFromTemplate(
   const paths: string[] = [];
 
   for (const file of files) {
-    const template = resolve(root, "codegen/templates", file.template);
+    const template = resolve(root, "data/templates", file.template);
 
     const content = await readFile(template, "utf-8");
 

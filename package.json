@@ -23,7 +23,7 @@
     "coverage": "engrenage vitest:coverage",
     "format": "engrenage prettier",
     "lint": "engrenage eslint",
-    "make": "tsx scripts/make.ts",
+    "make": "tsx scripts/make/index.ts",
     "prepare": "engrenage sync",
     "ready": "pnpm install --frozen-lockfile && pnpm run prepare && pnpm run ci && echo 'Ready!'",
     "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm run typecheck",

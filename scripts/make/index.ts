@@ -1,8 +1,8 @@
 import { cli, command } from "cleye";
 
-import { makeProtocol } from "../codegen/makeProtocol";
-import { makeType } from "../codegen/makeType";
-import { makeUtilility } from "../codegen/makeUtilility";
+import { makeProtocol } from "./makeProtocol";
+import { makeType } from "./makeType";
+import { makeutility } from "./makeutility";
 
 function exit(code: number = 0): never {
   process.exit(code);
@@ -53,7 +53,7 @@ const argv = cli({
         parameters: ["<function name>"],
       },
       async (argv) => {
-        return await makeUtilility({
+        return await makeutility({
           ...argv.flags,
           name: argv._[0],
         });

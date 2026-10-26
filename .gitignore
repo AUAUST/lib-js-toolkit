@@ -1,7 +1,55 @@
+# @ignore defaults
+
+# JavaScript
 node_modules
-dist
-
-coverage
-
 .pnp.*
 .pnpm-store
+*.tgz
+*.tsbuildinfo
+.eslintcache
+npm-debug.log*
+pnpm-debug.log*
+
+# Package locks
+package-lock.json
+yarn.lock
+bun.lock
+bun.lockb
+
+# Operating systems
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+/logs
+*.log
+
+# Editors
+.idea
+.fleet
+.nova
+*.sublime-workspace
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# @ignore project
+
+# Output
+/dist
+
+# Coverage
+/coverage
+
+# @end
