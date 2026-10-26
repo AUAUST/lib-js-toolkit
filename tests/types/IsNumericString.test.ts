@@ -1,5 +1,6 @@
-import type { IsNumericString } from "@auaust/toolkit/types";
 import { assertType, describe, expectTypeOf, test } from "vitest";
+
+import type { IsNumericString } from "@auaust/toolkit/types";
 
 describe("IsNumericString", () => {
   test("works", () => {
@@ -15,8 +16,8 @@ describe("IsNumericString", () => {
 
     assertType<IsNumericString<"123abc", "yes", "no">>("no");
 
-    expectTypeOf<IsNumericString<`${number}` | "foo", "numeric", "not numeric">>().toEqualTypeOf<
-      "numeric" | "not numeric"
-    >();
+    expectTypeOf<
+      IsNumericString<`${number}` | "foo", "numeric", "not numeric">
+    >().toEqualTypeOf<"numeric" | "not numeric">();
   });
 });

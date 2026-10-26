@@ -1,5 +1,7 @@
-import { getOwn } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { getOwn } from "@auaust/toolkit/object";
+
 import { createObjects } from "../../fixtures/values";
 
 describe("getOwn", () => {
@@ -14,7 +16,9 @@ describe("getOwn", () => {
 
     expectTypeOf(getOwn(target, "value")).toEqualTypeOf<number | undefined>();
     expectTypeOf(getOwn(target, "missing")).toBeAny();
-    expectTypeOf(getOwn<number>(target, "value")).toEqualTypeOf<number | undefined>();
+    expectTypeOf(getOwn<number>(target, "value")).toEqualTypeOf<
+      number | undefined
+    >();
     expect(getOwn(target, "value")).toBe(1);
     expect(getOwn(target, "toString")).toBeUndefined();
     expect(getOwn(target, "missing")).toBeUndefined();

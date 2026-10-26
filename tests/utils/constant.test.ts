@@ -1,5 +1,7 @@
-import { constant } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { constant } from "@auaust/toolkit";
+
 import { createValues } from "../fixtures/values";
 
 describe("constant", () => {

@@ -1,5 +1,6 @@
-import { values } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { values } from "@auaust/toolkit/object";
 
 describe("values", () => {
   test("infers string-keyed values and excludes symbol-keyed ones", () => {
@@ -20,7 +21,9 @@ describe("values", () => {
     const target = {} as { first?: number } | { second: string };
     const tuple = [1, "entry"] as const;
 
-    expectTypeOf(values(target)).toEqualTypeOf<(number | string | undefined)[]>();
+    expectTypeOf(values(target)).toEqualTypeOf<
+      (number | string | undefined)[]
+    >();
     expectTypeOf(values(tuple)).toEqualTypeOf<(1 | "entry")[]>();
     expectTypeOf(values("ab")).toEqualTypeOf<string[]>();
     expectTypeOf(values({})).toEqualTypeOf<never[]>();

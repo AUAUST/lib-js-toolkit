@@ -9,12 +9,11 @@ type RequiredTargetKey<Target, Source> = {
 }[keyof Source];
 
 type AssignedProperties<Target, Source extends object> = {
-  -readonly [Key in keyof Source as Key extends RequiredTargetKey<
-    Target,
-    Source
-  >
-    ? never
-    : Key]: Source[Key];
+  -readonly [
+    Key in keyof Source as Key extends RequiredTargetKey<Target, Source>
+      ? never
+      : Key
+  ]: Source[Key];
 } & {
   [Key in RequiredTargetKey<Target, Source>]: {} extends Pick<Source, Key>
     ? Source[Key] | Target[Key & keyof Target]

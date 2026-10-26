@@ -16,26 +16,28 @@ export type MappedSource<
   ? number extends Source["length"]
     ? Record<`${number}`, Source[number]>
     : {
-        [Key in keyof Source as Key extends `${number}`
-          ? Key
-          : never]: Source[Key];
+        [
+          Key in keyof Source as Key extends `${number}` ? Key : never
+        ]: Source[Key];
       }
   : Source extends string
     ? Record<`${number}`, string>
     : Source extends object
       ? {
-          [Key in keyof Source as Key extends symbol
-            ? IncludeSymbols extends true
-              ? Key
-              : never
-            : Key]: Source[Key];
+          [
+            Key in keyof Source as Key extends symbol
+              ? IncludeSymbols extends true
+                ? Key
+                : never
+              : Key
+          ]: Source[Key];
         }
       : {};
 
 type NormalizedMap<Map> = {
-  [Key in keyof Map as Key extends PropertyKey
-    ? ToRecordKey<Key>
-    : never]: Map[Key];
+  [
+    Key in keyof Map as Key extends PropertyKey ? ToRecordKey<Key> : never
+  ]: Map[Key];
 };
 
 export type RecordMappedKey<Key, Map> = Key extends PropertyKey
@@ -70,10 +72,9 @@ export function mappedKeys<
   source: Source,
   map: Map,
 ): {
-  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
-    Key,
-    Map
-  >]: MappedSource<Source, false>[Key];
+  [
+    Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
+  ]: MappedSource<Source, false>[Key];
 };
 export function mappedKeys<
   Source extends object,

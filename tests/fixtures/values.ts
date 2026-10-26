@@ -1,6 +1,14 @@
 export const nullishValues = [null, undefined] as const;
 
-export const falsyValues = [...nullishValues, false, 0, -0, 0n, "", NaN] as const;
+export const falsyValues = [
+  ...nullishValues,
+  false,
+  0,
+  -0,
+  0n,
+  "",
+  NaN,
+] as const;
 
 export const truthyPrimitives = [
   true,
@@ -75,7 +83,11 @@ export function createFunctions() {
 }
 
 export function createValues() {
-  return [...primitiveValues, ...createObjects(), ...createFunctions()] as const;
+  return [
+    ...primitiveValues,
+    ...createObjects(),
+    ...createFunctions(),
+  ] as const;
 }
 
 export type FixtureValue = ReturnType<typeof createValues>[number];

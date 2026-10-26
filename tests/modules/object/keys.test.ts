@@ -1,5 +1,6 @@
-import { keys } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { keys } from "@auaust/toolkit/object";
 
 describe("keys", () => {
   test("infers string keys and excludes symbols", () => {

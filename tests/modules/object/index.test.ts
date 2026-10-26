@@ -1,5 +1,14 @@
-import { freeze, is, isExtensible, isFrozen, isSealed, preventExtensions, seal } from "@auaust/toolkit/object";
-import { describe, expect, test, expectTypeOf } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+import {
+  freeze,
+  is,
+  isExtensible,
+  isFrozen,
+  isSealed,
+  preventExtensions,
+  seal,
+} from "@auaust/toolkit/object";
 
 describe("object", () => {
   test("exposes unmodified native operations", () => {

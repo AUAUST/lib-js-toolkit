@@ -1,6 +1,8 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { readonly } from "@auaust/toolkit";
 import { ReadonlyError } from "@auaust/toolkit/errors";
-import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { createValues } from "../fixtures/values";
 
 describe("readonly", () => {
@@ -26,6 +28,7 @@ describe("readonly", () => {
     const original = {
       value: 1,
     };
+
     const read = readonly(original);
 
     expect(() => mutate(read)).toThrow(ReadonlyError);
@@ -60,13 +63,19 @@ describe("readonly", () => {
   });
 
   describe("isReadonly", () => {
-    test.for(createValues())("recognizes only toolkit proxies for %s", (input) => {
-      expect(readonly.isReadonly(input)).toBe(false);
-      expectTypeOf(readonly.isReadonly(input)).toEqualTypeOf<boolean>();
+    test.for(createValues())(
+      "recognizes only toolkit proxies for %s",
+      (input) => {
+        expect(readonly.isReadonly(input)).toBe(false);
+        expectTypeOf(readonly.isReadonly(input)).toEqualTypeOf<boolean>();
 
-      if (input !== null && (typeof input === "object" || typeof input === "function")) {
-        expect(readonly.isReadonly(readonly(input))).toBe(true);
-      }
-    });
+        if (
+          input !== null &&
+          (typeof input === "object" || typeof input === "function")
+        ) {
+          expect(readonly.isReadonly(readonly(input))).toBe(true);
+        }
+      },
+    );
   });
 });

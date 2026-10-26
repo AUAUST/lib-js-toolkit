@@ -1,5 +1,6 @@
-import { proto } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { proto } from "@auaust/toolkit/object";
 
 describe("proto", () => {
   test("permits an explicit prototype type", () => {
@@ -7,7 +8,9 @@ describe("proto", () => {
       inherited: 1,
     };
 
-    expectTypeOf(proto<typeof target>({})).toEqualTypeOf<typeof target | null>();
+    expectTypeOf(proto<typeof target>({})).toEqualTypeOf<
+      typeof target | null
+    >();
     expectTypeOf(proto({})).toBeAny();
     expect(proto(Object.create(target))).toBe(target);
     expect(proto(Object.create(null))).toBeNull();

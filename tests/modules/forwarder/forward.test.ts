@@ -1,3 +1,5 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import {
   forward,
   forwardAs,
@@ -7,7 +9,6 @@ import {
   propertyForwarders,
 } from "@auaust/toolkit/forwarder";
 import { entries, keys } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("forward", () => {
   describe.each(
@@ -35,7 +36,11 @@ describe("forward", () => {
 
     const target = {};
 
-    const forwarded = forward(target, forward.method(handler, "greet"), forward.property(handler, "value"));
+    const forwarded = forward(
+      target,
+      forward.method(handler, "greet"),
+      forward.property(handler, "value"),
+    );
 
     expect(target).toBe(forwarded);
 
@@ -104,7 +109,11 @@ describe("forward", () => {
       forward.properties(b, ["bValue", "bOtherValue"]),
       forward.methods(b, ["bMethod", "bOtherMethod"]),
       forward.properties(c, "cValue", "cOtherValue"),
-      forward.methods(c, "cMethod", forward.as("cOtherMethod", "myAliasedCOtherMethod")),
+      forward.methods(
+        c,
+        "cMethod",
+        forward.as("cOtherMethod", "myAliasedCOtherMethod"),
+      ),
     );
 
     expect(api.method()).toEqual(
@@ -261,6 +270,7 @@ describe("forward", () => {
     const handler = {
       value: 42,
     };
+
     const target = {
       value: 100,
     };

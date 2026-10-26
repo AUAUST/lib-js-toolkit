@@ -1,3 +1,5 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import {
   compose,
   getterComposer,
@@ -7,8 +9,15 @@ import {
   valueComposer,
   valueComposers,
 } from "@auaust/toolkit/composer";
-import { create, entries, defineProperty, hasOwn, ownDescriptor, proto } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import {
+  create,
+  defineProperty,
+  entries,
+  hasOwn,
+  ownDescriptor,
+  proto,
+} from "@auaust/toolkit/object";
+
 import { createInstances } from "../../fixtures/values";
 
 describe("compose", () => {
@@ -107,6 +116,7 @@ describe("compose", () => {
 
   test("extends the base in place without reading existing getters", () => {
     let reads = 0;
+
     const prototype = {
       inherited: true,
     };
@@ -119,6 +129,7 @@ describe("compose", () => {
       lazy: {
         get() {
           reads += 1;
+
           return this.value;
         },
         configurable: true,
@@ -130,7 +141,9 @@ describe("compose", () => {
     expect(result).toBe(base);
     expect(reads).toBe(0);
     expect(proto(result)).toBe(prototype);
-    expect(ownDescriptor(result, "hidden")).toEqual(ownDescriptor(base, "hidden"));
+    expect(ownDescriptor(result, "hidden")).toEqual(
+      ownDescriptor(base, "hidden"),
+    );
     expect(result.lazy).toBe(2);
     expect(hasOwn(base, "value")).toBe(true);
   });
@@ -197,14 +210,21 @@ describe("compose", () => {
   });
 
   test("reuses entries and preserves receivers", () => {
-    const getter = compose.getter("doubled", function (this: { count: number }) {
-      return this.count * 2;
-    });
+    const getter = compose.getter(
+      "doubled",
+      function (this: { count: number }) {
+        return this.count * 2;
+      },
+    );
 
-    const method = compose.method("add", function (this: { count: number }, amount: number) {
-      this.count += amount;
-      return this.count;
-    });
+    const method = compose.method(
+      "add",
+      function (this: { count: number }, amount: number) {
+        this.count += amount;
+
+        return this.count;
+      },
+    );
 
     const first = compose(
       {

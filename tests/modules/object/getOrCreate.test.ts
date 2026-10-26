@@ -1,5 +1,7 @@
-import { getOrCreate } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { getOrCreate } from "@auaust/toolkit/object";
+
 import { createObjects } from "../../fixtures/values";
 
 describe("getOrCreate", () => {
@@ -22,12 +24,17 @@ describe("getOrCreate", () => {
 
   test("preserves present and optional types", () => {
     const target: { value?: number } = {};
+
     const present = {
       value: undefined,
     };
 
-    expectTypeOf(getOrCreate(target, "value", Date)).toEqualTypeOf<number | Date | undefined>();
-    expectTypeOf(getOrCreate(present, "value", Date)).toEqualTypeOf<undefined>();
+    expectTypeOf(getOrCreate(target, "value", Date)).toEqualTypeOf<
+      number | Date | undefined
+    >();
+    expectTypeOf(
+      getOrCreate(present, "value", Date),
+    ).toEqualTypeOf<undefined>();
     expect(getOrCreate(present, "value", Date)).toBeUndefined();
     expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
 

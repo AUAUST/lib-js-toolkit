@@ -1,6 +1,7 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { spy } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
+import { spy } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("spy", () => {
   test("calls the before listener before the closure", () => {
@@ -45,6 +46,7 @@ describe("spy", () => {
       factor: 2,
       method(this: { factor: number }, x: number) {
         expect(this).toBe(obj);
+
         return x * this.factor;
       },
     };

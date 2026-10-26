@@ -7,8 +7,7 @@ import type { Callee } from "@auaust/toolkit/types";
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;
 
 export type PipeCondition<This, In> =
-  | boolean
-  | Callee<boolean, [value: In], This>;
+  boolean | Callee<boolean, [value: In], This>;
 
 export type PipeEntry<This, In, Out> =
   | TransformFn<This, In, Out>
@@ -76,7 +75,9 @@ export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
       const [condition, callback] = entry;
 
       return {
-        condition: isBoolean(condition) ? condition : resolveCallable(condition),
+        condition: isBoolean(condition)
+          ? condition
+          : resolveCallable(condition),
         callback: resolveCallable(callback),
         original: callback,
       };

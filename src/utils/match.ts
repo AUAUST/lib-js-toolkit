@@ -3,8 +3,8 @@ import { isArray } from "@auaust/toolkit/isArray";
 import { isCallable } from "@auaust/toolkit/isCallable";
 import { isString } from "@auaust/toolkit/isString";
 import { isNaN } from "@auaust/toolkit/math";
+import { value, type ResolvedValue } from "@auaust/toolkit/value";
 import type { Callee } from "@auaust/toolkit/types";
-import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 type Predicate<T> = Callee<unknown, [value: T]>;
 

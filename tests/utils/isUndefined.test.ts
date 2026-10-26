@@ -1,17 +1,24 @@
-import { isUndefined } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { isUndefined } from "@auaust/toolkit";
+
 import { createValues } from "../fixtures/values";
 
 describe("isUndefined", () => {
-  test.for(createValues())("classifies case %# (%s) and narrows its type", (value) => {
-    const input: unknown = value;
-    const expected = input === undefined;
+  test.for(createValues())(
+    "classifies case %# (%s) and narrows its type",
+    (value) => {
+      const input: unknown = value;
+      const expected = input === undefined;
 
-    expect(isUndefined(input)).toBe(expected);
-    expectTypeOf(createValues().filter(isUndefined)).toEqualTypeOf<undefined[]>();
+      expect(isUndefined(input)).toBe(expected);
+      expectTypeOf(createValues().filter(isUndefined)).toEqualTypeOf<
+        undefined[]
+      >();
 
-    if (isUndefined(input)) {
-      expectTypeOf(input).toEqualTypeOf<undefined>();
-    }
-  });
+      if (isUndefined(input)) {
+        expectTypeOf(input).toEqualTypeOf<undefined>();
+      }
+    },
+  );
 });

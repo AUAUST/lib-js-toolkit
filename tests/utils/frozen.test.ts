@@ -1,5 +1,6 @@
-import { frozen } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { frozen } from "@auaust/toolkit";
 
 describe("frozen", () => {
   test("returns a frozen shallow copy of the object", () => {

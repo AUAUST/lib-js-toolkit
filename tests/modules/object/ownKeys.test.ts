@@ -1,5 +1,6 @@
-import { ownKeys } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { ownKeys } from "@auaust/toolkit/object";
 
 describe("ownKeys", () => {
   test("infers known keys", () => {

@@ -1,6 +1,8 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { getOrSet } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { createObjects } from "../../fixtures/values";
 
 describe("getOrSet", () => {
@@ -26,7 +28,9 @@ describe("getOrSet", () => {
     });
     expect(getOrSet(target, "count", fallback)).toBe(5);
     expect(fallback).toHaveBeenCalledExactlyOnceWith("count");
-    expectTypeOf(getOrSet({}, "literal", "fallback" as const)).toEqualTypeOf<"fallback">();
+    expectTypeOf(
+      getOrSet({}, "literal", "fallback" as const),
+    ).toEqualTypeOf<"fallback">();
   });
 
   test("retains present undefined, null, falsy, and inherited values", () => {
@@ -39,12 +43,16 @@ describe("getOrSet", () => {
 
     const fallback = vi.fn(() => 1);
 
-    expectTypeOf(getOrSet(target, "missing", fallback)).toEqualTypeOf<undefined>();
+    expectTypeOf(
+      getOrSet(target, "missing", fallback),
+    ).toEqualTypeOf<undefined>();
     expect(getOrSet(target, "missing", fallback)).toBeUndefined();
     expect(getOrSet(target, "empty", fallback)).toBeNull();
     expect(getOrSet(target, "zero", fallback)).toBe(0);
     expect(getOrSet(target, "no", fallback)).toBe(false);
-    expect(getOrSet(target, "toString", fallback)).toBe(Object.prototype.toString);
+    expect(getOrSet(target, "toString", fallback)).toBe(
+      Object.prototype.toString,
+    );
     expect(fallback).not.toHaveBeenCalled();
   });
 
@@ -59,7 +67,9 @@ describe("getOrSet", () => {
       },
     };
 
-    expectTypeOf(getOrSet(target, "value", "fallback" as const)).toEqualTypeOf<number | undefined | "fallback">();
+    expectTypeOf(getOrSet(target, "value", "fallback" as const)).toEqualTypeOf<
+      number | undefined | "fallback"
+    >();
 
     const result = getOrSet({}, key, fallback);
 

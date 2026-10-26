@@ -1,7 +1,8 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { pipeAsync } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("pipeAsync", () => {
   test("composes functions from left to right", async () => {
@@ -36,7 +37,10 @@ describe("pipeAsync", () => {
   });
 
   test("can conditionally apply functions", async () => {
-    const pipedFunction = pipeAsync([true, async (x: number) => x + 10], [false, async (x: number) => x * 2]);
+    const pipedFunction = pipeAsync(
+      [true, async (x: number) => x + 10],
+      [false, async (x: number) => x * 2],
+    );
 
     return pipedFunction(5).then((result) => {
       // 5 + 10 = 15

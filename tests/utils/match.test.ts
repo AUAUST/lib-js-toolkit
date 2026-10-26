@@ -1,9 +1,10 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { match } from "@auaust/toolkit";
 import { isArray } from "@auaust/toolkit/isArray";
 import { isNumber } from "@auaust/toolkit/isNumber";
 import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { match } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("match", () => {
   test.each([
@@ -66,7 +67,9 @@ describe("match", () => {
     ]);
 
     expect(result).toBe(expected);
-    expectTypeOf(result).toEqualTypeOf<"one" | "greeting" | "farewell" | undefined>();
+    expectTypeOf(result).toEqualTypeOf<
+      "one" | "greeting" | "farewell" | undefined
+    >();
   });
 
   test("first matching case is returned", () => {

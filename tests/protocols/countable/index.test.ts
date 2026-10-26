@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("countable", () => {
   test("is properly recognized and narrowed by `implementsProtocol()`", () => {

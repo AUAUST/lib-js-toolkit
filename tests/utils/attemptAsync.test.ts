@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { attemptAsync, type AttemptResult } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("attemptAsync", () => {
   test("returns the result of a successful function call", async () => {

@@ -1,5 +1,7 @@
-import { forwardAs, forwardMethods } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { forwardAs, forwardMethods } from "@auaust/toolkit/forwarder";
+
 import { createKeyedCollections } from "../../fixtures/values";
 
 describe("forwardMethods", () => {
@@ -130,7 +132,7 @@ describe("forwardMethods", () => {
     );
 
     expectTypeOf(forwarded).toEqualTypeOf<{
-      label: string;
+      "label": string;
       "0": (value: number) => number;
       [alias]: (name: string) => string;
       "1": () => boolean;

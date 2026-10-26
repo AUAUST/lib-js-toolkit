@@ -5,9 +5,8 @@ export type SetOrDeleted<Target, Key extends PropertyKey, Value> = [
 ] extends [undefined]
   ? Omit<Target, Key>
   : undefined extends Value
-    ?
-        | Omit<Target, Key>
-        | Assigned<Target, [Record<Key, Exclude<Value, undefined>>]>
+    ? | Omit<Target, Key>
+      | Assigned<Target, [Record<Key, Exclude<Value, undefined>>]>
     : Assigned<Target, [Record<Key, Value>]>;
 
 export function setOrDelete<

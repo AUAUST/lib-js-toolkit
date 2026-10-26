@@ -1,7 +1,8 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { pipe } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("pipe", () => {
   test("composes functions from left to right", () => {
@@ -32,12 +33,18 @@ describe("pipe", () => {
   });
 
   test("can conditionally apply functions", () => {
-    const pipedFunction = pipe([true, (x: number) => x + 10], [false, (x: number) => x * 2]);
+    const pipedFunction = pipe(
+      [true, (x: number) => x + 10],
+      [false, (x: number) => x * 2],
+    );
     const result = pipedFunction(5); // 5 + 10 = 15
 
     expect(result).toBe(15);
 
-    const pipedFunction2 = pipe([false, (x: number) => x + 10], [true, (x: number) => x * 2]);
+    const pipedFunction2 = pipe(
+      [false, (x: number) => x + 10],
+      [true, (x: number) => x * 2],
+    );
     const result2 = pipedFunction2(5); // 5 * 2 = 10
 
     expect(result2).toBe(10);
@@ -46,7 +53,10 @@ describe("pipe", () => {
   test("works with functional conditions", () => {
     const isEven = (x: number) => x % 2 === 0;
 
-    const pipedFunction = pipe([isEven, (x: number) => x + 100], [(x: number) => !isEven(x), (x: number) => x - 100]);
+    const pipedFunction = pipe(
+      [isEven, (x: number) => x + 100],
+      [(x: number) => !isEven(x), (x: number) => x - 100],
+    );
 
     const result1 = pipedFunction(4); // 4 is even, so 4 + 100 = 104
     const result2 = pipedFunction(5); // 5 is odd, so 5 - 100 = -95

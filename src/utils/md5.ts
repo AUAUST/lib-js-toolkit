@@ -25,7 +25,7 @@ function rstr_md5(s: string): string {
 }
 
 function rstr2hex(input: string): string {
-  let hex = "0123456789abcdef";
+  const hex = "0123456789abcdef";
   let output = "";
   let x;
 
@@ -78,7 +78,7 @@ function str2rstr_utf8(input: string): string {
 }
 
 function rstr2binl(input: string): number[] {
-  let output = Array(input.length >> 2);
+  const output = Array(input.length >> 2);
 
   for (let i = 0; i < output.length; i++) {
     output[i] = 0;
@@ -111,10 +111,10 @@ function binl_md5(x: number[], len: number): number[] {
   let d = 271733878;
 
   for (let i = 0; i < x.length; i += 16) {
-    let olda = a;
-    let oldb = b;
-    let oldc = c;
-    let oldd = d;
+    const olda = a;
+    const oldb = b;
+    const oldc = c;
+    const oldd = d;
 
     a = md5_ff(a, b, c, d, x[i + 0], 7, -680876936);
     d = md5_ff(d, a, b, c, x[i + 1], 12, -389564586);
@@ -190,7 +190,7 @@ function binl_md5(x: number[], len: number): number[] {
     d = safe_add(d, oldd);
   }
 
-  return Array(a, b, c, d);
+  return [a, b, c, d];
 }
 
 function md5_cmn(
@@ -253,8 +253,8 @@ function md5_ii(
 }
 
 function safe_add(x: number, y: number): number {
-  let lsw = (x & 0xffff) + (y & 0xffff);
-  let msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  const lsw = (x & 0xffff) + (y & 0xffff);
+  const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
 
   return (msw << 16) | (lsw & 0xffff);
 }

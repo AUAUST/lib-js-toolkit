@@ -1,5 +1,7 @@
-import { expose } from "@auaust/toolkit";
 import { afterEach, describe, expect, expectTypeOf, test } from "vitest";
+
+import { expose } from "@auaust/toolkit";
+
 import { createObjects, primitiveValues } from "../fixtures/values";
 
 describe("expose", () => {
@@ -10,10 +12,13 @@ describe("expose", () => {
     Reflect.deleteProperty(globalThis, key);
   });
 
-  test.each([true, false])("exposes on the global target when %s", (condition) => {
-    expect(expose(key, 42, condition)).toBe(42);
-    expect(Reflect.get(globalThis, key)).toBe(condition ? 42 : undefined);
-  });
+  test.each([true, false])(
+    "exposes on the global target when %s",
+    (condition) => {
+      expect(expose(key, 42, condition)).toBe(42);
+      expect(Reflect.get(globalThis, key)).toBe(condition ? 42 : undefined);
+    },
+  );
 
   test.for(createObjects())("accepts native target %s", (target) => {
     const result = expose(key, "value" as const, true, target);
@@ -42,7 +47,9 @@ describe("expose", () => {
     test("sets the default for subsequent single and multiple exposures", () => {
       const target = {};
 
-      expectTypeOf(expose.target).parameter(0).toEqualTypeOf<Record<PropertyKey, any>>();
+      expectTypeOf(expose.target)
+        .parameter(0)
+        .toEqualTypeOf<Record<PropertyKey, any>>();
 
       expose.target(target);
 

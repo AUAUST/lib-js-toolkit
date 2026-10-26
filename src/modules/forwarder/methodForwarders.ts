@@ -3,13 +3,14 @@ import type {
   MaybeArrayElement,
   MethodName,
 } from "@auaust/toolkit/types";
-import type { ForwardAs } from "./forwardAs";
+
 import {
   methodForwarder,
   type MethodForwarder,
   type MethodForwardingInput,
   type MethodForwardingOptions,
 } from "./methodForwarder";
+import type { ForwardAs } from "./forwardAs";
 
 export type MethodForwarderFor<
   Source extends object,

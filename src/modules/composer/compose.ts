@@ -6,6 +6,7 @@ import type {
   Fn,
   UnionToIntersection,
 } from "@auaust/toolkit/types";
+
 import { getterComposer } from "./getterComposer";
 import { getterComposers } from "./getterComposers";
 import { isPropertyComposer } from "./isPropertyComposer";

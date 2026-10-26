@@ -26,7 +26,12 @@ export function createKeyMapper() {
 }
 
 export function createValueTransformer() {
-  function transform(this: { factor: number }, value: number, key: "entry", sourceKey: "entry") {
+  function transform(
+    this: { factor: number },
+    value: number,
+    key: "entry",
+    sourceKey: "entry",
+  ) {
     return `${value * this.factor}:${key}:${sourceKey}`;
   }
 

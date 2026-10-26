@@ -1,5 +1,7 @@
-import { md5 } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { md5 } from "@auaust/toolkit";
+
 import { createValues } from "../fixtures/values";
 
 describe("md5", () => {

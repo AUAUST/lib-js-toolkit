@@ -1,5 +1,7 @@
-import { get } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { get } from "@auaust/toolkit/object";
+
 import { createKeyedCollections } from "../../fixtures/values";
 
 describe("get", () => {
@@ -24,7 +26,9 @@ describe("get", () => {
     expectTypeOf(get(target, "missing")).toBeAny();
     expectTypeOf(get(target, "dynamic" as string)).toBeAny();
     expectTypeOf(get(target as unknown, "name")).toBeAny();
-    expectTypeOf(get<string>(target as unknown, "name")).toEqualTypeOf<string>();
+    expectTypeOf(
+      get<string>(target as unknown, "name"),
+    ).toEqualTypeOf<string>();
     expect(get(target, "name")).toBe("entry");
     expect(get(target, "missing")).toBeUndefined();
     expect(get("hello", "length")).toBe(5);
@@ -38,7 +42,9 @@ describe("get", () => {
     } as { value: number } | { value: string } | null;
 
     expectTypeOf(get(optional, "value")).toEqualTypeOf<number | undefined>();
-    expectTypeOf(get(union, "value")).toEqualTypeOf<number | string | undefined>();
+    expectTypeOf(get(union, "value")).toEqualTypeOf<
+      number | string | undefined
+    >();
     expectTypeOf(get(null, "value")).toEqualTypeOf<undefined>();
     expectTypeOf(get(undefined, "value")).toEqualTypeOf<undefined>();
     expect(get(null, "value")).toBeUndefined();

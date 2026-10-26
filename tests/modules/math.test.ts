@@ -1,6 +1,7 @@
+import { describe, expect, test } from "vitest";
+
 import { isNaN } from "@auaust/toolkit";
 import { isNaN as mathIsNaN } from "@auaust/toolkit/math";
-import { describe, expect, test } from "vitest";
 
 describe("math", () => {
   test("exposes Number.isNaN from both the root and math entrypoints", () => {

@@ -1,8 +1,15 @@
+import { runInNewContext } from "node:vm";
+
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import * as toolkit from "@auaust/toolkit";
 import { isPlainObject } from "@auaust/toolkit";
-import { runInNewContext } from "node:vm";
-import { describe, expect, expectTypeOf, test } from "vitest";
-import { createFunctions, createInstances, primitiveValues } from "../fixtures/values";
+
+import {
+  createFunctions,
+  createInstances,
+  primitiveValues,
+} from "../fixtures/values";
 
 describe("isPlainObject", () => {
   test.for([
@@ -18,9 +25,11 @@ describe("isPlainObject", () => {
     Object.preventExtensions({}),
     new Proxy({}, {}),
     new Proxy(Object.create(null), {}),
-    ...["({ value: 1 })", "new Object()", "Object.create(null)"].map((source) => {
-      return runInNewContext(source);
-    }),
+    ...["({ value: 1 })", "new Object()", "Object.create(null)"].map(
+      (source) => {
+        return runInNewContext(source);
+      },
+    ),
   ])("accepts ordinary object %s", (input) => {
     expect(isPlainObject(input)).toBe(true);
   });
@@ -59,6 +68,7 @@ describe("isPlainObject", () => {
       enumerable: true,
       get() {
         reads += 1;
+
         return "value";
       },
     });

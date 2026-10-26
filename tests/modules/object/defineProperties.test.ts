@@ -1,5 +1,6 @@
-import { defineProperties } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { defineProperties } from "@auaust/toolkit/object";
 
 describe("defineProperties", () => {
   test("infers each descriptor and getter-only writability", () => {

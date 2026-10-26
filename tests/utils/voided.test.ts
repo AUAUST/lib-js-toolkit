@@ -1,5 +1,6 @@
-import { voided, type Voided } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
+import { voided, type Voided } from "@auaust/toolkit";
 
 describe("voided", () => {
   test("returns the function but ignores its return value", () => {
@@ -8,6 +9,7 @@ describe("voided", () => {
 
     const runnable = vi.fn((...args: unknown[]) => {
       expect(args).toEqual([1, 2, 3]);
+
       return 42;
     });
 
@@ -27,6 +29,7 @@ describe("voided", () => {
     const fn = voided(function (this: typeof context) {
       expect(this).toBe(context);
       expect(this.value).toBe(42);
+
       return context.value;
     });
 

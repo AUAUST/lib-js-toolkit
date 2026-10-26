@@ -1,6 +1,15 @@
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  expectTypeOf,
+  test,
+  vi,
+} from "vitest";
+
 import { debounce } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { afterEach, beforeEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("debounce", () => {
   beforeEach(() => {
@@ -9,30 +18,33 @@ describe("debounce", () => {
 
   afterEach(() => vi.useRealTimers());
 
-  test.for([[], [1], [1, 2, 3]])("coalesces calls using the last arguments %s", (args) => {
-    const callback = vi.fn();
-    const fn = debounce(callback, 10);
+  test.for([[], [1], [1, 2, 3]])(
+    "coalesces calls using the last arguments %s",
+    (args) => {
+      const callback = vi.fn();
+      const fn = debounce(callback, 10);
 
-    expect(fn(...args)).toBe(false);
-    expect(fn(...args)).toBe(true);
-    expect(fn("latest")).toBe(true);
-    expect(callback).not.toHaveBeenCalled();
+      expect(fn(...args)).toBe(false);
+      expect(fn(...args)).toBe(true);
+      expect(fn("latest")).toBe(true);
+      expect(callback).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(9);
+      vi.advanceTimersByTime(9);
 
-    expect(callback).not.toHaveBeenCalled();
+      expect(callback).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(1);
+      vi.advanceTimersByTime(1);
 
-    expect(callback).toHaveBeenCalledExactlyOnceWith("latest");
-    expect(fn(...args)).toBe(false);
-    expect(fn(...args)).toBe(true);
+      expect(callback).toHaveBeenCalledExactlyOnceWith("latest");
+      expect(fn(...args)).toBe(false);
+      expect(fn(...args)).toBe(true);
 
-    vi.advanceTimersByTime(10);
+      vi.advanceTimersByTime(10);
 
-    expect(callback).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenLastCalledWith(...args);
-  });
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenLastCalledWith(...args);
+    },
+  );
 
   test("preserves function receivers", () => {
     const context = {
@@ -68,6 +80,7 @@ describe("debounce", () => {
     };
 
     const fn = debounce(callback, 10);
+
     const context = {
       factor: 3,
     };

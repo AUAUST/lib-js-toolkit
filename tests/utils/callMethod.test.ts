@@ -1,5 +1,7 @@
-import { callMethod } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { callMethod } from "@auaust/toolkit";
+
 import { createKeyedCollections } from "../fixtures/values";
 
 describe("callMethod", () => {
@@ -14,6 +16,7 @@ describe("callMethod", () => {
       value: 2,
       add(amount: number, suffix: string) {
         this.value += amount;
+
         return `${this.value}${suffix}`;
       },
     };
@@ -41,6 +44,7 @@ describe("callMethod", () => {
 
     const contextual = callMethod(target, function () {
       expectTypeOf(this).toEqualTypeOf<typeof target>();
+
       return this.value;
     });
 
@@ -75,6 +79,7 @@ describe("callMethod", () => {
       }
       get action() {
         expect(this).toBe(target);
+
         return this.method;
       }
     }

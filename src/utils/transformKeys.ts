@@ -1,9 +1,9 @@
 import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { keys } from "@auaust/toolkit/object";
 import type {
   FunctionMappedKey,
   RecordMappedKey,
 } from "@auaust/toolkit/mappedKeys";
-import { keys } from "@auaust/toolkit/object";
 import type { Callee } from "@auaust/toolkit/types";
 
 export function transformKeys<Target extends object>(target: Target): Target;
@@ -39,7 +39,9 @@ export function transformKeys(target: any, map?: any) {
 
   const mapper = keyMapper(map);
 
-  const originals = { ...target };
+  const originals = {
+    ...target,
+  };
 
   const overrides = new Set<PropertyKey>();
 

@@ -1,8 +1,9 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { apply, call } from "@auaust/toolkit";
 import { assign, freeze } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocols/callable";
 import type { Callee } from "@auaust/toolkit/types";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("apply", () => {
   test("forwards generic readonly arguments to functions and protocol objects", () => {
@@ -17,9 +18,14 @@ describe("apply", () => {
     const receiver = {
       prefix: "hello",
     };
+
     const args = freeze(["world", 2] as const);
 
-    const callback = function (this: typeof receiver, name: string, count: number) {
+    const callback = function (
+      this: typeof receiver,
+      name: string,
+      count: number,
+    ) {
       return `${this.prefix} ${name}`.repeat(count);
     };
 
@@ -59,12 +65,17 @@ describe("apply", () => {
     const context = {
       prefix: "goodbye",
     };
+
     const result = apply.call(context, input, ["world", 1]);
 
     expect(result).toBe("goodbye world");
     expectTypeOf(result).toEqualTypeOf<string>();
-    expectTypeOf(apply.apply(context, [input, ["world", 1]])).toEqualTypeOf<string>();
-    expectTypeOf(apply.call(null, (n: number) => n, [1])).toEqualTypeOf<number>();
+    expectTypeOf(
+      apply.apply(context, [input, ["world", 1]]),
+    ).toEqualTypeOf<string>();
+    expectTypeOf(
+      apply.call(null, (n: number) => n, [1]),
+    ).toEqualTypeOf<number>();
 
     if (false) {
       // @ts-expect-error Missing required argument.

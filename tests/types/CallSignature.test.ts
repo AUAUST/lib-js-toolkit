@@ -1,8 +1,15 @@
-import type { CallParameters, CallReturnType, CallSignature } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
 import { assertType, describe, expectTypeOf, test } from "vitest";
 
-type Accepts<Signature, Arguments extends readonly any[]> = [Signature] extends [(...args: Arguments) => any]
+import { callable } from "@auaust/toolkit/protocols/callable";
+import type {
+  CallParameters,
+  CallReturnType,
+  CallSignature,
+} from "@auaust/toolkit";
+
+type Accepts<Signature, Arguments extends readonly any[]> = [
+  Signature,
+] extends [(...args: Arguments) => any]
   ? true
   : false;
 
@@ -17,7 +24,9 @@ describe("CallSignature", () => {
       [callable](input: unknown): input is string;
     };
 
-    expectTypeOf<CallSignature<Protocol>>().toEqualTypeOf<(input: unknown) => input is string>();
+    expectTypeOf<CallSignature<Protocol>>().toEqualTypeOf<
+      (input: unknown) => input is string
+    >();
   });
 
   test("extracts readonly protocol parameters with optional and rest entries", () => {
@@ -38,7 +47,9 @@ describe("CallSignature", () => {
       [callable](name: string): string;
     };
 
-    expectTypeOf<CallParameters<Hybrid>>().toEqualTypeOf<readonly [name: string]>();
+    expectTypeOf<CallParameters<Hybrid>>().toEqualTypeOf<
+      readonly [name: string]
+    >();
     expectTypeOf<CallReturnType<Hybrid>>().toEqualTypeOf<string>();
   });
 

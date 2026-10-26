@@ -10,9 +10,9 @@ export function defineGetters<
 ): Extended<
   Target,
   {
-    readonly [Key in keyof Getters as Key extends string | number
-      ? Key
-      : never]: ReturnType<Getters[Key]>;
+    readonly [
+      Key in keyof Getters as Key extends string | number ? Key : never
+    ]: ReturnType<Getters[Key]>;
   }
 >;
 export function defineGetters(

@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { compose, propertyComposer } from "@auaust/toolkit/composer";
 import { ownDescriptor } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("propertyComposer", () => {
   test("preserves accessors and descriptor flags", () => {

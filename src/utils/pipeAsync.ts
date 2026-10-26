@@ -1,8 +1,8 @@
 import { PipelineError } from "@auaust/toolkit/errors";
 import { isArray } from "@auaust/toolkit/isArray";
 import { isBoolean } from "@auaust/toolkit/isBoolean";
-import type { PipeCondition } from "@auaust/toolkit/pipe";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type { PipeCondition } from "@auaust/toolkit/pipe";
 import type { AsyncCallee } from "@auaust/toolkit/types";
 
 export type AsyncTransformFn<This, In, Out> = AsyncCallee<
@@ -80,7 +80,9 @@ export function pipeAsync(
       const [condition, callback] = entry;
 
       return {
-        condition: isBoolean(condition) ? condition : resolveCallable(condition),
+        condition: isBoolean(condition)
+          ? condition
+          : resolveCallable(condition),
         callback: resolveCallable(callback),
         original: callback,
       };

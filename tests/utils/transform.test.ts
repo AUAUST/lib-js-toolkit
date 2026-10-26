@@ -1,9 +1,15 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { transform } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
-import { createKeyMapper, createValueTransformer, createTriple } from "../fixtures/objects";
-import { primitiveValues } from "../fixtures/values";
+
 import { mappingCases } from "../fixtures/mapping";
+import {
+  createKeyMapper,
+  createTriple,
+  createValueTransformer,
+} from "../fixtures/objects";
+import { primitiveValues } from "../fixtures/values";
 
 describe("transform", () => {
   test.for(primitiveValues)("preserves non-object input %s", (input) => {
@@ -11,13 +17,16 @@ describe("transform", () => {
     expect(transform(input)).toBe(input);
   });
 
-  test.each(mappingCases)("transform handles %s", (_name, map, transformer, expected) => {
-    const source = createTriple();
-    const result = transform(source, map, transformer);
+  test.each(mappingCases)(
+    "transform handles %s",
+    (_name, map, transformer, expected) => {
+      const source = createTriple();
+      const result = transform(source, map, transformer);
 
-    expect(result).toBe(source);
-    expect(result).toEqual(Object.fromEntries(expected));
-  });
+      expect(result).toBe(source);
+      expect(result).toEqual(Object.fromEntries(expected));
+    },
+  );
 
   test("types explicit exclusions", () => {
     const result = transform(createTriple(), {
@@ -37,9 +46,11 @@ describe("transform", () => {
       return key === "a" ? "renamed" : true;
     });
 
-    const transformer = vi.fn((value: number, key: PropertyKey, _sourceKey: string) => {
-      return String(key) + ":" + value;
-    });
+    const transformer = vi.fn(
+      (value: number, key: PropertyKey, _sourceKey: string) => {
+        return String(key) + ":" + value;
+      },
+    );
 
     const result = transform(createTriple(), mapper, transformer);
 

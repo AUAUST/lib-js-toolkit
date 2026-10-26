@@ -1,6 +1,7 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { measure, type MeasureResult } from "@auaust/toolkit";
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
+
+import { measure, type MeasureResult } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("measure", () => {
   afterEach(() => vi.restoreAllMocks());

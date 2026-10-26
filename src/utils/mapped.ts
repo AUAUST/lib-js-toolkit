@@ -35,10 +35,9 @@ export function mapped<
   map: Map,
   transformer?: undefined,
 ): {
-  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
-    Key,
-    Map
-  >]: MappedSource<Source, false>[Key];
+  [
+    Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
+  ]: MappedSource<Source, false>[Key];
 };
 export function mapped<
   Source extends Record<string, any>,
@@ -77,7 +76,9 @@ export function mapped<
 >;
 export function mapped<
   Source extends Record<string, any>,
-  Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>> | undefined,
+  Map extends
+    | Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>
+    | undefined,
   Transformer extends Callee<
     any,
     [
@@ -91,10 +92,9 @@ export function mapped<
   map?: Map,
   transformer?: Transformer,
 ): {
-  [Key in keyof MappedSource<Source, false> as RecordMappedKey<
-    Key,
-    Map
-  >]: CallReturnType<Transformer>;
+  [
+    Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
+  ]: CallReturnType<Transformer>;
 };
 export function mapped(
   source: Record<string, any>,

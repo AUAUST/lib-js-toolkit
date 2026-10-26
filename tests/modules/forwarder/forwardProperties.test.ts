@@ -1,5 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { forwardProperties } from "@auaust/toolkit/forwarder";
-import { describe, expect, test, expectTypeOf } from "vitest";
+
 import { createDescriptorSource } from "../../fixtures/descriptors";
 
 describe("forwardProperties", () => {
@@ -7,6 +9,7 @@ describe("forwardProperties", () => {
     const handler = {
       value: 1,
     };
+
     const forwarded = forwardProperties({}, handler, ["value"]);
 
     expectTypeOf(forwarded.value).toEqualTypeOf<number>();
@@ -106,6 +109,8 @@ describe("forwardProperties", () => {
         handler,
         [property],
       );
-    }).toThrow(`Existing property ${String(property)} cannot be forwarded on target.`);
+    }).toThrow(
+      `Existing property ${String(property)} cannot be forwarded on target.`,
+    );
   });
 });

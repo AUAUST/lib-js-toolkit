@@ -1,5 +1,7 @@
-import { set } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { set } from "@auaust/toolkit/object";
+
 import { createObjects } from "../../fixtures/values";
 
 describe("set", () => {

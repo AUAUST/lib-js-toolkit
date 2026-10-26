@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { compose, propertyComposers } from "@auaust/toolkit/composer";
 import { ownDescriptor, proto } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("propertyComposers", () => {
   test("infers data and accessor descriptors independently", () => {

@@ -1,5 +1,6 @@
-import { setOrDelete } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { setOrDelete } from "@auaust/toolkit/object";
 
 describe("setOrDelete", () => {
   test("models setting and deletion on the returned object", () => {

@@ -1,5 +1,6 @@
-import type { NullaryFn } from "@auaust/toolkit/types";
 import { describe, expectTypeOf, test } from "vitest";
+
+import type { NullaryFn } from "@auaust/toolkit/types";
 
 describe("NullaryFn", () => {
   test("has no arguments and preserves its return and receiver types", () => {

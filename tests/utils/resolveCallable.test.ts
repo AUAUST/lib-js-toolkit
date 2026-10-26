@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { resolveCallable } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("resolveCallable", () => {
   test("returns a function as is", () => {
@@ -14,7 +15,9 @@ describe("resolveCallable", () => {
     expect(resolved).toBe(fn);
     expect(resolveCallable(fn)).toBe(fn);
     expectTypeOf(resolveCallable(fn)).toEqualTypeOf<typeof fn>();
-    expectTypeOf(resolveCallable(fn)).toEqualTypeOf<(a: string, b: number) => a is `${typeof b}`>();
+    expectTypeOf(resolveCallable(fn)).toEqualTypeOf<
+      (a: string, b: number) => a is `${typeof b}`
+    >();
   });
 
   test("extracts and binds a callable object", () => {
@@ -47,7 +50,9 @@ describe("resolveCallable", () => {
 
     const unboundObj = resolveCallable(obj);
 
-    expectTypeOf<ThisParameterType<typeof unboundObj>>().toEqualTypeOf<unknown>();
+    expectTypeOf<
+      ThisParameterType<typeof unboundObj>
+    >().toEqualTypeOf<unknown>();
     expect(unboundObj()).toBe(42);
     expectTypeOf(unboundObj()).toBeNumber();
 

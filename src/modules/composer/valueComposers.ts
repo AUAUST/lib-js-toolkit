@@ -1,6 +1,7 @@
 import { ownKeys } from "@auaust/toolkit/object";
-import type { PropertyComposer } from "./propertyComposer";
+
 import { valueComposer } from "./valueComposer";
+import type { PropertyComposer } from "./propertyComposer";
 
 export function valueComposers<const Values extends object>(
   values: Values,

@@ -1,6 +1,7 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { transformValues } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { transformValues } from "@auaust/toolkit";
+
 import { createPair, createValueTransformer } from "../fixtures/objects";
 
 describe("transformValues", () => {
@@ -10,6 +11,7 @@ describe("transformValues", () => {
 
     const result = transformValues(target, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
+
       return `${String(key)}:${value}`;
     });
 

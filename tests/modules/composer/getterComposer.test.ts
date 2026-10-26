@@ -1,5 +1,6 @@
-import { compose, getterComposer } from "@auaust/toolkit/composer";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { compose, getterComposer } from "@auaust/toolkit/composer";
 
 describe("getterComposer", () => {
   test("stays lazy and produces a readonly property", () => {
@@ -7,6 +8,7 @@ describe("getterComposer", () => {
 
     const entry = getterComposer("value", () => {
       reads += 1;
+
       return "value" as const;
     });
 

@@ -1,5 +1,6 @@
-import { record } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { record } from "@auaust/toolkit/object";
 
 describe("record", () => {
   test("preserves entry types, symbols, and the last duplicate value", () => {
@@ -22,7 +23,9 @@ describe("record", () => {
     const result = record(new Map<string, number>([["one", 1]]));
 
     expectTypeOf(result).toEqualTypeOf<Record<string, number>>();
-    expectTypeOf(record(new Map<"a" | "b", number>())).toEqualTypeOf<Record<"a" | "b", number>>();
+    expectTypeOf(record(new Map<"a" | "b", number>())).toEqualTypeOf<
+      Record<"a" | "b", number>
+    >();
     expectTypeOf(record([])).toEqualTypeOf<{}>();
     expect(result.one).toBe(1);
     expect(record([])).toEqual({});

@@ -1,5 +1,10 @@
-import { forwardAs, methodForwarders, type MethodForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import {
+  forwardAs,
+  methodForwarders,
+  type MethodForwarder,
+} from "@auaust/toolkit/forwarder";
 
 describe("methodForwarders", () => {
   test("handles the spread call form", () => {
@@ -58,7 +63,10 @@ describe("methodForwarders", () => {
     });
 
     expectTypeOf(forwarders).toEqualTypeOf<
-      (MethodForwarder<typeof source, "foo"> | MethodForwarder<typeof source, "bar">)[]
+      (
+        | MethodForwarder<typeof source, "foo">
+        | MethodForwarder<typeof source, "bar">
+      )[]
     >();
   });
 
@@ -97,8 +105,22 @@ describe("methodForwarders", () => {
       forwardAs(token, "aliasedSymbol"),
     );
 
-    expect(forwarders.map((entry) => entry.name)).toEqual([0, token, "renamed", "zero", "symbol", "aliasedSymbol"]);
-    expect(forwarders.map((entry) => entry.get()())).toEqual([0, "symbol", true, 0, "symbol", "symbol"]);
+    expect(forwarders.map((entry) => entry.name)).toEqual([
+      0,
+      token,
+      "renamed",
+      "zero",
+      "symbol",
+      "aliasedSymbol",
+    ]);
+    expect(forwarders.map((entry) => entry.get()())).toEqual([
+      0,
+      "symbol",
+      true,
+      0,
+      "symbol",
+      "symbol",
+    ]);
     expect(forwarders[4].enumerable).toBe(true);
     expectTypeOf(forwarders).toEqualTypeOf<
       (

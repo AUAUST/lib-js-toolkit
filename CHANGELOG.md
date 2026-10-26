@@ -93,11 +93,12 @@
 - f944172: Add `isCallable()` that returns true for functions and `Callable`
 - 8482a92: Define the `Callable` protocol
 - 23c4fd4: Add several utility types
-  
+
   - `IsNumericString`
   - `StringToNumber`
   - `ToArrayKey`
   - `ToRecordKey`
+
 - 0f7e8a6: Use `Protocol.${name}` as the key for global protocol symbols
 - 613317a: Add `memberValue()` which is the equivalent of `value()` for properties and methods
 - f90278f: Add `callMethod()` and `applyMethod()` that help calling methods with the correct `this` context while supporting the `Callable` protocol

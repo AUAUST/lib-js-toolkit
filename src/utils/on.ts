@@ -1,6 +1,6 @@
 import { apply } from "@auaust/toolkit/apply";
+import { value, type ResolvedValue } from "@auaust/toolkit/value";
 import type { Callee } from "@auaust/toolkit/types";
-import { type ResolvedValue, value } from "@auaust/toolkit/value";
 
 export function on<Return, Arguments extends readonly any[], This = any>(
   this: This,

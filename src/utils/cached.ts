@@ -2,8 +2,8 @@ import { identity } from "@auaust/toolkit/identity";
 import { isCallable } from "@auaust/toolkit/isCallable";
 import { isContainer } from "@auaust/toolkit/isContainer";
 import { assign } from "@auaust/toolkit/object";
-import type { Callable } from "@auaust/toolkit/protocols/callable";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type { Callable } from "@auaust/toolkit/protocols/callable";
 import type {
   Callee,
   CallParameters,

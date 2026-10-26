@@ -1,6 +1,6 @@
-import type { MappedSource } from "@auaust/toolkit/mappedKeys";
 import { plain } from "@auaust/toolkit/plain";
 import { resolveCallable } from "@auaust/toolkit/resolveCallable";
+import type { MappedSource } from "@auaust/toolkit/mappedKeys";
 import type { Callee, ObjectKey, ObjectValue } from "@auaust/toolkit/types";
 
 /**

@@ -1,5 +1,7 @@
-import { identity } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { identity } from "@auaust/toolkit";
+
 import { createValues } from "../fixtures/values";
 
 describe("identity", () => {

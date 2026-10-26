@@ -1,5 +1,6 @@
-import type { StringToNumber } from "@auaust/toolkit/types";
 import { describe, expectTypeOf, test } from "vitest";
+
+import type { StringToNumber } from "@auaust/toolkit/types";
 
 describe("StringToNumber", () => {
   test("works", () => {

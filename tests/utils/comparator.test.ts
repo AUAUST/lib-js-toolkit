@@ -1,8 +1,9 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { comparator } from "@auaust/toolkit";
 import { isNumber } from "@auaust/toolkit/isNumber";
 import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { comparator } from "@auaust/toolkit";
-import { describe, expect, test, expectTypeOf } from "vitest";
 
 describe("comparator", () => {
   test("returns a comparator function which holds the custom operators", () => {
@@ -34,7 +35,7 @@ describe("comparator", () => {
 
   test("allows to disable specific operators", () => {
     const numberComparator = comparator({
-      isEven: (a: unknown): boolean => {
+      "isEven": (a: unknown): boolean => {
         if (isNumber(a)) {
           return a % 2 === 0;
         }

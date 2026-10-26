@@ -1,11 +1,13 @@
-import { finalize } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { finalize } from "@auaust/toolkit/object";
 
 describe("finalize", () => {
   test("assigns sources in order and shallowly freezes the target", () => {
     const target = {
       value: 1,
     };
+
     const child = {
       value: 2,
     };
@@ -44,7 +46,7 @@ describe("finalize", () => {
       label: "entry" as const,
     });
 
-    const identity = finalize(<Value,>(value: Value) => value, {
+    const identity = finalize(<Value>(value: Value) => value, {
       label: "identity",
     });
 

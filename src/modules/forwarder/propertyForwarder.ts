@@ -1,6 +1,7 @@
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 import { ownDescriptor } from "@auaust/toolkit/object";
 import type { IsNever } from "@auaust/toolkit/types";
+
 import type { ForwardAs } from "./forwardAs";
 
 export type PropertyForwardingInput<
@@ -114,7 +115,10 @@ export function propertyForwarder(
 
     property = input.property;
     targetProperty = input.as ?? property;
-    options = { ...input, ...options };
+    options = {
+      ...input,
+      ...options,
+    };
   } else {
     targetProperty = options?.as ?? property;
   }

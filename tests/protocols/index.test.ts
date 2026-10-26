@@ -1,7 +1,11 @@
-import { empty, value as resolve } from "@auaust/toolkit";
-import { type DefineProtocol, implementsProtocol } from "@auaust/toolkit/protocols";
-import { type Emptiable, isEmpty } from "@auaust/toolkit/protocols/emptiable";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { empty, value as resolve } from "@auaust/toolkit";
+import {
+  implementsProtocol,
+  type DefineProtocol,
+} from "@auaust/toolkit/protocols";
+import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
 
 const customProtocol: unique symbol = Symbol("customProtocol");
 
@@ -10,12 +14,18 @@ interface CustomImplementation {
 }
 
 declare module "@auaust/toolkit/protocols" {
-  interface ProtocolRegistry extends DefineProtocol<typeof customProtocol, CustomImplementation> {}
+  interface ProtocolRegistry extends DefineProtocol<
+    typeof customProtocol,
+    CustomImplementation
+  > {}
 }
 
 describe("protocols", () => {
   test("preserves the protocol definition contract", () => {
-    type Definition = DefineProtocol<typeof customProtocol, CustomImplementation>;
+    type Definition = DefineProtocol<
+      typeof customProtocol,
+      CustomImplementation
+    >;
 
     expectTypeOf<Definition>().toEqualTypeOf<{
       [customProtocol]: CustomImplementation;
@@ -75,7 +85,9 @@ describe("protocols", () => {
       expectTypeOf(asyncIterable).toEqualTypeOf<AsyncIterable<any>>();
       expectTypeOf(asyncIterable[Symbol.asyncIterator]).toBeFunction();
     } else {
-      expect.unreachable("The async generator should implement Symbol.asyncIterator.");
+      expect.unreachable(
+        "The async generator should implement Symbol.asyncIterator.",
+      );
     }
   });
 
@@ -97,7 +109,9 @@ describe("protocols", () => {
 
     if (implementsProtocol(Symbol.asyncDispose, asyncDisposable)) {
       expectTypeOf(asyncDisposable).toEqualTypeOf<AsyncDisposable>();
-      expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<() => PromiseLike<void>>();
+      expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<
+        () => PromiseLike<void>
+      >();
     } else {
       expect.unreachable("The value should implement Symbol.asyncDispose.");
     }
@@ -121,12 +135,16 @@ describe("protocols", () => {
     }
 
     if (implementsProtocol(Symbol.isConcatSpreadable, spreadable)) {
-      expectTypeOf(spreadable[Symbol.isConcatSpreadable]).toEqualTypeOf<boolean>();
+      expectTypeOf(
+        spreadable[Symbol.isConcatSpreadable],
+      ).toEqualTypeOf<boolean>();
       expect(spreadable[Symbol.isConcatSpreadable]).toBe(true);
     }
 
     if (implementsProtocol(Symbol.toPrimitive, primitiveConvertible)) {
-      expectTypeOf(primitiveConvertible[Symbol.toPrimitive]).returns.toEqualTypeOf<
+      expectTypeOf(
+        primitiveConvertible[Symbol.toPrimitive],
+      ).returns.toEqualTypeOf<
         bigint | boolean | null | number | string | symbol | undefined
       >();
       expect(primitiveConvertible[Symbol.toPrimitive]("number")).toBe(42);
@@ -143,11 +161,15 @@ describe("protocols", () => {
     };
 
     if (implementsProtocol(Symbol.match, pattern)) {
-      expectTypeOf(pattern[Symbol.match]).returns.toEqualTypeOf<RegExpMatchArray | null>();
+      expectTypeOf(
+        pattern[Symbol.match],
+      ).returns.toEqualTypeOf<RegExpMatchArray | null>();
     }
 
     if (implementsProtocol(Symbol.matchAll, pattern)) {
-      expectTypeOf(pattern[Symbol.matchAll]).returns.toEqualTypeOf<IterableIterator<RegExpMatchArray>>();
+      expectTypeOf(pattern[Symbol.matchAll]).returns.toEqualTypeOf<
+        IterableIterator<RegExpMatchArray>
+      >();
     }
 
     if (implementsProtocol(Symbol.replace, pattern)) {
@@ -208,6 +230,8 @@ describe("protocols", () => {
     expect(implementsProtocol(isEmpty, null)).toBe(false);
     expect(implementsProtocol(isEmpty, "value")).toBe(false);
     expect(implementsProtocol(Symbol.iterator, {})).toBe(false);
-    expect(implementsProtocol(Symbol.iterator, "iterable primitive")).toBe(false);
+    expect(implementsProtocol(Symbol.iterator, "iterable primitive")).toBe(
+      false,
+    );
   });
 });

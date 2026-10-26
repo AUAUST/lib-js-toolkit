@@ -1,6 +1,12 @@
-import { isFunction } from "@auaust/toolkit";
 import { assertType, describe, expect, expectTypeOf, test } from "vitest";
-import { createFunctions, createObjects, primitiveValues } from "../fixtures/values";
+
+import { isFunction } from "@auaust/toolkit";
+
+import {
+  createFunctions,
+  createObjects,
+  primitiveValues,
+} from "../fixtures/values";
 
 describe("isFunction", () => {
   test.for(createFunctions())("recognizes function %s", (input) => {
@@ -8,9 +14,12 @@ describe("isFunction", () => {
     expectTypeOf(isFunction(input)).toEqualTypeOf<boolean>();
   });
 
-  test.for([...primitiveValues, ...createObjects()])("rejects non-callable %s", (input) => {
-    expect(isFunction(input)).toBe(false);
-  });
+  test.for([...primitiveValues, ...createObjects()])(
+    "rejects non-callable %s",
+    (input) => {
+      expect(isFunction(input)).toBe(false);
+    },
+  );
 
   test("supports passing a method name", () => {
     const obj = {

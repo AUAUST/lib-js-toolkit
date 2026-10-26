@@ -1,4 +1,5 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import {
   keyMapper,
   type KeyMap,
@@ -7,7 +8,7 @@ import {
   type NormalizedKey,
   type NormalizedKeyMapping,
 } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("keyMapper", () => {
   test("keeps keys by default", () => {
@@ -54,12 +55,18 @@ describe("keyMapper", () => {
       value: 1 as const,
     } satisfies KeyMap<"value", 1>);
 
-    const fromFunction = keyMapper((_key: PropertyKey, _value: unknown) => 2 as const);
+    const fromFunction = keyMapper(
+      (_key: PropertyKey, _value: unknown) => 2 as const,
+    );
 
     expect(fromMap("value", null)).toBe("1");
     expect(fromFunction("value", null)).toBe("2");
-    expectTypeOf(fromMap("value", null)).toEqualTypeOf<KeyMapping<NormalizedKey<1>>>();
-    expectTypeOf(fromFunction("value", null)).toEqualTypeOf<NormalizedKeyMapping<2>>();
+    expectTypeOf(fromMap("value", null)).toEqualTypeOf<
+      KeyMapping<NormalizedKey<1>>
+    >();
+    expectTypeOf(fromFunction("value", null)).toEqualTypeOf<
+      NormalizedKeyMapping<2>
+    >();
   });
 
   test("resolves retained callable mappers and normalizes numeric keys", () => {

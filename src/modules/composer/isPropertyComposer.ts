@@ -1,5 +1,6 @@
 import { isObject } from "@auaust/toolkit/isObject";
 import { hasOwn, ownKeys } from "@auaust/toolkit/object";
+
 import type { PropertyComposer } from "./propertyComposer";
 
 export function isPropertyComposer(value: unknown): value is PropertyComposer {

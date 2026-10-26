@@ -1,12 +1,17 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { compose, valueComposer } from "@auaust/toolkit/composer";
 import { ownDescriptor } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("valueComposer", () => {
   test("defines writable values, including special keys", () => {
     const token = Symbol("token");
 
-    const result = compose(valueComposer("__proto__", null), valueComposer(token, undefined), valueComposer(0, false));
+    const result = compose(
+      valueComposer("__proto__", null),
+      valueComposer(token, undefined),
+      valueComposer(0, false),
+    );
 
     expect(ownDescriptor(result, "__proto__")).toEqual({
       value: null,

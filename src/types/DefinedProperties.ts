@@ -8,8 +8,7 @@ type WritableDescriptorKey<Descriptors extends PropertyDescriptorMap> = {
   [Key in keyof Descriptors]: PropertyDescriptor extends Descriptors[Key]
     ? Key
     : Descriptors[Key] extends
-          | { writable: true }
-          | { set: (...args: any[]) => any }
+          { writable: true } | { set: (...args: any[]) => any }
       ? Key
       : never;
 }[keyof Descriptors];
@@ -19,12 +18,16 @@ export type DefinedProperties<
   Target = {},
 > = Simplify<
   {
-    -readonly [Key in keyof Descriptors as Key extends WritableDescriptorKey<Descriptors>
-      ? Key
-      : never]: DescriptorValue<Descriptors[Key], PropertyValue<Target, Key>>;
+    -readonly [
+      Key in keyof Descriptors as Key extends WritableDescriptorKey<Descriptors>
+        ? Key
+        : never
+    ]: DescriptorValue<Descriptors[Key], PropertyValue<Target, Key>>;
   } & {
-    readonly [Key in keyof Descriptors as Key extends WritableDescriptorKey<Descriptors>
-      ? never
-      : Key]: DescriptorValue<Descriptors[Key], PropertyValue<Target, Key>>;
+    readonly [
+      Key in keyof Descriptors as Key extends WritableDescriptorKey<Descriptors>
+        ? never
+        : Key
+    ]: DescriptorValue<Descriptors[Key], PropertyValue<Target, Key>>;
   }
 >;

@@ -1,8 +1,20 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { memoized, type Memoized, type MemoizedOptions } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
-import { createValues, primitiveValues, createObjects, createFunctions } from "../fixtures/values";
-import { createSpies, genericIdentity, overloaded, signature } from "../fixtures/callbacks";
+
+import {
+  createSpies,
+  genericIdentity,
+  overloaded,
+  signature,
+} from "../fixtures/callbacks";
+import {
+  createFunctions,
+  createObjects,
+  createValues,
+  primitiveValues,
+} from "../fixtures/values";
 
 describe("memoized", () => {
   test.for(createValues())("caches result %s and manages entries", (value) => {
@@ -30,75 +42,83 @@ describe("memoized", () => {
     expect(fn.has("b")).toBe(false);
   });
 
-  test.each(["nextString", "freshObject", "sameObject"] as const)("retains %s results until cleared", (behavior) => {
-    const callback = createSpies()[behavior];
-    const fn = memoized(callback);
-    const first = fn("a");
-    const second = fn("b");
+  test.each(["nextString", "freshObject", "sameObject"] as const)(
+    "retains %s results until cleared",
+    (behavior) => {
+      const callback = createSpies()[behavior];
+      const fn = memoized(callback);
+      const first = fn("a");
+      const second = fn("b");
 
-    expect(fn("a")).toBe(first);
-    expect(first === second).toBe(behavior === "sameObject");
-    expect(callback).toHaveBeenCalledTimes(2);
+      expect(fn("a")).toBe(first);
+      expect(first === second).toBe(behavior === "sameObject");
+      expect(callback).toHaveBeenCalledTimes(2);
 
-    fn.clear();
+      fn.clear();
 
-    expect(fn("a") === first).toBe(behavior === "sameObject");
-    expect(callback).toHaveBeenCalledTimes(3);
-  });
+      expect(fn("a") === first).toBe(behavior === "sameObject");
+      expect(callback).toHaveBeenCalledTimes(3);
+    },
+  );
 
-  test.each([false, true])("resolves keys from all arguments with options form %s", (optionsForm) => {
-    const callback = vi.fn((input: { id: number }, suffix?: string) => {
-      return {
-        input,
-        suffix,
+  test.each([false, true])(
+    "resolves keys from all arguments with options form %s",
+    (optionsForm) => {
+      const callback = vi.fn((input: { id: number }, suffix?: string) => {
+        return {
+          input,
+          suffix,
+        };
+      });
+
+      const resolveKey = vi.fn((input: { id: number }, suffix?: string) => {
+        return JSON.stringify([input.id, suffix]);
+      });
+
+      const fn = optionsForm
+        ? memoized(callback, {
+            resolveKey,
+          })
+        : memoized(callback, resolveKey);
+
+      const input = {
+        id: 1,
       };
-    });
 
-    const resolveKey = vi.fn((input: { id: number }, suffix?: string) => {
-      return JSON.stringify([input.id, suffix]);
-    });
+      const equivalent = {
+        id: 1,
+      };
 
-    const fn = optionsForm
-      ? memoized(callback, {
-          resolveKey,
-        })
-      : memoized(callback, resolveKey);
+      const key = JSON.stringify([1, "a"]);
 
-    const input = {
-      id: 1,
-    };
-    const equivalent = {
-      id: 1,
-    };
-    const key = JSON.stringify([1, "a"]);
+      expect(fn.keyFor(input, "a")).toBe(key);
+      expect(fn.size).toBe(0);
+      expect(callback).not.toHaveBeenCalled();
+      expect(fn.value(key)).toBeUndefined();
 
-    expect(fn.keyFor(input, "a")).toBe(key);
-    expect(fn.size).toBe(0);
-    expect(callback).not.toHaveBeenCalled();
-    expect(fn.value(key)).toBeUndefined();
+      const first = fn(input, "a");
 
-    const first = fn(input, "a");
+      expect(fn(equivalent, "a")).toBe(first);
+      expect(fn(input, "b")).not.toBe(first);
+      expect(callback).toHaveBeenNthCalledWith(1, input, "a");
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(resolveKey).toHaveBeenCalledTimes(4);
+      expect(fn.size).toBe(2);
+      expect(fn.value(key)).toBe(first);
+      expect(fn.has(fn.keyFor(equivalent, "a"))).toBe(true);
+      expect(fn.delete(key)).toBe(true);
+      expect(fn.has(key)).toBe(false);
+      expect(fn.size).toBe(1);
 
-    expect(fn(equivalent, "a")).toBe(first);
-    expect(fn(input, "b")).not.toBe(first);
-    expect(callback).toHaveBeenNthCalledWith(1, input, "a");
-    expect(callback).toHaveBeenCalledTimes(2);
-    expect(resolveKey).toHaveBeenCalledTimes(4);
-    expect(fn.size).toBe(2);
-    expect(fn.value(key)).toBe(first);
-    expect(fn.has(fn.keyFor(equivalent, "a"))).toBe(true);
-    expect(fn.delete(key)).toBe(true);
-    expect(fn.has(key)).toBe(false);
-    expect(fn.size).toBe(1);
+      fn.clear();
 
-    fn.clear();
-
-    expect(fn.size).toBe(0);
-    expect(fn(input, "a")).not.toBe(first);
-    expectTypeOf(fn).toEqualTypeOf<Memoized<typeof callback, string>>();
-    expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
-    expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
-  });
+      expect(fn.size).toBe(0);
+      expect(fn(input, "a")).not.toBe(first);
+      expectTypeOf(fn).toEqualTypeOf<Memoized<typeof callback, string>>();
+      expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
+      expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
+    },
+  );
 
   test.for([...primitiveValues, ...createObjects(), ...createFunctions()])(
     "resolves key %s from a later argument",
@@ -145,54 +165,57 @@ describe("memoized", () => {
     expectTypeOf(fn.keyFor).returns.toEqualTypeOf<"entry" | undefined>();
   });
 
-  test.each([false, true])("resolves callable key methods once with options form %s", (optionsForm) => {
-    const callback = {
-      value: 5,
-      [callable](key: number) {
-        return this.value * key;
-      },
-    };
+  test.each([false, true])(
+    "resolves callable key methods once with options form %s",
+    (optionsForm) => {
+      const callback = {
+        value: 5,
+        [callable](key: number) {
+          return this.value * key;
+        },
+      };
 
-    const keyResolver = {
-      prefix: "key:",
-      [callable](key: number) {
-        return this.prefix + key;
-      },
-    };
+      const keyResolver = {
+        prefix: "key:",
+        [callable](key: number) {
+          return this.prefix + key;
+        },
+      };
 
-    const fn = optionsForm
-      ? memoized(callback, {
-          resolveKey: keyResolver,
-        })
-      : memoized(callback, keyResolver);
+      const fn = optionsForm
+        ? memoized(callback, {
+            resolveKey: keyResolver,
+          })
+        : memoized(callback, keyResolver);
 
-    const context = {
-      value: 0,
-      prefix: "wrong:",
-    };
+      const context = {
+        value: 0,
+        prefix: "wrong:",
+      };
 
-    keyResolver[callable] = () => {
-      throw new Error("The retained key method should be used");
-    };
+      keyResolver[callable] = () => {
+        throw new Error("The retained key method should be used");
+      };
 
-    expect(Reflect.apply(fn.keyFor, context, [2])).toBe("key:2");
-    expect(Reflect.apply(fn, context, [2])).toBe(10);
-    expect(fn.value(fn.keyFor(2))).toBe(10);
+      expect(Reflect.apply(fn.keyFor, context, [2])).toBe("key:2");
+      expect(Reflect.apply(fn, context, [2])).toBe(10);
+      expect(fn.value(fn.keyFor(2))).toBe(10);
 
-    keyResolver.prefix = "new:";
+      keyResolver.prefix = "new:";
 
-    callback.value = 10;
+      callback.value = 10;
 
-    expect(fn(2)).toBe(20);
-    expect(fn.size).toBe(2);
-    expect(fn.value("key:2")).toBe(10);
+      expect(fn(2)).toBe(20);
+      expect(fn.size).toBe(2);
+      expect(fn.value("key:2")).toBe(10);
 
-    fn.clear();
+      fn.clear();
 
-    expect(fn.keyFor(2)).toBe("new:2");
-    expect(fn(2)).toBe(20);
-    expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
-  });
+      expect(fn.keyFor(2)).toBe("new:2");
+      expect(fn(2)).toBe(20);
+      expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
+    },
+  );
 
   test("propagates key resolver failures without computing or caching a value", () => {
     const error = new Error("key failed");
@@ -213,6 +236,7 @@ describe("memoized", () => {
 
     function callback(this: unknown, key: number) {
       receivers.push(this);
+
       return key * 2;
     }
 
@@ -238,6 +262,7 @@ describe("memoized", () => {
     };
 
     const fn = memoized(holder);
+
     const context = {
       value: 99,
     };
@@ -316,7 +341,9 @@ describe("memoized", () => {
   test("infers cache keys and the full callback signature", () => {
     const wrapped = memoized(signature);
 
-    expectTypeOf(wrapped).parameters.toEqualTypeOf<[key: "entry", count?: number, ...suffixes: string[]]>();
+    expectTypeOf(wrapped).parameters.toEqualTypeOf<
+      [key: "entry", count?: number, ...suffixes: string[]]
+    >();
     expectTypeOf(wrapped).thisParameter.toEqualTypeOf<void>();
     expectTypeOf(wrapped).returns.toEqualTypeOf<string>();
     expectTypeOf(wrapped.has).parameter(0).toEqualTypeOf<"entry">();
@@ -378,7 +405,9 @@ describe("memoized", () => {
     expect(nullary.size).toBe(1);
     expectTypeOf(nullary.keyFor).returns.toEqualTypeOf<undefined>();
     expectTypeOf(nullary.has).parameter(0).toEqualTypeOf<undefined>();
-    expectTypeOf(optional.has).parameter(0).toEqualTypeOf<"entry" | undefined>();
+    expectTypeOf(optional.has)
+      .parameter(0)
+      .toEqualTypeOf<"entry" | undefined>();
     expect(optional()).toBeUndefined();
     expect(optional("entry")).toBe("entry");
   });

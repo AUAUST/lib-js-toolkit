@@ -1,5 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { BUILD } from "@auaust/toolkit";
-import { describe, expect, test, expectTypeOf } from "vitest";
+
 import packageJson from "../package.json" with { type: "json" };
 
 describe("toolkit", () => {

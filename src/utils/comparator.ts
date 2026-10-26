@@ -1,6 +1,6 @@
 import {
-  type AvailableOperators,
   compare,
+  type AvailableOperators,
   type CustomOperators,
 } from "@auaust/toolkit/compare";
 

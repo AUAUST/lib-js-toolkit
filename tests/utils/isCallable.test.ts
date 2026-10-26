@@ -1,7 +1,13 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { applyMethod, call, callMethod, isCallable } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, test, expectTypeOf } from "vitest";
-import { createFunctions, createObjects, primitiveValues } from "../fixtures/values";
+
+import {
+  createFunctions,
+  createObjects,
+  primitiveValues,
+} from "../fixtures/values";
 
 describe("isCallable", () => {
   test.for(createFunctions())("recognizes function %s", (input) => {
@@ -9,9 +15,12 @@ describe("isCallable", () => {
     expectTypeOf(isCallable(input)).toEqualTypeOf<boolean>();
   });
 
-  test.for([...primitiveValues, ...createObjects()])("rejects non-callable %s", (input) => {
-    expect(isCallable(input)).toBe(false);
-  });
+  test.for([...primitiveValues, ...createObjects()])(
+    "rejects non-callable %s",
+    (input) => {
+      expect(isCallable(input)).toBe(false);
+    },
+  );
 
   test("returns `true` for objects that implement the `Callable` protocol", () => {
     expect(

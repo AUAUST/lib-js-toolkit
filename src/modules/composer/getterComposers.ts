@@ -1,4 +1,5 @@
 import { ownKeys } from "@auaust/toolkit/object";
+
 import { getterComposer } from "./getterComposer";
 import type { PropertyComposer } from "./propertyComposer";
 

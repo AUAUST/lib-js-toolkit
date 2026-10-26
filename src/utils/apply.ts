@@ -1,11 +1,11 @@
 import { isFunction } from "@auaust/toolkit/isFunction";
 import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import {
-  type Callee,
-  type CallParameters,
-  type CallReturnType,
-  type CallThisParameterType,
+import type {
+  Callee,
+  CallParameters,
+  CallReturnType,
+  CallThisParameterType,
 } from "@auaust/toolkit/types";
 
 export interface Apply {

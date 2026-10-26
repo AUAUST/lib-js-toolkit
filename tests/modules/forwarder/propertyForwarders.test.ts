@@ -1,5 +1,9 @@
-import { propertyForwarders, type PropertyForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import {
+  propertyForwarders,
+  type PropertyForwarder,
+} from "@auaust/toolkit/forwarder";
 
 describe("propertyForwarders", () => {
   test("handles the spread call form", () => {

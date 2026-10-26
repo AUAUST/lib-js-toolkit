@@ -30,7 +30,9 @@ export class PipelineError<Input = unknown> extends Error {
   }) {
     const message = cause instanceof Error ? cause.message : String(cause);
 
-    super(`Pipeline step failed: ${message}`, { cause });
+    super(`Pipeline step failed: ${message}`, {
+      cause,
+    });
 
     this.fn = fn;
     this.step = step;

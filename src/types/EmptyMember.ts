@@ -23,9 +23,8 @@ export type EmptyMember<Value> = Value extends null | undefined
             ? EmptyCountable
             : Value extends object
               ? EmptyContainer<Value>
-              :
-                  | EmptyValue
-                  | EmptyString
-                  | EmptyCountable
-                  | { length: 0 }
-                  | { size: 0 };
+              : | EmptyValue
+                | EmptyString
+                | EmptyCountable
+                | { length: 0 }
+                | { size: 0 };

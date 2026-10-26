@@ -1,7 +1,9 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { cachedAsync, defer, type CachedAsync } from "@auaust/toolkit";
 import { cachedAsync as cachedAsyncSubpath } from "@auaust/toolkit/cachedAsync";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { primitiveValues } from "../fixtures/values";
 
 describe("cachedAsync", () => {
@@ -53,32 +55,37 @@ describe("cachedAsync", () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  test.each([false, true])("supports primitive caching %s", async (cachePrimitives) => {
-    const callback = vi.fn(async (_key: unknown) => 1);
+  test.each([false, true])(
+    "supports primitive caching %s",
+    async (cachePrimitives) => {
+      const callback = vi.fn(async (_key: unknown) => 1);
 
-    const fn = cachedAsync(callback, {
-      cachePrimitives,
-    });
+      const fn = cachedAsync(callback, {
+        cachePrimitives,
+      });
 
-    for (const key of primitiveValues) {
-      const promise = fn(key);
+      for (const key of primitiveValues) {
+        const promise = fn(key);
 
-      expect(fn.has(key)).toBe(cachePrimitives);
-      expect(fn.pending(key)).toBe(cachePrimitives);
-      expect(fn(key) === promise).toBe(cachePrimitives);
+        expect(fn.has(key)).toBe(cachePrimitives);
+        expect(fn.pending(key)).toBe(cachePrimitives);
+        expect(fn(key) === promise).toBe(cachePrimitives);
 
-      await promise;
+        await promise;
 
-      expect(fn.value(key)).toBe(cachePrimitives ? 1 : undefined);
-      expect(fn.settled(key)).toBe(cachePrimitives);
-      expect(fn.delete(key)).toBe(cachePrimitives);
-    }
-  });
+        expect(fn.value(key)).toBe(cachePrimitives ? 1 : undefined);
+        expect(fn.settled(key)).toBe(cachePrimitives);
+        expect(fn.delete(key)).toBe(cachePrimitives);
+      }
+    },
+  );
 
   test("resolves keys once per call and preserves optional and rest arguments", async () => {
-    const callback = vi.fn(async (id: number, count: number = 1, ...suffixes: string[]) => {
-      return `${id}:${count}${suffixes.join("")}`;
-    });
+    const callback = vi.fn(
+      async (id: number, count: number = 1, ...suffixes: string[]) => {
+        return `${id}:${count}${suffixes.join("")}`;
+      },
+    );
 
     const resolveKey = vi.fn((id: number) => String(id));
     const fn = cachedAsync(callback, resolveKey);
@@ -93,23 +100,28 @@ describe("cachedAsync", () => {
     expect(callback).toHaveBeenCalledExactlyOnceWith(1, 2, "a", "b");
     expect(await promise).toBe("1:2ab");
     expect(fn.value("1")).toBe("1:2ab");
-    expectTypeOf(fn).parameters.toEqualTypeOf<[id: number, count?: number, ...suffixes: string[]]>();
+    expectTypeOf(fn).parameters.toEqualTypeOf<
+      [id: number, count?: number, ...suffixes: string[]]
+    >();
     expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
     expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
     expectTypeOf(fn.pending).parameter(0).toEqualTypeOf<string>();
     expectTypeOf(fn.settled).parameter(0).toEqualTypeOf<string>();
   });
 
-  test.each([false, true])("options key resolvers respect primitive caching %s", async (cachePrimitives) => {
-    const fn = cachedAsync(async (id: number) => id, {
-      resolveKey: String,
-      cachePrimitives,
-    });
+  test.each([false, true])(
+    "options key resolvers respect primitive caching %s",
+    async (cachePrimitives) => {
+      const fn = cachedAsync(async (id: number) => id, {
+        resolveKey: String,
+        cachePrimitives,
+      });
 
-    await fn(1);
+      await fn(1);
 
-    expect(fn.settled("1")).toBe(cachePrimitives);
-  });
+      expect(fn.settled("1")).toBe(cachePrimitives);
+    },
+  );
 
   test("undefined resolved keys bypass caching", async () => {
     const fn = cachedAsync(

@@ -5,6 +5,7 @@ import { isNaN } from "@auaust/toolkit/math";
 import { defineGetters, finalize, freeze } from "@auaust/toolkit/object";
 import { plain } from "@auaust/toolkit/plain";
 import { readonly } from "@auaust/toolkit/readonly";
+
 import { StateError } from "../errors/StateError";
 
 /**

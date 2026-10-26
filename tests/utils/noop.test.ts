@@ -1,5 +1,7 @@
-import { noop } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { noop } from "@auaust/toolkit";
+
 import { createValues } from "../fixtures/values";
 
 describe("noop", () => {

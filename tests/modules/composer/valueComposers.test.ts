@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { compose, valueComposers } from "@auaust/toolkit/composer";
 import { create, ownKeys } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("valueComposers", () => {
   test("includes own symbols and hidden keys but omits inherited keys", () => {

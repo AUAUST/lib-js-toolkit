@@ -28,7 +28,12 @@ export function createSpies() {
   };
 }
 
-export function signature(this: void, key: "entry", count = 1, ...suffixes: string[]) {
+export function signature(
+  this: void,
+  key: "entry",
+  count = 1,
+  ...suffixes: string[]
+) {
   return `!${key}:${count}${suffixes.join("")}`;
 }
 

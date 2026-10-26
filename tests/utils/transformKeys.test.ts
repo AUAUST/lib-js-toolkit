@@ -1,7 +1,8 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { transformKeys } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
-import { createPair, createKeyMapper } from "../fixtures/objects";
+
+import { transformKeys } from "@auaust/toolkit";
+
+import { createKeyMapper, createPair } from "../fixtures/objects";
 
 describe("transformKeys", () => {
   test("renames keys on the original object", () => {
@@ -88,7 +89,9 @@ describe("transformKeys", () => {
     expect(target.a).toBe(2);
     expect(target.b).toBe(2);
     expect(writes).toEqual([1]);
-    expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf("function");
+    expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf(
+      "function",
+    );
   });
 
   test("accepts callable key mappers and preserves literal keys", () => {

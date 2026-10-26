@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { methodForwarder } from "@auaust/toolkit/forwarder";
 import { defineProperty } from "@auaust/toolkit/object";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("methodForwarder", () => {
   test("preserves method signatures, receivers, and wrapper identity", () => {

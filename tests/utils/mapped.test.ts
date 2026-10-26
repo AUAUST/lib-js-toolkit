@@ -1,6 +1,8 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { mapped } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { mappingCases } from "../fixtures/mapping";
 import {
   createKeyMapper,

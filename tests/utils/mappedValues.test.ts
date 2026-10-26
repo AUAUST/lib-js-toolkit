@@ -1,6 +1,8 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { mappedValues } from "@auaust/toolkit";
 import { isArray } from "@auaust/toolkit/isArray";
-import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { createPair, createValueTransformer } from "../fixtures/objects";
 
 describe("mappedValues", () => {
@@ -10,6 +12,7 @@ describe("mappedValues", () => {
 
     const result = mappedValues(source, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
+
       return `${String(key)}:${value}`;
     });
 

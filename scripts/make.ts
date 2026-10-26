@@ -1,4 +1,5 @@
 import { cli, command } from "cleye";
+
 import { makeProtocol } from "../codegen/makeProtocol";
 import { makeType } from "../codegen/makeType";
 import { makeUtilility } from "../codegen/makeUtilility";

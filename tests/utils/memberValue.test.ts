@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { memberValue } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("memberValue", () => {
   test("returns the value of the specified property if it exists", () => {

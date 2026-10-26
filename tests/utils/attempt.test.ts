@@ -1,6 +1,7 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { attempt, type AttemptResult } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
+import { attempt, type AttemptResult } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("attempt", () => {
   test("returns the result of a successful function call", () => {

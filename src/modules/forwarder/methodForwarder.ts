@@ -1,6 +1,7 @@
 import { isPropertyKey } from "@auaust/toolkit/isPropertyKey";
 import { ownDescriptor } from "@auaust/toolkit/object";
 import type { MethodName } from "@auaust/toolkit/types";
+
 import type { ForwardAs } from "./forwardAs";
 
 export type MethodForwardingInput<
@@ -78,7 +79,10 @@ export function methodForwarder(
 
     method = input.method ?? input.property;
     targetMethod = input.as ?? method;
-    options = { ...input, ...options };
+    options = {
+      ...input,
+      ...options,
+    };
   } else {
     targetMethod = options?.as ?? method;
   }

@@ -1,34 +1,39 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { once } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { createValues } from "../fixtures/values";
 
 describe("once", () => {
-  test.for(createValues())("caches %s until reset and exposes its state", (value) => {
-    const callback = vi.fn(() => value);
-    const fn = once(callback);
+  test.for(createValues())(
+    "caches %s until reset and exposes its state",
+    (value) => {
+      const callback = vi.fn(() => value);
+      const fn = once(callback);
 
-    expect(fn.called).toBe(false);
-    expect(fn.value).toBeUndefined();
-    expect(callback).not.toHaveBeenCalled();
-    expect(fn()).toBe(value);
-    expect(fn()).toBe(value);
-    expect(fn.called).toBe(true);
-    expect(fn.value).toBe(value);
-    expect(callback).toHaveBeenCalledOnce();
-    expectTypeOf(fn()).toEqualTypeOf<typeof value>();
+      expect(fn.called).toBe(false);
+      expect(fn.value).toBeUndefined();
+      expect(callback).not.toHaveBeenCalled();
+      expect(fn()).toBe(value);
+      expect(fn()).toBe(value);
+      expect(fn.called).toBe(true);
+      expect(fn.value).toBe(value);
+      expect(callback).toHaveBeenCalledOnce();
+      expectTypeOf(fn()).toEqualTypeOf<typeof value>();
 
-    if (fn.called) {
-      expectTypeOf(fn.value).toEqualTypeOf<typeof value>();
-    }
+      if (fn.called) {
+        expectTypeOf(fn.value).toEqualTypeOf<typeof value>();
+      }
 
-    fn.reset();
+      fn.reset();
 
-    expect(fn.called).toBe(false);
-    expect(fn.value).toBeUndefined();
-    expect(fn()).toBe(value);
-    expect(callback).toHaveBeenCalledTimes(2);
-  });
+      expect(fn.called).toBe(false);
+      expect(fn.value).toBeUndefined();
+      expect(fn()).toBe(value);
+      expect(callback).toHaveBeenCalledTimes(2);
+    },
+  );
 
   test("retains the callable method and binds the factory receiver", () => {
     const callback = {
@@ -39,9 +44,11 @@ describe("once", () => {
     };
 
     const wrapped = once(callback);
+
     const context = {
       factor: 3,
     };
+
     const bound = once.call(context, callback);
 
     callback[callable] = () => 99;

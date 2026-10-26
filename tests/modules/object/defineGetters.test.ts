@@ -1,5 +1,6 @@
-import { defineGetters } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { defineGetters } from "@auaust/toolkit/object";
 
 describe("defineGetters", () => {
   test("infers each getter and preserves its receiver", () => {
@@ -11,6 +12,7 @@ describe("defineGetters", () => {
     const result = defineGetters(target, {
       doubled() {
         expectTypeOf(this).toEqualTypeOf<typeof target>();
+
         return this.count * 2;
       },
       label() {

@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join, resolve } from "path";
+
 import { isString } from "../../src/utils/isString.js";
 import { pathRelativeFrom } from "./pathResolveFrom";
 
@@ -21,7 +22,9 @@ export async function makeFromTemplate(
 
     const replacedContent = await transform(content);
 
-    await mkdir(resolve(file.destination, ".."), { recursive: true });
+    await mkdir(resolve(file.destination, ".."), {
+      recursive: true,
+    });
 
     nooverride: if (!override) {
       try {
@@ -53,6 +56,7 @@ export function codeFile(template: string, file: string | string[]) {
 export function testFile(template: string, file: string | string[]) {
   return {
     template: `${template}.test.txt`,
-    destination: join("tests", ...(isString(file) ? [file] : file)) + ".test.ts",
+    destination:
+      join("tests", ...(isString(file) ? [file] : file)) + ".test.ts",
   };
 }

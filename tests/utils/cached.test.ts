@@ -1,66 +1,88 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { cached, type Cached, type CachedOptions } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
-import { contextual, createSpies, genericIdentity, overloaded, signature } from "../fixtures/callbacks";
-import { createFunctions, createObjects, createValues, primitiveValues } from "../fixtures/values";
+
+import {
+  contextual,
+  createSpies,
+  genericIdentity,
+  overloaded,
+  signature,
+} from "../fixtures/callbacks";
+import {
+  createFunctions,
+  createObjects,
+  createValues,
+  primitiveValues,
+} from "../fixtures/values";
 
 describe("cached", () => {
-  test.for([...createObjects(), ...createFunctions()])("manages object key %s by identity", (key) => {
-    const { freshObject: callback } = createSpies();
-    const fn = cached(callback);
-
-    expect(fn.keyFor(key)).toBe(key);
-    expect(fn.has(key)).toBe(false);
-    expect(fn.value(key)).toBeUndefined();
-    expect(fn.delete(key)).toBe(false);
-    expect(callback).not.toHaveBeenCalled();
-
-    const result = fn(key);
-
-    expect(fn(key)).toBe(result);
-    expect(fn.value(key)).toBe(result);
-    expect(fn.has(key)).toBe(true);
-    expect(fn({})).not.toBe(result);
-    expect(fn.delete(key)).toBe(true);
-    expect(fn.delete(key)).toBe(false);
-    expect(fn.has(key)).toBe(false);
-    expect(fn.value(key)).toBeUndefined();
-    expect(fn(key)).not.toBe(result);
-    expect(callback).toHaveBeenCalledTimes(3);
-    expectTypeOf(result).toEqualTypeOf<{}>();
-  });
-
-  test.for(createValues())("caches result %s without copying or coercion", (result) => {
-    const callback = vi.fn((_key: object) => result);
-    const fn = cached(callback);
-    const key = {};
-
-    expect(fn(key)).toBe(result);
-    expect(fn(key)).toBe(result);
-    expect(fn.value(key)).toBe(result);
-    expect(fn.has(key)).toBe(true);
-    expect(callback).toHaveBeenCalledOnce();
-    expectTypeOf(fn).returns.toEqualTypeOf<typeof result>();
-  });
-
-  test.for(primitiveValues)("caches primitive key %s only when enabled", (key) => {
-    for (const cachePrimitives of [false, true]) {
+  test.for([...createObjects(), ...createFunctions()])(
+    "manages object key %s by identity",
+    (key) => {
       const { freshObject: callback } = createSpies();
+      const fn = cached(callback);
 
-      const fn = cached(callback, {
-        cachePrimitives,
-      });
+      expect(fn.keyFor(key)).toBe(key);
+      expect(fn.has(key)).toBe(false);
+      expect(fn.value(key)).toBeUndefined();
+      expect(fn.delete(key)).toBe(false);
+      expect(callback).not.toHaveBeenCalled();
 
       const result = fn(key);
 
-      expect(fn(key) === result).toBe(cachePrimitives);
-      expect(fn.has(key)).toBe(cachePrimitives);
-      expect(fn.value(key)).toBe(cachePrimitives ? result : undefined);
-      expect(fn.delete(key)).toBe(cachePrimitives);
+      expect(fn(key)).toBe(result);
+      expect(fn.value(key)).toBe(result);
+      expect(fn.has(key)).toBe(true);
+      expect(fn({})).not.toBe(result);
+      expect(fn.delete(key)).toBe(true);
+      expect(fn.delete(key)).toBe(false);
       expect(fn.has(key)).toBe(false);
-      expect(callback).toHaveBeenCalledTimes(cachePrimitives ? 1 : 2);
-    }
-  });
+      expect(fn.value(key)).toBeUndefined();
+      expect(fn(key)).not.toBe(result);
+      expect(callback).toHaveBeenCalledTimes(3);
+      expectTypeOf(result).toEqualTypeOf<{}>();
+    },
+  );
+
+  test.for(createValues())(
+    "caches result %s without copying or coercion",
+    (result) => {
+      const callback = vi.fn((_key: object) => result);
+      const fn = cached(callback);
+      const key = {};
+
+      expect(fn(key)).toBe(result);
+      expect(fn(key)).toBe(result);
+      expect(fn.value(key)).toBe(result);
+      expect(fn.has(key)).toBe(true);
+      expect(callback).toHaveBeenCalledOnce();
+      expectTypeOf(fn).returns.toEqualTypeOf<typeof result>();
+    },
+  );
+
+  test.for(primitiveValues)(
+    "caches primitive key %s only when enabled",
+    (key) => {
+      for (const cachePrimitives of [false, true]) {
+        const { freshObject: callback } = createSpies();
+
+        const fn = cached(callback, {
+          cachePrimitives,
+        });
+
+        const result = fn(key);
+
+        expect(fn(key) === result).toBe(cachePrimitives);
+        expect(fn.has(key)).toBe(cachePrimitives);
+        expect(fn.value(key)).toBe(cachePrimitives ? result : undefined);
+        expect(fn.delete(key)).toBe(cachePrimitives);
+        expect(fn.has(key)).toBe(false);
+        expect(callback).toHaveBeenCalledTimes(cachePrimitives ? 1 : 2);
+      }
+    },
+  );
 
   test("clears both stores and permits reuse", () => {
     const { freshObject: callback } = createSpies();
@@ -84,139 +106,157 @@ describe("cached", () => {
     expect(callback).toHaveBeenCalledTimes(6);
   });
 
-  test.each([false, true])("resolves all arguments in options form %s", (optionsForm) => {
-    const callback = vi.fn((input: { id: number }, suffix?: string) => {
-      return {
-        input,
-        suffix,
+  test.each([false, true])(
+    "resolves all arguments in options form %s",
+    (optionsForm) => {
+      const callback = vi.fn((input: { id: number }, suffix?: string) => {
+        return {
+          input,
+          suffix,
+        };
+      });
+
+      const resolveKey = vi.fn((input: { id: number }, suffix?: string) => {
+        return JSON.stringify([input.id, suffix]);
+      });
+
+      const options: CachedOptions<typeof callback, string> = {
+        resolveKey,
+        cachePrimitives: true,
       };
-    });
 
-    const resolveKey = vi.fn((input: { id: number }, suffix?: string) => {
-      return JSON.stringify([input.id, suffix]);
-    });
+      const fn = optionsForm
+        ? cached(callback, options)
+        : cached(callback, resolveKey);
 
-    const options: CachedOptions<typeof callback, string> = {
-      resolveKey,
-      cachePrimitives: true,
-    };
+      const input = {
+        id: 1,
+      };
 
-    const fn = optionsForm ? cached(callback, options) : cached(callback, resolveKey);
-    const input = {
-      id: 1,
-    };
-    const result = fn(input, "a");
-    const key = JSON.stringify([1, "a"]);
+      const result = fn(input, "a");
+      const key = JSON.stringify([1, "a"]);
 
-    expect(
-      fn(
-        {
-          id: 1,
+      expect(
+        fn(
+          {
+            id: 1,
+          },
+          "a",
+        ),
+      ).toBe(result);
+      expect(fn(input, "b")).not.toBe(result);
+      expect(fn.keyFor(input, "a")).toBe(key);
+      expect(fn.value(key)).toBe(result);
+      expect(fn.has(key)).toBe(true);
+      expect(fn.delete(key)).toBe(true);
+      expect(fn.has(key)).toBe(false);
+      expect(resolveKey).toHaveBeenCalledTimes(4);
+      expect(resolveKey).toHaveBeenNthCalledWith(1, input, "a");
+      expect(callback).toHaveBeenNthCalledWith(1, input, "a");
+      expect(callback).toHaveBeenCalledTimes(2);
+      expectTypeOf(fn).toEqualTypeOf<Cached<typeof callback, string>>();
+      expectTypeOf(fn).parameters.toEqualTypeOf<
+        [input: { id: number }, suffix?: string]
+      >();
+      expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
+    },
+  );
+
+  test.each([undefined, false, true])(
+    "respects options cachePrimitives %s",
+    (cachePrimitives) => {
+      const { freshObject: callback } = createSpies();
+
+      const fn = cached(callback, {
+        resolveKey: String,
+        cachePrimitives,
+      });
+
+      const first = fn(1);
+
+      expect(fn(1) === first).toBe(!!cachePrimitives);
+      expect(fn.has("1")).toBe(!!cachePrimitives);
+      expect(fn.value("1")).toBe(cachePrimitives ? first : undefined);
+      expect(callback).toHaveBeenCalledTimes(cachePrimitives ? 1 : 2);
+      expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
+    },
+  );
+
+  test.for([{}, () => {}, ...primitiveValues])(
+    "uses resolved key %s from a later argument",
+    (key) => {
+      const callback = vi.fn((_input: number, _key: typeof key) => undefined);
+      const fn = cached(callback, (_input, key) => key);
+
+      expect(fn.keyFor(1, key)).toBe(key);
+      expect(callback).not.toHaveBeenCalled();
+      expect(fn(1, key)).toBeUndefined();
+      expect(fn(2, key)).toBeUndefined();
+      expect(fn.has(key)).toBe(key !== undefined);
+      expect(fn.value(key)).toBeUndefined();
+      expect(fn.delete(key)).toBe(key !== undefined);
+      expect(callback).toHaveBeenCalledTimes(key === undefined ? 2 : 1);
+      expectTypeOf(fn.has).parameter(0).toEqualTypeOf<typeof key>();
+    },
+  );
+
+  test.each([false, true])(
+    "retains separate callable holders in options form %s",
+    (optionsForm) => {
+      const callback = {
+        factor: 2,
+        [callable](id: number) {
+          return this.factor * id;
         },
-        "a",
-      ),
-    ).toBe(result);
-    expect(fn(input, "b")).not.toBe(result);
-    expect(fn.keyFor(input, "a")).toBe(key);
-    expect(fn.value(key)).toBe(result);
-    expect(fn.has(key)).toBe(true);
-    expect(fn.delete(key)).toBe(true);
-    expect(fn.has(key)).toBe(false);
-    expect(resolveKey).toHaveBeenCalledTimes(4);
-    expect(resolveKey).toHaveBeenNthCalledWith(1, input, "a");
-    expect(callback).toHaveBeenNthCalledWith(1, input, "a");
-    expect(callback).toHaveBeenCalledTimes(2);
-    expectTypeOf(fn).toEqualTypeOf<Cached<typeof callback, string>>();
-    expectTypeOf(fn).parameters.toEqualTypeOf<[input: { id: number }, suffix?: string]>();
-    expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
-  });
+      };
 
-  test.each([undefined, false, true])("respects options cachePrimitives %s", (cachePrimitives) => {
-    const { freshObject: callback } = createSpies();
+      const resolver = {
+        prefix: "key:",
+        [callable](id: number) {
+          return this.prefix + id;
+        },
+      };
 
-    const fn = cached(callback, {
-      resolveKey: String,
-      cachePrimitives,
-    });
+      const fn = optionsForm
+        ? cached(callback, {
+            resolveKey: resolver,
+            cachePrimitives: true,
+          })
+        : cached(callback, resolver);
 
-    const first = fn(1);
+      const context = {
+        factor: 99,
+        prefix: "wrong:",
+      };
 
-    expect(fn(1) === first).toBe(!!cachePrimitives);
-    expect(fn.has("1")).toBe(!!cachePrimitives);
-    expect(fn.value("1")).toBe(cachePrimitives ? first : undefined);
-    expect(callback).toHaveBeenCalledTimes(cachePrimitives ? 1 : 2);
-    expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
-  });
+      resolver[callable] = () => {
+        throw new Error("retained resolver expected");
+      };
 
-  test.for([{}, () => {}, ...primitiveValues])("uses resolved key %s from a later argument", (key) => {
-    const callback = vi.fn((_input: number, _key: typeof key) => undefined);
-    const fn = cached(callback, (_input, key) => key);
+      callback[callable] = () => {
+        throw new Error("retained callback expected");
+      };
 
-    expect(fn.keyFor(1, key)).toBe(key);
-    expect(callback).not.toHaveBeenCalled();
-    expect(fn(1, key)).toBeUndefined();
-    expect(fn(2, key)).toBeUndefined();
-    expect(fn.has(key)).toBe(key !== undefined);
-    expect(fn.value(key)).toBeUndefined();
-    expect(fn.delete(key)).toBe(key !== undefined);
-    expect(callback).toHaveBeenCalledTimes(key === undefined ? 2 : 1);
-    expectTypeOf(fn.has).parameter(0).toEqualTypeOf<typeof key>();
-  });
+      expect(Reflect.apply(fn.keyFor, context, [2])).toBe("key:2");
+      expect(Reflect.apply(fn, context, [2])).toBe(4);
+      expect(fn.value(fn.keyFor(2))).toBe(4);
+      expect(fn.has("wrong:2")).toBe(false);
 
-  test.each([false, true])("retains separate callable holders in options form %s", (optionsForm) => {
-    const callback = {
-      factor: 2,
-      [callable](id: number) {
-        return this.factor * id;
-      },
-    };
+      callback.factor = 3;
 
-    const resolver = {
-      prefix: "key:",
-      [callable](id: number) {
-        return this.prefix + id;
-      },
-    };
+      resolver.prefix = "new:";
 
-    const fn = optionsForm
-      ? cached(callback, {
-          resolveKey: resolver,
-          cachePrimitives: true,
-        })
-      : cached(callback, resolver);
+      expect(fn(2)).toBe(6);
+      expect(fn.value("key:2")).toBe(4);
 
-    const context = {
-      factor: 99,
-      prefix: "wrong:",
-    };
+      fn.clear();
 
-    resolver[callable] = () => {
-      throw new Error("retained resolver expected");
-    };
-
-    callback[callable] = () => {
-      throw new Error("retained callback expected");
-    };
-
-    expect(Reflect.apply(fn.keyFor, context, [2])).toBe("key:2");
-    expect(Reflect.apply(fn, context, [2])).toBe(4);
-    expect(fn.value(fn.keyFor(2))).toBe(4);
-    expect(fn.has("wrong:2")).toBe(false);
-
-    callback.factor = 3;
-
-    resolver.prefix = "new:";
-
-    expect(fn(2)).toBe(6);
-    expect(fn.value("key:2")).toBe(4);
-
-    fn.clear();
-
-    expect(fn(2)).toBe(6);
-    expectTypeOf(fn.keyFor).thisParameter.toEqualTypeOf<void>();
-    expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
-    expectTypeOf(fn.call).parameter(0).toEqualTypeOf<void>();
-  });
+      expect(fn(2)).toBe(6);
+      expectTypeOf(fn.keyFor).thisParameter.toEqualTypeOf<void>();
+      expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
+      expectTypeOf(fn.call).parameter(0).toEqualTypeOf<void>();
+    },
+  );
 
   test("propagates failures without caching or evaluating values after key errors", () => {
     const failure = new Error("failure");
@@ -255,7 +295,9 @@ describe("cached", () => {
     const overload = cached(overloaded);
 
     expect(fn("entry", 2, "?")).toBe("!entry:2?");
-    expectTypeOf(fn).parameters.toEqualTypeOf<[key: "entry", count?: number, ...suffixes: string[]]>();
+    expectTypeOf(fn).parameters.toEqualTypeOf<
+      [key: "entry", count?: number, ...suffixes: string[]]
+    >();
     expectTypeOf(fn).thisParameter.toEqualTypeOf<void>();
     expectTypeOf(fn).returns.toEqualTypeOf<string>();
     expectTypeOf(fn.has).parameter(0).toEqualTypeOf<"entry">();
@@ -331,7 +373,9 @@ describe("cached", () => {
     expect(optional()).toBeUndefined();
     expect(optional("entry")).toBe("entry");
     expectTypeOf(nullary.has).parameter(0).toEqualTypeOf<undefined>();
-    expectTypeOf(optional.has).parameter(0).toEqualTypeOf<"entry" | undefined>();
+    expectTypeOf(optional.has)
+      .parameter(0)
+      .toEqualTypeOf<"entry" | undefined>();
     expectTypeOf(optional.keyFor).returns.toEqualTypeOf<"entry" | undefined>();
 
     if (false) {
@@ -344,6 +388,7 @@ describe("cached", () => {
 
   test("rejects required function receivers and receiver overrides", () => {
     const fn = cached((key: number) => key);
+
     const context = {
       value: 0,
     };

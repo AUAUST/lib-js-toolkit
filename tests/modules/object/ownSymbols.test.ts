@@ -1,5 +1,6 @@
-import { ownSymbols } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { ownSymbols } from "@auaust/toolkit/object";
 
 describe("ownSymbols", () => {
   test("infers known symbol keys", () => {

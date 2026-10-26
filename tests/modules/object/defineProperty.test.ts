@@ -1,5 +1,6 @@
-import { defineProperty } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { defineProperty } from "@auaust/toolkit/object";
 
 describe("defineProperty", () => {
   test("infers values, writability, and replaced property types", () => {

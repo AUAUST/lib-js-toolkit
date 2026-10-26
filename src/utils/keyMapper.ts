@@ -49,8 +49,7 @@ export function keyMapper<
   NewKey extends PropertyKey = PropertyKey,
 >(
   mapper?:
-    | KeyMap<Key, NewKey>
-    | Callee<KeyMapping<NewKey>, [key: Key, value: Value]>,
+    KeyMap<Key, NewKey> | Callee<KeyMapping<NewKey>, [key: Key, value: Value]>,
 ): KeyMapper<Key, Value, NormalizedKey<NewKey> & PropertyKey>;
 export function keyMapper(
   mapper?: KeyMap | Callee<KeyMapping, [key: PropertyKey, value: any]>,

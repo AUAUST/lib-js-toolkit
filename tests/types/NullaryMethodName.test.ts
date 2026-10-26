@@ -1,5 +1,6 @@
-import type { NullaryMethodName } from "@auaust/toolkit/types";
 import { describe, expectTypeOf, test } from "vitest";
+
+import type { NullaryMethodName } from "@auaust/toolkit/types";
 
 describe("NullaryMethodName", () => {
   test("returns the names of methods without arguments", () => {

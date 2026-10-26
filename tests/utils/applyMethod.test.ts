@@ -1,5 +1,7 @@
-import { applyMethod } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { applyMethod } from "@auaust/toolkit";
+
 import { createKeyedCollections } from "../fixtures/values";
 
 describe("applyMethod", () => {
@@ -14,6 +16,7 @@ describe("applyMethod", () => {
       value: 2,
       add(amount: number, suffix: string) {
         this.value += amount;
+
         return `${this.value}${suffix}`;
       },
     };
@@ -44,6 +47,7 @@ describe("applyMethod", () => {
       target,
       function () {
         expectTypeOf(this).toEqualTypeOf<typeof target>();
+
         return this.value;
       },
       [],
@@ -80,6 +84,7 @@ describe("applyMethod", () => {
       }
       get action() {
         expect(this).toBe(target);
+
         return this.method;
       }
     }

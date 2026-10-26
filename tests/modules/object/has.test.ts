@@ -1,5 +1,6 @@
-import { has } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { has } from "@auaust/toolkit/object";
 
 describe("has", () => {
   test("checks inherited properties and narrows unknown objects", () => {

@@ -1,8 +1,9 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { compare } from "@auaust/toolkit";
 import { isNumber } from "@auaust/toolkit/isNumber";
 import { isString } from "@auaust/toolkit/isString";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { compare } from "@auaust/toolkit";
-import { describe, expect, expectTypeOf, test } from "vitest";
 
 describe("compare", () => {
   test.each([
@@ -154,8 +155,12 @@ describe("compare", () => {
       alwaysFalse: false,
     };
 
-    expect(compare("Apple", "startsWithA", undefined, customOperators)).toBe(true);
-    expect(compare("Banana", "startsWithA", undefined, customOperators)).toBe(false);
+    expect(compare("Apple", "startsWithA", undefined, customOperators)).toBe(
+      true,
+    );
+    expect(compare("Banana", "startsWithA", undefined, customOperators)).toBe(
+      false,
+    );
     expect(compare(4, "isEven", undefined, customOperators)).toBe(true);
     expect(compare(5, "isEven", undefined, customOperators)).toBe(false);
     expect(compare(42, "alwaysTrue", undefined, customOperators)).toBe(true);
@@ -165,7 +170,7 @@ describe("compare", () => {
   test("can disable specific operators", () => {
     const customOperators = {
       "==": null,
-      filled: undefined,
+      "filled": undefined,
     };
 
     expect(compare(5, "===", 5, customOperators)).toBe(true);

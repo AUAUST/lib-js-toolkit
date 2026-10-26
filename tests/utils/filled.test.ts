@@ -1,9 +1,19 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { empty, filled, type FilledValue } from "@auaust/toolkit";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
-import type { FilledContainer, FilledMember, FilledString } from "@auaust/toolkit/types";
-import { describe, expect, expectTypeOf, test } from "vitest";
-import { createEmptyValues, createFilledValues, createValues } from "../fixtures/values";
+import type {
+  FilledContainer,
+  FilledMember,
+  FilledString,
+} from "@auaust/toolkit/types";
+
+import {
+  createEmptyValues,
+  createFilledValues,
+  createValues,
+} from "../fixtures/values";
 
 describe("filled", () => {
   test.for(createEmptyValues())("recognizes empty value %s", (input) => {
@@ -15,11 +25,15 @@ describe("filled", () => {
   });
 
   test("extracts filled members from mixed literal unions", () => {
-    function check(input: "" | " " | "\t\n" | "hello" | 0 | 1 | null | undefined) {
+    function check(
+      input: "" | " " | "\t\n" | "hello" | 0 | 1 | null | undefined,
+    ) {
       if (filled(input)) {
         expectTypeOf(input).toEqualTypeOf<"hello" | 0 | 1>();
       } else {
-        expectTypeOf(input).toEqualTypeOf<"" | " " | "\t\n" | null | undefined>();
+        expectTypeOf(input).toEqualTypeOf<
+          "" | " " | "\t\n" | null | undefined
+        >();
       }
     }
 
@@ -37,7 +51,9 @@ describe("filled", () => {
 
     check(undefined);
 
-    expectTypeOf<FilledString<"" | " " | " hello ">>().toEqualTypeOf<" hello ">();
+    expectTypeOf<
+      FilledString<"" | " " | " hello ">
+    >().toEqualTypeOf<" hello ">();
     expectTypeOf<FilledString<"\u00a0\ufeff">>().toBeNever();
     expectTypeOf<FilledString<"\u200b">>().toEqualTypeOf<"\u200b">();
     expectTypeOf<FilledString<` ${string}`>>().toEqualTypeOf<` ${string}`>();
@@ -47,15 +63,21 @@ describe("filled", () => {
   test("preserves primitives and narrows unknown values to non-nullish values", () => {
     expectTypeOf<FilledValue<number>>().toEqualTypeOf<number>();
     expectTypeOf<FilledValue<0 | 1 | 2>>().toEqualTypeOf<0 | 1 | 2>();
-    expectTypeOf<FilledValue<boolean | bigint | symbol>>().toEqualTypeOf<boolean | bigint | symbol>();
+    expectTypeOf<FilledValue<boolean | bigint | symbol>>().toEqualTypeOf<
+      boolean | bigint | symbol
+    >();
     expectTypeOf<FilledValue<never>>().toBeNever();
     expectTypeOf<FilledValue<any>>().toBeAny();
-    expectTypeOf<FilledValue<unknown>>().toEqualTypeOf<string | number | bigint | boolean | symbol | object>();
+    expectTypeOf<FilledValue<unknown>>().toEqualTypeOf<
+      string | number | bigint | boolean | symbol | object
+    >();
     expectTypeOf<FilledValue<{}>>().toEqualTypeOf<{}>();
 
     function check(input: unknown) {
       if (filled(input)) {
-        expectTypeOf(input).toEqualTypeOf<string | number | bigint | boolean | symbol | object>();
+        expectTypeOf(input).toEqualTypeOf<
+          string | number | bigint | boolean | symbol | object
+        >();
       } else {
         expectTypeOf(input).toBeUnknown();
       }
@@ -69,7 +91,9 @@ describe("filled", () => {
   test("narrows arrays to nonempty tuples while preserving their properties", () => {
     function check(input: string[] & { label: string }) {
       if (filled(input)) {
-        expectTypeOf(input).toEqualTypeOf<string[] & { label: string } & [string, ...string[]]>();
+        expectTypeOf(input).toEqualTypeOf<
+          string[] & { label: string } & [string, ...string[]]
+        >();
       }
     }
 
@@ -79,9 +103,15 @@ describe("filled", () => {
       }),
     );
 
-    expectTypeOf<FilledValue<readonly number[]>>().toEqualTypeOf<readonly number[] & readonly [number, ...number[]]>();
-    expectTypeOf<FilledContainer<string[]>>().toEqualTypeOf<[string, ...string[]]>();
-    expectTypeOf<FilledValue<[number?]>>().toEqualTypeOf<[number?] & [number | undefined, ...(number | undefined)[]]>();
+    expectTypeOf<FilledValue<readonly number[]>>().toEqualTypeOf<
+      readonly number[] & readonly [number, ...number[]]
+    >();
+    expectTypeOf<FilledContainer<string[]>>().toEqualTypeOf<
+      [string, ...string[]]
+    >();
+    expectTypeOf<FilledValue<[number?]>>().toEqualTypeOf<
+      [number?] & [number | undefined, ...(number | undefined)[]]
+    >();
   });
 
   test("excludes empty tuples without changing nonempty tuple contracts", () => {
@@ -101,10 +131,18 @@ describe("filled", () => {
   });
 
   test("preserves collection element types and excludes known empty counts", () => {
-    expectTypeOf<FilledValue<Map<string, number> | Set<number>>>().toEqualTypeOf<Map<string, number> | Set<number>>();
-    expectTypeOf<FilledValue<ReadonlyMap<string, number>>>().toEqualTypeOf<ReadonlyMap<string, number>>();
-    expectTypeOf<FilledValue<ReadonlySet<number>>>().toEqualTypeOf<ReadonlySet<number>>();
-    expectTypeOf<FilledValue<Map<string, never> | ReadonlySet<never>>>().toBeNever();
+    expectTypeOf<
+      FilledValue<Map<string, number> | Set<number>>
+    >().toEqualTypeOf<Map<string, number> | Set<number>>();
+    expectTypeOf<FilledValue<ReadonlyMap<string, number>>>().toEqualTypeOf<
+      ReadonlyMap<string, number>
+    >();
+    expectTypeOf<FilledValue<ReadonlySet<number>>>().toEqualTypeOf<
+      ReadonlySet<number>
+    >();
+    expectTypeOf<
+      FilledValue<Map<string, never> | ReadonlySet<never>>
+    >().toBeNever();
     expectTypeOf<FilledValue<{ length: 0 } | { size: 0 }>>().toBeNever();
     expectTypeOf<FilledValue<{ length: 1; size: 0 }>>().toEqualTypeOf<{
       length: 1;
@@ -116,7 +154,9 @@ describe("filled", () => {
   test("narrows emptiness protocols before considering container shape", () => {
     function check(input: Emptiable & { label: string }) {
       if (filled(input)) {
-        expectTypeOf(input).toEqualTypeOf<Emptiable & { label: string } & Emptiable<false>>();
+        expectTypeOf(input).toEqualTypeOf<
+          Emptiable & { label: string } & Emptiable<false>
+        >();
       }
     }
 
@@ -135,8 +175,12 @@ describe("filled", () => {
 
     expect(filled(value)).toBe(false);
     expectTypeOf<FilledValue<Emptiable<true>>>().toBeNever();
-    expectTypeOf<FilledValue<Emptiable<false>>>().toEqualTypeOf<Emptiable<false>>();
-    expectTypeOf<FilledValue<Emptiable & []>>().toEqualTypeOf<Emptiable & [] & Emptiable<false>>();
+    expectTypeOf<FilledValue<Emptiable<false>>>().toEqualTypeOf<
+      Emptiable<false>
+    >();
+    expectTypeOf<FilledValue<Emptiable & []>>().toEqualTypeOf<
+      Emptiable & [] & Emptiable<false>
+    >();
     expectTypeOf<FilledMember<Emptiable>>().toEqualTypeOf<Emptiable<false>>();
   });
 
@@ -152,9 +196,9 @@ describe("filled", () => {
     expectTypeOf<FilledValue<typeof counted>>().toEqualTypeOf<typeof counted>();
     expectTypeOf<FilledValue<Countable>>().toEqualTypeOf<Countable>();
     expectTypeOf<FilledValue<{ [countOf](): 0 }>>().toBeNever();
-    expectTypeOf<FilledValue<Emptiable<false> & { [countOf](): 0 }>>().toEqualTypeOf<
-      Emptiable<false> & { [countOf](): 0 }
-    >();
+    expectTypeOf<
+      FilledValue<Emptiable<false> & { [countOf](): 0 }>
+    >().toEqualTypeOf<Emptiable<false> & { [countOf](): 0 }>();
 
     const customEmpty = {
       ...counted,
@@ -166,7 +210,13 @@ describe("filled", () => {
   });
 
   test("infers filled element types when filtering", () => {
-    const values: ("" | " " | "value" | null | 0)[] = ["", " ", "value", null, 0];
+    const values: ("" | " " | "value" | null | 0)[] = [
+      "",
+      " ",
+      "value",
+      null,
+      0,
+    ];
     const result = values.filter(filled);
 
     expect(result).toEqual(["value", 0]);

@@ -1,5 +1,6 @@
-import { entries } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { entries } from "@auaust/toolkit/object";
 
 describe("entries", () => {
   test("retains key-value correlations and stringifies numeric keys", () => {
@@ -22,7 +23,9 @@ describe("entries", () => {
   test("handles arrays and optional properties", () => {
     const optional: { value?: number } = {};
 
-    expectTypeOf(entries(optional)).toEqualTypeOf<["value", number | undefined][]>();
+    expectTypeOf(entries(optional)).toEqualTypeOf<
+      ["value", number | undefined][]
+    >();
     expectTypeOf(entries([1, 2])).toEqualTypeOf<[`${number}`, number][]>();
     expect(entries(optional)).toEqual([]);
     expect(entries("ab")).toEqual([

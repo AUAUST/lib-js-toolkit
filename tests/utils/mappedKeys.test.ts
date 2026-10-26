@@ -1,3 +1,5 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import {
   mappedKeys,
   type FunctionMappedKey,
@@ -5,7 +7,7 @@ import {
   type RecordMappedKey,
 } from "@auaust/toolkit";
 import { isArray } from "@auaust/toolkit/isArray";
-import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { createKeyMapper } from "../fixtures/objects";
 
 describe("mappedKeys", () => {
@@ -82,7 +84,9 @@ describe("mappedKeys", () => {
       readonly "1": "twenty";
     }>();
     expectTypeOf(copied).toEqualTypeOf<MappedSource<typeof source>>();
-    expectTypeOf<RecordMappedKey<"0", { 0: "first" }>>().toEqualTypeOf<"first">();
+    expectTypeOf<
+      RecordMappedKey<"0", { 0: "first" }>
+    >().toEqualTypeOf<"first">();
     expectTypeOf(result).toEqualTypeOf<{
       readonly first: 10;
     }>();
@@ -116,11 +120,14 @@ describe("mappedKeys", () => {
   });
 
   test("normalizes numeric source and destination names", () => {
-    const result = mappedKeys({
-      0: "zero",
-    }, {
-      "0": 1,
-    });
+    const result = mappedKeys(
+      {
+        0: "zero",
+      },
+      {
+        "0": 1,
+      },
+    );
 
     expectTypeOf(result).toEqualTypeOf<{
       "1": string;

@@ -1,5 +1,7 @@
-import { propertyForwarder } from "@auaust/toolkit/forwarder";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { propertyForwarder } from "@auaust/toolkit/forwarder";
+
 import { createDescriptorSource } from "../../fixtures/descriptors";
 
 describe("propertyForwarder", () => {
@@ -8,19 +10,22 @@ describe("propertyForwarder", () => {
     ["mutable", true, true, true],
     ["getter", true, true, false],
     ["writable", false, true, true],
-  ] as const)("mirrors %s flags", (property, enumerable, configurable, writable) => {
-    const source = createDescriptorSource();
+  ] as const)(
+    "mirrors %s flags",
+    (property, enumerable, configurable, writable) => {
+      const source = createDescriptorSource();
 
-    const descriptor = propertyForwarder(source, {
-      property,
-    });
+      const descriptor = propertyForwarder(source, {
+        property,
+      });
 
-    expect(descriptor.enumerable).toBe(enumerable);
-    expect(descriptor.configurable).toBe(configurable);
-    expect(typeof descriptor.set === "function").toBe(writable);
-    expect(descriptor.get()).toBe(source[property]);
-    expectTypeOf(descriptor.get()).toEqualTypeOf<number>();
-  });
+      expect(descriptor.enumerable).toBe(enumerable);
+      expect(descriptor.configurable).toBe(configurable);
+      expect(typeof descriptor.set === "function").toBe(writable);
+      expect(descriptor.get()).toBe(source[property]);
+      expectTypeOf(descriptor.get()).toEqualTypeOf<number>();
+    },
+  );
 
   test("overrides flags while respecting readonly source properties", () => {
     const source = createDescriptorSource();
@@ -72,6 +77,7 @@ describe("propertyForwarder", () => {
     const source: { value?: number } = {
       value: 42,
     };
+
     const descriptor = propertyForwarder(source, "value");
 
     expect(descriptor.get()).toBe(42);

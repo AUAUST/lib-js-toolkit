@@ -1,12 +1,12 @@
+import { identity } from "@auaust/toolkit/identity";
+import { isCallable } from "@auaust/toolkit/isCallable";
+import { assign, defineGetter } from "@auaust/toolkit/object";
+import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   CachedOptions,
   CacheResolver,
   KeyResolver,
 } from "@auaust/toolkit/cached";
-import { identity } from "@auaust/toolkit/identity";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { assign, defineGetter } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
 import type {
   Callee,
   CallParameters,

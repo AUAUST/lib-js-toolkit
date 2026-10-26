@@ -1,5 +1,6 @@
-import { create } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { create } from "@auaust/toolkit/object";
 
 describe("create", () => {
   test("infers prototype properties and descriptor values", () => {

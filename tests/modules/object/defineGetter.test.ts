@@ -1,15 +1,18 @@
-import { defineGetter } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { defineGetter } from "@auaust/toolkit/object";
 
 describe("defineGetter", () => {
   test("preserves the target and infers the getter value", () => {
     const key = Symbol("computed");
+
     const target = {
       count: 2,
     };
 
     const result = defineGetter(target, key, function () {
       expectTypeOf(this).toEqualTypeOf<typeof target>();
+
       return this.count * 2;
     });
 

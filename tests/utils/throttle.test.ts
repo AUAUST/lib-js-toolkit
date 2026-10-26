@@ -1,6 +1,15 @@
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  expectTypeOf,
+  test,
+  vi,
+} from "vitest";
+
 import { throttle, type Throttled } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { afterEach, beforeEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("throttle", () => {
   beforeEach(() => {
@@ -107,6 +116,7 @@ describe("throttle", () => {
     };
 
     const fn = throttle(callback, 10);
+
     const context = {
       factor: 3,
     };

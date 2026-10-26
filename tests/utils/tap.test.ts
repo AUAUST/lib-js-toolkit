@@ -1,6 +1,7 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
-import { tap } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
+import { tap } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocols/callable";
 
 describe("tap", () => {
   test("calls the provided function with the value and returns the value", () => {
@@ -16,6 +17,7 @@ describe("tap", () => {
     const context = {
       multiplier: 2,
     };
+
     const value = 21;
 
     function callback(this: typeof context, val: number) {

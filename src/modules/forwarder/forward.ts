@@ -6,6 +6,7 @@ import type {
   Simplify,
   UnionToIntersection,
 } from "@auaust/toolkit/types";
+
 import { forwardAs } from "./forwardAs";
 import {
   methodForwarder,

@@ -1,6 +1,8 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { isPromise } from "@auaust/toolkit";
 import { isPromise as subpathIsPromise } from "@auaust/toolkit/isPromise";
-import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { createFunctions, primitiveValues } from "../fixtures/values";
 
 describe("isPromise", () => {

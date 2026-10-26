@@ -1,5 +1,6 @@
-import { compose, getterComposers } from "@auaust/toolkit/composer";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { compose, getterComposers } from "@auaust/toolkit/composer";
 
 describe("getterComposers", () => {
   test("preserves symbol keys and receiver binding", () => {

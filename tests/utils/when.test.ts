@@ -1,17 +1,21 @@
-import { when } from "@auaust/toolkit";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-describe("when", () => {
-  test.each([true, false])("evaluates only the selected branch when %s", (condition) => {
-    const callback = vi.fn(() => "callback" as const);
-    const fallback = vi.fn(() => "fallback" as const);
-    const result = when(condition, callback, fallback);
+import { when } from "@auaust/toolkit";
 
-    expect(result).toBe(condition ? "callback" : "fallback");
-    expect(callback).toHaveBeenCalledTimes(Number(condition));
-    expect(fallback).toHaveBeenCalledTimes(Number(!condition));
-    expectTypeOf(result).toEqualTypeOf<"callback" | "fallback">();
-  });
+describe("when", () => {
+  test.each([true, false])(
+    "evaluates only the selected branch when %s",
+    (condition) => {
+      const callback = vi.fn(() => "callback" as const);
+      const fallback = vi.fn(() => "fallback" as const);
+      const result = when(condition, callback, fallback);
+
+      expect(result).toBe(condition ? "callback" : "fallback");
+      expect(callback).toHaveBeenCalledTimes(Number(condition));
+      expect(fallback).toHaveBeenCalledTimes(Number(!condition));
+      expectTypeOf(result).toEqualTypeOf<"callback" | "fallback">();
+    },
+  );
 
   test("returns undefined without evaluating an unselected callback", () => {
     const callback = vi.fn();

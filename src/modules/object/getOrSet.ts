@@ -1,9 +1,9 @@
-import type { InitializedProperty } from "@auaust/toolkit/types";
 import {
   value,
   type ResolvedValue,
   type ValueInput,
 } from "@auaust/toolkit/value";
+import type { InitializedProperty } from "@auaust/toolkit/types";
 
 export function getOrSet<Target extends object, Key extends PropertyKey, Value>(
   target: Target,

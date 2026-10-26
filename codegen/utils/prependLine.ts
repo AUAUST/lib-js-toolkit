@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
+
 import { pathRelativeFrom } from "./pathResolveFrom";
 
 const root = process.cwd();

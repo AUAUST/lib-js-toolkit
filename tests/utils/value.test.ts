@@ -1,6 +1,7 @@
+import { assertType, describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { value } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { assertType, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("value", () => {
   test("returns the provided value when it's not a function", () => {
@@ -78,7 +79,11 @@ describe("value", () => {
   });
 
   test("resolves unions using their shared callable arguments", () => {
-    type Source = (() => number) | ((name: string) => string) | boolean | ((something: unknown) => number);
+    type Source =
+      | (() => number)
+      | ((name: string) => string)
+      | boolean
+      | ((something: unknown) => number);
 
     const source = ((something: unknown) => Number(something)) as Source;
     const result = value(source, "name");
@@ -91,11 +96,16 @@ describe("value", () => {
   });
 
   test("preserves generic results through native methods", () => {
-    const input = <const V extends number, const S extends string>(value: V, suffix: S): `${V}${S}` => {
+    const input = <const V extends number, const S extends string>(
+      value: V,
+      suffix: S,
+    ): `${V}${S}` => {
       return `${value}${suffix}` as const;
     };
 
-    assertType<`${number}${string}` | 32>(value(input as typeof input | 32, 1, "!"));
+    assertType<`${number}${string}` | 32>(
+      value(input as typeof input | 32, 1, "!"),
+    );
 
     assertType<`${number}${string}`>(value(input, 1, "!"));
 

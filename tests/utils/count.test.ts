@@ -1,7 +1,9 @@
+import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { count } from "@auaust/toolkit";
 import { assign, create, defineProperty } from "@auaust/toolkit/object";
 import { countOf } from "@auaust/toolkit/protocols/countable";
-import { describe, expect, expectTypeOf, test } from "vitest";
+
 import { createFunctions, primitiveValues } from "../fixtures/values";
 
 describe("count", () => {
@@ -65,6 +67,7 @@ describe("count", () => {
       items: [1, 2, 3],
       [countOf]() {
         expect(this).toBe(input);
+
         return this.items.length;
       },
     };
@@ -72,13 +75,16 @@ describe("count", () => {
     expect(count(input)).toBe(3);
   });
 
-  test.each([-1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1])("rejects protocol count %s", (result) => {
-    expect(() => {
-      return count({
-        [countOf]: () => result,
-      });
-    }).toThrow(RangeError);
-  });
+  test.each([-1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1])(
+    "rejects protocol count %s",
+    (result) => {
+      expect(() => {
+        return count({
+          [countOf]: () => result,
+        });
+      }).toThrow(RangeError);
+    },
+  );
 
   test.for([
     ...primitiveValues.filter((value) => {

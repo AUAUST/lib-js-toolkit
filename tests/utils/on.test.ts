@@ -1,6 +1,7 @@
+import { describe, expect, expectTypeOf, test, vi } from "vitest";
+
 import { on } from "@auaust/toolkit";
 import { callable } from "@auaust/toolkit/protocols/callable";
-import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 describe("on", () => {
   test("calls the final argument with all preceding arguments", () => {
@@ -28,6 +29,7 @@ describe("on", () => {
       (number, string) => {
         expectTypeOf(number).toEqualTypeOf<number>();
         expectTypeOf(string).toEqualTypeOf<string>();
+
         return `${string}: ${number}`;
       },
     );
@@ -43,6 +45,7 @@ describe("on", () => {
 
     function callback(this: typeof context, increment: number) {
       expect(this).toBe(context);
+
       return this.value + increment;
     }
 
@@ -71,6 +74,7 @@ describe("on", () => {
       (number, string) => {
         expectTypeOf(number).toEqualTypeOf<number>();
         expectTypeOf(string).toEqualTypeOf<"value">();
+
         return `${string}: ${number}`;
       },
     );

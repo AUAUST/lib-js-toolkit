@@ -1,5 +1,7 @@
-import { assign } from "@auaust/toolkit/object";
 import { describe, expect, expectTypeOf, test } from "vitest";
+
+import { assign } from "@auaust/toolkit/object";
+
 import { createObjects } from "../../fixtures/values";
 
 describe("assign", () => {
@@ -47,7 +49,7 @@ describe("assign", () => {
   });
 
   test("preserves generic call signatures and accepts an empty source list", () => {
-    const target = <Value,>(value: Value) => value;
+    const target = <Value>(value: Value) => value;
 
     const result = assign(target, {
       label: "entry",
@@ -65,9 +67,11 @@ describe("assign", () => {
   test("models optional properties and a variable number of sources", () => {
     const optional: { value?: number } = {};
     const sources: { value: number }[] = [];
+
     const target = {
       value: "initial",
     };
+
     const result = assign(target, optional);
 
     const variable = assign(
