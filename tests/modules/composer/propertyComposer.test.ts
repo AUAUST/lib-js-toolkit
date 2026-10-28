@@ -49,7 +49,7 @@ describe("propertyComposer", () => {
       configurable: true,
     });
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

@@ -48,7 +48,7 @@ describe("mapped", () => {
     expect(result.alpha).toBe(1);
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; nested: {} }>();
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

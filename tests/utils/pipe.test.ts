@@ -70,11 +70,12 @@ describe("pipe", () => {
   test("throws a PipelineError with useful information on failure", () => {
     const fn1 = (x: number) => x + 1;
 
-    const fn2 = (x: number) => {
+    const fn2 = (ignored: number) => {
       throw new Error("Intentional failure");
     };
 
     const fn3 = (x: number) => x * 2;
+
     const pipedFunction = pipe(fn1, fn2, fn3);
 
     try {

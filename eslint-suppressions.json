@@ -1,6 +1,93 @@
 {
+  "src/utils/compare.ts": {
+    "auaust/no-loose-equal": {
+      "count": 3
+    },
+    "auaust/no-unsafe-member-access": {
+      "count": 4
+    },
+    "unicorn/no-negation-in-equality-check": {
+      "count": 2
+    }
+  },
+  "src/utils/expose.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    }
+  },
+  "src/utils/isCallable.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    }
+  },
+  "src/utils/isFunction.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    }
+  },
+  "src/utils/mapped.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    }
+  },
+  "src/utils/mappedKeys.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 3
+    }
+  },
+  "src/utils/mappedValues.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 2
+    }
+  },
+  "src/utils/memberValue.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    }
+  },
+  "src/utils/memoized.ts": {
+    "auaust/no-invalid-void-type": {
+      "count": 1
+    }
+  },
+  "src/utils/once.ts": {
+    "auaust/prefer-function-declaration": {
+      "count": 1
+    }
+  },
+  "src/utils/plain.ts": {
+    "auaust/unified-signatures": {
+      "count": 3
+    }
+  },
+  "src/utils/sleep.ts": {
+    "auaust/no-promise-executor-return": {
+      "count": 1
+    }
+  },
+  "src/utils/transformKeys.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 5
+    }
+  },
+  "src/utils/transformValues.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 2
+    }
+  },
+  "src/utils/value.ts": {
+    "auaust/unified-signatures": {
+      "count": 3
+    }
+  },
   "tests/modules/composer/compose.test.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 1
+    },
     "no-constant-condition": {
+      "count": 1
+    },
+    "unicorn/prefer-default-parameters": {
       "count": 1
     }
   },
@@ -17,6 +104,11 @@
   "tests/modules/composer/propertyComposers.test.ts": {
     "no-constant-condition": {
       "count": 2
+    }
+  },
+  "tests/modules/forwarder/forwardProperties.test.ts": {
+    "auaust/consistent-type-assertions": {
+      "count": 1
     }
   },
   "tests/modules/forwarder/methodForwarders.test.ts": {
@@ -52,13 +144,43 @@
       "count": 1
     }
   },
+  "tests/modules/object/get.test.ts": {
+    "auaust/consistent-type-assertions": {
+      "count": 1
+    },
+    "auaust/no-confusing-void-expression": {
+      "count": 4
+    }
+  },
   "tests/modules/object/getOrCreate.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 2
+    },
+    "auaust/no-extraneous-class": {
+      "count": 1
+    },
     "no-constant-condition": {
+      "count": 1
+    },
+    "unicorn/prefer-early-return": {
       "count": 1
     }
   },
   "tests/modules/object/getOrSet.test.ts": {
     "auaust/no-complex-concise-arrows": {
+      "count": 1
+    },
+    "auaust/no-confusing-void-expression": {
+      "count": 2
+    }
+  },
+  "tests/modules/object/keys.test.ts": {
+    "auaust/consistent-type-assertions": {
+      "count": 1
+    }
+  },
+  "tests/modules/object/values.test.ts": {
+    "auaust/consistent-type-assertions": {
       "count": 1
     }
   },
@@ -68,6 +190,9 @@
     }
   },
   "tests/utils/after.test.ts": {
+    "auaust/no-floating-promises": {
+      "count": 1
+    },
     "no-constant-condition": {
       "count": 1
     }
@@ -87,13 +212,33 @@
       "count": 1
     }
   },
+  "tests/utils/attemptAsync.test.ts": {
+    "auaust/no-await-expression-member": {
+      "count": 1
+    }
+  },
   "tests/utils/cached.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 2
+    },
+    "auaust/no-invalid-void-type": {
+      "count": 2
+    },
     "no-constant-condition": {
       "count": 2
+    },
+    "unicorn/no-declarations-before-early-exit": {
+      "count": 1
     }
   },
   "tests/utils/cachedAsync.test.ts": {
+    "auaust/no-await-expression-member": {
+      "count": 1
+    },
     "auaust/no-complex-concise-arrows": {
+      "count": 1
+    },
+    "auaust/no-invalid-void-type": {
       "count": 1
     }
   },
@@ -103,8 +248,32 @@
     }
   },
   "tests/utils/callMethod.test.ts": {
+    "auaust/prefer-function-declaration": {
+      "count": 3
+    },
     "no-constant-condition": {
       "count": 1
+    },
+    "unicorn/no-declarations-before-early-exit": {
+      "count": 1
+    }
+  },
+  "tests/utils/constant.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 1
+    }
+  },
+  "tests/utils/count.test.ts": {
+    "unicorn/no-duplicate-set-values": {
+      "count": 1
+    },
+    "unicorn/no-new-array": {
+      "count": 1
+    }
+  },
+  "tests/utils/empty.test.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 3
     }
   },
   "tests/utils/frozen.test.ts": {
@@ -112,9 +281,24 @@
       "count": 1
     }
   },
+  "tests/utils/identity.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 1
+    }
+  },
   "tests/utils/isNull.test.ts": {
     "auaust/no-is-null": {
       "count": 2
+    }
+  },
+  "tests/utils/isPromise.test.ts": {
+    "auaust/no-thenable": {
+      "count": 1
+    }
+  },
+  "tests/utils/isPromiseLike.test.ts": {
+    "auaust/no-thenable": {
+      "count": 4
     }
   },
   "tests/utils/isUndefined.test.ts": {
@@ -153,9 +337,28 @@
       "count": 1
     }
   },
+  "tests/utils/measureAsync.test.ts": {
+    "auaust/no-await-expression-member": {
+      "count": 3
+    }
+  },
   "tests/utils/memoized.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 1
+    },
+    "auaust/no-invalid-void-type": {
+      "count": 1
+    },
     "no-constant-condition": {
       "count": 2
+    }
+  },
+  "tests/utils/noop.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 2
+    },
+    "auaust/no-invalid-void-type": {
+      "count": 1
     }
   },
   "tests/utils/on.test.ts": {
@@ -163,8 +366,49 @@
       "count": 1
     }
   },
+  "tests/utils/pipe.test.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 7
+    }
+  },
+  "tests/utils/pipeAsync.test.ts": {
+    "auaust/no-unsafe-member-access": {
+      "count": 3
+    }
+  },
+  "tests/utils/plain.test.ts": {
+    "auaust/no-misused-promises": {
+      "count": 2
+    }
+  },
   "tests/utils/readonly.test.ts": {
     "auaust/no-complex-concise-arrows": {
+      "count": 1
+    },
+    "unicorn/no-return-array-push": {
+      "count": 1
+    }
+  },
+  "tests/utils/resolveCallable.test.ts": {
+    "auaust/prefer-function-declaration": {
+      "count": 1
+    }
+  },
+  "tests/utils/sleep.test.ts": {
+    "auaust/no-floating-promises": {
+      "count": 1
+    }
+  },
+  "tests/utils/spy.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 3
+    },
+    "unicorn/prefer-default-parameters": {
+      "count": 2
+    }
+  },
+  "tests/utils/throttle.test.ts": {
+    "auaust/no-confusing-void-expression": {
       "count": 1
     }
   },
@@ -176,9 +420,22 @@
       "count": 1
     }
   },
+  "tests/utils/transformKeys.test.ts": {
+    "auaust/consistent-type-assertions": {
+      "count": 1
+    },
+    "unicorn/no-return-array-push": {
+      "count": 1
+    }
+  },
   "tests/utils/value.test.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 1
+    }
+  },
+  "tests/utils/voided.test.ts": {
+    "auaust/no-confusing-void-expression": {
+      "count": 2
     }
   },
   "tests/utils/when.test.ts": {

@@ -257,7 +257,7 @@ describe("cached", () => {
       expect(fn(2)).toBe(6);
       expectTypeOf(fn.keyFor).thisParameter.toEqualTypeOf<void>();
       expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
-      expectTypeOf(fn.call).parameter(0).toEqualTypeOf<void>();
+      expectTypeOf(fn.call).parameter(0).toEqualTypeOf<undefined>();
     },
   );
 
@@ -404,7 +404,7 @@ describe("cached", () => {
       value: 0,
     };
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

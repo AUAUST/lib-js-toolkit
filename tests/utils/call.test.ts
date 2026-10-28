@@ -87,7 +87,7 @@ describe("call", () => {
     expectTypeOf(call.apply(null, [input, 1, "!"])).toEqualTypeOf<string>();
     expectTypeOf(call.call(null, (n: number) => n, 1)).toEqualTypeOf<number>();
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

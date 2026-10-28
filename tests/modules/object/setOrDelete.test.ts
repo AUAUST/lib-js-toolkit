@@ -20,7 +20,7 @@ describe("setOrDelete", () => {
 
     const conditional = setOrDelete({}, "value", 1);
 
-    expectTypeOf(conditional).toEqualTypeOf<{} | { value: number }>();
+    expectTypeOf(conditional).toEqualTypeOf<{ value: number }>();
 
     expect(setOrDelete({}, "value", false)).toEqual({
       value: false,

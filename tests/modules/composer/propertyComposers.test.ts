@@ -43,7 +43,7 @@ describe("propertyComposers", () => {
       stored: number;
     }>();
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

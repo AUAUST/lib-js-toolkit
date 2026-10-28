@@ -13,7 +13,7 @@ export type PipeEntry<This, In, Out> =
   | TransformFn<This, In, Out>
   | [when: PipeCondition<This, In>, then: TransformFn<This, In, Out>];
 
-export function pipe(): <This, T>(this: This, value: T) => T;
+export function pipe(): <T>(this: unknown, value: T) => T;
 export function pipe<This, A, B>(
   fn: PipeEntry<This, A, B>,
 ): (this: This, value: A) => B;

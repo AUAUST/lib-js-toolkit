@@ -157,7 +157,7 @@ describe("callMethod", () => {
       return this.other;
     };
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

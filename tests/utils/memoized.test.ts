@@ -324,7 +324,7 @@ describe("memoized", () => {
 
     expect(Reflect.apply(wrapped, context, [])).toBe(5);
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

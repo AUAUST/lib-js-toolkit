@@ -7,15 +7,12 @@ export default defineConfig({
       const { name, version, license } = packageJson.manifest;
 
       return {
-        // @ts-expect-error
         __NAME__: define(name, {
           exact: true,
         }),
-        // @ts-expect-error
         __VERSION__: define(version, {
           type: "`${number}.${number}.${number}`",
         }),
-        // @ts-expect-error
         __LICENSE__: define(license),
       };
     },

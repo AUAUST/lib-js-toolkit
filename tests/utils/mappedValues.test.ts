@@ -54,7 +54,7 @@ describe("mappedValues", () => {
     expect(isArray(result)).toBe(false);
     expectTypeOf(result).toEqualTypeOf<Record<`${number}`, number>>();
 
-    if (!!true) {
+    if (!false) {
       return;
     }
 

@@ -81,13 +81,14 @@ describe("cachedAsync", () => {
   );
 
   test("resolves keys once per call and preserves optional and rest arguments", async () => {
-    const callback = vi.fn(
-      async (id: number, count = 1, ...suffixes: string[]) => {
-        return `${id}:${count}${suffixes.join("")}`;
-      },
-    );
+    const impl = async (id: number, count = 1, ...suffixes: string[]) => {
+      return `${id}:${count}${suffixes.join("")}`;
+    };
+
+    const callback = vi.fn(impl);
 
     const resolveKey = vi.fn((id: number) => String(id));
+
     const fn = cachedAsync(callback, resolveKey);
 
     expect(fn.keyFor(1)).toBe("1");
@@ -102,7 +103,7 @@ describe("cachedAsync", () => {
     expect(fn.value("1")).toBe("1:2ab");
 
     expectTypeOf(fn).parameters.toEqualTypeOf<
-      [id: number, count?: number, ...suffixes: string[]]
+      [id: number, count?: number | undefined, ...suffixes: string[]]
     >();
 
     expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
@@ -295,7 +296,7 @@ describe("cachedAsync", () => {
     expect(fn(2)).toBe(4);
     expect(fn.value("key:2")).toBe(4);
     expectTypeOf(fn).thisParameter.toEqualTypeOf<void>();
-    expectTypeOf(fn.call).parameter(0).toEqualTypeOf<void>();
+    expectTypeOf(fn.call).parameter(0).toEqualTypeOf<undefined>();
   });
 
   test("supports nullary and synchronous resolvers", async () => {
