@@ -20,10 +20,10 @@ export function getOrSet<
   fallback: ValueInput<Fallback, [Key], undefined>,
 ): InitializedProperty<Target, Key, ResolvedValue<Fallback>>;
 export function getOrSet(
-  target: any,
+  target: Record<PropertyKey, unknown>,
   key: PropertyKey,
   fallback: unknown,
-): any {
+) {
   if (!(key in target)) {
     target[key] = value(fallback, key);
   }

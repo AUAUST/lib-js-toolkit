@@ -81,4 +81,4 @@ export const value: ValueResolver = function value(
   ...args: unknown[]
 ): unknown {
   return isCallable(input) ? apply.call(this, input, args) : input;
-} as ValueResolver;
+};

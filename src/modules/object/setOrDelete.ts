@@ -15,10 +15,10 @@ export function setOrDelete<
   Value,
 >(target: Target, key: Key, value: Value): SetOrDeleted<Target, Key, Value>;
 export function setOrDelete(
-  target: any,
+  target: Record<PropertyKey, unknown>,
   key: PropertyKey,
   value: unknown,
-): any {
+) {
   if (value === undefined) {
     delete target[key];
   } else {

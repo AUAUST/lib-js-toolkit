@@ -1,14 +1,4 @@
 {
-  "scripts/make/utils/logChanges.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 2
-    }
-  },
-  "src/utils/match.ts": {
-    "prefer-const": {
-      "count": 1
-    }
-  },
   "tests/modules/composer/compose.test.ts": {
     "no-constant-condition": {
       "count": 1
@@ -171,21 +161,6 @@
   "tests/utils/on.test.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 1
-    }
-  },
-  "tests/utils/pipe.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/pipeAsync.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 2
-    }
-  },
-  "tests/utils/plain.test.ts": {
-    "@typescript-eslint/no-misused-promises": {
-      "count": 2
     }
   },
   "tests/utils/readonly.test.ts": {

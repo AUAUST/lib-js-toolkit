@@ -17,11 +17,11 @@ export function md5(input: string): string {
     throw new TypeError("Input must be a string");
   }
 
-  return rstr2hex(rstr_md5(str2rstr_utf8(input)));
+  return rstr2hex(rstrMd5(string2rstrUtf8(input)));
 }
 
-function rstr_md5(s: string): string {
-  return binl2rstr(binl_md5(rstr2binl(s), s.length * 8));
+function rstrMd5(s: string): string {
+  return binl2rstr(binlMd5(rstr2binl(s), s.length * 8));
 }
 
 function rstr2hex(input: string): string {
@@ -29,26 +29,26 @@ function rstr2hex(input: string): string {
   let output = "";
   let x;
 
-  for (let i = 0; i < input.length; i++) {
-    x = input.charCodeAt(i);
+  for (let index = 0; index < input.length; index++) {
+    x = input.charCodeAt(index);
     output += hex.charAt((x >>> 4) & 0x0f) + hex.charAt(x & 0x0f);
   }
 
   return output;
 }
 
-function str2rstr_utf8(input: string): string {
+function string2rstrUtf8(input: string): string {
   let output = "";
-  let i = -1;
+  let index = -1;
   let x, y;
 
-  while (++i < input.length) {
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+  while (++index < input.length) {
+    x = input.charCodeAt(index);
+    y = index + 1 < input.length ? input.charCodeAt(index + 1) : 0;
 
     if (0xd800 <= x && x <= 0xdbff && 0xdc00 <= y && y <= 0xdfff) {
       x = 0x10000 + ((x & 0x03ff) << 10) + (y & 0x03ff);
-      i++;
+      index++;
     }
 
     if (x <= 0x7f) {
@@ -78,14 +78,16 @@ function str2rstr_utf8(input: string): string {
 }
 
 function rstr2binl(input: string): number[] {
-  const output = Array(input.length >> 2);
+  const output = Array.from<number>({
+    length: input.length >> 2,
+  });
 
-  for (let i = 0; i < output.length; i++) {
-    output[i] = 0;
+  for (let index = 0; index < output.length; index++) {
+    output[index] = 0;
   }
 
-  for (let i = 0; i < input.length * 8; i += 8) {
-    output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
+  for (let index = 0; index < input.length * 8; index += 8) {
+    output[index >> 5] |= (input.charCodeAt(index / 8) & 0xff) << (index % 32);
   }
 
   return output;
@@ -94,106 +96,106 @@ function rstr2binl(input: string): number[] {
 function binl2rstr(input: number[]): string {
   let output = "";
 
-  for (let i = 0; i < input.length * 32; i += 8) {
-    output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xff);
+  for (let index = 0; index < input.length * 32; index += 8) {
+    output += String.fromCharCode((input[index >> 5] >>> (index % 32)) & 0xff);
   }
 
   return output;
 }
 
-function binl_md5(x: number[], len: number): number[] {
-  x[len >> 5] |= 0x80 << (len % 32);
-  x[(((len + 64) >>> 9) << 4) + 14] = len;
+function binlMd5(x: number[], length: number): number[] {
+  x[length >> 5] |= 0x80 << (length % 32);
+  x[(((length + 64) >>> 9) << 4) + 14] = length;
 
-  let a = 1732584193;
-  let b = -271733879;
-  let c = -1732584194;
-  let d = 271733878;
+  let a = 1_732_584_193;
+  let b = -271_733_879;
+  let c = -1_732_584_194;
+  let d = 271_733_878;
 
-  for (let i = 0; i < x.length; i += 16) {
+  for (let index = 0; index < x.length; index += 16) {
     const olda = a;
     const oldb = b;
     const oldc = c;
     const oldd = d;
 
-    a = md5_ff(a, b, c, d, x[i + 0], 7, -680876936);
-    d = md5_ff(d, a, b, c, x[i + 1], 12, -389564586);
-    c = md5_ff(c, d, a, b, x[i + 2], 17, 606105819);
-    b = md5_ff(b, c, d, a, x[i + 3], 22, -1044525330);
-    a = md5_ff(a, b, c, d, x[i + 4], 7, -176418897);
-    d = md5_ff(d, a, b, c, x[i + 5], 12, 1200080426);
-    c = md5_ff(c, d, a, b, x[i + 6], 17, -1473231341);
-    b = md5_ff(b, c, d, a, x[i + 7], 22, -45705983);
-    a = md5_ff(a, b, c, d, x[i + 8], 7, 1770035416);
-    d = md5_ff(d, a, b, c, x[i + 9], 12, -1958414417);
-    c = md5_ff(c, d, a, b, x[i + 10], 17, -42063);
-    b = md5_ff(b, c, d, a, x[i + 11], 22, -1990404162);
-    a = md5_ff(a, b, c, d, x[i + 12], 7, 1804603682);
-    d = md5_ff(d, a, b, c, x[i + 13], 12, -40341101);
-    c = md5_ff(c, d, a, b, x[i + 14], 17, -1502002290);
-    b = md5_ff(b, c, d, a, x[i + 15], 22, 1236535329);
+    a = md5Ff(a, b, c, d, x[index + 0], 7, -680_876_936);
+    d = md5Ff(d, a, b, c, x[index + 1], 12, -389_564_586);
+    c = md5Ff(c, d, a, b, x[index + 2], 17, 606_105_819);
+    b = md5Ff(b, c, d, a, x[index + 3], 22, -1_044_525_330);
+    a = md5Ff(a, b, c, d, x[index + 4], 7, -176_418_897);
+    d = md5Ff(d, a, b, c, x[index + 5], 12, 1_200_080_426);
+    c = md5Ff(c, d, a, b, x[index + 6], 17, -1_473_231_341);
+    b = md5Ff(b, c, d, a, x[index + 7], 22, -45_705_983);
+    a = md5Ff(a, b, c, d, x[index + 8], 7, 1_770_035_416);
+    d = md5Ff(d, a, b, c, x[index + 9], 12, -1_958_414_417);
+    c = md5Ff(c, d, a, b, x[index + 10], 17, -42_063);
+    b = md5Ff(b, c, d, a, x[index + 11], 22, -1_990_404_162);
+    a = md5Ff(a, b, c, d, x[index + 12], 7, 1_804_603_682);
+    d = md5Ff(d, a, b, c, x[index + 13], 12, -40_341_101);
+    c = md5Ff(c, d, a, b, x[index + 14], 17, -1_502_002_290);
+    b = md5Ff(b, c, d, a, x[index + 15], 22, 1_236_535_329);
 
-    a = md5_gg(a, b, c, d, x[i + 1], 5, -165796510);
-    d = md5_gg(d, a, b, c, x[i + 6], 9, -1069501632);
-    c = md5_gg(c, d, a, b, x[i + 11], 14, 643717713);
-    b = md5_gg(b, c, d, a, x[i + 0], 20, -373897302);
-    a = md5_gg(a, b, c, d, x[i + 5], 5, -701558691);
-    d = md5_gg(d, a, b, c, x[i + 10], 9, 38016083);
-    c = md5_gg(c, d, a, b, x[i + 15], 14, -660478335);
-    b = md5_gg(b, c, d, a, x[i + 4], 20, -405537848);
-    a = md5_gg(a, b, c, d, x[i + 9], 5, 568446438);
-    d = md5_gg(d, a, b, c, x[i + 14], 9, -1019803690);
-    c = md5_gg(c, d, a, b, x[i + 3], 14, -187363961);
-    b = md5_gg(b, c, d, a, x[i + 8], 20, 1163531501);
-    a = md5_gg(a, b, c, d, x[i + 13], 5, -1444681467);
-    d = md5_gg(d, a, b, c, x[i + 2], 9, -51403784);
-    c = md5_gg(c, d, a, b, x[i + 7], 14, 1735328473);
-    b = md5_gg(b, c, d, a, x[i + 12], 20, -1926607734);
+    a = md5Gg(a, b, c, d, x[index + 1], 5, -165_796_510);
+    d = md5Gg(d, a, b, c, x[index + 6], 9, -1_069_501_632);
+    c = md5Gg(c, d, a, b, x[index + 11], 14, 643_717_713);
+    b = md5Gg(b, c, d, a, x[index + 0], 20, -373_897_302);
+    a = md5Gg(a, b, c, d, x[index + 5], 5, -701_558_691);
+    d = md5Gg(d, a, b, c, x[index + 10], 9, 38_016_083);
+    c = md5Gg(c, d, a, b, x[index + 15], 14, -660_478_335);
+    b = md5Gg(b, c, d, a, x[index + 4], 20, -405_537_848);
+    a = md5Gg(a, b, c, d, x[index + 9], 5, 568_446_438);
+    d = md5Gg(d, a, b, c, x[index + 14], 9, -1_019_803_690);
+    c = md5Gg(c, d, a, b, x[index + 3], 14, -187_363_961);
+    b = md5Gg(b, c, d, a, x[index + 8], 20, 1_163_531_501);
+    a = md5Gg(a, b, c, d, x[index + 13], 5, -1_444_681_467);
+    d = md5Gg(d, a, b, c, x[index + 2], 9, -51_403_784);
+    c = md5Gg(c, d, a, b, x[index + 7], 14, 1_735_328_473);
+    b = md5Gg(b, c, d, a, x[index + 12], 20, -1_926_607_734);
 
-    a = md5_hh(a, b, c, d, x[i + 5], 4, -378558);
-    d = md5_hh(d, a, b, c, x[i + 8], 11, -2022574463);
-    c = md5_hh(c, d, a, b, x[i + 11], 16, 1839030562);
-    b = md5_hh(b, c, d, a, x[i + 14], 23, -35309556);
-    a = md5_hh(a, b, c, d, x[i + 1], 4, -1530992060);
-    d = md5_hh(d, a, b, c, x[i + 4], 11, 1272893353);
-    c = md5_hh(c, d, a, b, x[i + 7], 16, -155497632);
-    b = md5_hh(b, c, d, a, x[i + 10], 23, -1094730640);
-    a = md5_hh(a, b, c, d, x[i + 13], 4, 681279174);
-    d = md5_hh(d, a, b, c, x[i + 0], 11, -358537222);
-    c = md5_hh(c, d, a, b, x[i + 3], 16, -722521979);
-    b = md5_hh(b, c, d, a, x[i + 6], 23, 76029189);
-    a = md5_hh(a, b, c, d, x[i + 9], 4, -640364487);
-    d = md5_hh(d, a, b, c, x[i + 12], 11, -421815835);
-    c = md5_hh(c, d, a, b, x[i + 15], 16, 530742520);
-    b = md5_hh(b, c, d, a, x[i + 2], 23, -995338651);
+    a = md5Hh(a, b, c, d, x[index + 5], 4, -378_558);
+    d = md5Hh(d, a, b, c, x[index + 8], 11, -2_022_574_463);
+    c = md5Hh(c, d, a, b, x[index + 11], 16, 1_839_030_562);
+    b = md5Hh(b, c, d, a, x[index + 14], 23, -35_309_556);
+    a = md5Hh(a, b, c, d, x[index + 1], 4, -1_530_992_060);
+    d = md5Hh(d, a, b, c, x[index + 4], 11, 1_272_893_353);
+    c = md5Hh(c, d, a, b, x[index + 7], 16, -155_497_632);
+    b = md5Hh(b, c, d, a, x[index + 10], 23, -1_094_730_640);
+    a = md5Hh(a, b, c, d, x[index + 13], 4, 681_279_174);
+    d = md5Hh(d, a, b, c, x[index + 0], 11, -358_537_222);
+    c = md5Hh(c, d, a, b, x[index + 3], 16, -722_521_979);
+    b = md5Hh(b, c, d, a, x[index + 6], 23, 76_029_189);
+    a = md5Hh(a, b, c, d, x[index + 9], 4, -640_364_487);
+    d = md5Hh(d, a, b, c, x[index + 12], 11, -421_815_835);
+    c = md5Hh(c, d, a, b, x[index + 15], 16, 530_742_520);
+    b = md5Hh(b, c, d, a, x[index + 2], 23, -995_338_651);
 
-    a = md5_ii(a, b, c, d, x[i + 0], 6, -198630844);
-    d = md5_ii(d, a, b, c, x[i + 7], 10, 1126891415);
-    c = md5_ii(c, d, a, b, x[i + 14], 15, -1416354905);
-    b = md5_ii(b, c, d, a, x[i + 5], 21, -57434055);
-    a = md5_ii(a, b, c, d, x[i + 12], 6, 1700485571);
-    d = md5_ii(d, a, b, c, x[i + 3], 10, -1894986606);
-    c = md5_ii(c, d, a, b, x[i + 10], 15, -1051523);
-    b = md5_ii(b, c, d, a, x[i + 1], 21, -2054922799);
-    a = md5_ii(a, b, c, d, x[i + 8], 6, 1873313359);
-    d = md5_ii(d, a, b, c, x[i + 15], 10, -30611744);
-    c = md5_ii(c, d, a, b, x[i + 6], 15, -1560198380);
-    b = md5_ii(b, c, d, a, x[i + 13], 21, 1309151649);
-    a = md5_ii(a, b, c, d, x[i + 4], 6, -145523070);
-    d = md5_ii(d, a, b, c, x[i + 11], 10, -1120210379);
-    c = md5_ii(c, d, a, b, x[i + 2], 15, 718787259);
-    b = md5_ii(b, c, d, a, x[i + 9], 21, -343485551);
+    a = md5Ii(a, b, c, d, x[index + 0], 6, -198_630_844);
+    d = md5Ii(d, a, b, c, x[index + 7], 10, 1_126_891_415);
+    c = md5Ii(c, d, a, b, x[index + 14], 15, -1_416_354_905);
+    b = md5Ii(b, c, d, a, x[index + 5], 21, -57_434_055);
+    a = md5Ii(a, b, c, d, x[index + 12], 6, 1_700_485_571);
+    d = md5Ii(d, a, b, c, x[index + 3], 10, -1_894_986_606);
+    c = md5Ii(c, d, a, b, x[index + 10], 15, -1_051_523);
+    b = md5Ii(b, c, d, a, x[index + 1], 21, -2_054_922_799);
+    a = md5Ii(a, b, c, d, x[index + 8], 6, 1_873_313_359);
+    d = md5Ii(d, a, b, c, x[index + 15], 10, -30_611_744);
+    c = md5Ii(c, d, a, b, x[index + 6], 15, -1_560_198_380);
+    b = md5Ii(b, c, d, a, x[index + 13], 21, 1_309_151_649);
+    a = md5Ii(a, b, c, d, x[index + 4], 6, -145_523_070);
+    d = md5Ii(d, a, b, c, x[index + 11], 10, -1_120_210_379);
+    c = md5Ii(c, d, a, b, x[index + 2], 15, 718_787_259);
+    b = md5Ii(b, c, d, a, x[index + 9], 21, -343_485_551);
 
-    a = safe_add(a, olda);
-    b = safe_add(b, oldb);
-    c = safe_add(c, oldc);
-    d = safe_add(d, oldd);
+    a = safeAdd(a, olda);
+    b = safeAdd(b, oldb);
+    c = safeAdd(c, oldc);
+    d = safeAdd(d, oldd);
   }
 
   return [a, b, c, d];
 }
 
-function md5_cmn(
+function md5Cmn(
   q: number,
   a: number,
   b: number,
@@ -201,10 +203,10 @@ function md5_cmn(
   s: number,
   t: number,
 ): number {
-  return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
+  return safeAdd(bitRol(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
 }
 
-function md5_ff(
+function md5Ff(
   a: number,
   b: number,
   c: number,
@@ -213,10 +215,10 @@ function md5_ff(
   s: number,
   t: number,
 ): number {
-  return md5_cmn((b & c) | (~b & d), a, b, x, s, t);
+  return md5Cmn((b & c) | (~b & d), a, b, x, s, t);
 }
 
-function md5_gg(
+function md5Gg(
   a: number,
   b: number,
   c: number,
@@ -225,10 +227,10 @@ function md5_gg(
   s: number,
   t: number,
 ): number {
-  return md5_cmn((b & d) | (c & ~d), a, b, x, s, t);
+  return md5Cmn((b & d) | (c & ~d), a, b, x, s, t);
 }
 
-function md5_hh(
+function md5Hh(
   a: number,
   b: number,
   c: number,
@@ -237,10 +239,10 @@ function md5_hh(
   s: number,
   t: number,
 ) {
-  return md5_cmn(b ^ c ^ d, a, b, x, s, t);
+  return md5Cmn(b ^ c ^ d, a, b, x, s, t);
 }
 
-function md5_ii(
+function md5Ii(
   a: number,
   b: number,
   c: number,
@@ -249,16 +251,16 @@ function md5_ii(
   s: number,
   t: number,
 ): number {
-  return md5_cmn(c ^ (b | ~d), a, b, x, s, t);
+  return md5Cmn(c ^ (b | ~d), a, b, x, s, t);
 }
 
-function safe_add(x: number, y: number): number {
+function safeAdd(x: number, y: number): number {
   const lsw = (x & 0xffff) + (y & 0xffff);
   const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
 
   return (msw << 16) | (lsw & 0xffff);
 }
 
-function bit_rol(num: number, cnt: number): number {
-  return (num << cnt) | (num >>> (32 - cnt));
+function bitRol(number: number, cnt: number): number {
+  return (number << cnt) | (number >>> (32 - cnt));
 }

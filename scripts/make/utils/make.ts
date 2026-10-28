@@ -1,5 +1,5 @@
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { join, resolve } from "path";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
 
 import { isString } from "../../../src/utils/isString.js";
 import { pathRelativeFrom } from "./pathResolveFrom.js";

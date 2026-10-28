@@ -4,10 +4,10 @@ import type { MethodName } from "@auaust/toolkit/types";
 export function isFunction(
   value: unknown,
 ): value is (...args: unknown[]) => unknown;
-export function isFunction<
-  Target extends object,
-  Method extends MethodName<Target>,
->(target: Target, method: Method): boolean;
+export function isFunction<Target extends object>(
+  target: Target,
+  method: MethodName<Target>,
+): boolean;
 export function isFunction<Method extends PropertyKey>(
   target: unknown,
   method: Method,

@@ -15,9 +15,9 @@ export function defer<Result>(): DeferPromise<Result> {
   let resolve!: PromiseResolver<Result>;
   let reject!: PromiseRejecter;
 
-  const promise = new Promise<Result>((res, rej) => {
-    resolve = res;
-    reject = rej;
+  const promise = new Promise<Result>((resolver, rejecter) => {
+    resolve = resolver;
+    reject = rejecter;
   });
 
   return assign(promise, {

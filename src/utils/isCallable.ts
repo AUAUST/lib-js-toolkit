@@ -4,10 +4,10 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 import type { Callee, MethodName } from "@auaust/toolkit/types";
 
 export function isCallable(value: unknown): value is Callee;
-export function isCallable<
-  Target extends object,
-  Method extends MethodName<Target>,
->(value: Target, method: Method): boolean;
+export function isCallable<Target extends object>(
+  value: Target,
+  method: MethodName<Target>,
+): boolean;
 export function isCallable<Method extends PropertyKey>(
   value: unknown,
   method: Method,

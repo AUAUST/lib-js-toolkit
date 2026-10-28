@@ -30,15 +30,17 @@ export function count(input: unknown): number | undefined {
     return keys(input).length;
   }
 
-  if (isObject(input)) {
-    let length: unknown;
+  if (!isObject(input)) {
+    return;
+  }
 
-    if ("length" in input && isNumber((length = input.length))) {
-      return length; // Takes care of arrays, but also several array-like objects
-    }
+  let length: unknown;
 
-    if ("size" in input && isNumber((length = input.size))) {
-      return length; // Takes care of Maps and Sets
-    }
+  if ("length" in input && isNumber((length = input.length))) {
+    return length; // Takes care of arrays, but also several array-like objects
+  }
+
+  if ("size" in input && isNumber((length = input.size))) {
+    return length; // Takes care of Maps and Sets
   }
 }

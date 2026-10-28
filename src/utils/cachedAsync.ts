@@ -25,7 +25,7 @@ export type CachedAsync<
   ): MaybePromise<Awaited<CallReturnType<Callback>>>;
 
   call(
-    thisArg: void,
+    thisArg: undefined,
     ...args: CallParameters<Callback>
   ): MaybePromise<Awaited<CallReturnType<Callback>>>;
 

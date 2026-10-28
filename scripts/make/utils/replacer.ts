@@ -7,7 +7,7 @@ export function replacer(placeholders: Record<string, string>) {
     let result = content;
 
     for (const [regex, value] of expressions) {
-      result = result.replace(regex, value);
+      result = result.replace(regex, () => value);
     }
 
     return result;

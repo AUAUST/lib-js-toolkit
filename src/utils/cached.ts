@@ -28,7 +28,7 @@ export type Cached<
   Key = CallParameters<Callback>[0],
 > = CallSignature<Callback> & {
   call(
-    thisArg: void,
+    thisArg: undefined,
     ...args: CallParameters<Callback>
   ): CallReturnType<Callback>;
 
@@ -157,19 +157,18 @@ export function cached(
   }
 
   function has(key: unknown): boolean {
-    return isContainer(key)
-      ? objectCache.has(key)
-      : primitiveCache
-        ? primitiveCache.has(key)
-        : false;
+    return (
+      ((isContainer(key) && objectCache.has(key)) ||
+        primitiveCache?.has(key)) ??
+      false
+    );
   }
 
   function deleteEntry(key: unknown): boolean {
-    return isContainer(key)
-      ? objectCache.delete(key)
-      : primitiveCache
-        ? primitiveCache.delete(key)
-        : false;
+    return (
+      (isContainer(key) && objectCache.delete(key)) ||
+      (primitiveCache?.delete(key) ?? false)
+    );
   }
 
   return assign(accessor, {
