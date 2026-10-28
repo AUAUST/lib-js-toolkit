@@ -2,9 +2,9 @@ import { cli, command } from "cleye";
 
 import { makeProtocol } from "./makeProtocol";
 import { makeType } from "./makeType";
-import { makeutility } from "./makeutility";
+import { makeUtility } from "./makeUtility";
 
-function exit(code: number = 0): never {
+function exit(code = 0): never {
   process.exit(code);
 }
 
@@ -38,10 +38,10 @@ const argv = cli({
         parameters: ["<protocol name>"],
       },
       async (argv) => {
-        return await makeProtocol({
+        return void (await makeProtocol({
           ...argv.flags,
           name: argv._[0],
-        });
+        }));
       },
     ),
     command(
@@ -53,10 +53,10 @@ const argv = cli({
         parameters: ["<function name>"],
       },
       async (argv) => {
-        return await makeutility({
+        return void (await makeUtility({
           ...argv.flags,
           name: argv._[0],
-        });
+        }));
       },
     ),
     command(
@@ -68,10 +68,10 @@ const argv = cli({
         parameters: ["<type name>"],
       },
       async (argv) => {
-        return await makeType({
+        return void (await makeType({
           ...argv.flags,
           name: argv._[0],
-        });
+        }));
       },
     ),
   ],

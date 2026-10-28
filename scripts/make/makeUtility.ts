@@ -3,7 +3,7 @@ import { codeFile, makeFromTemplate, testFile } from "./utils/make";
 import { prependLine } from "./utils/prependLine";
 import { replacer } from "./utils/replacer";
 
-export async function makeutility(options: {
+export async function makeUtility(options: {
   name: string;
   override?: boolean;
 }) {
