@@ -19,20 +19,20 @@ describe("memberValue", () => {
   });
 
   test("executes a method if the property is a function", () => {
-    const obj = {
+    const object = {
       a() {
         return 42;
       },
     };
 
-    const value = memberValue(obj, "a");
+    const value = memberValue(object, "a");
 
     expect(value).toBe(42);
     expectTypeOf(value).toBeNumber();
   });
 
   test("provides the correct `this` context to methods and getters", () => {
-    const obj = {
+    const object = {
       value: 42,
       getValue(multiplier: number) {
         if (multiplier === undefined) {
@@ -46,27 +46,28 @@ describe("memberValue", () => {
       },
     };
 
-    const value = memberValue(obj, "value");
+    const value = memberValue(object, "value");
 
     expect(value).toBe(42);
     expectTypeOf(value).toBeNumber();
+
     expect(() => {
       // @ts-expect-error
 
-      return memberValue(obj, "getValue");
+      return memberValue(object, "getValue");
     }).toThrow("Multiplier is required");
 
-    const getValue = memberValue(obj, "getValue", 0.5);
+    const getValue = memberValue(object, "getValue", 0.5);
 
     expect(getValue).toBe(21);
     expectTypeOf(getValue).toBeNumber();
 
-    const doubleValue = memberValue(obj, "doubleValue");
+    const doubleValue = memberValue(object, "doubleValue");
 
     expect(doubleValue).toBe(84);
     expectTypeOf(doubleValue).toBeNumber();
 
-    const obj2 = {
+    const object2 = {
       value: 4,
       [callable]() {
         return this.value * 4;
@@ -74,35 +75,35 @@ describe("memberValue", () => {
       get method() {
         return {
           get [callable]() {
-            return obj2[callable];
+            return object2[callable];
           },
         };
       },
     };
 
-    const method = memberValue(obj2, "method");
+    const method = memberValue(object2, "method");
 
     expect(method).toBe(16);
     expectTypeOf(method).toBeNumber();
   });
 
   test("forwards arguments to method member", () => {
-    const obj = {
+    const object = {
       sum(a: number, b: number) {
         return a + b;
       },
     };
 
-    expect(memberValue(obj, "sum", 2, 3)).toBe(5);
+    expect(memberValue(object, "sum", 2, 3)).toBe(5);
 
     // @ts-expect-error
-    expect(memberValue(obj, "sum", "2", "3")).toBe("23");
+    expect(memberValue(object, "sum", "2", "3")).toBe("23");
   });
 
   test("supports methods that are implemented by the `Callable` protocol", () => {
     const simpleObject = {};
 
-    const obj = {
+    const object = {
       value: 3,
       doubleValue: {
         [callable](this: { value: number }) {
@@ -112,8 +113,8 @@ describe("memberValue", () => {
       simpleProperty: simpleObject,
     };
 
-    expect(memberValue(obj, "doubleValue")).toBe(6);
-    expect(memberValue(obj, "simpleProperty")).toBe(simpleObject);
+    expect(memberValue(object, "doubleValue")).toBe(6);
+    expect(memberValue(object, "simpleProperty")).toBe(simpleObject);
   });
 
   test("correctly types member values", () => {

@@ -78,6 +78,7 @@ describe("after", () => {
       vi.advanceTimersByTime(9);
 
       expect(execute).not.toHaveBeenCalled();
+
       expect(() => {
         vi.advanceTimersByTime(1);
       }).not.toThrow();

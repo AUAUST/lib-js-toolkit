@@ -101,6 +101,7 @@ describe("forwardProperties", () => {
     const forwarded = forwardProperties({}, handler, [property]);
 
     expect(forwarded[property]).toBe(1);
+
     expect(() => {
       return forwardProperties(
         {

@@ -16,10 +16,12 @@ describe("transformKeys", () => {
     });
 
     expect(result).toBe(target);
+
     expect(target).toEqual({
       alpha: 1,
       b: "two",
     });
+
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; b: string }>();
   });
 
@@ -89,6 +91,7 @@ describe("transformKeys", () => {
     expect(target.a).toBe(2);
     expect(target.b).toBe(2);
     expect(writes).toEqual([1]);
+
     expect(Object.getOwnPropertyDescriptor(target, "b")?.get).toBeTypeOf(
       "function",
     );
@@ -105,6 +108,7 @@ describe("transformKeys", () => {
     );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+
     expect(result).toEqual({
       renamed: 4,
     });

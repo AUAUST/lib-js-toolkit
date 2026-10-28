@@ -15,6 +15,7 @@ describe("isContainer", () => {
         (typeof input === "object" || typeof input === "function");
 
       expect(isContainer(input)).toBe(expected);
+
       expectTypeOf(createValues().filter(isContainer)).toEqualTypeOf<
         object[]
       >();

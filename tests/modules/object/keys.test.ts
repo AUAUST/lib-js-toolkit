@@ -25,11 +25,13 @@ describe("keys", () => {
     expectTypeOf(keys(tuple)).toEqualTypeOf<`${number}`[]>();
     expectTypeOf(keys("ab")).toEqualTypeOf<`${number}`[]>();
     expectTypeOf(keys({})).toEqualTypeOf<never[]>();
+
     expectTypeOf(
       keys({
         [Symbol()]: true,
       }),
     ).toEqualTypeOf<never[]>();
+
     expect(keys(tuple)).toEqual(["0", "1"]);
     expect(keys("ab")).toEqual(["0", "1"]);
   });

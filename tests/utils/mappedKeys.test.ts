@@ -25,6 +25,7 @@ describe("mappedKeys", () => {
       alpha: 1,
       b: "two",
     });
+
     expect(result).not.toBe(source);
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; b: string }>();
   });
@@ -41,11 +42,7 @@ describe("mappedKeys", () => {
           return "alpha";
         }
 
-        if (key === "b") {
-          return true;
-        }
-
-        return false;
+        return key === "b";
       },
     );
 
@@ -67,6 +64,7 @@ describe("mappedKeys", () => {
       "item-0": 10,
       "item-1": 20,
     });
+
     expect(isArray(result)).toBe(false);
   });
 
@@ -80,19 +78,24 @@ describe("mappedKeys", () => {
     });
 
     expectTypeOf(copied).toEqualTypeOf<{
-      readonly "0": 10;
-      readonly "1": "twenty";
+      readonly 0: 10;
+      readonly 1: "twenty";
     }>();
+
     expectTypeOf(copied).toEqualTypeOf<MappedSource<typeof source>>();
+
     expectTypeOf<
       RecordMappedKey<"0", { 0: "first" }>
     >().toEqualTypeOf<"first">();
+
     expectTypeOf(result).toEqualTypeOf<{
       readonly first: 10;
     }>();
+
     expect(result).toEqual({
       first: 10,
     });
+
     expect(isArray(copied)).toBe(false);
   });
 
@@ -125,13 +128,14 @@ describe("mappedKeys", () => {
         0: "zero",
       },
       {
-        "0": 1,
+        0: 1,
       },
     );
 
     expectTypeOf(result).toEqualTypeOf<{
-      "1": string;
+      1: string;
     }>();
+
     expect(result).toEqual({
       1: "zero",
     });
@@ -148,9 +152,11 @@ describe("mappedKeys", () => {
     );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+
     expectTypeOf<
       FunctionMappedKey<{ entry: number }, typeof mapper>
     >().toEqualTypeOf<"renamed">();
+
     expect(result).toEqual({
       renamed: 4,
     });

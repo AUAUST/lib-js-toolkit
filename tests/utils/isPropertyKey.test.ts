@@ -12,6 +12,7 @@ describe("isPropertyKey", () => {
       const expected = ["string", "number", "symbol"].includes(typeof input);
 
       expect(isPropertyKey(input)).toBe(expected);
+
       expectTypeOf(createValues().filter(isPropertyKey)).toEqualTypeOf<
         PropertyKey[]
       >();

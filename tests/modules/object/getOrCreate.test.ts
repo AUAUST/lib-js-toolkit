@@ -32,9 +32,11 @@ describe("getOrCreate", () => {
     expectTypeOf(getOrCreate(target, "value", Date)).toEqualTypeOf<
       number | Date | undefined
     >();
+
     expectTypeOf(
       getOrCreate(present, "value", Date),
     ).toEqualTypeOf<undefined>();
+
     expect(getOrCreate(present, "value", Date)).toBeUndefined();
     expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
 

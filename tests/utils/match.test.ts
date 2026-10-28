@@ -67,6 +67,7 @@ describe("match", () => {
     ]);
 
     expect(result).toBe(expected);
+
     expectTypeOf(result).toEqualTypeOf<
       "one" | "greeting" | "farewell" | undefined
     >();
@@ -91,6 +92,7 @@ describe("match", () => {
         [() => true, () => "matched"],
       ]),
     ).toBe("matched");
+
     expect(
       match([
         [[() => false, () => false], "never"],
@@ -103,7 +105,7 @@ describe("match", () => {
       [
         // @ts-expect-error A targetless predicate has no contextual input type.
         (x) => {
-          return expect(x).toBeUndefined();
+          return void expect(x).toBeUndefined();
         },
         0,
       ],
@@ -120,6 +122,7 @@ describe("match", () => {
         "fallback",
       ),
     ).toBe("fallback");
+
     expect(
       match(
         [
@@ -156,6 +159,7 @@ describe("match", () => {
     expectTypeOf(matched).toEqualTypeOf<"matched" | "fallback">();
     expect(matched).toBe("matched");
     expect(match(5, [[predicate, result]], fallback)).toBe("fallback");
+
     expect(
       match([
         [

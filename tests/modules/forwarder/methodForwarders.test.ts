@@ -113,6 +113,7 @@ describe("methodForwarders", () => {
       "symbol",
       "aliasedSymbol",
     ]);
+
     expect(forwarders.map((entry) => entry.get()())).toEqual([
       0,
       "symbol",
@@ -121,7 +122,9 @@ describe("methodForwarders", () => {
       "symbol",
       "symbol",
     ]);
+
     expect(forwarders[4].enumerable).toBe(true);
+
     expectTypeOf(forwarders).toEqualTypeOf<
       (
         | MethodForwarder<typeof source, 0>
@@ -133,13 +136,15 @@ describe("methodForwarders", () => {
       )[]
     >();
 
-    if (false) {
-      // @ts-expect-error Data properties cannot be forwarded as methods.
-      methodForwarders(source, "value");
-      // @ts-expect-error Aliased inputs must name a method on the source.
-      methodForwarders(source, forwardAs("value", "alias"));
-      // @ts-expect-error Missing numeric keys are rejected.
-      methodForwarders(source, 1);
+    if (!false) {
+      return;
     }
+
+    // @ts-expect-error Data properties cannot be forwarded as methods.
+    methodForwarders(source, "value");
+    // @ts-expect-error Aliased inputs must name a method on the source.
+    methodForwarders(source, forwardAs("value", "alias"));
+    // @ts-expect-error Missing numeric keys are rejected.
+    methodForwarders(source, 1);
   });
 });

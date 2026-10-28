@@ -12,6 +12,7 @@ describe("isUndefined", () => {
       const expected = input === undefined;
 
       expect(isUndefined(input)).toBe(expected);
+
       expectTypeOf(createValues().filter(isUndefined)).toEqualTypeOf<
         undefined[]
       >();

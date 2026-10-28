@@ -48,11 +48,13 @@ describe("comparator", () => {
 
     expect(numberComparator(4, "isEven")).toBe(true);
     expect(numberComparator(5, "isEven")).toBe(false);
+
     expect(() => {
       // @ts-expect-error
 
       return numberComparator(5, "==", 5);
     }).toThrow(/disabled/);
+
     expect(() => {
       // @ts-expect-error
 

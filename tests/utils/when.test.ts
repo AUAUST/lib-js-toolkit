@@ -41,6 +41,7 @@ describe("when", () => {
     }
 
     expect(when.call(context, condition, callback, fallback)).toBe(43);
+
     expect(
       when.call(
         {
@@ -51,6 +52,7 @@ describe("when", () => {
         fallback,
       ),
     ).toBe(-1);
+
     expect(condition).toHaveBeenCalledTimes(2);
   });
 });

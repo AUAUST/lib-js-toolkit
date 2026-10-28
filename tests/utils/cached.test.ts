@@ -144,6 +144,7 @@ describe("cached", () => {
           "a",
         ),
       ).toBe(result);
+
       expect(fn(input, "b")).not.toBe(result);
       expect(fn.keyFor(input, "a")).toBe(key);
       expect(fn.value(key)).toBe(result);
@@ -155,9 +156,11 @@ describe("cached", () => {
       expect(callback).toHaveBeenNthCalledWith(1, input, "a");
       expect(callback).toHaveBeenCalledTimes(2);
       expectTypeOf(fn).toEqualTypeOf<Cached<typeof callback, string>>();
+
       expectTypeOf(fn).parameters.toEqualTypeOf<
         [input: { id: number }, suffix?: string]
       >();
+
       expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
     },
   );
@@ -185,7 +188,7 @@ describe("cached", () => {
   test.for([{}, () => {}, ...primitiveValues])(
     "uses resolved key %s from a later argument",
     (key) => {
-      const callback = vi.fn((_input: number, _key: typeof key) => undefined);
+      const callback = vi.fn((_input: number, _key: typeof key) => {});
       const fn = cached(callback, (_input, key) => key);
 
       expect(fn.keyFor(1, key)).toBe(key);
@@ -295,9 +298,11 @@ describe("cached", () => {
     const overload = cached(overloaded);
 
     expect(fn("entry", 2, "?")).toBe("!entry:2?");
+
     expectTypeOf(fn).parameters.toEqualTypeOf<
       [key: "entry", count?: number, ...suffixes: string[]]
     >();
+
     expectTypeOf(fn).thisParameter.toEqualTypeOf<void>();
     expectTypeOf(fn).returns.toEqualTypeOf<string>();
     expectTypeOf(fn.has).parameter(0).toEqualTypeOf<"entry">();
@@ -329,8 +334,10 @@ describe("cached", () => {
       count: 2,
       suffixes: ["a", "b"],
     });
+
     expect(fn("entry")).toBe(result);
     expect(fn.value("entry")).toBe(result);
+
     expectTypeOf(result).toEqualTypeOf<{
       key: string;
       count: number | undefined;
@@ -361,6 +368,7 @@ describe("cached", () => {
     expect(nullary()).toBe(0);
     expect(bound()).toBe(5);
     expect(owner.fn()).toBe(5);
+
     expect(
       Reflect.apply(
         bound,
@@ -370,12 +378,15 @@ describe("cached", () => {
         [],
       ),
     ).toBe(5);
+
     expect(optional()).toBeUndefined();
     expect(optional("entry")).toBe("entry");
     expectTypeOf(nullary.has).parameter(0).toEqualTypeOf<undefined>();
+
     expectTypeOf(optional.has)
       .parameter(0)
       .toEqualTypeOf<"entry" | undefined>();
+
     expectTypeOf(optional.keyFor).returns.toEqualTypeOf<"entry" | undefined>();
 
     if (false) {
@@ -393,20 +404,23 @@ describe("cached", () => {
       value: 0,
     };
 
-    if (false) {
-      // @ts-expect-error Function callbacks cannot require a receiver.
-      cached(contextual);
-      // @ts-expect-error Function key resolvers cannot require a receiver.
-      cached((key: number) => key, contextual);
-
-      cached((key: number) => key, {
-        // @ts-expect-error Options key resolvers cannot require a receiver.
-        resolveKey: contextual,
-      });
-      // @ts-expect-error Cache receivers cannot be overridden.
-      fn.call(context, 1);
-      // @ts-expect-error Key resolver receivers cannot be overridden.
-      fn.keyFor.call(context, 1);
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Function callbacks cannot require a receiver.
+    cached(contextual);
+    // @ts-expect-error Function key resolvers cannot require a receiver.
+    cached((key: number) => key, contextual);
+
+    cached((key: number) => key, {
+      // @ts-expect-error Options key resolvers cannot require a receiver.
+      resolveKey: contextual,
+    });
+
+    // @ts-expect-error Cache receivers cannot be overridden.
+    fn.call(context, 1);
+    // @ts-expect-error Key resolver receivers cannot be overridden.
+    fn.keyFor.call(context, 1);
   });
 });

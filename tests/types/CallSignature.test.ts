@@ -16,6 +16,7 @@ type Accepts<Signature, Arguments extends readonly any[]> = [
 describe("CallSignature", () => {
   test("preserves native function signatures", () => {
     type Guard = (input: unknown) => input is string;
+
     expectTypeOf<CallSignature<Guard>>().toEqualTypeOf<Guard>();
   });
 
@@ -37,6 +38,7 @@ describe("CallSignature", () => {
     expectTypeOf<CallParameters<Protocol>>().toEqualTypeOf<
       readonly [name: string, count?: number, ...flags: boolean[]]
     >();
+
     expectTypeOf<CallParameters<Protocol | (() => number)>>().toEqualTypeOf<
       readonly [name: string, count?: number, ...flags: boolean[]] | readonly []
     >();
@@ -50,6 +52,7 @@ describe("CallSignature", () => {
     expectTypeOf<CallParameters<Hybrid>>().toEqualTypeOf<
       readonly [name: string]
     >();
+
     expectTypeOf<CallReturnType<Hybrid>>().toEqualTypeOf<string>();
   });
 
@@ -76,6 +79,7 @@ describe("CallSignature", () => {
       | readonly [thing: unknown]
       | readonly [input: number | string, condition: boolean]
     >();
+
     expectTypeOf<CallReturnType<Target>>().toEqualTypeOf<number | string>();
   });
 });

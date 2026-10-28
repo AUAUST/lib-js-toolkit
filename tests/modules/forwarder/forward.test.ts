@@ -51,6 +51,7 @@ describe("forward", () => {
     forwarded.value = 100;
 
     expect(handler.value).toBe(100);
+
     expect(
       forwarded.greet.call(
         {
@@ -134,6 +135,7 @@ describe("forward", () => {
         "myAliasedCOtherMethod",
       ]),
     );
+
     expect(api.valueFromA).toBe(a.aValue);
     // @ts-expect-error
     expect(api.aValue).toBeUndefined();
@@ -195,6 +197,7 @@ describe("forward", () => {
     api.answer = 7;
 
     expect(source.value).toBe(7);
+
     expectTypeOf(api).toEqualTypeOf<{
       answer: number;
       hello: typeof source.greet;
@@ -229,6 +232,7 @@ describe("forward", () => {
 
     expect(keys(api)).toEqual(["read", "doubleValue"]);
     expect(api.read()).toBe(42);
+
     expectTypeOf(api).toEqualTypeOf<{
       readonly answer: number;
       read: typeof source.method;
@@ -260,6 +264,7 @@ describe("forward", () => {
 
     expect(api.answer).toBe(42);
     expect(api.read()).toBe(42);
+
     expectTypeOf(api).toEqualTypeOf<{
       readonly answer: number;
       read: typeof source.method;

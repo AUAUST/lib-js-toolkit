@@ -18,9 +18,10 @@ describe("setOrDelete", () => {
     expect(deleted).toBe(target);
     expect(Object.hasOwn(deleted, "value")).toBe(false);
 
-    const conditional = setOrDelete({}, "value", 1 as number | undefined);
+    const conditional = setOrDelete({}, "value", 1);
 
     expectTypeOf(conditional).toEqualTypeOf<{} | { value: number }>();
+
     expect(setOrDelete({}, "value", false)).toEqual({
       value: false,
     });

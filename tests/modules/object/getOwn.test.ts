@@ -16,9 +16,11 @@ describe("getOwn", () => {
 
     expectTypeOf(getOwn(target, "value")).toEqualTypeOf<number | undefined>();
     expectTypeOf(getOwn(target, "missing")).toBeAny();
+
     expectTypeOf(getOwn<number>(target, "value")).toEqualTypeOf<
       number | undefined
     >();
+
     expect(getOwn(target, "value")).toBe(1);
     expect(getOwn(target, "toString")).toBeUndefined();
     expect(getOwn(target, "missing")).toBeUndefined();

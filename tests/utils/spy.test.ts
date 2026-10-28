@@ -42,26 +42,26 @@ describe("spy", () => {
   });
 
   test("forwards the 'this' context to the closure and listeners", () => {
-    const obj = {
+    const object = {
       factor: 2,
       method(this: { factor: number }, x: number) {
-        expect(this).toBe(obj);
+        expect(this).toBe(object);
 
         return x * this.factor;
       },
     };
 
-    const before = vi.fn(function (this: typeof obj) {
-      expect(this).toBe(obj);
+    const before = vi.fn(function (this: typeof object) {
+      expect(this).toBe(object);
     });
 
-    const after = vi.fn(function (this: typeof obj, result: number) {
-      expect(this).toBe(obj);
+    const after = vi.fn(function (this: typeof object, result: number) {
+      expect(this).toBe(object);
       expect(result).toBe(10);
     });
 
-    const spiedFunction = spy(obj.method, before, after);
-    const result = spiedFunction.call(obj, 5);
+    const spiedFunction = spy(object.method, before, after);
+    const result = spiedFunction.call(object, 5);
 
     expect(result).toBe(10);
   });
@@ -135,6 +135,7 @@ describe("spy", () => {
 
     expectTypeOf(wrapped).toEqualTypeOf<(typeof callback)[typeof callable]>();
     expect(wrapped(4, "!")).toBe("8!");
+
     expect(calls).toEqual([
       ["before", 4, "!"],
       ["after", "8!", 4, "!"],

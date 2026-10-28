@@ -61,7 +61,9 @@ describe("measureAsync", () => {
     expectTypeOf(result).toEqualTypeOf<
       Promise<MeasureResult<`entry:${number}`>>
     >();
+
     expect((await result).result).toBe("entry:3");
+
     expect(
       (
         await measureAsync.call(

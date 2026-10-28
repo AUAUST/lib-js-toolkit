@@ -20,9 +20,9 @@ describe("tap", () => {
 
     const value = 21;
 
-    function callback(this: typeof context, val: number) {
+    function callback(this: typeof context, num: number) {
       expect(this).toBe(context);
-      expect(val * this.multiplier).toBe(42);
+      expect(num * this.multiplier).toBe(42);
     }
 
     // The type level of `fn.call` is too poor to infer `this` correctly here

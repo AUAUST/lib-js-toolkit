@@ -158,9 +158,11 @@ describe("compare", () => {
     expect(compare("Apple", "startsWithA", undefined, customOperators)).toBe(
       true,
     );
+
     expect(compare("Banana", "startsWithA", undefined, customOperators)).toBe(
       false,
     );
+
     expect(compare(4, "isEven", undefined, customOperators)).toBe(true);
     expect(compare(5, "isEven", undefined, customOperators)).toBe(false);
     expect(compare(42, "alwaysTrue", undefined, customOperators)).toBe(true);
@@ -174,11 +176,13 @@ describe("compare", () => {
     };
 
     expect(compare(5, "===", 5, customOperators)).toBe(true);
+
     expect(() => {
       // @ts-expect-error
 
       return compare(5, "==", 5, customOperators);
     }).toThrow(/disabled/);
+
     expect(() => {
       // @ts-expect-error Disabled operators are rejected statically too.
       return compare("test", "filled", undefined, customOperators);
@@ -194,6 +198,7 @@ describe("compare", () => {
     };
 
     expect(compare(2, operator, 4)).toBe(true);
+
     expect(
       compare(2, "custom", 4, {
         custom: operator,

@@ -28,6 +28,7 @@ describe("isCallable", () => {
         [callable]: () => {},
       }),
     ).toBe(true);
+
     expect(
       isCallable({
         get [callable]() {
@@ -38,39 +39,41 @@ describe("isCallable", () => {
   });
 
   test("supports passing a method name", () => {
-    const obj = {
+    const object = {
       method(...nums: number[]) {
-        return nums.reduce((sum, num) => sum + num, 0);
+        return nums.reduce((sum, number_) => sum + number_, 0);
       },
     } as unknown;
 
-    expect(isCallable(obj, "method")).toBe(true);
-    expect(isCallable(obj, "nonExistentMethod")).toBe(false);
+    expect(isCallable(object, "method")).toBe(true);
+    expect(isCallable(object, "nonExistentMethod")).toBe(false);
 
-    if (isCallable(obj, "method")) {
-      // Arguments cannot be inferred at runtime from an unknown input,
-      // so the guard should allow unknown args
-      expect(call(obj.method)).toBe(0);
-      expect(call(obj.method, 1, 2, 3)).toBe(6);
-      expect(callMethod(obj, "method", 5)).toBe(5);
-      expect(applyMethod(obj, "method", [1, 2, 3])).toBe(6);
+    if (!isCallable(object, "method")) {
+      return;
     }
+
+    // Arguments cannot be inferred at runtime from an unknown input,
+    // so the guard should allow unknown args
+    expect(call(object.method)).toBe(0);
+    expect(call(object.method, 1, 2, 3)).toBe(6);
+    expect(callMethod(object, "method", 5)).toBe(5);
+    expect(applyMethod(object, "method", [1, 2, 3])).toBe(6);
   });
 
   test("supports passing a method symbol", () => {
     const methodSymbol = Symbol("method");
 
-    const obj = {
+    const object = {
       [methodSymbol]() {
         return 1;
       },
     } as unknown;
 
-    expect(isCallable(obj, methodSymbol)).toBe(true);
-    expect(isCallable(obj, Symbol("nonExistentMethod"))).toBe(false);
+    expect(isCallable(object, methodSymbol)).toBe(true);
+    expect(isCallable(object, Symbol("nonExistentMethod"))).toBe(false);
 
-    if (isCallable(obj, methodSymbol)) {
-      expect(call(obj[methodSymbol])).toBe(1);
+    if (isCallable(object, methodSymbol)) {
+      expect(call(object[methodSymbol])).toBe(1);
     }
   });
 });

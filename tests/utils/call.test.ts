@@ -31,7 +31,7 @@ describe("call", () => {
 
   test("supports the `Callable` protocol", () => {
     const object = {
-      [callable]: function () {
+      [callable]() {
         return this;
       },
     };
@@ -59,12 +59,12 @@ describe("call", () => {
   });
 
   test("provides the correct this context at all times with `Callable`", () => {
-    const obj = {
+    const object = {
       other: 2,
       get value() {
         return this.other * 2;
       },
-      method: function () {
+      method() {
         return this.value * 2;
       },
       get [callable]() {
@@ -72,7 +72,7 @@ describe("call", () => {
       },
     };
 
-    expect(call(obj)).toBe(8);
+    expect(call(object)).toBe(8);
   });
 
   test("preserves argument and return types through native call and apply", () => {
@@ -87,14 +87,16 @@ describe("call", () => {
     expectTypeOf(call.apply(null, [input, 1, "!"])).toEqualTypeOf<string>();
     expectTypeOf(call.call(null, (n: number) => n, 1)).toEqualTypeOf<number>();
 
-    if (false) {
-      // @ts-expect-error Missing required argument.
-      call.call(null, input, 1);
-      // @ts-expect-error Incorrect argument type.
-      call.call(null, input, "1", "!");
-      // @ts-expect-error Incorrect argument type through native apply.
-      call.apply(null, [input, false, "!"]);
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Missing required argument.
+    call.call(null, input, 1);
+    // @ts-expect-error Incorrect argument type.
+    call.call(null, input, "1", "!");
+    // @ts-expect-error Incorrect argument type through native apply.
+    call.apply(null, [input, false, "!"]);
   });
 
   test("defaults helper receivers to the holder and preserves explicit receivers", () => {

@@ -12,6 +12,7 @@ describe("isNullish", () => {
       const expected = input == null;
 
       expect(isNullish(input)).toBe(expected);
+
       expectTypeOf(createValues().filter(isNullish)).toEqualTypeOf<
         (null | undefined)[]
       >();

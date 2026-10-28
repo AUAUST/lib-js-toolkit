@@ -54,6 +54,7 @@ describe("filled", () => {
     expectTypeOf<
       FilledString<"" | " " | " hello ">
     >().toEqualTypeOf<" hello ">();
+
     expectTypeOf<FilledString<"\u00a0\ufeff">>().toBeNever();
     expectTypeOf<FilledString<"\u200b">>().toEqualTypeOf<"\u200b">();
     expectTypeOf<FilledString<` ${string}`>>().toEqualTypeOf<` ${string}`>();
@@ -63,14 +64,18 @@ describe("filled", () => {
   test("preserves primitives and narrows unknown values to non-nullish values", () => {
     expectTypeOf<FilledValue<number>>().toEqualTypeOf<number>();
     expectTypeOf<FilledValue<0 | 1 | 2>>().toEqualTypeOf<0 | 1 | 2>();
+
     expectTypeOf<FilledValue<boolean | bigint | symbol>>().toEqualTypeOf<
       boolean | bigint | symbol
     >();
+
     expectTypeOf<FilledValue<never>>().toBeNever();
     expectTypeOf<FilledValue<any>>().toBeAny();
+
     expectTypeOf<FilledValue<unknown>>().toEqualTypeOf<
       string | number | bigint | boolean | symbol | object
     >();
+
     expectTypeOf<FilledValue<{}>>().toEqualTypeOf<{}>();
 
     function check(input: unknown) {
@@ -106,9 +111,11 @@ describe("filled", () => {
     expectTypeOf<FilledValue<readonly number[]>>().toEqualTypeOf<
       readonly number[] & readonly [number, ...number[]]
     >();
+
     expectTypeOf<FilledContainer<string[]>>().toEqualTypeOf<
       [string, ...string[]]
     >();
+
     expectTypeOf<FilledValue<[number?]>>().toEqualTypeOf<
       [number?] & [number | undefined, ...(number | undefined)[]]
     >();
@@ -134,20 +141,26 @@ describe("filled", () => {
     expectTypeOf<
       FilledValue<Map<string, number> | Set<number>>
     >().toEqualTypeOf<Map<string, number> | Set<number>>();
+
     expectTypeOf<FilledValue<ReadonlyMap<string, number>>>().toEqualTypeOf<
       ReadonlyMap<string, number>
     >();
+
     expectTypeOf<FilledValue<ReadonlySet<number>>>().toEqualTypeOf<
       ReadonlySet<number>
     >();
+
     expectTypeOf<
       FilledValue<Map<string, never> | ReadonlySet<never>>
     >().toBeNever();
+
     expectTypeOf<FilledValue<{ length: 0 } | { size: 0 }>>().toBeNever();
+
     expectTypeOf<FilledValue<{ length: 1; size: 0 }>>().toEqualTypeOf<{
       length: 1;
       size: 0;
     }>();
+
     expectTypeOf<FilledValue<() => void>>().toEqualTypeOf<() => void>();
   });
 
@@ -175,12 +188,15 @@ describe("filled", () => {
 
     expect(filled(value)).toBe(false);
     expectTypeOf<FilledValue<Emptiable<true>>>().toBeNever();
+
     expectTypeOf<FilledValue<Emptiable<false>>>().toEqualTypeOf<
       Emptiable<false>
     >();
+
     expectTypeOf<FilledValue<Emptiable & []>>().toEqualTypeOf<
       Emptiable & [] & Emptiable<false>
     >();
+
     expectTypeOf<FilledMember<Emptiable>>().toEqualTypeOf<Emptiable<false>>();
   });
 
@@ -196,6 +212,7 @@ describe("filled", () => {
     expectTypeOf<FilledValue<typeof counted>>().toEqualTypeOf<typeof counted>();
     expectTypeOf<FilledValue<Countable>>().toEqualTypeOf<Countable>();
     expectTypeOf<FilledValue<{ [countOf](): 0 }>>().toBeNever();
+
     expectTypeOf<
       FilledValue<Emptiable<false> & { [countOf](): 0 }>
     >().toEqualTypeOf<Emptiable<false> & { [countOf](): 0 }>();

@@ -35,6 +35,7 @@ describe("propertyComposers", () => {
     result.stored = 3;
 
     expect(result.doubled).toBe(6);
+
     expectTypeOf(result).toEqualTypeOf<{
       readonly fixed: "fixed";
       mutable: 1;
@@ -42,20 +43,22 @@ describe("propertyComposers", () => {
       stored: number;
     }>();
 
-    if (false) {
-      // @ts-expect-error Non-writable descriptors produce readonly properties.
-      result.fixed = "fixed";
-      // @ts-expect-error Getter-only descriptors produce readonly properties.
-      result.doubled = 1;
-
-      propertyComposers({
-        // @ts-expect-error Data descriptors cannot contain accessors.
-        invalid: {
-          value: 1,
-          get: () => 1,
-        },
-      });
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Non-writable descriptors produce readonly properties.
+    result.fixed = "fixed";
+    // @ts-expect-error Getter-only descriptors produce readonly properties.
+    result.doubled = 1;
+
+    propertyComposers({
+      // @ts-expect-error Data descriptors cannot contain accessors.
+      invalid: {
+        value: 1,
+        get: () => 1,
+      },
+    });
   });
 
   test("preserves symbol keys and descriptor flags", () => {
@@ -78,6 +81,7 @@ describe("propertyComposers", () => {
       enumerable: false,
       configurable: false,
     });
+
     expectTypeOf(result).toEqualTypeOf<{ [token]: true }>();
   });
 

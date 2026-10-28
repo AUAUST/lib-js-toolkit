@@ -24,14 +24,17 @@ describe("values", () => {
     expectTypeOf(values(target)).toEqualTypeOf<
       (number | string | undefined)[]
     >();
+
     expectTypeOf(values(tuple)).toEqualTypeOf<(1 | "entry")[]>();
     expectTypeOf(values("ab")).toEqualTypeOf<string[]>();
     expectTypeOf(values({})).toEqualTypeOf<never[]>();
+
     expectTypeOf(
       values({
         [Symbol()]: true,
       }),
     ).toEqualTypeOf<never[]>();
+
     expect(values(tuple)).toEqual([1, "entry"]);
     expect(values("ab")).toEqual(["a", "b"]);
   });

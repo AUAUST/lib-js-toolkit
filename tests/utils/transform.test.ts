@@ -59,11 +59,13 @@ describe("transform", () => {
       ["b", 2],
       ["c", 3],
     ]);
+
     expect(transformer.mock.calls).toEqual([
       [1, "renamed", "a"],
       [2, "b", "b"],
       [3, "c", "c"],
     ]);
+
     expect(result).toEqual({
       renamed: "renamed:1",
       b: "b:2",
@@ -82,6 +84,7 @@ describe("transform", () => {
     );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+
     expect(result).toEqual({
       renamed: 4,
     });
@@ -101,6 +104,7 @@ describe("transform", () => {
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
     }>();
+
     expect(result).toEqual({
       entry: "8:entry:entry",
     });

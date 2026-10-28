@@ -82,7 +82,7 @@ describe("cachedAsync", () => {
 
   test("resolves keys once per call and preserves optional and rest arguments", async () => {
     const callback = vi.fn(
-      async (id: number, count: number = 1, ...suffixes: string[]) => {
+      async (id: number, count = 1, ...suffixes: string[]) => {
         return `${id}:${count}${suffixes.join("")}`;
       },
     );
@@ -100,9 +100,11 @@ describe("cachedAsync", () => {
     expect(callback).toHaveBeenCalledExactlyOnceWith(1, 2, "a", "b");
     expect(await promise).toBe("1:2ab");
     expect(fn.value("1")).toBe("1:2ab");
+
     expectTypeOf(fn).parameters.toEqualTypeOf<
       [id: number, count?: number, ...suffixes: string[]]
     >();
+
     expectTypeOf(fn.keyFor).returns.toEqualTypeOf<string>();
     expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
     expectTypeOf(fn.pending).parameter(0).toEqualTypeOf<string>();
@@ -126,7 +128,7 @@ describe("cachedAsync", () => {
   test("undefined resolved keys bypass caching", async () => {
     const fn = cachedAsync(
       async (_id: number) => 1,
-      () => undefined,
+      () => {},
     );
 
     const first = fn(1);

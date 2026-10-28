@@ -48,12 +48,14 @@ describe("mapped", () => {
     expect(result.alpha).toBe(1);
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; nested: {} }>();
 
-    if (false) {
-      // @ts-expect-error Renamed keys are removed from the result type.
-      result.a;
-      // @ts-expect-error Excluded keys are removed from the result type.
-      result.b;
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Renamed keys are removed from the result type.
+    result.a;
+    // @ts-expect-error Excluded keys are removed from the result type.
+    result.b;
   });
 
   test("copies arrays and tuples into records without array metadata", () => {
@@ -75,10 +77,13 @@ describe("mapped", () => {
     );
 
     expectTypeOf(copied).toEqualTypeOf<Record<`${number}`, number>>();
+
     expectTypeOf(result).toEqualTypeOf<{
       readonly first: string;
     }>();
+
     expect(Array.isArray(copied)).toBe(false);
+
     expect(result).toEqual({
       first: "1",
     });
@@ -110,9 +115,11 @@ describe("mapped", () => {
     );
 
     expectTypeOf(copied).toEqualTypeOf<typeof source>();
+
     expectTypeOf(result).toEqualTypeOf<{
       [destinationSymbol]: string;
     }>();
+
     expect(copied[sourceSymbol]).toBe("symbol value");
     expect(Reflect.ownKeys(result)).toEqual([destinationSymbol]);
     expect(result[destinationSymbol]).toBe("4");
@@ -136,11 +143,13 @@ describe("mapped", () => {
       ["b", 2],
       ["c", 3],
     ]);
+
     expect(transformer.mock.calls).toEqual([
       [1, "renamed", "a"],
       [2, "b", "b"],
       [3, "c", "c"],
     ]);
+
     expect(result).toEqual({
       renamed: "renamed:1",
       b: "b:2",
@@ -159,6 +168,7 @@ describe("mapped", () => {
     );
 
     expectTypeOf(result).toEqualTypeOf<Record<"renamed", number>>();
+
     expect(result).toEqual({
       renamed: 4,
     });
@@ -178,6 +188,7 @@ describe("mapped", () => {
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
     }>();
+
     expect(result).toEqual({
       entry: "8:entry:entry",
     });

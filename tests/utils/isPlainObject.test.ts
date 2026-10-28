@@ -76,9 +76,11 @@ describe("isPlainObject", () => {
     expect(isPlainObject(input)).toBe(true);
     expect(reads).toBe(0);
 
-    if (isPlainObject(input)) {
-      expectTypeOf(input).toEqualTypeOf<Record<string, unknown>>();
-      expect(input.property).toBe("value");
+    if (!isPlainObject(input)) {
+      return;
     }
+
+    expectTypeOf(input).toEqualTypeOf<Record<string, unknown>>();
+    expect(input.property).toBe("value");
   });
 });

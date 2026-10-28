@@ -22,38 +22,38 @@ describe("isFunction", () => {
   );
 
   test("supports passing a method name", () => {
-    const obj = {
+    const object = {
       method(...nums: number[]) {
-        return nums.reduce((sum, num) => sum + num, 0);
+        return nums.reduce((sum, number_) => sum + number_, 0);
       },
     } as unknown;
 
-    expect(isFunction(obj, "method")).toBe(true);
-    expect(isFunction(obj, "nonExistentMethod")).toBe(false);
+    expect(isFunction(object, "method")).toBe(true);
+    expect(isFunction(object, "nonExistentMethod")).toBe(false);
 
-    if (isFunction(obj, "method")) {
-      expect(obj.method()).toBe(0);
-      expect(obj.method(1, 2, 3)).toBe(6);
-      expectTypeOf<ReturnType<typeof obj.method>>().toBeUnknown();
+    if (!isFunction(object, "method")) {
+      return;
     }
+
+    expect(object.method()).toBe(0);
+    expect(object.method(1, 2, 3)).toBe(6);
+    expectTypeOf<ReturnType<typeof object.method>>().toBeUnknown();
   });
 
   test("respects known methods", () => {
-    const obj = {
+    const object = {
       method(...nums: number[]) {
-        return nums.reduce((sum, num) => sum + num, 0);
+        return nums.reduce((sum, number_) => sum + number_, 0);
       },
     };
 
-    if (isFunction(obj, "method")) {
-      const method = obj.method;
-
-      expect(obj.method()).toBe(0);
-      expect(obj.method(1, 2, 3)).toBe(6);
-
-      assertType<typeof method>(obj.method);
-
-      assertType<ReturnType<typeof method>>(1 + 1);
+    if (!isFunction(object, "method")) {
+      return;
     }
+
+    expect(object.method()).toBe(0);
+    expect(object.method(1, 2, 3)).toBe(6);
+
+    assertType<ReturnType<typeof object.method>>(1 + 1);
   });
 });

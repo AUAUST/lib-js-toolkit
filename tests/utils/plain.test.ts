@@ -20,11 +20,13 @@ describe("plain", () => {
 
       expect(Object.getPrototypeOf(result)).toBeNull();
       expect(result).not.toBe(input);
+
       expect({
         ...result,
       }).toEqual({
         ...input,
       });
+
       expectTypeOf(result).toEqualTypeOf<typeof input>();
     },
   );

@@ -79,6 +79,7 @@ describe("compose", () => {
     expect(extended).toBe(base);
     expect(extended.name).toBe("base");
     expect(compose(empty)).toBe(empty);
+
     expectTypeOf(extended).toEqualTypeOf<{
       name: string;
       extra: boolean;
@@ -141,9 +142,11 @@ describe("compose", () => {
     expect(result).toBe(base);
     expect(reads).toBe(0);
     expect(proto(result)).toBe(prototype);
+
     expect(ownDescriptor(result, "hidden")).toEqual(
       ownDescriptor(base, "hidden"),
     );
+
     expect(result.lazy).toBe(2);
     expect(hasOwn(base, "value")).toBe(true);
   });
@@ -165,6 +168,7 @@ describe("compose", () => {
 
     expect(result.value).toBe("last");
     expect(base.value).toBe("last");
+
     expectTypeOf(result).toEqualTypeOf<{
       untouched: boolean;
       value: "last";
@@ -200,12 +204,13 @@ describe("compose", () => {
     expect(result.boz).toBe(true);
     expect(await result.async("test")).toBe(4);
     expect(result.meep()).toBe(0);
+
     expectTypeOf(result).toEqualTypeOf<{
       [token]: undefined;
       readonly bar: number;
       readonly boz: boolean;
-      async: (value: string) => Promise<number>;
-      meep: (value?: number) => number;
+      async(value: string): Promise<number>;
+      meep(value?: number): number;
     }>();
   });
 
@@ -266,16 +271,19 @@ describe("compose", () => {
     expect(() => {
       return compose(base, compose.value("value", 2));
     }).toThrow(TypeError);
+
     expect(ownDescriptor(base, "value")?.value).toBe(1);
   });
 
   test("accepts only a base followed by composer entries", () => {
-    if (false) {
-      // @ts-expect-error Only the first argument may be a base object.
-      compose({}, {});
-      // @ts-expect-error A helper cannot be followed by a base object.
-      compose(compose.value("value", 1), {});
+    if (!false) {
+      return;
     }
+
+    // @ts-expect-error Only the first argument may be a base object.
+    compose({}, {});
+    // @ts-expect-error A helper cannot be followed by a base object.
+    compose(compose.value("value", 1), {});
   });
 
   test("resets descriptor defaults when replacing earlier properties", () => {
@@ -326,6 +334,7 @@ describe("compose", () => {
     );
 
     expect(composed(3)).toBe("xxx");
+
     expect(
       composed.call(
         {
@@ -334,6 +343,7 @@ describe("compose", () => {
         2,
       ),
     ).toBe("yy");
+
     expect(composed.count).toBe(5);
     expect(composed.pow2(4)).toBe(16);
   });

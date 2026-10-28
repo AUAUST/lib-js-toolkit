@@ -11,10 +11,12 @@ describe("countable", () => {
 
     expect(implementsProtocol(countOf, value)).toBe(true);
 
-    if (implementsProtocol(countOf, value)) {
-      expectTypeOf(value).toEqualTypeOf<Countable>();
-      expectTypeOf(value[countOf]).toEqualTypeOf<() => number>();
-      expect(value[countOf]()).toBe(3);
+    if (!implementsProtocol(countOf, value)) {
+      return;
     }
+
+    expectTypeOf(value).toEqualTypeOf<Countable>();
+    expectTypeOf(value[countOf]).toEqualTypeOf<() => number>();
+    expect(value[countOf]()).toBe(3);
   });
 });

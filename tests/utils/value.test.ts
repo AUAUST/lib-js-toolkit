@@ -8,11 +8,11 @@ describe("value", () => {
     expect(value(42)).toBe(42);
     expect(value("Hello")).toBe("Hello");
 
-    const obj = {
+    const object = {
       a: 1,
     };
 
-    expect(value(obj)).toBe(obj);
+    expect(value(object)).toBe(object);
 
     const sym = Symbol("test");
 
@@ -23,11 +23,11 @@ describe("value", () => {
     expect(value(() => 42)).toBe(42);
     expect(value(() => "Hello")).toBe("Hello");
 
-    const obj = {
+    const object = {
       a: 1,
     };
 
-    expect(value(() => obj)).toBe(obj);
+    expect(value(() => object)).toBe(object);
 
     const sym = Symbol("test");
 
@@ -71,6 +71,7 @@ describe("value", () => {
     const context = new Context();
 
     expect(context.resolve(42)).toBe(42);
+
     expect(
       context.resolve(function () {
         return this;

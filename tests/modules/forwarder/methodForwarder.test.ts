@@ -18,6 +18,7 @@ describe("methodForwarder", () => {
     expect(descriptor.get).toBeTypeOf("function");
     expect(api.method()).toBe("42");
     expect(api.method("!")).toBe("42!");
+
     expect(
       api.method.call(
         {
@@ -26,6 +27,7 @@ describe("methodForwarder", () => {
         "?",
       ),
     ).toBe("7?");
+
     expect(api.method).toBe(api.method);
     expect(api.method).not.toBe(source.method);
     expectTypeOf(descriptor.get()).toEqualTypeOf<typeof source.method>();

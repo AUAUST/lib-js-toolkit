@@ -13,22 +13,26 @@ describe("mappedValues", () => {
     const result = mappedValues(source, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
 
-      return `${String(key)}:${value}`;
+      return `${key}:${value}`;
     });
 
     expect(result).toEqual({
       a: "a:1",
       b: "b:2",
     });
+
     expect(result).not.toBe(source);
+
     expect(source).toEqual({
       a: 1,
       b: 2,
     });
+
     expect(calls).toEqual([
       [1, "a", "a"],
       [2, "b", "b"],
     ]);
+
     expectTypeOf(result).toEqualTypeOf<{ a: string; b: string }>();
   });
 
@@ -46,15 +50,18 @@ describe("mappedValues", () => {
       1: 4,
       2: 6,
     });
+
     expect(isArray(result)).toBe(false);
     expectTypeOf(result).toEqualTypeOf<Record<`${number}`, number>>();
 
-    if (false) {
-      // @ts-expect-error Mapping an array produces a record without array methods.
-      result.map;
-      // @ts-expect-error Array metadata is not copied.
-      result.length;
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Mapping an array produces a record without array methods.
+    result.map;
+    // @ts-expect-error Array metadata is not copied.
+    result.length;
   });
 
   test("projects readonly tuples into records and preserves optional indices", () => {
@@ -68,9 +75,10 @@ describe("mappedValues", () => {
     });
 
     expectTypeOf(result).toEqualTypeOf<{
-      readonly "0": string;
-      readonly "1"?: string;
+      readonly 0: string;
+      readonly 1?: string;
     }>();
+
     expect(result).toEqual({
       0: "1",
     });
@@ -96,9 +104,11 @@ describe("mappedValues", () => {
     expectTypeOf(copied).toEqualTypeOf<{
       entry: number;
     }>();
+
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
     }>();
+
     expect(Reflect.ownKeys(copied)).toEqual(["entry"]);
     expect(Reflect.ownKeys(result)).toEqual(["entry"]);
   });
@@ -109,10 +119,12 @@ describe("mappedValues", () => {
 
     expectTypeOf(characters).toEqualTypeOf<Record<`${number}`, string>>();
     expectTypeOf(empty).toEqualTypeOf<{}>();
+
     expect(characters).toEqual({
       0: "a",
       1: "b",
     });
+
     expect(empty).toEqual({});
   });
 
@@ -129,6 +141,7 @@ describe("mappedValues", () => {
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
     }>();
+
     expect(result).toEqual({
       entry: "8:entry:entry",
     });

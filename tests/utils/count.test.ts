@@ -12,7 +12,7 @@ describe("count", () => {
     ["toolkit", 7],
     [[], 0],
     [[1, 2, 3], 3],
-    [Array(3), 3],
+    [new Array(3), 3],
     [new Map(), 0],
     [new Map([["key", "value"]]), 1],
     [new Set(), 0],
@@ -52,12 +52,14 @@ describe("count", () => {
 
     expect(count(inherited)).toBeUndefined();
     expect(count({})).toBe(0);
+
     expect(
       count({
         first: 1,
         second: 2,
       }),
     ).toBe(2);
+
     expect(count(record)).toBe(2);
   });
 

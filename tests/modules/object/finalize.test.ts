@@ -35,9 +35,7 @@ describe("finalize", () => {
 
   test("preserves overloads and generic function inference", () => {
     function overloaded(value: string): string;
-
     function overloaded(value: number): number;
-
     function overloaded(value: string | number): string | number {
       return value;
     }

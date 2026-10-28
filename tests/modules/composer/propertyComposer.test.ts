@@ -41,6 +41,7 @@ describe("propertyComposer", () => {
       readonly fixed: "fixed";
       mutable: 1;
     }>();
+
     expect(ownDescriptor(result, "fixed")).toEqual({
       value: "fixed",
       writable: false,
@@ -48,19 +49,23 @@ describe("propertyComposer", () => {
       configurable: true,
     });
 
-    if (false) {
-      // @ts-expect-error Data descriptors cannot contain accessors.
-      propertyComposer("invalid", {
-        value: 1,
-        get: () => 1,
-      });
-      // @ts-expect-error Accessor descriptors cannot specify writability.
-      propertyComposer("invalid", {
-        writable: true,
-        get: () => 1,
-      });
-      // @ts-expect-error Non-writable descriptors produce readonly properties.
-      result.fixed = "fixed";
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Data descriptors cannot contain accessors.
+    propertyComposer("invalid", {
+      value: 1,
+      get: () => 1,
+    });
+
+    // @ts-expect-error Accessor descriptors cannot specify writability.
+    propertyComposer("invalid", {
+      writable: true,
+      get: () => 1,
+    });
+
+    // @ts-expect-error Non-writable descriptors produce readonly properties.
+    result.fixed = "fixed";
   });
 });

@@ -23,9 +23,11 @@ describe("record", () => {
     const result = record(new Map<string, number>([["one", 1]]));
 
     expectTypeOf(result).toEqualTypeOf<Record<string, number>>();
+
     expectTypeOf(record(new Map<"a" | "b", number>())).toEqualTypeOf<
       Record<"a" | "b", number>
     >();
+
     expectTypeOf(record([])).toEqualTypeOf<{}>();
     expect(result.one).toBe(1);
     expect(record([])).toEqual({});
@@ -42,9 +44,11 @@ describe("record", () => {
     expectTypeOf(record(loose)).toBeAny();
     expectTypeOf(record(loose as any)).toBeAny();
     expectTypeOf(result[1]).toEqualTypeOf<"last">();
+
     expect(record(loose)).toEqual({
       one: 1,
     });
+
     expect(result[1]).toBe("last");
   });
 });

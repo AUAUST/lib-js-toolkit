@@ -142,7 +142,7 @@ describe("memoized", () => {
   );
 
   test("bypasses caching for undefined resolved keys while caching undefined results", () => {
-    const callback = vi.fn((_value: number, _key?: "entry") => undefined);
+    const callback = vi.fn((_value: number, _key?: "entry") => {});
     const fn = memoized(callback, (_value, key) => key);
 
     fn(1);
@@ -324,18 +324,20 @@ describe("memoized", () => {
 
     expect(Reflect.apply(wrapped, context, [])).toBe(5);
 
-    if (false) {
-      // @ts-expect-error Function callbacks cannot require a receiver.
-      memoized(contextual);
-
-      // @ts-expect-error Memoized receivers cannot be overridden.
-      fn.call(context, 1);
-
-      // @ts-expect-error Callable holder receivers cannot be overridden.
-      wrapped.call({
-        value: 0,
-      });
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Function callbacks cannot require a receiver.
+    memoized(contextual);
+
+    // @ts-expect-error Memoized receivers cannot be overridden.
+    fn.call(context, 1);
+
+    // @ts-expect-error Callable holder receivers cannot be overridden.
+    wrapped.call({
+      value: 0,
+    });
   });
 
   test("infers cache keys and the full callback signature", () => {
@@ -344,6 +346,7 @@ describe("memoized", () => {
     expectTypeOf(wrapped).parameters.toEqualTypeOf<
       [key: "entry", count?: number, ...suffixes: string[]]
     >();
+
     expectTypeOf(wrapped).thisParameter.toEqualTypeOf<void>();
     expectTypeOf(wrapped).returns.toEqualTypeOf<string>();
     expectTypeOf(wrapped.has).parameter(0).toEqualTypeOf<"entry">();
@@ -379,8 +382,10 @@ describe("memoized", () => {
       count: 2,
       suffixes: ["a", "b"],
     });
+
     expect(wrapped("entry")).toBe(result);
     expect(wrapped.value("entry")).toBe(result);
+
     expectTypeOf(result).toEqualTypeOf<{
       key: string;
       count: number | undefined;
@@ -405,9 +410,11 @@ describe("memoized", () => {
     expect(nullary.size).toBe(1);
     expectTypeOf(nullary.keyFor).returns.toEqualTypeOf<undefined>();
     expectTypeOf(nullary.has).parameter(0).toEqualTypeOf<undefined>();
+
     expectTypeOf(optional.has)
       .parameter(0)
       .toEqualTypeOf<"entry" | undefined>();
+
     expect(optional()).toBeUndefined();
     expect(optional("entry")).toBe("entry");
   });

@@ -130,6 +130,7 @@ describe("callMethod", () => {
 
       return callMethod(target, "value");
     }).toThrow(TypeError);
+
     expect(() => {
       // @ts-expect-error The method does not exist.
 
@@ -156,17 +157,19 @@ describe("callMethod", () => {
       return this.other;
     };
 
-    if (false) {
-      // @ts-expect-error Required argument is missing.
-      callMethod(target, "add");
-      // @ts-expect-error Incorrect named-method argument type.
-      callMethod(target, "add", "3");
-      // @ts-expect-error Too many arguments.
-      callMethod(target, "add", 1, 2);
-      // @ts-expect-error Incorrect supplied-function argument type.
-      callMethod(target, fn, "3");
-      // @ts-expect-error The target does not satisfy the function receiver.
-      callMethod(target, incompatible);
+    if (!!true) {
+      return;
     }
+
+    // @ts-expect-error Required argument is missing.
+    callMethod(target, "add");
+    // @ts-expect-error Incorrect named-method argument type.
+    callMethod(target, "add", "3");
+    // @ts-expect-error Too many arguments.
+    callMethod(target, "add", 1, 2);
+    // @ts-expect-error Incorrect supplied-function argument type.
+    callMethod(target, fn, "3");
+    // @ts-expect-error The target does not satisfy the function receiver.
+    callMethod(target, incompatible);
   });
 });

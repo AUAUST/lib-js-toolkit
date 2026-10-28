@@ -44,6 +44,7 @@ describe("set", () => {
 
     expect(set(target, "value", 2)).toBe(target);
     expect(stored).toBe(2);
+
     expect(() => {
       return set(Object.freeze({}), "value", 1);
     }).toThrow(TypeError);

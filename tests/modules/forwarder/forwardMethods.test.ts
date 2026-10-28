@@ -82,8 +82,8 @@ describe("forwardMethods", () => {
     const sym = Symbol("uniqueMethod");
 
     const handler = {
-      [sym](msg: string) {
-        return `Message: ${msg}`;
+      [sym](message: string) {
+        return `Message: ${message}`;
       },
     };
 
@@ -132,11 +132,12 @@ describe("forwardMethods", () => {
     );
 
     expectTypeOf(forwarded).toEqualTypeOf<{
-      "label": string;
-      "0": (value: number) => number;
-      [alias]: (name: string) => string;
-      "1": () => boolean;
+      label: string;
+      0(value: number): number;
+      [alias](name: string): string;
+      1(): boolean;
     }>();
+
     expect(forwarded).toBe(target);
     expect(forwarded[0](4)).toBe(12);
     expect(forwarded[alias]("World")).toBe("Hello, World!");

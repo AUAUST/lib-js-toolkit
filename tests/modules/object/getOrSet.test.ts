@@ -23,11 +23,14 @@ describe("getOrSet", () => {
 
     expectTypeOf(result).toEqualTypeOf<number>();
     expect(result).toBe(5);
+
     expect(target).toEqual({
       count: 5,
     });
+
     expect(getOrSet(target, "count", fallback)).toBe(5);
     expect(fallback).toHaveBeenCalledExactlyOnceWith("count");
+
     expectTypeOf(
       getOrSet({}, "literal", "fallback" as const),
     ).toEqualTypeOf<"fallback">();
@@ -46,13 +49,16 @@ describe("getOrSet", () => {
     expectTypeOf(
       getOrSet(target, "missing", fallback),
     ).toEqualTypeOf<undefined>();
+
     expect(getOrSet(target, "missing", fallback)).toBeUndefined();
     expect(getOrSet(target, "empty", fallback)).toBeNull();
     expect(getOrSet(target, "zero", fallback)).toBe(0);
     expect(getOrSet(target, "no", fallback)).toBe(false);
+
     expect(getOrSet(target, "toString", fallback)).toBe(
       Object.prototype.toString,
     );
+
     expect(fallback).not.toHaveBeenCalled();
   });
 

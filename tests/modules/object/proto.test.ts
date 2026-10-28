@@ -11,6 +11,7 @@ describe("proto", () => {
     expectTypeOf(proto<typeof target>({})).toEqualTypeOf<
       typeof target | null
     >();
+
     expectTypeOf(proto({})).toBeAny();
     expect(proto(Object.create(target))).toBe(target);
     expect(proto(Object.create(null))).toBeNull();

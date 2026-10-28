@@ -20,6 +20,7 @@ describe("defineGetter", () => {
     expectTypeOf(result.count).toEqualTypeOf<number>();
     expect(result).toBe(target);
     expect(result[key]).toBe(4);
+
     expect(Object.getOwnPropertyDescriptor(result, key)).toEqual({
       get: expect.any(Function),
       set: undefined,

@@ -58,13 +58,15 @@ describe("protocols", () => {
 
     expect(implementsProtocol(customProtocol, value)).toBe(true);
 
-    if (implementsProtocol(customProtocol, value)) {
-      const typed = value[customProtocol];
-
-      expectTypeOf(value).toEqualTypeOf<CustomImplementation>();
-      expect(typed).toBe("implemented");
-      expectTypeOf(typed).toEqualTypeOf<string>();
+    if (!implementsProtocol(customProtocol, value)) {
+      return;
     }
+
+    const typed = value[customProtocol];
+
+    expectTypeOf(value).toEqualTypeOf<CustomImplementation>();
+    expect(typed).toBe("implemented");
+    expectTypeOf(typed).toEqualTypeOf<string>();
   });
 
   test("narrows synchronous and asynchronous iteration protocols", () => {
@@ -109,6 +111,7 @@ describe("protocols", () => {
 
     if (implementsProtocol(Symbol.asyncDispose, asyncDisposable)) {
       expectTypeOf(asyncDisposable).toEqualTypeOf<AsyncDisposable>();
+
       expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<
         () => PromiseLike<void>
       >();
@@ -138,23 +141,27 @@ describe("protocols", () => {
       expectTypeOf(
         spreadable[Symbol.isConcatSpreadable],
       ).toEqualTypeOf<boolean>();
+
       expect(spreadable[Symbol.isConcatSpreadable]).toBe(true);
     }
 
-    if (implementsProtocol(Symbol.toPrimitive, primitiveConvertible)) {
-      expectTypeOf(
-        primitiveConvertible[Symbol.toPrimitive],
-      ).returns.toEqualTypeOf<
-        bigint | boolean | null | number | string | symbol | undefined
-      >();
-      expect(primitiveConvertible[Symbol.toPrimitive]("number")).toBe(42);
+    if (!implementsProtocol(Symbol.toPrimitive, primitiveConvertible)) {
+      return;
     }
+
+    expectTypeOf(
+      primitiveConvertible[Symbol.toPrimitive],
+    ).returns.toEqualTypeOf<
+      bigint | boolean | null | number | string | symbol | undefined
+    >();
+
+    expect(primitiveConvertible[Symbol.toPrimitive]("number")).toBe(42);
   });
 
   test("narrows string pattern protocols", () => {
     const pattern: unknown = {
       [Symbol.match]: (_string: string) => null,
-      [Symbol.matchAll]: function* (_string: string) {},
+      *[Symbol.matchAll](_string: string) {},
       [Symbol.replace]: (string: string) => string,
       [Symbol.search]: (_string: string) => -1,
       [Symbol.split]: (string: string) => [string],
@@ -210,12 +217,15 @@ describe("protocols", () => {
       expect(tagged[Symbol.toStringTag]).toBe("Tagged");
     }
 
-    if (implementsProtocol(Symbol.unscopables, scoped)) {
-      expectTypeOf(scoped[Symbol.unscopables]).toEqualTypeOf<object>();
-      expect(scoped[Symbol.unscopables]).toEqual({
-        hidden: true,
-      });
+    if (!implementsProtocol(Symbol.unscopables, scoped)) {
+      return;
     }
+
+    expectTypeOf(scoped[Symbol.unscopables]).toEqualTypeOf<object>();
+
+    expect(scoped[Symbol.unscopables]).toEqual({
+      hidden: true,
+    });
   });
 
   test("recognizes inherited well-known protocols", () => {
@@ -230,6 +240,7 @@ describe("protocols", () => {
     expect(implementsProtocol(isEmpty, null)).toBe(false);
     expect(implementsProtocol(isEmpty, "value")).toBe(false);
     expect(implementsProtocol(Symbol.iterator, {})).toBe(false);
+
     expect(implementsProtocol(Symbol.iterator, "iterable primitive")).toBe(
       false,
     );

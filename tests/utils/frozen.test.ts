@@ -4,31 +4,31 @@ import { frozen } from "@auaust/toolkit";
 
 describe("frozen", () => {
   test("returns a frozen shallow copy of the object", () => {
-    const obj = {
+    const object = {
       a: 1,
       nested: {
         b: 2,
       },
     };
 
-    const result = frozen(obj);
+    const result = frozen(object);
 
     expect(Object.isFrozen(result)).toBe(true);
-    expect(result).not.toBe(obj);
-    expect(result).toEqual(obj);
+    expect(result).not.toBe(object);
+    expect(result).toEqual(object);
     expect(Object.isFrozen(result.nested)).toBe(false);
-    expect(result.nested).toEqual(obj.nested);
+    expect(result.nested).toEqual(object.nested);
   });
 
   test("returns a frozen shallow copy of an array", () => {
-    const arr = [1, [2, 3]];
-    const result = frozen(arr);
+    const array = [1, [2, 3]];
+    const result = frozen(array);
 
     expect(Object.isFrozen(result)).toBe(true);
-    expect(result).not.toBe(arr);
-    expect(result).toEqual(arr);
+    expect(result).not.toBe(array);
+    expect(result).toEqual(array);
     expect(Object.isFrozen(result[1])).toBe(false);
-    expect(result[1]).toEqual(arr[1]);
+    expect(result[1]).toEqual(array[1]);
   });
 
   test("freezes non-array and non-plain-objects in place", () => {
@@ -49,6 +49,7 @@ describe("frozen", () => {
     expect(result).toBe(fn);
     expect(Object.isFrozen(result)).toBe(true);
     expectTypeOf(result).toExtend<() => number>();
+
     expectTypeOf(result).toExtend<{
       readonly value: number;
     }>();

@@ -12,6 +12,7 @@ describe("forwardAs", () => {
         property: key,
         as: "alias",
       });
+
       expectTypeOf(result).toEqualTypeOf<ForwardAs<typeof key, "alias">>();
     },
   );

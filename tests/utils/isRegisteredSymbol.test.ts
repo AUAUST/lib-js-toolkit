@@ -14,6 +14,7 @@ describe("isRegisteredSymbol", () => {
         typeof input === "symbol" && Symbol.keyFor(input) !== undefined;
 
       expect(isRegisteredSymbol(input)).toBe(expected);
+
       expectTypeOf(createValues().filter(isRegisteredSymbol)).toEqualTypeOf<
         symbol[]
       >();

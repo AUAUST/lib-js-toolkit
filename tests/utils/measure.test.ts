@@ -18,6 +18,7 @@ describe("measure", () => {
       end: 35,
       duration: 25,
     });
+
     expect(fn).toHaveBeenCalledWith(2, 3);
   });
 
@@ -49,6 +50,7 @@ describe("measure", () => {
 
     expectTypeOf(result.result).toEqualTypeOf<number>();
     expect(result.result).toBe(9);
+
     expect(
       measure.call(
         {

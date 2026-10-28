@@ -14,6 +14,7 @@ describe("entries", () => {
 
     expectTypeOf(result).toEqualTypeOf<(["name", "entry"] | ["1", 42])[]>();
     expect(entries).toBe(Object.entries);
+
     expect(result).toEqual([
       ["1", 42],
       ["name", "entry"],
@@ -26,8 +27,10 @@ describe("entries", () => {
     expectTypeOf(entries(optional)).toEqualTypeOf<
       ["value", number | undefined][]
     >();
+
     expectTypeOf(entries([1, 2])).toEqualTypeOf<[`${number}`, number][]>();
     expect(entries(optional)).toEqual([]);
+
     expect(entries("ab")).toEqual([
       ["0", "a"],
       ["1", "b"],

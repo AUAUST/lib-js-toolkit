@@ -61,6 +61,7 @@ describe("attempt", () => {
 
     expectTypeOf(result.result).toEqualTypeOf<number | undefined>();
     expect(result.result).toBe(9);
+
     expect(
       attempt.call(
         {

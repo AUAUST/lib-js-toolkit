@@ -18,10 +18,12 @@ describe("getterComposers", () => {
     );
 
     expect(result[token]).toBe(2);
+
     expectTypeOf(result).toEqualTypeOf<{
       count: number;
       readonly [token]: number;
     }>();
+
     expect(compose(getterComposers({}))).toEqual({});
   });
 });

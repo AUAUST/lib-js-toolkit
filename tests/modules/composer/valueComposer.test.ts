@@ -19,8 +19,10 @@ describe("valueComposer", () => {
       enumerable: true,
       configurable: true,
     });
+
     expect(result[token]).toBeUndefined();
     expect(result[0]).toBe(false);
+
     expectTypeOf(result).toEqualTypeOf<{
       __proto__: null;
       [token]: undefined;

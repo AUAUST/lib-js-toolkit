@@ -61,9 +61,11 @@ describe("keyMapper", () => {
 
     expect(fromMap("value", null)).toBe("1");
     expect(fromFunction("value", null)).toBe("2");
+
     expectTypeOf(fromMap("value", null)).toEqualTypeOf<
       KeyMapping<NormalizedKey<1>>
     >();
+
     expectTypeOf(fromFunction("value", null)).toEqualTypeOf<
       NormalizedKeyMapping<2>
     >();

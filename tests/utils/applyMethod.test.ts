@@ -34,9 +34,9 @@ describe("applyMethod", () => {
       value: 2,
     };
 
-    const fn = function (this: typeof target, amount: number) {
+    function fn(this: typeof target, amount: number) {
       return this.value + amount;
-    };
+    }
 
     const result = applyMethod(target, fn, [3]);
 
@@ -135,6 +135,7 @@ describe("applyMethod", () => {
 
       return applyMethod(target, "value", []);
     }).toThrow(TypeError);
+
     expect(() => {
       // @ts-expect-error The method does not exist.
 
@@ -153,25 +154,27 @@ describe("applyMethod", () => {
       },
     };
 
-    const fn = function (this: typeof target, amount: number) {
+    function fn(this: typeof target, amount: number) {
       return this.value + amount;
-    };
-
-    const incompatible = function (this: { other: string }) {
-      return this.other;
-    };
-
-    if (false) {
-      // @ts-expect-error Required argument is missing.
-      applyMethod(target, "add", []);
-      // @ts-expect-error Incorrect named-method argument type.
-      applyMethod(target, "add", ["3"]);
-      // @ts-expect-error Too many arguments.
-      applyMethod(target, "add", [1, 2]);
-      // @ts-expect-error Incorrect supplied-function argument type.
-      applyMethod(target, fn, ["3"]);
-      // @ts-expect-error The target does not satisfy the function receiver.
-      applyMethod(target, incompatible, []);
     }
+
+    function incompatible(this: { other: string }) {
+      return this.other;
+    }
+
+    if (!false) {
+      return;
+    }
+
+    // @ts-expect-error Required argument is missing.
+    applyMethod(target, "add", []);
+    // @ts-expect-error Incorrect named-method argument type.
+    applyMethod(target, "add", ["3"]);
+    // @ts-expect-error Too many arguments.
+    applyMethod(target, "add", [1, 2]);
+    // @ts-expect-error Incorrect supplied-function argument type.
+    applyMethod(target, fn, ["3"]);
+    // @ts-expect-error The target does not satisfy the function receiver.
+    applyMethod(target, incompatible, []);
   });
 });

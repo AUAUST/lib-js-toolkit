@@ -21,13 +21,9 @@ describe("apply", () => {
 
     const args = freeze(["world", 2] as const);
 
-    const callback = function (
-      this: typeof receiver,
-      name: string,
-      count: number,
-    ) {
+    function callback(this: typeof receiver, name: string, count: number) {
       return `${this.prefix} ${name}`.repeat(count);
-    };
+    }
 
     const protocol = {
       [callable]: callback,
@@ -70,21 +66,25 @@ describe("apply", () => {
 
     expect(result).toBe("goodbye world");
     expectTypeOf(result).toEqualTypeOf<string>();
+
     expectTypeOf(
       apply.apply(context, [input, ["world", 1]]),
     ).toEqualTypeOf<string>();
+
     expectTypeOf(
       apply.call(null, (n: number) => n, [1]),
     ).toEqualTypeOf<number>();
 
-    if (false) {
-      // @ts-expect-error Missing required argument.
-      apply(input, ["world"]);
-      // @ts-expect-error Incorrect argument type.
-      apply.call(context, input, [1, "world"]);
-      // @ts-expect-error Incorrect tuple through native apply.
-      apply.apply(context, [input, ["world"]]);
+    if (!false) {
+      return;
     }
+
+    // @ts-expect-error Missing required argument.
+    apply(input, ["world"]);
+    // @ts-expect-error Incorrect argument type.
+    apply.call(context, input, [1, "world"]);
+    // @ts-expect-error Incorrect tuple through native apply.
+    apply.apply(context, [input, ["world"]]);
   });
 
   test("defaults helper receivers to the holder and preserves explicit receivers", () => {

@@ -17,6 +17,7 @@ describe("hasOwn", () => {
 
     expect(hasOwn).toBe(Object.hasOwn);
     expect(hasOwn({}, "toString")).toBe(false);
+
     expect(() => {
       return hasOwn(null, "value");
     }).toThrow(TypeError);

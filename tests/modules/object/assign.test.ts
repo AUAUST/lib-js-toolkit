@@ -43,6 +43,7 @@ describe("assign", () => {
       b: number;
       c: number;
     }>();
+
     expect(assign).toBe(Object.assign);
     expect(result).toBe(target);
     expect(result.value).toBe("last");
@@ -56,11 +57,13 @@ describe("assign", () => {
     });
 
     expectTypeOf(result("literal" as const)).toEqualTypeOf<"literal">();
+
     expectTypeOf(
       assign({
         value: 1,
       }),
     ).toEqualTypeOf<{ value: number }>();
+
     expect(result).toBe(target);
   });
 
@@ -85,6 +88,7 @@ describe("assign", () => {
     expectTypeOf(variable.value).toEqualTypeOf<string | number | undefined>();
     expect(result.value).toBe("initial");
     expect(variable.value).toBe("initial");
+
     expect(assign({}, "ab")).toEqual({
       0: "a",
       1: "b",

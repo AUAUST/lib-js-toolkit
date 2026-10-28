@@ -16,7 +16,7 @@ describe("pipe", () => {
   });
 
   test("maintains the context of 'this' when using methods", () => {
-    const obj = {
+    const object = {
       factor: 2,
       add(this: { factor: number }, x: number) {
         return x + this.factor;
@@ -26,8 +26,8 @@ describe("pipe", () => {
       },
     };
 
-    const pipedFunction = pipe(obj.add, obj.multiply);
-    const result = pipedFunction.call(obj, 3); // (3 + 2) * 2 = 10
+    const pipedFunction = pipe(object.add, object.multiply);
+    const result = pipedFunction.call(object, 3); // (3 + 2) * 2 = 10
 
     expect(result).toBe(10);
   });
@@ -135,6 +135,7 @@ describe("pipe", () => {
       throw new Error("Expected a pipeline failure");
     } catch (error) {
       expect(error).toBeInstanceOf(PipelineError);
+
       expect(error).toMatchObject({
         fn: callback,
         cause,

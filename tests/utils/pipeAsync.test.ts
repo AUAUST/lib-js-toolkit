@@ -18,7 +18,7 @@ describe("pipeAsync", () => {
   });
 
   test("maintains the context of 'this' when using methods", async () => {
-    const obj = {
+    const object = {
       factor: 2,
       async add(this: { factor: number }, x: number) {
         return x + this.factor;
@@ -28,9 +28,9 @@ describe("pipeAsync", () => {
       },
     };
 
-    const pipedFunction = pipeAsync(obj.add, obj.multiply);
+    const pipedFunction = pipeAsync(object.add, object.multiply);
 
-    return pipedFunction.call(obj, 3).then((result) => {
+    return pipedFunction.call(object, 3).then((result) => {
       // (3 + 2) * 2 = 10
       expect(result).toBe(10);
     });
@@ -136,6 +136,7 @@ describe("pipeAsync", () => {
       throw new Error("Expected a pipeline failure");
     } catch (error) {
       expect(error).toBeInstanceOf(PipelineError);
+
       expect(error).toMatchObject({
         fn: callback,
         cause,

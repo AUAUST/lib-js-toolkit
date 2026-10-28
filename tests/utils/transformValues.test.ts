@@ -12,18 +12,21 @@ describe("transformValues", () => {
     const result = transformValues(target, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
 
-      return `${String(key)}:${value}`;
+      return `${key}:${value}`;
     });
 
     expect(result).toBe(target);
+
     expect(target).toEqual({
       a: "a:1",
       b: "b:2",
     });
+
     expect(calls).toEqual([
       [1, "a", "a"],
       [2, "b", "b"],
     ]);
+
     expectTypeOf(result).toEqualTypeOf<{ a: string; b: string }>();
   });
 
@@ -37,6 +40,7 @@ describe("transformValues", () => {
     transformValues(target, (value) => value * 3);
 
     expect(target.value).toBe(6);
+
     expect(target).toEqual({
       value: 6,
     });
@@ -55,6 +59,7 @@ describe("transformValues", () => {
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
     }>();
+
     expect(result).toEqual({
       entry: "8:entry:entry",
     });
