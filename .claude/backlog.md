@@ -23,3 +23,15 @@ Deferred work. One entry per item: where, what is wrong, the intended fix.
    - Where: `src/index.ts`
    - Problem: `EmptyValue`, `EmptyValueOf` and `FilledValue` are exported explicitly and again through `export * from "@auaust/toolkit/types"` (reported by `import-x/export`).
    - Fix: keep a single export path for each type.
+2. Lint suppressions audit.
+   - Where: `src/utils/compare.ts` (`eqeqeq`), `src/utils/noop.ts` (`unused-imports/no-unused-vars`), `src/utils/debounce.ts` and `src/modules/forwarder/methodForwarder.ts` (`@typescript-eslint/no-this-alias`)
+   - Problem: each disable is unverified as a genuine exception.
+   - Fix: review each site; keep the disable only where no clean alternative exists, otherwise refactor.
+3. No safe access to native object methods.
+   - Where: `src/utils/`
+   - Problem: calling `x.valueOf()`, `x.toString()` and similar fails on null-prototype objects, and toolkit offers no helpers for these native operations.
+   - Fix: add helpers that invoke the `Object.prototype` (or matching built-in) methods so null-prototype objects work safely.
+4. Library README lacks domain overviews.
+   - Where: `README.md`
+   - Problem: the generalities of each domain (utils, types, errors, protocols, modules) are only discoverable by reading the source.
+   - Fix: document each domain's purpose and conventions in the root README; see AUAUST/lib-js-engrenage#22 for generating it.
