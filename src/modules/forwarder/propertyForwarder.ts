@@ -13,12 +13,7 @@ export type PropertyForwardingInput<
   | PropertyForwardingOptions<Property, Alias, Readonly>
   | ForwardAs<Property, PropertyKey>;
 
-export type AnyPropertyForwarder = PropertyForwarder<
-  any,
-  any,
-  PropertyKey,
-  boolean
->;
+export type AnyPropertyForwarder = PropertyForwarder<any, any, PropertyKey>;
 
 export interface PropertyForwarder<
   Source extends object = any,
@@ -115,6 +110,7 @@ export function propertyForwarder(
 
     property = input.property;
     targetProperty = input.as ?? property;
+
     options = {
       ...input,
       ...options,

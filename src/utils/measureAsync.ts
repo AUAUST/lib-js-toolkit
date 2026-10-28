@@ -14,7 +14,7 @@ export async function measureAsync<Callback extends Callee>(
 ): Promise<MeasureResult<Awaited<CallReturnType<Callback>>>> {
   const start = performance.now();
 
-  const result = await apply.call(this, callback, args);
+  const result = await Promise.resolve(apply.call(this, callback, args));
 
   const end = performance.now();
 

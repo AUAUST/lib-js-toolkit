@@ -18,10 +18,7 @@ type Create = {
     Prototype extends object ? Prototype : {},
     DefinedProperties<Descriptors>
   >;
-  <Result extends object>(
-    prototype: object | null,
-    properties?: PropertyDescriptorMap,
-  ): Result;
+  (prototype: object | null, properties?: PropertyDescriptorMap): object;
 };
 
 export const create: Create = Object.create;

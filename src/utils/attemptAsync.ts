@@ -13,7 +13,7 @@ export async function attemptAsync<Callback extends Callee>(
   ...args: CallParameters<Callback>
 ): Promise<AttemptResult<Awaited<CallReturnType<Callback>>>> {
   try {
-    const result = await apply.call(this, callback, args);
+    const result = await Promise.resolve(apply.call(this, callback, args));
 
     return {
       success: true,

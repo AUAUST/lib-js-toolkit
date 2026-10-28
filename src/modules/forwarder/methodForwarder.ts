@@ -56,7 +56,7 @@ export function methodForwarder<
 >(
   source: Source,
   method: ForwardAs<Method, Alias>,
-  options?: Omit<MethodForwardingOptions<Method, never>, "method" | "as">,
+  options?: Omit<MethodForwardingOptions<Method>, "method" | "as">,
 ): MethodForwarder<Source, Method, Alias>;
 export function methodForwarder<
   const Source extends object,
@@ -79,6 +79,7 @@ export function methodForwarder(
 
     method = input.method ?? input.property;
     targetMethod = input.as ?? method;
+
     options = {
       ...input,
       ...options,

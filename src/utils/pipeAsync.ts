@@ -15,7 +15,7 @@ export type AsyncPipeEntry<This, In, Out> =
   | AsyncTransformFn<This, In, Out>
   | [when: PipeCondition<This, In>, then: AsyncTransformFn<This, In, Out>];
 
-export function pipeAsync(): <This, T>(this: This, value: T) => Promise<T>;
+export function pipeAsync(): <T>(this: unknown, value: T) => Promise<T>;
 export function pipeAsync<This, A, B>(
   fn: AsyncPipeEntry<This, A, B>,
 ): (this: This, value: A) => Promise<B>;
@@ -98,9 +98,7 @@ export function pipeAsync(
   return async function (this: any, initialValue: unknown) {
     let carry = initialValue;
 
-    for (let step = 0; step < resolved.length; step++) {
-      const entry = resolved[step];
-
+    for (const [step, entry] of resolved.entries()) {
       const { condition, callback, original } = entry;
 
       const shouldRun = isBoolean(condition)

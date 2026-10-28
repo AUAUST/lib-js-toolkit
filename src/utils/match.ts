@@ -67,12 +67,8 @@ export function match(
     cases = casesOrFallback!;
   }
 
-  for (let [predicates, result] of cases) {
-    if (!isArray(predicates)) {
-      predicates = [predicates];
-    }
-
-    for (const predicate of <unknown[]>predicates) {
+  for (const [predicates, result] of cases) {
+    for (const predicate of isArray(predicates) ? predicates : [predicates]) {
       if (isCallable(predicate) && call(predicate, target)) {
         return value(result);
       }

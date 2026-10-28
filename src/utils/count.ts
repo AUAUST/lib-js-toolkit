@@ -8,7 +8,7 @@ import { implementsProtocol } from "@auaust/toolkit/protocols";
 import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
 
 export function count(
-  input: { length: number } | { size: number } | Countable,
+  input: Countable | { length: number } | { size: number },
 ): number;
 export function count(input: unknown): number | undefined;
 export function count(input: unknown): number | undefined {

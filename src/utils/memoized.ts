@@ -82,7 +82,7 @@ export function memoized<
 export function memoized(
   callback: CacheResolver,
   options: MemoizedOptions | Callee = {},
-): Memoized<CacheResolver> {
+): Memoized {
   const resolveKey = isCallable(options) ? options : options.resolveKey;
 
   const hasKeyResolver = isCallable(resolveKey);
@@ -137,5 +137,5 @@ export function memoized(
     value,
     has,
     delete: deleteEntry,
-  }) as Memoized<CacheResolver>;
+  }) as Memoized;
 }

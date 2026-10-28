@@ -59,4 +59,4 @@ export const apply: Apply = function apply(
   }
 
   throw new TypeError(`${String(callback)} is not callable`);
-} as Apply;
+};

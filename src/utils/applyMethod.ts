@@ -34,6 +34,10 @@ export function applyMethod<
   method: Method,
   args: CallParameters<Method>,
 ): CallReturnType<Method>;
-export function applyMethod(target: any, method: any, args: any): unknown {
+export function applyMethod(
+  target: Record<PropertyKey, any>,
+  method: PropertyKey | Callee,
+  args: any,
+): unknown {
   return apply.call(target, isCallable(method) ? method : target[method], args);
 }

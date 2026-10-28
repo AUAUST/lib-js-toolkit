@@ -7,8 +7,7 @@ import type {
 type WritableDescriptorKey<Descriptors extends PropertyDescriptorMap> = {
   [Key in keyof Descriptors]: PropertyDescriptor extends Descriptors[Key]
     ? Key
-    : Descriptors[Key] extends
-          { writable: true } | { set: (...args: any[]) => any }
+    : Descriptors[Key] extends { writable: true } | { set(...args: any[]): any }
       ? Key
       : never;
 }[keyof Descriptors];

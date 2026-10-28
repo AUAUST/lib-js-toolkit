@@ -32,7 +32,7 @@ export type CachedAsync<
   /**
    * Resolves a key without computing or caching a value.
    */
-  keyFor: (this: void, ...args: CallParameters<Callback>) => Key;
+  keyFor(this: void, ...args: CallParameters<Callback>): Key;
 
   /**
    * Clears pending and fulfilled entries.

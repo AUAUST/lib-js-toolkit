@@ -10,10 +10,10 @@ export function getOrCreate<
   Constructor: Create,
 ): InitializedProperty<Target, Key, InstanceType<Create>>;
 export function getOrCreate(
-  target: any,
+  target: Record<PropertyKey, unknown>,
   key: PropertyKey,
   Constructor: Constructor<unknown, []>,
-): any {
+): unknown {
   if (!(key in target)) {
     target[key] = new Constructor();
   }

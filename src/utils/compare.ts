@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import { call } from "@auaust/toolkit/call";
 import { empty } from "@auaust/toolkit/empty";
 import { StateError } from "@auaust/toolkit/errors";
@@ -79,7 +78,7 @@ export function compare(
 
     if (customOperator == null) {
       throw new StateError(
-        `Attempted to use a disabled operator '${String(operator)}'`,
+        `Attempted to use a disabled operator '${operator}'`,
       );
     }
 
@@ -94,22 +93,38 @@ export function compare(
         (isNaN(a) && isNaN(b))
       );
     }
-    case "==":
+
+    case "==": {
       return a == b;
-    case "===":
+    }
+
+    case "===": {
       return a === b;
-    case "!=":
+    }
+
+    case "!=": {
       return a != b;
-    case "!==":
+    }
+
+    case "!==": {
       return a !== b;
-    case "!":
+    }
+
+    case "!": {
       return !a === !!b;
-    case "!!":
+    }
+
+    case "!!": {
       return !a === !b;
-    case "filled":
+    }
+
+    case "filled": {
       return filled(a);
-    case "empty":
+    }
+
+    case "empty": {
       return empty(a);
+    }
   }
 
   if (a == null || b == null) {
@@ -123,32 +138,45 @@ export function compare(
     case "string":
     case "number":
     case "bigint":
-    case "boolean":
+    case "boolean": {
       break;
-    default:
+    }
+
+    default: {
       return false;
+    }
   }
 
   switch (typeof b) {
     case "string":
     case "number":
     case "bigint":
-    case "boolean":
+    case "boolean": {
       break;
-    default:
+    }
+
+    default: {
       return false;
+    }
   }
 
   switch (operator) {
-    case "<":
+    case "<": {
       return a < b;
-    case "<=":
+    }
+
+    case "<=": {
       return a <= b;
-    case ">":
+    }
+
+    case ">": {
       return a > b;
-    case ">=":
+    }
+
+    case ">=": {
       return a >= b;
+    }
   }
 
-  throw new TypeError(`Unknown operator '${String(operator)}'`);
+  throw new TypeError(`Unknown operator '${operator}'`);
 }

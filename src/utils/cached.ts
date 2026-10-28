@@ -36,7 +36,7 @@ export type Cached<
    * Resolves a key without computing or caching a value.
    * Callable resolvers use their holders as receivers; caller receivers are ignored.
    */
-  keyFor: (this: void, ...args: CallParameters<Callback>) => Key;
+  keyFor(this: void, ...args: CallParameters<Callback>): Key;
 
   /**
    * Clears the cached values.

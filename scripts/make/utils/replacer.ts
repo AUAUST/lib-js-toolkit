@@ -1,6 +1,6 @@
 export function replacer(placeholders: Record<string, string>) {
   const expressions = Object.entries(placeholders).map(([key, value]) => {
-    return [new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, "g"), value] as const;
+    return [new RegExp(String.raw`\{\{\s*${key}\s*\}\}`, "g"), value] as const;
   });
 
   return (content: string) => {

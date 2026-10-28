@@ -221,22 +221,26 @@ export function stopwatch<Identifier>(
   }
 
   function pause() {
-    if (running && activePeriod) {
-      const current = now();
-
-      elapsed += current - activePeriod.start;
-      activePeriod.end = current;
-      activePeriod = undefined;
-      running = false;
+    if (!(running && activePeriod)) {
+      return;
     }
+
+    const current = now();
+
+    elapsed += current - activePeriod.start;
+    activePeriod.end = current;
+    activePeriod = undefined;
+    running = false;
   }
 
   function resume() {
-    if (!running) {
-      running = true;
-
-      openPeriod(now());
+    if (running) {
+      return;
     }
+
+    running = true;
+
+    openPeriod(now());
   }
 
   function stop() {

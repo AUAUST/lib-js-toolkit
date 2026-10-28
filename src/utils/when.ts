@@ -13,6 +13,6 @@ export function when<
   ...args: Arguments
 ): IfTrue | IfFalse {
   return value.call(this, condition, ...args)
-    ? <IfTrue>value.call(this, callback, ...args)
-    : <IfFalse>value.call(this, fallback, ...args);
+    ? value.call(this, callback, ...args)
+    : value.call(this, fallback, ...args)!;
 }
