@@ -6,12 +6,12 @@ import type {
   CallThisParameterType,
 } from "@auaust/toolkit/types";
 
-export type MeasureResult<Result> = {
+export interface MeasureResult<Result> {
   readonly result: Result;
   readonly start: number;
   readonly end: number;
   readonly duration: number;
-};
+}
 
 export function measure<Callback extends Callee>(
   this: CallThisParameterType<Callback>,

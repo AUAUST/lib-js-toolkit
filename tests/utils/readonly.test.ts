@@ -55,11 +55,11 @@ describe("readonly", () => {
 
     expectTypeOf(read).toEqualTypeOf<readonly [1, 2, 3]>();
     // @ts-expect-error Readonly array indices cannot be assigned.
-    expect(() => (read[0] = 4)).toThrow(ReadonlyError);
+    expect(() => void (read[0] = 4)).toThrow(ReadonlyError);
     // @ts-expect-error Readonly arrays cannot be extended.
-    expect(() => read.push(4)).toThrow(ReadonlyError);
+    expect(() => void read.push(4)).toThrow(ReadonlyError);
     // @ts-expect-error Readonly arrays cannot be shortened.
-    expect(() => read.pop()).toThrow(ReadonlyError);
+    expect(() => void read.pop()).toThrow(ReadonlyError);
   });
 
   describe("isReadonly", () => {

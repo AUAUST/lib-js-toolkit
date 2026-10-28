@@ -21,9 +21,9 @@ describe("CallSignature", () => {
   });
 
   test("extracts protocol function signatures", () => {
-    type Protocol = {
+    interface Protocol {
       [callable](input: unknown): input is string;
-    };
+    }
 
     expectTypeOf<CallSignature<Protocol>>().toEqualTypeOf<
       (input: unknown) => input is string
@@ -31,9 +31,9 @@ describe("CallSignature", () => {
   });
 
   test("extracts readonly protocol parameters with optional and rest entries", () => {
-    type Protocol = {
+    interface Protocol {
       [callable](name: string, count?: number, ...flags: boolean[]): string;
-    };
+    }
 
     expectTypeOf<CallParameters<Protocol>>().toEqualTypeOf<
       readonly [name: string, count?: number, ...flags: boolean[]]

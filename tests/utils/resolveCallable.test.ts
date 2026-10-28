@@ -45,9 +45,9 @@ describe("resolveCallable", () => {
       value: 42,
     };
 
-    const fun = function (this: { value: number }) {
+    function fn(this: { value: number }) {
       return this.value;
-    };
+    }
 
     const unboundObject = resolveCallable(object);
 
@@ -58,17 +58,17 @@ describe("resolveCallable", () => {
     expect(unboundObject()).toBe(42);
     expectTypeOf(unboundObject()).toBeNumber();
 
-    const unboundFun = resolveCallable(fun);
+    const unboundFn = resolveCallable(fn);
 
-    expectTypeOf<ThisParameterType<typeof unboundFun>>().toEqualTypeOf<{
+    expectTypeOf<ThisParameterType<typeof unboundFn>>().toEqualTypeOf<{
       value: number;
     }>();
 
     // @ts-expect-error Missing this context
-    expect(() => unboundFun()).toThrow();
+    expect(() => unboundFn()).toThrow();
 
     expect(
-      unboundFun.call({
+      unboundFn.call({
         value: 30,
       }),
     ).toBe(30);
@@ -84,7 +84,7 @@ describe("resolveCallable", () => {
     expect(boundObject()).toBe(100);
     expectTypeOf(boundObject()).toBeNumber();
 
-    const boundFun = resolveCallable(fun, {
+    const boundFun = resolveCallable(fn, {
       value: 100,
     });
 

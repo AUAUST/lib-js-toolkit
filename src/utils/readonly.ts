@@ -51,7 +51,7 @@ const readonlyProxies = new WeakMap<object, object>();
 function doReadonly<Target extends readonly any[]>(
   array: Target,
 ): Readonly<Target>;
-function doReadonly<Target>(array: Target[]): ReadonlyArray<Target>;
+function doReadonly<Target>(array: Target[]): readonly Target[];
 function doReadonly<Target extends object>(object: Target): Readonly<Target>;
 function doReadonly(object: any): any {
   if (!isContainer(object)) {

@@ -1,6 +1,6 @@
 import type { DefinedProperties, Extended } from "@auaust/toolkit/types";
 
-type Create = {
+interface Create {
   <Prototype extends object | null>(
     prototype: Prototype,
     properties?: undefined,
@@ -22,6 +22,6 @@ type Create = {
     prototype: object | null,
     properties?: PropertyDescriptorMap,
   ): Result;
-};
+}
 
 export const create: Create = Object.create;

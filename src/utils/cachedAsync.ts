@@ -15,10 +15,10 @@ import type {
   MaybePromise,
 } from "@auaust/toolkit/types";
 
-export type CachedAsync<
+export interface CachedAsync<
   Callback extends CacheResolver,
   Key = CallParameters<Callback>[0],
-> = {
+> {
   (
     this: void,
     ...args: CallParameters<Callback>
@@ -69,13 +69,13 @@ export type CachedAsync<
    * Deletes an entry without cancelling its pending work.
    */
   delete(key: Key): boolean;
-};
+}
 
-type CacheEntry = {
+interface CacheEntry {
   promise: Promise<unknown>;
   fulfilled: boolean;
   result?: unknown;
-};
+}
 
 /**
  * Caches asynchronous results with the key semantics and options of `cached()`.

@@ -60,7 +60,7 @@ export type Cached<
   delete(key: Key): boolean;
 };
 
-export type CachedOptions<Callback extends Callee = Callee, Key = unknown> = {
+export interface CachedOptions<Callback extends Callee = Callee, Key = unknown> {
   /**
    * Resolves the cache key from all callback arguments.
    * Callable objects use their holders as receivers. Resolved once at setup.
@@ -75,7 +75,7 @@ export type CachedOptions<Callback extends Callee = Callee, Key = unknown> = {
    * @default false
    */
   cachePrimitives?: boolean;
-};
+}
 
 /**
  * Caches results by the first argument, weakly for object and function keys.

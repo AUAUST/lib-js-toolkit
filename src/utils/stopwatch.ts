@@ -56,7 +56,7 @@ export interface Stopwatch<Identifier = unknown> {
   restart(): void;
 }
 
-export type Lap<Identifier = unknown> = {
+export interface Lap<Identifier = unknown> {
   /**
    * The position of the lap in the sequence of recorded laps.
    */
@@ -73,9 +73,9 @@ export type Lap<Identifier = unknown> = {
    * The absolute elapsed time since the start of the timer, excluding pauses.
    */
   readonly timestamp: number;
-};
+}
 
-export type Period = {
+export interface Period {
   /**
    * The position of the period in the sequence of recorded periods.
    */
@@ -92,9 +92,9 @@ export type Period = {
    * The duration of this running period.
    */
   readonly duration: number;
-};
+}
 
-export type StopwatchOptions = {
+export interface StopwatchOptions {
   /**
    * Whether to use `performance.now()` instead of `Date.now()` for measuring time.
    * Defaults to `true`, except when `start` is a `Date` and this option is omitted.
@@ -105,12 +105,12 @@ export type StopwatchOptions = {
    * The timestamp to use as the start time for the stopwatch, if different than the current time.
    */
   startAt?: Date | number;
-};
+}
 
-type PeriodState = {
+interface PeriodState {
   start: number;
   end: number | undefined;
-};
+}
 
 function resolveOptions(options: StopwatchOptions) {
   const usePerformance =
