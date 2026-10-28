@@ -2,6 +2,9 @@ import { define, defineConfig } from "@auaust/engrenage/config";
 
 export default defineConfig({
   presets: ["library"],
+  agents: {
+    preferred: ["claude", "codex"],
+  },
   define: {
     values({ packageJson: { name, version, license } }) {
       return {

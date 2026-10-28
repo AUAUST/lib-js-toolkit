@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pnpm --silent engrenage claude hook edit"
+            "command": "pnpm --silent engrenage agents claude hook edit"
           }
         ]
       }
