@@ -13,6 +13,7 @@ import { callable } from "@auaust/toolkit/protocols/callable";
 describe("keyMapper", () => {
   test("keeps keys by default", () => {
     const mapper = keyMapper();
+
     expect(mapper("key", 42)).toBe(true);
     expectTypeOf(mapper).toExtend<KeyMapper>();
   });

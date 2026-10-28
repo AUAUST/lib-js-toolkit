@@ -7,6 +7,7 @@ import { createKeyedCollections } from "../../fixtures/values";
 describe("forwardMethods", () => {
   test.for(createKeyedCollections())("accepts native target %s", (target) => {
     const result = forwardMethods({}, target, "get");
+
     expect(result.get("key")).toBe(target.get("key"));
     expectTypeOf(result.get("key")).toEqualTypeOf<string | null | undefined>();
   });

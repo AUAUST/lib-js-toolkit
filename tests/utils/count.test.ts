@@ -24,6 +24,7 @@ describe("count", () => {
     [new File(["abc"], "fixture.txt"), 3],
   ] as const)("counts %s as %i", (input, expected) => {
     const result = count(input);
+
     expect(result).toBe(expected);
     expectTypeOf(result).toEqualTypeOf<number>();
   });

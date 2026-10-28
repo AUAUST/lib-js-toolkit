@@ -7,6 +7,7 @@ import { createValues } from "../fixtures/values";
 describe("identity", () => {
   test.for(createValues())("preserves identity for %s", (input) => {
     const result = identity(input, "ignored");
+
     expect(result).toBe(input);
     expectTypeOf(result).toEqualTypeOf<typeof input>();
   });

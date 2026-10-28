@@ -120,6 +120,7 @@ describe("compare", () => {
     ],
   ] as const)("compares %s %s %s as %s", (left, operator, right, expected) => {
     const result = compare(left, operator, right);
+
     expect(result).toBe(expected);
     expectTypeOf(result).toEqualTypeOf<boolean>();
   });

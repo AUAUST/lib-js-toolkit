@@ -7,6 +7,7 @@ import { createValues } from "../fixtures/values";
 describe("noop", () => {
   test.for(createValues())("preserves no result for %s", (input) => {
     const result = noop(input, "ignored");
+
     expect(result).toBe(undefined);
     expectTypeOf(result).toEqualTypeOf<void>();
   });

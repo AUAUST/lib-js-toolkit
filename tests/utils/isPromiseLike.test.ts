@@ -1,3 +1,4 @@
+/* eslint-disable auaust/no-thenable */
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { isPromiseLike } from "@auaust/toolkit";

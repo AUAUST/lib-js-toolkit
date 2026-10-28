@@ -2,42 +2,6 @@
   "src/utils/compare.ts": {
     "auaust/no-loose-equal": {
       "count": 3
-    },
-    "auaust/no-unsafe-member-access": {
-      "count": 4
-    },
-    "unicorn/no-negation-in-equality-check": {
-      "count": 2
-    }
-  },
-  "src/utils/expose.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    }
-  },
-  "src/utils/isCallable.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    }
-  },
-  "src/utils/isFunction.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    }
-  },
-  "src/utils/mappedKeys.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 2
-    }
-  },
-  "src/utils/mappedValues.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    }
-  },
-  "src/utils/memberValue.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
     }
   },
   "src/utils/memoized.ts": {
@@ -45,158 +9,26 @@
       "count": 1
     }
   },
-  "src/utils/transformKeys.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 5
-    }
-  },
-  "src/utils/transformValues.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 2
-    }
-  },
   "tests/modules/composer/compose.test.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    },
-    "no-constant-condition": {
-      "count": 1
-    },
     "unicorn/prefer-default-parameters": {
-      "count": 1
-    }
-  },
-  "tests/modules/composer/getterComposer.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/composer/propertyComposer.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/composer/propertyComposers.test.ts": {
-    "no-constant-condition": {
-      "count": 2
-    }
-  },
-  "tests/modules/forwarder/forwardProperties.test.ts": {
-    "auaust/consistent-type-assertions": {
-      "count": 1
-    }
-  },
-  "tests/modules/forwarder/methodForwarders.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/defineGetter.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    },
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/defineGetters.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/defineProperties.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/defineProperty.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/finalize.test.ts": {
-    "no-constant-condition": {
       "count": 1
     }
   },
   "tests/modules/object/get.test.ts": {
     "auaust/consistent-type-assertions": {
       "count": 1
-    },
-    "auaust/no-confusing-void-expression": {
-      "count": 4
     }
   },
   "tests/modules/object/getOrCreate.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 2
-    },
     "auaust/no-extraneous-class": {
-      "count": 1
-    },
-    "no-constant-condition": {
       "count": 1
     },
     "unicorn/prefer-early-return": {
       "count": 1
     }
   },
-  "tests/modules/object/getOrSet.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    },
-    "auaust/no-confusing-void-expression": {
-      "count": 2
-    }
-  },
-  "tests/modules/object/keys.test.ts": {
-    "auaust/consistent-type-assertions": {
-      "count": 1
-    }
-  },
-  "tests/modules/object/values.test.ts": {
-    "auaust/consistent-type-assertions": {
-      "count": 1
-    }
-  },
-  "tests/protocols/index.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/after.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/apply.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/applyMethod.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/attempt.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/attemptAsync.test.ts": {
-    "auaust/no-await-expression-member": {
-      "count": 1
-    }
-  },
   "tests/utils/cached.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 2
-    },
     "auaust/no-invalid-void-type": {
-      "count": 2
-    },
-    "no-constant-condition": {
       "count": 2
     },
     "unicorn/no-declarations-before-early-exit": {
@@ -204,18 +36,7 @@
     }
   },
   "tests/utils/cachedAsync.test.ts": {
-    "auaust/no-await-expression-member": {
-      "count": 1
-    },
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    },
     "auaust/no-invalid-void-type": {
-      "count": 1
-    }
-  },
-  "tests/utils/call.test.ts": {
-    "no-constant-condition": {
       "count": 1
     }
   },
@@ -223,15 +44,7 @@
     "auaust/prefer-function-declaration": {
       "count": 3
     },
-    "no-constant-condition": {
-      "count": 1
-    },
     "unicorn/no-declarations-before-early-exit": {
-      "count": 1
-    }
-  },
-  "tests/utils/constant.test.ts": {
-    "auaust/no-confusing-void-expression": {
       "count": 1
     }
   },
@@ -243,18 +56,8 @@
       "count": 1
     }
   },
-  "tests/utils/empty.test.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 3
-    }
-  },
   "tests/utils/frozen.test.ts": {
     "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/identity.test.ts": {
-    "auaust/no-confusing-void-expression": {
       "count": 1
     }
   },
@@ -268,84 +71,29 @@
       "count": 1
     }
   },
-  "tests/utils/isPromiseLike.test.ts": {
-    "auaust/no-thenable": {
-      "count": 4
-    }
-  },
   "tests/utils/isUndefined.test.ts": {
     "auaust/no-is-undefined": {
       "count": 2
     }
   },
-  "tests/utils/keyMapper.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
   "tests/utils/mapped.test.ts": {
     "@typescript-eslint/no-unused-expressions": {
       "count": 2
-    },
-    "no-constant-condition": {
-      "count": 1
     }
   },
   "tests/utils/mappedValues.test.ts": {
     "@typescript-eslint/no-unused-expressions": {
       "count": 2
-    },
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/match.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/measure.test.ts": {
-    "no-constant-condition": {
-      "count": 1
-    }
-  },
-  "tests/utils/measureAsync.test.ts": {
-    "auaust/no-await-expression-member": {
-      "count": 3
     }
   },
   "tests/utils/memoized.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 1
-    },
     "auaust/no-invalid-void-type": {
       "count": 1
-    },
-    "no-constant-condition": {
-      "count": 2
     }
   },
   "tests/utils/noop.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 2
-    },
     "auaust/no-invalid-void-type": {
       "count": 1
-    }
-  },
-  "tests/utils/on.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/pipe.test.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 7
-    }
-  },
-  "tests/utils/pipeAsync.test.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 3
     }
   },
   "tests/utils/plain.test.ts": {
@@ -372,23 +120,12 @@
     }
   },
   "tests/utils/spy.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 3
-    },
     "unicorn/prefer-default-parameters": {
       "count": 2
     }
   },
-  "tests/utils/throttle.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 1
-    }
-  },
   "tests/utils/transform.test.ts": {
     "@typescript-eslint/no-unused-expressions": {
-      "count": 1
-    },
-    "no-constant-condition": {
       "count": 1
     }
   },
@@ -398,21 +135,6 @@
     },
     "unicorn/no-return-array-push": {
       "count": 1
-    }
-  },
-  "tests/utils/value.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/voided.test.ts": {
-    "auaust/no-confusing-void-expression": {
-      "count": 2
-    }
-  },
-  "tests/utils/when.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 2
     }
   }
 }

@@ -7,6 +7,7 @@ import { createKeyedCollections } from "../../fixtures/values";
 describe("get", () => {
   test.for(createKeyedCollections())("accepts native target %s", (target) => {
     const result = get(target, "get");
+
     expect(result).toBe(target.get);
     expectTypeOf(result).toEqualTypeOf<typeof target.get>();
   });

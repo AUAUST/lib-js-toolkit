@@ -31,6 +31,7 @@ describe("defineProperty", () => {
 
   test("infers accessors and supports symbol keys", () => {
     let stored = 1;
+
     const key = Symbol("value");
 
     const result = defineProperty({}, key, {

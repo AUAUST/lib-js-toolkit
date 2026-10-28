@@ -26,6 +26,7 @@ function rstrMd5(s: string): string {
 
 function rstr2hex(input: string): string {
   const hex = "0123456789abcdef";
+
   let output = "";
   let x;
 

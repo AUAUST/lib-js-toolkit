@@ -19,6 +19,7 @@ describe("when", () => {
 
   test("returns undefined without evaluating an unselected callback", () => {
     const callback = vi.fn();
+
     expect(when(false, callback)).toBeUndefined();
     expect(callback).not.toHaveBeenCalled();
   });

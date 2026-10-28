@@ -19,6 +19,7 @@ describe("on", () => {
 
   test("preserves the callback return type", () => {
     const result = on(42, (value) => value.toString());
+
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 

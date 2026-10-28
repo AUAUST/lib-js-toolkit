@@ -7,6 +7,7 @@ import { createKeyedCollections } from "../fixtures/values";
 describe("callMethod", () => {
   test.for(createKeyedCollections())("accepts native target %s", (target) => {
     const result = callMethod(target, "get", "key");
+
     expect(result).toBe(target.get("key"));
     expectTypeOf(result).toEqualTypeOf<string | null | undefined>();
   });
