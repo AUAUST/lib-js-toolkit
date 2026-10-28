@@ -59,8 +59,11 @@ describe("mappedValues", () => {
     }
 
     // @ts-expect-error Mapping an array produces a record without array methods.
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     result.map;
+
     // @ts-expect-error Array metadata is not copied.
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     result.length;
   });
 

@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
+import { sleep } from "@auaust/toolkit";
 import {
   compose,
   getterComposer,
@@ -190,11 +191,13 @@ describe("compose", () => {
         },
       }),
       compose.method("async", async (value: string) => {
+        await sleep(0);
+
         return value.length;
       }),
       compose.methods({
-        meep(value?: number) {
-          return value ?? 0;
+        meep(value = 0) {
+          return value;
         },
       }),
     );

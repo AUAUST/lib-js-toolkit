@@ -1,3 +1,5 @@
+/* eslint-disable auaust/no-invalid-void-type */
+
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { noop } from "@auaust/toolkit";

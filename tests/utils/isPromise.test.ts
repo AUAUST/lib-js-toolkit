@@ -19,6 +19,7 @@ describe("isPromise", () => {
     ...createFunctions(),
     {},
     {
+      // eslint-disable-next-line auaust/no-thenable
       then() {},
     },
   ])("rejects values that are not Promise instances: %s", (input) => {

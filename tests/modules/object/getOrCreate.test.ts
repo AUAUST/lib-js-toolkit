@@ -40,13 +40,16 @@ describe("getOrCreate", () => {
     expect(getOrCreate(present, "value", Date)).toBeUndefined();
     expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
 
-    if (false) {
-      class RequiresArgument {
-        constructor(value: number) {}
-      }
-
-      // @ts-expect-error The constructor is called without arguments.
-      getOrCreate({}, "value", RequiresArgument);
+    if (!false) {
+      return;
     }
+
+    // eslint-disable-next-line auaust/no-extraneous-class
+    class RequiresArgument {
+      constructor(ignored: number) {}
+    }
+
+    // @ts-expect-error The constructor is called without arguments.
+    getOrCreate({}, "value", RequiresArgument);
   });
 });

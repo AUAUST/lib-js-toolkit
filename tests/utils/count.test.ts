@@ -21,7 +21,7 @@ describe("count", () => {
     [new Map(), 0],
     [new Map([["key", "value"]]), 1],
     [new Set(), 0],
-    [new Set([1, 1, 2]), 2],
+    [new Set([1, 2]), 2],
     [new Uint8Array(), 0],
     [new Uint8Array([1, 2]), 2],
     [new URLSearchParams("a=1&b=2"), 2],

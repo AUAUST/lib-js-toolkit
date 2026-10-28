@@ -53,8 +53,11 @@ describe("mapped", () => {
     }
 
     // @ts-expect-error Renamed keys are removed from the result type.
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     result.a;
+
     // @ts-expect-error Excluded keys are removed from the result type.
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     result.b;
   });
 
