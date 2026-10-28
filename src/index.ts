@@ -35,7 +35,6 @@ export {
   type PromiseResolver,
 } from "@auaust/toolkit/defer";
 export { empty } from "@auaust/toolkit/empty";
-export * from "@auaust/toolkit/errors";
 export { expose, type Expose } from "@auaust/toolkit/expose";
 export { filled } from "@auaust/toolkit/filled";
 export { frozen } from "@auaust/toolkit/frozen";
@@ -122,7 +121,6 @@ export { throttle, type Throttled } from "@auaust/toolkit/throttle";
 export { transform } from "@auaust/toolkit/transform";
 export { transformKeys } from "@auaust/toolkit/transformKeys";
 export { transformValues } from "@auaust/toolkit/transformValues";
-export * from "@auaust/toolkit/types";
 export {
   value,
   type ResolvableValue,
@@ -131,9 +129,11 @@ export {
   type ValueInput,
   type ValueResolver,
 } from "@auaust/toolkit/value";
-
 export { voided, type Voided } from "@auaust/toolkit/voided";
 export { when } from "@auaust/toolkit/when";
+
+export * from "@auaust/toolkit/errors";
+export * from "@auaust/toolkit/types";
 
 import { frozen } from "@auaust/toolkit/frozen";
 
@@ -141,5 +141,4 @@ export const BUILD = frozen({
   name: __NAME__,
   version: __VERSION__,
   license: __LICENSE__,
-  timestamp: new Date(__TIMESTAMP__),
 });

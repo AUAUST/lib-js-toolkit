@@ -3,6 +3,7 @@
   "version": "0.5.1",
   "description": "What you need, I provide.",
   "repository": {
+    "type": "git",
     "url": "git+https://github.com/AUAUST/lib-js-toolkit.git"
   },
   "license": "GPL-3.0-only",
@@ -11,7 +12,6 @@
     "email": "aurian@auaust.ch",
     "url": "https://auaust.ch"
   },
-  "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "engrenage tsdown --config-loader tsx && engrenage tsc:dist && engrenage vitest:dist",
@@ -115,10 +115,9 @@
     "dist",
     "src"
   ],
-  "prettier": "@auaust/engrenage/prettier",
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
-    "@auaust/engrenage": "^0.1.1",
+    "@auaust/engrenage": "^0.2.0",
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.2",
     "@vitest/coverage-istanbul": "^4.1.11",
@@ -132,6 +131,8 @@
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
   },
+  "sideEffects": false,
+  "prettier": "@auaust/engrenage/prettier",
   "packageManager": "pnpm@10.26.0",
   "publishConfig": {
     "access": "public"
