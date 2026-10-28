@@ -22,7 +22,7 @@ export type Memoized<
    * Calls the memoized function without overriding its resolver's receiver.
    */
   call(
-    thisArg: void,
+    thisArg: undefined,
     ...args: CallParameters<Callback>
   ): CallReturnType<Callback>;
 

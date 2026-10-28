@@ -1,3 +1,5 @@
+/* eslint-disable auaust/no-invalid-void-type */
+
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { cachedAsync, defer, type CachedAsync } from "@auaust/toolkit";

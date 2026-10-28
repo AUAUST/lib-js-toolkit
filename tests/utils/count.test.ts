@@ -12,7 +12,12 @@ describe("count", () => {
     ["toolkit", 7],
     [[], 0],
     [[1, 2, 3], 3],
-    [new Array(3), 3],
+    [
+      Array.from({
+        length: 3,
+      }),
+      3,
+    ],
     [new Map(), 0],
     [new Map([["key", "value"]]), 1],
     [new Set(), 0],

@@ -78,8 +78,8 @@ describe("spy", () => {
   });
 
   test("infers spy receivers, hook arguments, and absent callback results", () => {
-    function callback(this: { value: number }, count: number, suffix?: string) {
-      return `${this.value + count}${suffix ?? ""}`;
+    function callback(this: { value: number }, count: number, suffix = "") {
+      return `${this.value + count}${suffix}`;
     }
 
     const wrapped = spy(
@@ -110,8 +110,8 @@ describe("spy", () => {
 
     const callback = {
       factor: 2,
-      [callable](count: number, suffix?: string) {
-        return `${this.factor * count}${suffix ?? ""}`;
+      [callable](count: number, suffix = "") {
+        return `${this.factor * count}${suffix}`;
       },
     };
 

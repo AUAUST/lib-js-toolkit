@@ -54,8 +54,10 @@ describe("frozen", () => {
       readonly value: number;
     }>();
 
-    // @ts-expect-error
-    expect(() => (result.value = 43)).toThrow();
+    expect(() => {
+      // @ts-expect-error
+      result.value = 43;
+    }).toThrow();
 
     const called = result();
 

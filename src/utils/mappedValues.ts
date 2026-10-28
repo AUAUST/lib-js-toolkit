@@ -34,7 +34,7 @@ export function mappedValues(
     return plain(source);
   }
 
-  const result = plain();
+  const result = plain<Record<PropertyKey, any>>();
 
   const transformer = resolveCallable(transform);
 

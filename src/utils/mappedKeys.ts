@@ -100,7 +100,7 @@ export function mappedKeys(source: any, map?: any) {
     return plain(source);
   }
 
-  const result = plain();
+  const result = plain<Record<PropertyKey, any>>();
 
   const mapper = keyMapper(map);
 

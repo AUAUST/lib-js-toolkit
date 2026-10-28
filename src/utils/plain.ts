@@ -1,10 +1,15 @@
+import { isContainer } from "@auaust/toolkit/isContainer";
 import { assign, create } from "@auaust/toolkit/object";
 
 /**
- * Returns a new plain object with the null prototype.
- * If an object is provided, it will be used to fill the new plain object.
+ * Returns a new null-prototype object, copying own enumerable properties.
+ * Primitives and nullish values produce an empty object.
  */
-export function plain<Source extends {}>(value?: Partial<Source>): Source;
-export function plain(value?: {}): {} {
-  return assign(create(null), value); // non-objects are ignored by Object.assign
+export function plain<Source extends object>(value: Source): Source;
+export function plain<Source extends object = {}>(
+  value?: Partial<Source>,
+): Source;
+export function plain(value: unknown): {};
+export function plain(value?: unknown): {} {
+  return assign(create(null), isContainer(value) ? value : undefined);
 }

@@ -19,6 +19,7 @@ describe("sleep", () => {
 
     if (delay > 0) {
       await vi.advanceTimersByTimeAsync(delay - 1);
+
       expect(settled).not.toHaveBeenCalled();
     }
 

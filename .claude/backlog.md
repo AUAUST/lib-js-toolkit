@@ -16,6 +16,14 @@ Deferred work. One entry per item: where, what is wrong, the intended fix.
    - Where: `codegen/`, `scripts/`, `eslint.config.ts`
    - Problem: tooling loads without the `@auaust/toolkit/*` path aliases, so it uses `Object.*` and is exempt from the restricted-properties rule.
    - Fix: declare `#…` subpath imports in `package.json`, as engrenage does, and import helpers through them.
+4. Remaining repository lint failures.
+   - Where: `src/utils/compare.ts`, `src/modules/forwarder/propertyForwarder.ts` and tests outside `tests/utils/plain.test.ts`.
+   - Problem: repository lint fails on existing equality, promise, assertion, callback and unused-variable rules; the focused `plain` lint check passes.
+   - Fix: resolve the remaining violations in a dedicated lint cleanup without weakening the shared configuration.
+5. Packaging validation blocked by package-manager retrieval.
+   - Where: `pnpm build`, during the tsdown package-validation step.
+   - Problem: the installed pnpm cannot fetch and verify the pinned `pnpm@10.26.0` from the registry in the restricted environment, so packing fails after bundles and declarations are generated.
+   - Fix: rerun the complete build when the pinned package manager is available; source and built-output tests and type checking already pass.
 
 ## 2. Source
 

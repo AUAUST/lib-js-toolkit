@@ -34,9 +34,9 @@ describe("callMethod", () => {
       value: 2,
     };
 
-    const fn = function (this: typeof target, amount: number) {
+    function fn(this: typeof target, amount: number) {
       return this.value + amount;
-    };
+    }
 
     const result = callMethod(target, fn, 3);
 
@@ -140,6 +140,10 @@ describe("callMethod", () => {
   });
 
   test("rejects incorrect arguments and incompatible receiver types", () => {
+    if (!false) {
+      return;
+    }
+
     const target = {
       value: 2,
       add(amount: number) {
@@ -150,16 +154,12 @@ describe("callMethod", () => {
       },
     };
 
-    const fn = function (this: typeof target, amount: number) {
+    function fn(this: typeof target, amount: number) {
       return this.value + amount;
-    };
+    }
 
-    const incompatible = function (this: { other: string }) {
+    function incompatible(this: { other: string }) {
       return this.other;
-    };
-
-    if (!false) {
-      return;
     }
 
     // @ts-expect-error Required argument is missing.

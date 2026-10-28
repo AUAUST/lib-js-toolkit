@@ -126,7 +126,7 @@ export function mapped(
 
   const transformer = resolveCallable(transform);
 
-  const mapped = plain();
+  const mapped = plain<Record<PropertyKey, any>>();
 
   for (const key in source) {
     const newKey = mapper(key, source[key]);

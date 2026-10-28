@@ -74,13 +74,16 @@ describe("transformKeys", () => {
 
     const target = {
       a: 1,
-    } as { a: number; b: number };
+    } as {
+      a: number;
+      b: number;
+    };
 
     Object.defineProperty(target, "b", {
       enumerable: true,
       configurable: true,
       get: () => 2,
-      set: (value: number) => writes.push(value),
+      set: (value: number) => void writes.push(value),
     });
 
     transformKeys(target, {

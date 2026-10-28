@@ -35,10 +35,9 @@ describe("transform", () => {
 
     expectTypeOf(result).toEqualTypeOf<{ b: number; c: number }>();
 
-    if (false) {
-      // @ts-expect-error Excluded keys are removed from the result type.
-      result.a;
-    }
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    result.a;
   });
 
   test("passes values to mappers and original and mapped keys to transformers", () => {

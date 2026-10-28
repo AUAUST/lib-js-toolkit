@@ -1,3 +1,5 @@
+/* eslint-disable auaust/no-invalid-void-type */
+
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { cached, type Cached, type CachedOptions } from "@auaust/toolkit";
@@ -398,15 +400,15 @@ describe("cached", () => {
   });
 
   test("rejects required function receivers and receiver overrides", () => {
+    if (!false) {
+      return;
+    }
+
     const fn = cached((key: number) => key);
 
     const context = {
       value: 0,
     };
-
-    if (!false) {
-      return;
-    }
 
     // @ts-expect-error Function callbacks cannot require a receiver.
     cached(contextual);

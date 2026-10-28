@@ -4,11 +4,6 @@
       "count": 3
     }
   },
-  "src/utils/memoized.ts": {
-    "auaust/no-invalid-void-type": {
-      "count": 1
-    }
-  },
   "tests/modules/composer/compose.test.ts": {
     "unicorn/prefer-default-parameters": {
       "count": 1
@@ -27,43 +22,9 @@
       "count": 1
     }
   },
-  "tests/utils/cached.test.ts": {
-    "auaust/no-invalid-void-type": {
-      "count": 2
-    },
-    "unicorn/no-declarations-before-early-exit": {
-      "count": 1
-    }
-  },
-  "tests/utils/cachedAsync.test.ts": {
-    "auaust/no-invalid-void-type": {
-      "count": 1
-    }
-  },
-  "tests/utils/callMethod.test.ts": {
-    "auaust/prefer-function-declaration": {
-      "count": 3
-    },
-    "unicorn/no-declarations-before-early-exit": {
-      "count": 1
-    }
-  },
   "tests/utils/count.test.ts": {
     "unicorn/no-duplicate-set-values": {
       "count": 1
-    },
-    "unicorn/no-new-array": {
-      "count": 1
-    }
-  },
-  "tests/utils/frozen.test.ts": {
-    "auaust/no-complex-concise-arrows": {
-      "count": 1
-    }
-  },
-  "tests/utils/isNull.test.ts": {
-    "auaust/no-is-null": {
-      "count": 2
     }
   },
   "tests/utils/isPromise.test.ts": {
@@ -96,11 +57,6 @@
       "count": 1
     }
   },
-  "tests/utils/plain.test.ts": {
-    "auaust/no-misused-promises": {
-      "count": 1
-    }
-  },
   "tests/utils/readonly.test.ts": {
     "auaust/no-complex-concise-arrows": {
       "count": 1
@@ -119,21 +75,8 @@
       "count": 1
     }
   },
-  "tests/utils/spy.test.ts": {
-    "unicorn/prefer-default-parameters": {
-      "count": 2
-    }
-  },
-  "tests/utils/transform.test.ts": {
-    "@typescript-eslint/no-unused-expressions": {
-      "count": 1
-    }
-  },
   "tests/utils/transformKeys.test.ts": {
     "auaust/consistent-type-assertions": {
-      "count": 1
-    },
-    "unicorn/no-return-array-push": {
       "count": 1
     }
   }
