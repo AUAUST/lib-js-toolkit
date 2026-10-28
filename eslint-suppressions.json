@@ -25,19 +25,14 @@
       "count": 1
     }
   },
-  "src/utils/mapped.ts": {
-    "auaust/no-unsafe-member-access": {
-      "count": 1
-    }
-  },
   "src/utils/mappedKeys.ts": {
     "auaust/no-unsafe-member-access": {
-      "count": 3
+      "count": 2
     }
   },
   "src/utils/mappedValues.ts": {
     "auaust/no-unsafe-member-access": {
-      "count": 2
+      "count": 1
     }
   },
   "src/utils/memberValue.ts": {
@@ -50,21 +45,6 @@
       "count": 1
     }
   },
-  "src/utils/once.ts": {
-    "auaust/prefer-function-declaration": {
-      "count": 1
-    }
-  },
-  "src/utils/plain.ts": {
-    "auaust/unified-signatures": {
-      "count": 3
-    }
-  },
-  "src/utils/sleep.ts": {
-    "auaust/no-promise-executor-return": {
-      "count": 1
-    }
-  },
   "src/utils/transformKeys.ts": {
     "auaust/no-unsafe-member-access": {
       "count": 5
@@ -73,11 +53,6 @@
   "src/utils/transformValues.ts": {
     "auaust/no-unsafe-member-access": {
       "count": 2
-    }
-  },
-  "src/utils/value.ts": {
-    "auaust/unified-signatures": {
-      "count": 3
     }
   },
   "tests/modules/composer/compose.test.ts": {
@@ -190,9 +165,6 @@
     }
   },
   "tests/utils/after.test.ts": {
-    "auaust/no-floating-promises": {
-      "count": 1
-    },
     "no-constant-condition": {
       "count": 1
     }
@@ -378,7 +350,7 @@
   },
   "tests/utils/plain.test.ts": {
     "auaust/no-misused-promises": {
-      "count": 2
+      "count": 1
     }
   },
   "tests/utils/readonly.test.ts": {

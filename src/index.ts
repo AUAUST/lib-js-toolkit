@@ -131,7 +131,6 @@ export {
 } from "@auaust/toolkit/value";
 export { voided, type Voided } from "@auaust/toolkit/voided";
 export { when } from "@auaust/toolkit/when";
-
 export * from "@auaust/toolkit/errors";
 export * from "@auaust/toolkit/types";
 

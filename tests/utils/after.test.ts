@@ -38,7 +38,7 @@ describe("after", () => {
 
     if (false) {
       // @ts-expect-error The optional callback argument is numeric.
-      after(callback, 0, "entry", "2");
+      await after(callback, 0, "entry", "2");
     }
 
     await vi.runAllTimersAsync();

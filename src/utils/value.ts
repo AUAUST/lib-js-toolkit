@@ -24,12 +24,9 @@ export type ValueInput<Input, Arguments extends readonly any[], This> = Input &
 export interface ValueResolver {
   <Value, Arguments extends readonly any[], This = any>(
     this: This,
-    input: (this: This, ...args: Arguments) => Value,
-    ...args: Arguments
-  ): Value;
-  <Value, Arguments extends readonly any[], This = any>(
-    this: This,
-    input: ResolvableValue<Value, Arguments, This>,
+    input:
+      | ((this: This, ...args: Arguments) => Value)
+      | ResolvableValue<Value, Arguments, This>,
     ...args: Arguments
   ): Value;
   <Input, Arguments extends readonly any[], This = any>(
@@ -39,12 +36,9 @@ export interface ValueResolver {
   ): ResolvedValue<Input>;
   call<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
-    input: (this: This, ...args: Arguments) => Value,
-    ...args: Arguments
-  ): Value;
-  call<Value, Arguments extends readonly any[], This = any>(
-    thisArg: This,
-    input: ResolvableValue<Value, Arguments, This>,
+    input:
+      | ((this: This, ...args: Arguments) => Value)
+      | ResolvableValue<Value, Arguments, This>,
     ...args: Arguments
   ): Value;
   call<Input, Arguments extends readonly any[], This = any>(
@@ -55,14 +49,9 @@ export interface ValueResolver {
   apply<Value, Arguments extends readonly any[], This = any>(
     thisArg: This,
     args: readonly [
-      input: (this: This, ...args: Arguments) => Value,
-      ...args: Arguments,
-    ],
-  ): Value;
-  apply<Value, Arguments extends readonly any[], This = any>(
-    thisArg: This,
-    args: readonly [
-      input: ResolvableValue<Value, Arguments, This>,
+      input:
+        | ((this: This, ...args: Arguments) => Value)
+        | ResolvableValue<Value, Arguments, This>,
       ...args: Arguments,
     ],
   ): Value;

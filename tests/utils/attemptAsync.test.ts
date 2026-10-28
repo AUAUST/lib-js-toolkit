@@ -34,7 +34,7 @@ describe("attemptAsync", () => {
 
   test("infers awaited return types from callable callbacks", async () => {
     const callback = {
-      [callable](key: "entry", ...values: number[]) {
+      [callable](key: "entry", ...ignored: number[]) {
         return Promise.resolve(key);
       },
     };
