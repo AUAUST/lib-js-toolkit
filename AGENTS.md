@@ -40,17 +40,23 @@ Pause on real choices: ask the questions and wait for the answers before continu
 
 <!-- @end -->
 
+## Issues and coordination
+
+- When given a GitHub issue, read it and each parent issue it links, up to the root. Together with these instructions they define the task; task- and module-specific instructions live in issues, never here.
+- Never resolve a conflict between this file, `.claude/rules/` and the issue chain yourself: stop on the affected item and report the conflict for human review.
+- Before working on an issue, follow `.claude/rules/agent-lock.md`.
+
 ## Project and tools
 
 - `@auaust/toolkit` is an ESM-only TypeScript utility library. Read the actual source, configuration and package scripts for current details.
 - Use pnpm and the scripts in `package.json`. CI uses Node.js 24. TypeScript stays on the major required by `@auaust/engrenage`.
 - Runtime utilities stay independent of application frameworks and platform-specific integrations. Node-only filesystem, process and build operations belong in `scripts/` and tooling configuration, never in runtime utilities.
-- Toolkit is the package other AUAUST projects reuse. Inside it, reuse sibling utilities through their subpaths; never depend on the published package or add a dependency for functionality provided here.
+- Toolkit is the package other AUAUST projects reuse. Inside it, reuse sibling helpers through the internal import paths; never depend on the published package or add a dependency for functionality provided here.
 - Shared tooling configuration comes from `@auaust/engrenage`: the tsconfig preset, the `prettier` key in `package.json`, `eslint.config.ts`, the tsdown and Vitest builders (`tsdown.config.ts`, `vitest.config.ts`) that resolve entries and path aliases from `tsconfig.json`, and `engrenage.config.ts`. Extend its builders and presets locally instead of copying or redefining them.
 
 ## Source organization and public API
 
-- One primary utility per `src/utils/<name>.ts`, one reusable type per `src/types/<Name>.ts`, one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads and utility-specific types with their owner; split independent concepts into separate modules.
+- One primary helper per file, in the module owning the kind of value it handles, or in `src/utils/` when it is type-agnostic. One reusable type per `src/types/<Name>.ts`, one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads and utility-specific types with their owner; split independent concepts into separate modules.
 - Protocols live in `src/protocols/<name>/index.ts`. Preserve their symbol identities, `Symbol.for` keys, module augmentation and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection.
 - Maintain the public barrels `src/index.ts`, `src/types.ts` and `src/errors.ts`. Keep root and subpath exports consistent with the intended API; never expose internal helpers.
 - Preserve observable behavior: `this` binding, argument forwarding, return values, property descriptors, mutation, error causes and promise settlement. Changes to these or to exported types are API changes.
@@ -61,7 +67,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 
 ## Imports and types
 
-- Import sibling utilities through `@auaust/toolkit/<function>`, reusable types through `@auaust/toolkit/types`, and errors and protocols through their existing subpaths, as configured in `tsconfig.json`. Never import the root barrel from runtime modules.
+- Import sibling helpers, reusable types, errors and protocols through the internal import paths the project configures (`package.json` `imports`). Never import the root barrel from runtime modules.
 - Keep relative imports where tooling or type and error barrels need them, and keep tooling imports compatible with the configured ESM loaders.
 - Types are public API. Preserve generic inference, literal types, overloads, type predicates, readonly tuples, optional and rest parameters, `this` parameters and synchronous or asynchronous return contracts.
 - Prefer `unknown` for data that must be narrowed. Use `any` only where a generic constraint or another supported type contract needs it; do not replace it where that changes assignability or inference.
@@ -106,6 +112,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 
 - Preserve distinctions between missing values, `undefined`, `null` and other falsy values where the API distinguishes them.
 - Document public contracts with concise JSDoc when needed: behavior, options, return values, mutation, timing and error semantics. Keep it accurate when behavior changes; never narrate the implementation.
+- Once toolkit provides a helper for an operation, use it everywhere else instead of the native or ad hoc form.
 - Keep configuration and build knowledge in its existing owner. Do not duplicate alias maps, entry-point discovery, package metadata or compile-time variables across modules.
 
 ## Code conventions
@@ -114,7 +121,6 @@ Pause on real choices: ask the questions and wait for the answers before continu
 
 ## Scaffolding, build and packaging
 
-- `pnpm make function <name>`, `pnpm make type <Name>` and `pnpm make protocol <name>` create source and test files and may update barrels. Inspect their output and replace placeholders. Change scaffold conventions in `data/templates/`.
 - Build entries and test aliases are derived from the `tsconfig.json` paths by engrenage's tsdown and Vitest builders. Declare new entry points there.
 - Package exports are generated by tsdown. Run `pnpm exec engrenage tsdown` after entry-point changes and review the `package.json` diff; never hand-edit `exports` or `dist/`.
 - Preserve declaration generation, source maps, publint and Are the Types Wrong checks.

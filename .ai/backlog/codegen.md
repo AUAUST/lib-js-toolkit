@@ -9,6 +9,6 @@
 ## 2. Deriving `@throws` from code
 
 - Settled in AUAUST/lib-js-toolkit#103: `@throws` is not written by hand, because it would drift from the code.
-- Proposal: derive it from the `throw` statements of each helper, with an optional meta comment giving the condition, for example ``throw new TypeError("Invalid input"); /** @cause when the `value` is not a string */`` producing ``@throws {TypeError} - when the `value` is not a string``. Open: errors thrown by called helpers, rethrows, errors built by shared helpers (`merge.56`).
+- Proposal: derive it from the `throw` statements of each helper, with an optional meta comment giving the condition, for example ``throw new TypeError("Invalid input"); /** @cause when the `value` is not a string */`` producing ``@throws {TypeError} - when the `value` is not a string``. Open: errors thrown by called helpers, rethrows, errors built by shared helpers (AUAUST/lib-js-toolkit#119).
 - Outcome: a check of whether this is automatable, and if so a generator in codegen.
 - Done when `@throws` is generated, or the idea is dropped as not automatable.
