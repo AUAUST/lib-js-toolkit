@@ -2,4 +2,4 @@
 
 <!-- scratchpad-placeholder -->
 
-Nyaa~ this page is a sparkly empty bento box (っ˘ω˘ς) — fill it with your teeny idea-dumplings and a squad of strawberry-milk bunnies will hop them straight to the backlog! 🍓🐰✨
+Pyon pyon~ ₍ᐢ•ﻌ•ᐢ₎♡ this page is an empty mochi tray dusted with sakura sugar — plop your squishiest little musings here and a choir of jelly-bean hamsters in sailor hats will roll each one to the backlog on tiny strawberry wheels! 🍡🐹⛵💕

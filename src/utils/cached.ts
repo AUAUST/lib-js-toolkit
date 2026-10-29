@@ -178,5 +178,5 @@ export function cached(
     value,
     has,
     delete: deleteEntry,
-  }) as Cached<Callee>;
+  });
 }
