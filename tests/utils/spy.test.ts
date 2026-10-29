@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { spy } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("spy", () => {
   test("calls the before listener before the closure", () => {

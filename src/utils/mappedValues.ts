@@ -1,7 +1,9 @@
-import { plain } from "@auaust/toolkit/plain";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { MappedSource } from "@auaust/toolkit/mappedKeys";
-import type { Callee, ObjectKey, ObjectValue } from "@auaust/toolkit/types";
+import { plain } from "#utils/plain";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { ObjectKey } from "#types/ObjectKey";
+import type { ObjectValue } from "#types/ObjectValue";
+import type { MappedSource } from "#utils/mappedKeys";
 
 /**
  * Copies transformed enumerable string properties, including inherited ones,

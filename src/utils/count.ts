@@ -1,19 +1,20 @@
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { isObject } from "@auaust/toolkit/isObject";
-import { isPlainObject } from "@auaust/toolkit/isPlainObject";
-import { isString } from "@auaust/toolkit/isString";
-import { isSafeInteger } from "@auaust/toolkit/math";
-import { keys } from "@auaust/toolkit/object";
-import { implementsProtocol } from "@auaust/toolkit/protocols";
-import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
+import { isSafeInteger } from "#modules/math/utils/isSafeInteger";
+import { keys } from "#modules/object/utils/keys";
+import { countable } from "#modules/protocol/symbols";
+import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { isNumber } from "#utils/isNumber";
+import { isObject } from "#utils/isObject";
+import { isPlainObject } from "#utils/isPlainObject";
+import { isString } from "#utils/isString";
+import type { Countable } from "#modules/protocol/types/Countable";
 
 export function count(
   input: Countable | { length: number } | { size: number },
 ): number;
 export function count(input: unknown): number | undefined;
 export function count(input: unknown): number | undefined {
-  if (implementsProtocol(countOf, input)) {
-    const result = input[countOf]();
+  if (implementsProtocol(countable, input)) {
+    const result = input[countable]();
 
     if (!isSafeInteger(result) || result < 0) {
       throw new RangeError("A count must be a non-negative safe integer.");

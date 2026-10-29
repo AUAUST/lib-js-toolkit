@@ -1,7 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { mappedValues } from "@auaust/toolkit";
-import { isArray } from "@auaust/toolkit/isArray";
+import { isArray, mappedValues } from "@auaust/toolkit";
 
 import { createPair, createValueTransformer } from "../fixtures/objects";
 

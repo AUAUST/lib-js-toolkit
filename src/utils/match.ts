@@ -1,10 +1,10 @@
-import { call } from "@auaust/toolkit/call";
-import { isArray } from "@auaust/toolkit/isArray";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { isString } from "@auaust/toolkit/isString";
-import { isNaN } from "@auaust/toolkit/math";
-import { value, type ResolvedValue } from "@auaust/toolkit/value";
-import type { Callee } from "@auaust/toolkit/types";
+import { isNaN } from "#modules/math/utils/isNaN";
+import { call } from "#utils/call";
+import { isArray } from "#utils/isArray";
+import { isCallable } from "#utils/isCallable";
+import { isString } from "#utils/isString";
+import { value, type ResolvedValue } from "#utils/value";
+import type { Callee } from "#types/Callee";
 
 type Predicate<T> = Callee<unknown, [value: T]>;
 

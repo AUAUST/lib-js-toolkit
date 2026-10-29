@@ -1,11 +1,15 @@
-export { compose, type Composed, type ComposedEntry } from "./compose";
-export { getterComposer } from "./getterComposer";
-export { getterComposers } from "./getterComposers";
+export {
+  compose,
+  type Composed,
+  type ComposedEntry,
+} from "#modules/composer/utils/compose";
+export { getterComposer } from "#modules/composer/utils/getterComposer";
+export { getterComposers } from "#modules/composer/utils/getterComposers";
 export {
   propertyComposer,
   type PropertyComposer,
   type PropertyCompositionDescriptor,
-} from "./propertyComposer";
-export { propertyComposers } from "./propertyComposers";
-export { valueComposer } from "./valueComposer";
-export { valueComposers } from "./valueComposers";
+} from "#modules/composer/utils/propertyComposer";
+export { propertyComposers } from "#modules/composer/utils/propertyComposers";
+export { valueComposer } from "#modules/composer/utils/valueComposer";
+export { valueComposers } from "#modules/composer/utils/valueComposers";

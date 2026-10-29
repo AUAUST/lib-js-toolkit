@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { measureAsync, sleep, type MeasureResult } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("measureAsync", () => {
   afterEach(() => {

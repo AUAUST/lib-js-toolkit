@@ -1,8 +1,8 @@
-import { PipelineError } from "@auaust/toolkit/errors";
-import { isArray } from "@auaust/toolkit/isArray";
-import { isBoolean } from "@auaust/toolkit/isBoolean";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callee } from "@auaust/toolkit/types";
+import { PipelineError } from "#errors/PipelineError";
+import { isArray } from "#utils/isArray";
+import { isBoolean } from "#utils/isBoolean";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
 
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;
 

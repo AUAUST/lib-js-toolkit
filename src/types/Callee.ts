@@ -1,5 +1,5 @@
-import type { Callable } from "@auaust/toolkit/protocols/callable";
-import type { Fn } from "@auaust/toolkit/types";
+import type { Callable } from "#modules/protocol/types/Callable";
+import type { Fn } from "#types/Fn";
 
 /**
  * A value that supports being called, either because it

@@ -1,4 +1,4 @@
-import type { IsNever } from "@auaust/toolkit/types";
+import type { IsNever } from "#types/IsNever";
 
 export type ObjectValue<Target> = Target extends readonly (infer Value)[]
   ? Value

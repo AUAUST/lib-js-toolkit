@@ -1,10 +1,8 @@
-import { apply } from "@auaust/toolkit/apply";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export interface MeasureResult<Result> {
   readonly result: Result;

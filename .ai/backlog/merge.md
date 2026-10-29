@@ -375,3 +375,13 @@ Questions to settle before migration agents batch-import primitive-kit (AUAUST/l
 
 - #112 question 2: migrate each dependent as its modules land, or all at the end. Engrenage is affected twice: it imports primitive-kit and toolkit's dropped per-helper subpaths (`engrenage.4`).
 - Done when decided.
+
+## 73. Build: empty module entries break `typecheck:dist`
+
+- Found while applying #104: the empty modules (`export {};` in `array`, `assert`, `async`, `boolean`, `function`, `guard`, `iterable`, `maplike`, `number`, `parse`, `setlike`, `string`) bundle to `dist/<module>.d.mts` containing only `export { index_d_exports as t };` with no definition, so `engrenage typecheck:dist` fails with TS2304 and `pnpm build` stops before `vitest:dist`. Source mode (lint, typecheck, tests) is unaffected.
+- Done when it is decided how an empty module entry is emitted (tsdown/rolldown-plugin-dts fix or a placeholder export) and `pnpm build` passes.
+
+## 74. Build: root namespace identity differs in `dist/`
+
+- Found while applying #104: the identity test in `tests/index.test.ts` (`toolkit.object === @auaust/toolkit/object`) passes in source mode and fails in `vitest:dist`. The root exports a synthesized namespace object (`__exportAll`), while `dist/object.mjs` re-exports the bindings as a real module namespace, so the two objects differ.
+- Done when it is decided whether the identity is a contract the build must honour (and how) or the test and #104/#114 wording are relaxed.

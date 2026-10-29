@@ -3,7 +3,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { cached, type Cached, type CachedOptions } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 import {
   contextual,

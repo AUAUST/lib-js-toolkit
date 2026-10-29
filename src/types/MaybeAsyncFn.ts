@@ -1,4 +1,4 @@
-import type { AsyncFn } from "@auaust/toolkit/types";
+import type { AsyncFn } from "#types/AsyncFn";
 
 export type MaybeAsyncFn<
   Return = any,

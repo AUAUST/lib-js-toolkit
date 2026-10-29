@@ -1,5 +1,6 @@
-import { isObject } from "@auaust/toolkit/isObject";
-import { entries, finalize } from "@auaust/toolkit/object";
+import { entries } from "#modules/object/utils/entries";
+import { finalize } from "#modules/object/utils/finalize";
+import { isObject } from "#utils/isObject";
 
 let defaultTarget: Record<PropertyKey, any> | undefined;
 

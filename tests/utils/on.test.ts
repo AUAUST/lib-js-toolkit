@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { on } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("on", () => {
   test("calls the final argument with all preceding arguments", () => {

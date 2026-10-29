@@ -1,21 +1,19 @@
-import { isObject } from "@auaust/toolkit/isObject";
-import { keyMapper } from "@auaust/toolkit/keyMapper";
+import { isObject } from "#utils/isObject";
+import { keyMapper } from "#utils/keyMapper";
 import {
   mappedKeys,
   type FunctionMappedKey,
   type MappedSource,
   type RecordMappedKey,
-} from "@auaust/toolkit/mappedKeys";
-import { mappedValues } from "@auaust/toolkit/mappedValues";
-import { plain } from "@auaust/toolkit/plain";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallReturnType,
-  ObjectKey,
-  ObjectValue,
-  ToRecordKey,
-} from "@auaust/toolkit/types";
+} from "#utils/mappedKeys";
+import { mappedValues } from "#utils/mappedValues";
+import { plain } from "#utils/plain";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { ObjectKey } from "#types/ObjectKey";
+import type { ObjectValue } from "#types/ObjectValue";
+import type { ToRecordKey } from "#types/ToRecordKey";
 
 /**
  * Copies properties into a null-prototype record, optionally mapping keys and

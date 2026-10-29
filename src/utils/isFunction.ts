@@ -1,5 +1,5 @@
-import { isContainer } from "@auaust/toolkit/isContainer";
-import type { MethodName } from "@auaust/toolkit/types";
+import { isContainer } from "#utils/isContainer";
+import type { MethodName } from "#types/MethodName";
 
 export function isFunction(
   value: unknown,

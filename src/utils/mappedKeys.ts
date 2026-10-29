@@ -1,12 +1,10 @@
-import { keyMapper } from "@auaust/toolkit/keyMapper";
-import { plain } from "@auaust/toolkit/plain";
-import type {
-  Callee,
-  CallReturnType,
-  ObjectKey,
-  ObjectValue,
-  ToRecordKey,
-} from "@auaust/toolkit/types";
+import { keyMapper } from "#utils/keyMapper";
+import { plain } from "#utils/plain";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { ObjectKey } from "#types/ObjectKey";
+import type { ObjectValue } from "#types/ObjectValue";
+import type { ToRecordKey } from "#types/ToRecordKey";
 
 /** Projects copied properties into a record, excluding array methods and metadata. */
 export type MappedSource<

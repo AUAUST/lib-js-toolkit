@@ -1,8 +1,8 @@
-import { isArray } from "@auaust/toolkit/isArray";
-import { isPlainObject } from "@auaust/toolkit/isPlainObject";
-import { freeze } from "@auaust/toolkit/object";
-import { plain } from "@auaust/toolkit/plain";
-import type { ReadonlyFunction } from "@auaust/toolkit/types";
+import { freeze } from "#modules/object/utils/freeze";
+import { isArray } from "#utils/isArray";
+import { isPlainObject } from "#utils/isPlainObject";
+import { plain } from "#utils/plain";
+import type { ReadonlyFunction } from "#types/ReadonlyFunction";
 
 /**
  * Returns a shallow copy of the given value

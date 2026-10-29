@@ -1,7 +1,7 @@
 import { assertType, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { value } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("value", () => {
   test("returns the provided value when it's not a function", () => {

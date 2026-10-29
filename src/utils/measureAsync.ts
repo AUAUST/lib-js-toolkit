@@ -1,11 +1,9 @@
-import { apply } from "@auaust/toolkit/apply";
-import type { MeasureResult } from "@auaust/toolkit/measure";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
+import type { MeasureResult } from "#utils/measure";
 
 export async function measureAsync<Callback extends Callee>(
   this: CallThisParameterType<Callback>,

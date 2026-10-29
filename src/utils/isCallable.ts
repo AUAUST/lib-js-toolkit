@@ -1,7 +1,8 @@
-import { isContainer } from "@auaust/toolkit/isContainer";
-import { implementsProtocol } from "@auaust/toolkit/protocols";
-import { callable } from "@auaust/toolkit/protocols/callable";
-import type { Callee, MethodName } from "@auaust/toolkit/types";
+import { callable } from "#modules/protocol/symbols";
+import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { isContainer } from "#utils/isContainer";
+import type { Callee } from "#types/Callee";
+import type { MethodName } from "#types/MethodName";
 
 export function isCallable(value: unknown): value is Callee;
 export function isCallable<Target extends object>(

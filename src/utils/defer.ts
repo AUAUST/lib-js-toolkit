@@ -1,4 +1,4 @@
-import { assign } from "@auaust/toolkit/object";
+import { assign } from "#modules/object/utils/assign";
 
 export type PromiseResolver<Result = unknown> = (
   value: Result | PromiseLike<Result>,

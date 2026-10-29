@@ -1,6 +1,7 @@
-import { ReadonlyError } from "@auaust/toolkit/errors";
-import { isContainer } from "@auaust/toolkit/isContainer";
-import { finalize, hasOwn } from "@auaust/toolkit/object";
+import { ReadonlyError } from "#errors/ReadonlyError";
+import { finalize } from "#modules/object/utils/finalize";
+import { hasOwn } from "#modules/object/utils/hasOwn";
+import { isContainer } from "#utils/isContainer";
 
 const readonlySymbol = Symbol("readonly");
 

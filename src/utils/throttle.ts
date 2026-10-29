@@ -1,11 +1,10 @@
-import { isNaN, max } from "@auaust/toolkit/math";
-import { assign } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { isNaN } from "#modules/math/utils/isNaN";
+import { max } from "#modules/math/utils/max";
+import { assign } from "#modules/object/utils/assign";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type Throttled<Callback extends Callee> = ((
   this: CallThisParameterType<Callback>,

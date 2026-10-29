@@ -1,8 +1,12 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { empty, filled, type FilledValue } from "@auaust/toolkit";
-import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
-import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
+import {
+  countable,
+  emptiable,
+  type Countable,
+  type Emptiable,
+} from "@auaust/toolkit/protocol";
 import type {
   FilledContainer,
   FilledMember,
@@ -175,7 +179,7 @@ describe("filled", () => {
 
     const value = {
       label: "custom",
-      [isEmpty]() {
+      [emptiable]() {
         return this.label === "";
       },
     };
@@ -203,7 +207,7 @@ describe("filled", () => {
   test("respects count protocols and emptiness protocol precedence", () => {
     const counted = {
       length: 0 as const,
-      [countOf]() {
+      [countable]() {
         return 1;
       },
     };
@@ -211,15 +215,15 @@ describe("filled", () => {
     expect(filled(counted)).toBe(true);
     expectTypeOf<FilledValue<typeof counted>>().toEqualTypeOf<typeof counted>();
     expectTypeOf<FilledValue<Countable>>().toEqualTypeOf<Countable>();
-    expectTypeOf<FilledValue<{ [countOf](): 0 }>>().toBeNever();
+    expectTypeOf<FilledValue<{ [countable](): 0 }>>().toBeNever();
 
     expectTypeOf<
-      FilledValue<Emptiable<false> & { [countOf](): 0 }>
-    >().toEqualTypeOf<Emptiable<false> & { [countOf](): 0 }>();
+      FilledValue<Emptiable<false> & { [countable](): 0 }>
+    >().toEqualTypeOf<Emptiable<false> & { [countable](): 0 }>();
 
     const customEmpty = {
       ...counted,
-      [isEmpty]: true as const,
+      [emptiable]: true as const,
     };
 
     expect(filled(customEmpty)).toBe(false);

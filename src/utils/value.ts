@@ -1,10 +1,8 @@
-import { apply } from "@auaust/toolkit/apply";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import type {
-  Callee,
-  CallReturnType,
-  CallSignature,
-} from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import { isCallable } from "#utils/isCallable";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallSignature } from "#types/CallSignature";
 
 export type ResolvableValue<
   Result,

@@ -1,5 +1,5 @@
-import type { AsyncCallable } from "@auaust/toolkit/protocols/callable";
-import type { AsyncFn } from "@auaust/toolkit/types";
+import type { AsyncCallable } from "#modules/protocol/types/AsyncCallable";
+import type { AsyncFn } from "#types/AsyncFn";
 
 /**
  * A value that supports being called, either because it

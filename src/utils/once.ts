@@ -1,10 +1,9 @@
-import { assign, defineGetters } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallReturnType,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { assign } from "#modules/object/utils/assign";
+import { defineGetters } from "#modules/object/utils/defineGetters";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type OnceFn<Return> = (() => Return) & {
   /**

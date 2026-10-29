@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { apply, call } from "@auaust/toolkit";
 import { assign, freeze } from "@auaust/toolkit/object";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 import type { Callee } from "@auaust/toolkit/types";
 
 describe("apply", () => {

@@ -1,8 +1,6 @@
-import type {
-  IsNumberLiteral,
-  IsStringLiteral,
-  IsSymbolLiteral,
-} from "@auaust/toolkit/types";
+import type { IsNumberLiteral } from "#types/IsNumberLiteral";
+import type { IsStringLiteral } from "#types/IsStringLiteral";
+import type { IsSymbolLiteral } from "#types/IsSymbolLiteral";
 
 export type IsLiteral<
   T,

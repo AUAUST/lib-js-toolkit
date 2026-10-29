@@ -1,5 +1,5 @@
-import { apply } from "@auaust/toolkit/apply";
-import type { AsyncCallee } from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import type { AsyncCallee } from "#types/AsyncCallee";
 
 /**
  * Calls the callback after the delay in milliseconds, forwarding arguments and `this`.

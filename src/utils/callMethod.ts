@@ -1,13 +1,11 @@
-import { apply } from "@auaust/toolkit/apply";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  MethodName,
-  MethodParameters,
-  MethodReturnType,
-} from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import { isCallable } from "#utils/isCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { MethodName } from "#types/MethodName";
+import type { MethodParameters } from "#types/MethodParameters";
+import type { MethodReturnType } from "#types/MethodReturnType";
 
 export function callMethod<
   Target extends object,

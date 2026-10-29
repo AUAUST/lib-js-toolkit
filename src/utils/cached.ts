@@ -1,16 +1,14 @@
-import { identity } from "@auaust/toolkit/identity";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { isContainer } from "@auaust/toolkit/isContainer";
-import { assign } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callable } from "@auaust/toolkit/protocols/callable";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  CallSignature,
-  Fn,
-} from "@auaust/toolkit/types";
+import { assign } from "#modules/object/utils/assign";
+import { identity } from "#utils/identity";
+import { isCallable } from "#utils/isCallable";
+import { isContainer } from "#utils/isContainer";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callable } from "#modules/protocol/types/Callable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallSignature } from "#types/CallSignature";
+import type { Fn } from "#types/Fn";
 
 export type CacheResolver<
   Return = any,
@@ -60,7 +58,10 @@ export type Cached<
   delete(key: Key): boolean;
 };
 
-export interface CachedOptions<Callback extends Callee = Callee, Key = unknown> {
+export interface CachedOptions<
+  Callback extends Callee = Callee,
+  Key = unknown,
+> {
   /**
    * Resolves the cache key from all callback arguments.
    * Callable objects use their holders as receivers. Resolved once at setup.

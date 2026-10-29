@@ -1,11 +1,10 @@
-import { isFunction } from "@auaust/toolkit/isFunction";
-import { implementsProtocol } from "@auaust/toolkit/protocols";
-import { callable, type Callable } from "@auaust/toolkit/protocols/callable";
-import type {
-  Callee,
-  CallSignature,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { callable } from "#modules/protocol/symbols";
+import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { isFunction } from "#utils/isFunction";
+import type { Callable } from "#modules/protocol/types/Callable";
+import type { Callee } from "#types/Callee";
+import type { CallSignature } from "#types/CallSignature";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export function resolveCallable<Target extends Callable>(
   value: Target,

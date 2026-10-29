@@ -1,5 +1,6 @@
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { Callee, CallReturnType } from "@auaust/toolkit/types";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
 
 export function transformValues<Target extends object>(target: Target): Target;
 export function transformValues<

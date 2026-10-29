@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { count } from "@auaust/toolkit";
 import { assign, create, defineProperty } from "@auaust/toolkit/object";
-import { countOf } from "@auaust/toolkit/protocols/countable";
+import { countable } from "@auaust/toolkit/protocol";
 
 import { createFunctions, primitiveValues } from "../fixtures/values";
 
@@ -73,7 +73,7 @@ describe("count", () => {
     const input = {
       length: 99,
       items: [1, 2, 3],
-      [countOf]() {
+      [countable]() {
         expect(this).toBe(input);
 
         return this.items.length;
@@ -88,7 +88,7 @@ describe("count", () => {
     (result) => {
       expect(() => {
         return count({
-          [countOf]: () => result,
+          [countable]: () => result,
         });
       }).toThrow(RangeError);
     },

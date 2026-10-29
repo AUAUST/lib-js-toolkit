@@ -1,9 +1,7 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { comparator } from "@auaust/toolkit";
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { isString } from "@auaust/toolkit/isString";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { comparator, isNumber, isString } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("comparator", () => {
   test("returns a comparator function which holds the custom operators", () => {

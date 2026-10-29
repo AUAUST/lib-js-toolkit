@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
-import { BUILD } from "@auaust/toolkit";
+import { BUILD, object as rootObject } from "@auaust/toolkit";
+import * as object from "@auaust/toolkit/object";
 
 import packageJson from "../package.json" with { type: "json" };
 
@@ -18,5 +19,9 @@ describe("toolkit", () => {
     expect(name).toBe(__NAME__);
     expect(version).toBeTypeOf("string");
     expect(license).toBeTypeOf("string");
+  });
+
+  test("re-exports modules as namespaces with the identity of their entry", () => {
+    expect(rootObject).toBe(object);
   });
 });

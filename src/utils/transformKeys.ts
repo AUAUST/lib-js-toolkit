@@ -1,10 +1,7 @@
-import { keyMapper } from "@auaust/toolkit/keyMapper";
-import { keys } from "@auaust/toolkit/object";
-import type {
-  FunctionMappedKey,
-  RecordMappedKey,
-} from "@auaust/toolkit/mappedKeys";
-import type { Callee } from "@auaust/toolkit/types";
+import { keys } from "#modules/object/utils/keys";
+import { keyMapper } from "#utils/keyMapper";
+import type { Callee } from "#types/Callee";
+import type { FunctionMappedKey, RecordMappedKey } from "#utils/mappedKeys";
 
 export function transformKeys<Target extends object>(target: Target): Target;
 export function transformKeys<

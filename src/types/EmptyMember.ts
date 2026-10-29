@@ -1,13 +1,9 @@
-import type {
-  Countable,
-  EmptyCountable,
-} from "@auaust/toolkit/protocols/countable";
-import type { Emptiable } from "@auaust/toolkit/protocols/emptiable";
-import type {
-  EmptyContainer,
-  EmptyString,
-  EmptyValue,
-} from "@auaust/toolkit/types";
+import type { Countable } from "#modules/protocol/types/Countable";
+import type { Emptiable } from "#modules/protocol/types/Emptiable";
+import type { EmptyCountable } from "#modules/protocol/types/EmptyCountable";
+import type { EmptyContainer } from "#types/EmptyContainer";
+import type { EmptyString } from "#types/EmptyString";
+import type { EmptyValue } from "#types/EmptyValue";
 
 export type EmptyMember<Value> = Value extends null | undefined
   ? Value

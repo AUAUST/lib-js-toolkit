@@ -1,5 +1,5 @@
-import type { Callable } from "@auaust/toolkit/protocols/callable";
-import type { Callee } from "@auaust/toolkit/types";
+import type { Callable } from "#modules/protocol/types/Callable";
+import type { Callee } from "#types/Callee";
 
 export type ResolvedCallable<T extends Callee> =
   T extends Callable<infer Return, infer Arguments, infer This>

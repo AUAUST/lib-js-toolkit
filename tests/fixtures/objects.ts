@@ -1,4 +1,4 @@
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 export function createPair() {
   return {

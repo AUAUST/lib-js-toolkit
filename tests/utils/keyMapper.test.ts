@@ -8,7 +8,7 @@ import {
   type NormalizedKey,
   type NormalizedKeyMapping,
 } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("keyMapper", () => {
   test("keeps keys by default", () => {

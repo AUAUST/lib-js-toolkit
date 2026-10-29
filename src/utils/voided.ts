@@ -1,9 +1,7 @@
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type Voided<Callback extends Callee> = (
   this: CallThisParameterType<Callback>,

@@ -1,4 +1,4 @@
-import type { ToRecordKey } from "@auaust/toolkit/types";
+import type { ToRecordKey } from "#types/ToRecordKey";
 
 export type ObjectEntry<Target> = Target extends readonly (infer Value)[]
   ? [`${number}`, Value]

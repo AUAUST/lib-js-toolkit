@@ -1,9 +1,8 @@
-import type {
-  Countable,
-  EmptyCountable,
-} from "@auaust/toolkit/protocols/countable";
-import type { Emptiable } from "@auaust/toolkit/protocols/emptiable";
-import type { FilledContainer, FilledString } from "@auaust/toolkit/types";
+import type { Countable } from "#modules/protocol/types/Countable";
+import type { Emptiable } from "#modules/protocol/types/Emptiable";
+import type { EmptyCountable } from "#modules/protocol/types/EmptyCountable";
+import type { FilledContainer } from "#types/FilledContainer";
+import type { FilledString } from "#types/FilledString";
 
 export type FilledMember<Value> = Value extends null | undefined
   ? never

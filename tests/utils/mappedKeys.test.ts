@@ -1,12 +1,12 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import {
+  isArray,
   mappedKeys,
   type FunctionMappedKey,
   type MappedSource,
   type RecordMappedKey,
 } from "@auaust/toolkit";
-import { isArray } from "@auaust/toolkit/isArray";
 
 import { createKeyMapper } from "../fixtures/objects";
 

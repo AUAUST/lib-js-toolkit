@@ -1,4 +1,4 @@
-import type { Whitespace } from "@auaust/toolkit/types";
+import type { Whitespace } from "#types/Whitespace";
 
 export type EmptyString<Value extends string = string> = Value extends ""
   ? Value

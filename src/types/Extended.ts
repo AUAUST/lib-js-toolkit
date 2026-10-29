@@ -1,4 +1,5 @@
-import type { IfAny, Simplify } from "@auaust/toolkit/types";
+import type { IfAny } from "#types/IfAny";
+import type { Simplify } from "#types/Simplify";
 
 export type Extended<Target, Properties> = IfAny<
   Target | Properties,

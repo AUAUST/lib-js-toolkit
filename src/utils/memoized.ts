@@ -1,18 +1,13 @@
-import { identity } from "@auaust/toolkit/identity";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { assign, defineGetter } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  CachedOptions,
-  CacheResolver,
-  KeyResolver,
-} from "@auaust/toolkit/cached";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  CallSignature,
-} from "@auaust/toolkit/types";
+import { assign } from "#modules/object/utils/assign";
+import { defineGetter } from "#modules/object/utils/defineGetter";
+import { identity } from "#utils/identity";
+import { isCallable } from "#utils/isCallable";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallSignature } from "#types/CallSignature";
+import type { CachedOptions, CacheResolver, KeyResolver } from "#utils/cached";
 
 export type Memoized<
   Callback extends CacheResolver = CacheResolver,

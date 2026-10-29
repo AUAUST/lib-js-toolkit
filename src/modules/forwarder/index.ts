@@ -1,7 +1,11 @@
-export { forward, type Forwarded, type ForwardedEntry } from "./forward";
-export { forwardAs, type ForwardAs } from "./forwardAs";
-export { forwardMethods } from "./forwardMethods";
-export { forwardProperties } from "./forwardProperties";
+export {
+  forward,
+  type Forwarded,
+  type ForwardedEntry,
+} from "#modules/forwarder/utils/forward";
+export { forwardAs, type ForwardAs } from "#modules/forwarder/utils/forwardAs";
+export { forwardMethods } from "#modules/forwarder/utils/forwardMethods";
+export { forwardProperties } from "#modules/forwarder/utils/forwardProperties";
 export {
   methodForwarder,
   type AnyMethodForwarder,
@@ -9,8 +13,11 @@ export {
   type MethodForwarder,
   type MethodForwardingInput,
   type MethodForwardingOptions,
-} from "./methodForwarder";
-export { methodForwarders, type MethodForwarderFor } from "./methodForwarders";
+} from "#modules/forwarder/utils/methodForwarder";
+export {
+  methodForwarders,
+  type MethodForwarderFor,
+} from "#modules/forwarder/utils/methodForwarders";
 export {
   propertyForwarder,
   type AnyPropertyForwarder,
@@ -18,8 +25,8 @@ export {
   type PropertyForwarder,
   type PropertyForwardingInput,
   type PropertyForwardingOptions,
-} from "./propertyForwarder";
+} from "#modules/forwarder/utils/propertyForwarder";
 export {
   propertyForwarders,
   type PropertyForwarderFor,
-} from "./propertyForwarders";
+} from "#modules/forwarder/utils/propertyForwarders";

@@ -1,10 +1,10 @@
-import { count } from "@auaust/toolkit/count";
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { isString } from "@auaust/toolkit/isString";
-import { memberValue } from "@auaust/toolkit/memberValue";
-import { implementsProtocol } from "@auaust/toolkit/protocols";
-import { isEmpty } from "@auaust/toolkit/protocols/emptiable";
-import type { EmptyValueOf } from "@auaust/toolkit/types";
+import { emptiable } from "#modules/protocol/symbols";
+import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { count } from "#utils/count";
+import { isNumber } from "#utils/isNumber";
+import { isString } from "#utils/isString";
+import { memberValue } from "#utils/memberValue";
+import type { EmptyValueOf } from "#types/EmptyValueOf";
 
 /** Checks for nullish values, blank strings, empty containers, or custom emptiness. */
 export function empty<Value>(input: Value): input is EmptyValueOf<Value> {
@@ -20,11 +20,12 @@ export function empty<Value>(input: Value): input is EmptyValueOf<Value> {
     return input.trim() === "";
   }
 
-  if (implementsProtocol(isEmpty, input)) {
-    return !!memberValue(input, isEmpty);
+  if (implementsProtocol(emptiable, input)) {
+    return !!memberValue(input, emptiable);
   }
 
   return count(input) === 0;
 }
 
-export type { EmptyValue, EmptyValueOf } from "@auaust/toolkit/types";
+export type { EmptyValue } from "#types/EmptyValue";
+export type { EmptyValueOf } from "#types/EmptyValueOf";

@@ -1,4 +1,5 @@
-import { hasOwn, proto } from "@auaust/toolkit/object";
+import { hasOwn } from "#modules/object/utils/hasOwn";
+import { proto } from "#modules/object/utils/proto";
 
 const objectConstructorSource = Function.prototype.toString.call(Object);
 

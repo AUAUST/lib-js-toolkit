@@ -1,4 +1,4 @@
-import type { KeyAsString } from "@auaust/toolkit/types";
+import type { KeyAsString } from "#types/KeyAsString";
 
 export type ObjectKey<Target> = Target extends readonly unknown[] | string
   ? `${number}`

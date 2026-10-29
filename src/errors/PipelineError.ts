@@ -1,4 +1,4 @@
-import type { Callee } from "@auaust/toolkit/types";
+import type { Callee } from "#types/Callee";
 
 export class PipelineError<Input = unknown> extends Error {
   public readonly name = "PipelineError";

@@ -1,19 +1,17 @@
+import { assign } from "#modules/object/utils/assign";
 import {
   cached,
   type CachedOptions,
   type CacheResolver,
   type KeyResolver,
-} from "@auaust/toolkit/cached";
-import { identity } from "@auaust/toolkit/identity";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { assign } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  MaybePromise,
-} from "@auaust/toolkit/types";
+} from "#utils/cached";
+import { identity } from "#utils/identity";
+import { isCallable } from "#utils/isCallable";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { MaybePromise } from "#types/MaybePromise";
 
 export interface CachedAsync<
   Callback extends CacheResolver,

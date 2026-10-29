@@ -2,7 +2,7 @@ import {
   compare,
   type AvailableOperators,
   type CustomOperators,
-} from "@auaust/toolkit/compare";
+} from "#utils/compare";
 
 export function comparator<Operators extends CustomOperators>(
   operators: Operators,

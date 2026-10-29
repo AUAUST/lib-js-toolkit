@@ -1,4 +1,6 @@
-import type { Assigned, IfAny, ToRecordKey } from "@auaust/toolkit/types";
+import type { Assigned } from "#types/Assigned";
+import type { IfAny } from "#types/IfAny";
+import type { ToRecordKey } from "#types/ToRecordKey";
 
 type EntryRecord<Entry> = Entry extends readonly [PropertyKey, unknown]
   ? {

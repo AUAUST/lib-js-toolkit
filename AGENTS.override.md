@@ -10,11 +10,13 @@ Paths below are relative to the project root. Before editing a file, read and fo
 
 <!-- @rules -->
 
-| Matching glob                  | Rule to read                             |
-| ------------------------------ | ---------------------------------------- |
-| <code>.ai/backlog/*.md</code>  | <code>.claude/rules/backlog.md</code>    |
+| Matching glob | Rule to read |
+| --- | --- |
+| <code>.ai/agent-lock.md</code> | <code>.claude/rules/agent-lock.md</code> |
+| <code>.ai/backlog/*.md</code> | <code>.claude/rules/agent-lock.md</code> |
+| <code>.ai/backlog/*.md</code> | <code>.claude/rules/backlog.md</code> |
 | <code>.ai/scratchpad.md</code> | <code>.claude/rules/scratchpad.md</code> |
-| <code>.changeset/**</code>     | <code>.claude/rules/changesets.md</code> |
-| <code>**/*.ts</code>           | <code>.claude/rules/code-style.md</code> |
+| <code>.changeset/**</code> | <code>.claude/rules/changesets.md</code> |
+| <code>**/*.ts</code> | <code>.claude/rules/code-style.md</code> |
 
 <!-- @end -->

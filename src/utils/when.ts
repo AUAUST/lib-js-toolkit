@@ -1,4 +1,4 @@
-import { value, type ResolvableValue } from "@auaust/toolkit/value";
+import { value, type ResolvableValue } from "#utils/value";
 
 export function when<
   IfTrue = void,

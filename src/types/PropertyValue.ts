@@ -1,4 +1,4 @@
-import type { ToArrayKey } from "@auaust/toolkit/types";
+import type { ToArrayKey } from "#types/ToArrayKey";
 
 export type PropertyValue<
   Target,

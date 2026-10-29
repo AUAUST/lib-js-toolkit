@@ -1,8 +1,6 @@
-import type {
-  DescriptorValue,
-  PropertyValue,
-  Simplify,
-} from "@auaust/toolkit/types";
+import type { DescriptorValue } from "#types/DescriptorValue";
+import type { PropertyValue } from "#types/PropertyValue";
+import type { Simplify } from "#types/Simplify";
 
 type WritableDescriptorKey<Descriptors extends PropertyDescriptorMap> = {
   [Key in keyof Descriptors]: PropertyDescriptor extends Descriptors[Key]

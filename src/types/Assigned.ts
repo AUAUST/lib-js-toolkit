@@ -1,4 +1,5 @@
-import type { Extended, IfAny } from "@auaust/toolkit/types";
+import type { Extended } from "#types/Extended";
+import type { IfAny } from "#types/IfAny";
 
 type RequiredTargetKey<Target, Source> = {
   [Key in keyof Source]-?: Key extends keyof Target

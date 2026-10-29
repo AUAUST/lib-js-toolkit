@@ -1,6 +1,6 @@
 import { assertType, describe, expectTypeOf, test } from "vitest";
 
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 import type {
   CallParameters,
   CallReturnType,

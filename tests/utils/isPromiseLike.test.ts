@@ -1,9 +1,11 @@
 /* eslint-disable auaust/no-thenable */
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { isPromiseLike } from "@auaust/toolkit";
-import { isPromiseLike as subpathIsPromiseLike } from "@auaust/toolkit/isPromiseLike";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import {
+  isPromiseLike,
+  isPromiseLike as subpathIsPromiseLike,
+} from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocol";
 
 import { createFunctions, primitiveValues } from "../fixtures/values";
 

@@ -1,12 +1,10 @@
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  CallSignature,
-  CallThisParameterType,
-} from "@auaust/toolkit/types";
+import { isCallable } from "#utils/isCallable";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { CallSignature } from "#types/CallSignature";
+import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type SafeReturnType<F> = [NonNullable<F>] extends [never]
   ? undefined

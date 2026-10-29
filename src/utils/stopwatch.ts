@@ -1,11 +1,12 @@
-import { frozen } from "@auaust/toolkit/frozen";
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { isNaN } from "@auaust/toolkit/math";
-import { defineGetters, finalize, freeze } from "@auaust/toolkit/object";
-import { plain } from "@auaust/toolkit/plain";
-import { readonly } from "@auaust/toolkit/readonly";
-
-import { StateError } from "../errors/StateError";
+import { StateError } from "#errors/StateError";
+import { isNaN } from "#modules/math/utils/isNaN";
+import { defineGetters } from "#modules/object/utils/defineGetters";
+import { finalize } from "#modules/object/utils/finalize";
+import { freeze } from "#modules/object/utils/freeze";
+import { frozen } from "#utils/frozen";
+import { isNumber } from "#utils/isNumber";
+import { plain } from "#utils/plain";
+import { readonly } from "#utils/readonly";
 
 /**
  * A utility for measuring elapsed time across one or more running periods.

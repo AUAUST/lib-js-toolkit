@@ -1,9 +1,9 @@
-import { PipelineError } from "@auaust/toolkit/errors";
-import { isArray } from "@auaust/toolkit/isArray";
-import { isBoolean } from "@auaust/toolkit/isBoolean";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type { PipeCondition } from "@auaust/toolkit/pipe";
-import type { AsyncCallee } from "@auaust/toolkit/types";
+import { PipelineError } from "#errors/PipelineError";
+import { isArray } from "#utils/isArray";
+import { isBoolean } from "#utils/isBoolean";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { AsyncCallee } from "#types/AsyncCallee";
+import type { PipeCondition } from "#utils/pipe";
 
 export type AsyncTransformFn<This, In, Out> = AsyncCallee<
   Out,

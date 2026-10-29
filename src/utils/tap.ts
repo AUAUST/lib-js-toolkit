@@ -1,5 +1,5 @@
-import { call } from "@auaust/toolkit/call";
-import type { Callee } from "@auaust/toolkit/types";
+import { call } from "#utils/call";
+import type { Callee } from "#types/Callee";
 
 export function tap<V, This = any>(
   this: This,

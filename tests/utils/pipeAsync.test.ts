@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { pipeAsync } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("pipeAsync", () => {
   test("composes functions from left to right", async () => {

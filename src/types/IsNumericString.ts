@@ -1,4 +1,5 @@
-import type { IsNever, StringToNumber } from "@auaust/toolkit/types";
+import type { IsNever } from "#types/IsNever";
+import type { StringToNumber } from "#types/StringToNumber";
 
 export type IsNumericString<
   T,

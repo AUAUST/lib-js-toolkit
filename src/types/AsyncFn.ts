@@ -1,4 +1,4 @@
-import type { MaybePromise } from "@auaust/toolkit/types";
+import type { MaybePromise } from "#types/MaybePromise";
 
 export type AsyncFn<
   Return = any,

@@ -1,13 +1,15 @@
 /* eslint-disable auaust/no-loose-equal */
 
-import { call } from "@auaust/toolkit/call";
-import { empty } from "@auaust/toolkit/empty";
-import { StateError } from "@auaust/toolkit/errors";
-import { filled } from "@auaust/toolkit/filled";
-import { isBoolean } from "@auaust/toolkit/isBoolean";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { isNaN } from "@auaust/toolkit/math";
-import type { Callee, IsLiteral, KeyAsString } from "@auaust/toolkit/types";
+import { StateError } from "#errors/StateError";
+import { isNaN } from "#modules/math/utils/isNaN";
+import { call } from "#utils/call";
+import { empty } from "#utils/empty";
+import { filled } from "#utils/filled";
+import { isBoolean } from "#utils/isBoolean";
+import { isCallable } from "#utils/isCallable";
+import type { Callee } from "#types/Callee";
+import type { IsLiteral } from "#types/IsLiteral";
+import type { KeyAsString } from "#types/KeyAsString";
 
 export type Operator = BinaryOperator | UnaryOperator | OperatorFn;
 

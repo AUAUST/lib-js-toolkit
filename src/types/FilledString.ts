@@ -1,4 +1,4 @@
-import type { Whitespace } from "@auaust/toolkit/types";
+import type { Whitespace } from "#types/Whitespace";
 
 /** String members that can contain non-whitespace characters. */
 export type FilledString<Value extends string = string> = Value extends ""

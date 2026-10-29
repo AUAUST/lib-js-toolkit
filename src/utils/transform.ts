@@ -1,11 +1,12 @@
-import { isObject } from "@auaust/toolkit/isObject";
-import { keyMapper } from "@auaust/toolkit/keyMapper";
-import { keys } from "@auaust/toolkit/object";
-import { plain } from "@auaust/toolkit/plain";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import { transformKeys } from "@auaust/toolkit/transformKeys";
-import { transformValues } from "@auaust/toolkit/transformValues";
-import type { Callee, CallReturnType } from "@auaust/toolkit/types";
+import { keys } from "#modules/object/utils/keys";
+import { isObject } from "#utils/isObject";
+import { keyMapper } from "#utils/keyMapper";
+import { plain } from "#utils/plain";
+import { resolveCallable } from "#utils/resolveCallable";
+import { transformKeys } from "#utils/transformKeys";
+import { transformValues } from "#utils/transformValues";
+import type { Callee } from "#types/Callee";
+import type { CallReturnType } from "#types/CallReturnType";
 
 type RecordMappedKey<Key, Map> = Map extends object
   ? Key extends keyof Map

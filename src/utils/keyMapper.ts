@@ -1,14 +1,12 @@
-import { constant } from "@auaust/toolkit/constant";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { hasOwn } from "@auaust/toolkit/object";
-import { resolveCallable } from "@auaust/toolkit/resolveCallable";
-import type {
-  Callee,
-  CallParameters,
-  CallReturnType,
-  Maybe,
-} from "@auaust/toolkit/types";
+import { hasOwn } from "#modules/object/utils/hasOwn";
+import { constant } from "#utils/constant";
+import { isCallable } from "#utils/isCallable";
+import { isNumber } from "#utils/isNumber";
+import { resolveCallable } from "#utils/resolveCallable";
+import type { Callee } from "#types/Callee";
+import type { CallParameters } from "#types/CallParameters";
+import type { CallReturnType } from "#types/CallReturnType";
+import type { Maybe } from "#types/Maybe";
 
 export type KeyMapping<NewKey extends PropertyKey = PropertyKey> = Maybe<
   NewKey | boolean

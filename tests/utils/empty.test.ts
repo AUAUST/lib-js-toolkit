@@ -1,8 +1,12 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { empty, type EmptyValueOf } from "@auaust/toolkit";
-import { countOf, type Countable } from "@auaust/toolkit/protocols/countable";
-import { isEmpty, type Emptiable } from "@auaust/toolkit/protocols/emptiable";
+import {
+  countable,
+  emptiable,
+  type Countable,
+  type Emptiable,
+} from "@auaust/toolkit/protocol";
 
 import { createEmptyValues, createFilledValues } from "../fixtures/values";
 
@@ -22,7 +26,7 @@ describe("empty", () => {
 
     expect(empty(value)).toBe(false);
 
-    value[isEmpty] = function (this: any) {
+    value[emptiable] = function (this: any) {
       return this.value === 0;
     };
 
@@ -182,12 +186,12 @@ describe("empty", () => {
 
     check({
       label: "custom",
-      [isEmpty]: true,
+      [emptiable]: true,
     });
 
     const counted = {
       label: "custom count",
-      [countOf]() {
+      [countable]() {
         return 0;
       },
     };
@@ -195,7 +199,7 @@ describe("empty", () => {
     expect(empty(counted)).toBe(true);
 
     expectTypeOf<EmptyValueOf<Countable>>().toEqualTypeOf<
-      Countable & { [countOf](): 0 }
+      Countable & { [countable](): 0 }
     >();
 
     expectTypeOf<EmptyValueOf<Emptiable<false>>>().toBeNever();

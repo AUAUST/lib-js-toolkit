@@ -9,7 +9,7 @@ import {
 } from "vitest";
 
 import { throttle, type Throttled } from "@auaust/toolkit";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("throttle", () => {
   beforeEach(() => {

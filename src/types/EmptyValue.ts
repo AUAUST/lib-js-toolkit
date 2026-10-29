@@ -1,4 +1,4 @@
-import type { Emptiable } from "@auaust/toolkit/protocols/emptiable";
+import type { Emptiable } from "#modules/protocol/types/Emptiable";
 
 export type EmptyValue =
   | ""

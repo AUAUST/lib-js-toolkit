@@ -2,15 +2,9 @@
   "extends": "@auaust/engrenage/tsconfig/library.json",
   "compilerOptions": {
     "paths": {
-      "@auaust/toolkit/protocols/*": ["./src/protocols/*/index.ts"],
-      "@auaust/toolkit/protocols": ["./src/protocols/index.ts"],
-      "@auaust/toolkit/errors": ["./src/errors.ts"],
-      "@auaust/toolkit/types": ["./src/types.ts"],
-      "@auaust/toolkit/*": [
-        "./src/modules/*/index.ts",
-        "./src/modules/*.ts",
-        "./src/utils/*.ts"
-      ],
+      "@auaust/toolkit/types": ["./src/types/index.ts"],
+      "@auaust/toolkit/errors": ["./src/errors/index.ts"],
+      "@auaust/toolkit/*": ["./src/modules/*/index.ts"],
       "@auaust/toolkit": ["./src/index.ts"]
     },
     "types": ["node"]

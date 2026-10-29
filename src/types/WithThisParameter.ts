@@ -1,4 +1,4 @@
-import type { Fn } from "@auaust/toolkit/types";
+import type { Fn } from "#types/Fn";
 
 export type WithThisParameter<This, Function extends Fn> = (
   this: This,

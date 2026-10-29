@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { apply, call } from "@auaust/toolkit";
-import { callable, type Callable } from "@auaust/toolkit/protocols/callable";
+import { callable, type Callable } from "@auaust/toolkit/protocol";
 
 describe("call", () => {
   test("executes the given callback", () => {

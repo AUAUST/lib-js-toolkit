@@ -1,10 +1,7 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { match } from "@auaust/toolkit";
-import { isArray } from "@auaust/toolkit/isArray";
-import { isNumber } from "@auaust/toolkit/isNumber";
-import { isString } from "@auaust/toolkit/isString";
-import { callable } from "@auaust/toolkit/protocols/callable";
+import { isArray, isNumber, isString, match } from "@auaust/toolkit";
+import { callable } from "@auaust/toolkit/protocol";
 
 describe("match", () => {
   test.each([

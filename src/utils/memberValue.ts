@@ -1,12 +1,10 @@
-import { apply } from "@auaust/toolkit/apply";
-import { isCallable } from "@auaust/toolkit/isCallable";
-import type {
-  Callee,
-  IfNever,
-  MethodName,
-  MethodParameters,
-  MethodReturnType,
-} from "@auaust/toolkit/types";
+import { apply } from "#utils/apply";
+import { isCallable } from "#utils/isCallable";
+import type { Callee } from "#types/Callee";
+import type { IfNever } from "#types/IfNever";
+import type { MethodName } from "#types/MethodName";
+import type { MethodParameters } from "#types/MethodParameters";
+import type { MethodReturnType } from "#types/MethodReturnType";
 
 export type MemberValue<
   Target extends object,
