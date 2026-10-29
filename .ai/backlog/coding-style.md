@@ -20,7 +20,7 @@
 
 ## 4. Switch internal imports to `#` subpath imports
 
-- Decided in AUAUST/lib-js-toolkit#104: internal imports use `package.json` `#…` subpath imports instead of self-referencing `@auaust/toolkit/<function>`.
-- Today `src/` resolves the package name through `tsconfig.json` paths; `scripts/` and `eslint.config.ts` load without those aliases, so they use `Object.*` and are exempt from the restricted-properties rule. `#…` imports resolve natively in Node, TypeScript, bundlers and Vitest, but must not survive in published code or declarations.
-- Outcome: check that tsdown inlines or rewrites them in bundles and `.d.ts` files, then migrate `src/`, `scripts/` and `eslint.config.ts`. Tests keep the package name so they run unchanged against `dist/`. This is a shared change made before migration agents start (`merge.4`); the AGENTS.md import rule follows in the final rules pass (`agent-instructions.1`).
-- Done when no source file imports the package's own name.
+- Settled in AUAUST/lib-js-toolkit#104: `src/` imports through `package.json` `imports` (`#utils/*`, `#types/*`, `#errors/*`, `#modules/*`, each mapping to `./src/<role>/*.ts`), from the defining file, never through the package's own name or relative paths. Tests keep importing `@auaust/toolkit…` entries only. The switch is part of the layout relocation task (`merge.4`), in this order: add `imports`, rewrite the `src/` imports, remove the wildcard `tsconfig.json` paths.
+- Remaining after the relocation: `scripts/` uses `Object.*` because it loaded without the aliases; whether it moves to `#` imports and toolkit helpers is part of the scaffolding rework (`merge.8`). The AGENTS.md import rule follows in the final rules pass (`agent-instructions.1`).
+- Done when no file in `src/` imports the package's own name and the build output contains no `#` import.
+
