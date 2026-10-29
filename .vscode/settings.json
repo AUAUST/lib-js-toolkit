@@ -14,6 +14,10 @@
       "severity": "info"
     },
     {
+      "rule": "@typescript-eslint/require-await",
+      "severity": "info"
+    },
+    {
       "rule": "auaust/naming-convention",
       "severity": "info"
     },

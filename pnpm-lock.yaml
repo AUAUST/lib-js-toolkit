@@ -12,8 +12,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       '@auaust/engrenage':
-        specifier: ^0.4.2
-        version: 0.4.2(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.1(@typescript-eslint/parser@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(jiti@2.7.0)(magicast@0.5.5)(prettier@3.9.10)(tsdown@0.22.14(@arethetypeswrong/core@0.18.5)(publint@0.3.24)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.44.1)(tsx@4.23.15)(yaml@2.9.1))(vitest@4.1.11)
+        specifier: ^0.4.3
+        version: 0.4.3(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.1(@typescript-eslint/parser@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@4.1.11)(eslint@10.13.0(jiti@2.7.0))(jiti@2.7.0)(magicast@0.5.5)(prettier@3.9.10)(tsdown@0.22.14(@arethetypeswrong/core@0.18.5)(publint@0.3.24)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.44.1)(tsx@4.23.15)(yaml@2.9.1))(vitest@4.1.11)
       '@changesets/cli':
         specifier: ^3.0.3
         version: 3.0.3
@@ -63,11 +63,12 @@ packages:
     resolution: {integrity: sha512-9ytjzGwxjm9Uz7I9avfbt5vlQt6uk9uRRESzJjqrznl6WKvI6dwYTo+vJ3U02Wrq/mR3iql/PzhvHhKdJIAjDQ==}
     engines: {node: '>=20'}
 
-  '@auaust/engrenage@0.4.2':
-    resolution: {integrity: sha512-QL40tMjgfr9zAyurtUK+ar0mM5SJOy8tazc5m+WozVIMX1g+v0+AipOKwJZA4jY3jmlwdnz3KqgIDo6nSqw+nw==}
+  '@auaust/engrenage@0.4.3':
+    resolution: {integrity: sha512-4eIgpj6Y0Vr1/207l1wIRLZGYd2TPKZGnJ5XNMJU8d2yuW2YaphD8sGkb/8fDMYGfUvxiVFqvNALROEzwoRVBg==}
     hasBin: true
     peerDependencies:
       '@changesets/cli': ^3.0.0
+      '@vitest/coverage-istanbul': ^5.0.0
       eslint: ^10.0.0
       prettier: ^3.0.0
       tsdown: ^0.23.0
@@ -77,6 +78,8 @@ packages:
       vitest: ^5.0.0
     peerDependenciesMeta:
       '@changesets/cli':
+        optional: true
+      '@vitest/coverage-istanbul':
         optional: true
       prettier:
         optional: true
@@ -2347,7 +2350,7 @@ snapshots:
       typescript: 5.6.1-rc
       validate-npm-package-name: 5.0.1
 
-  '@auaust/engrenage@0.4.2(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.1(@typescript-eslint/parser@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(jiti@2.7.0)(magicast@0.5.5)(prettier@3.9.10)(tsdown@0.22.14(@arethetypeswrong/core@0.18.5)(publint@0.3.24)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.44.1)(tsx@4.23.15)(yaml@2.9.1))(vitest@4.1.11)':
+  '@auaust/engrenage@0.4.3(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.1(@typescript-eslint/parser@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@4.1.11)(eslint@10.13.0(jiti@2.7.0))(jiti@2.7.0)(magicast@0.5.5)(prettier@3.9.10)(tsdown@0.22.14(@arethetypeswrong/core@0.18.5)(publint@0.3.24)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.44.1)(tsx@4.23.15)(yaml@2.9.1))(vitest@4.1.11)':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.13.0(jiti@2.7.0))
       '@stylistic/eslint-plugin': 5.10.0(eslint@10.13.0(jiti@2.7.0))
@@ -2365,6 +2368,7 @@ snapshots:
       yaml: 2.9.1
     optionalDependencies:
       '@changesets/cli': 3.0.3
+      '@vitest/coverage-istanbul': 4.1.11(vitest@4.1.11)
       prettier: 3.9.10
       tsdown: 0.22.14(@arethetypeswrong/core@0.18.5)(publint@0.3.24)(tsx@4.23.15)(typescript@6.0.3)
       tsx: 4.23.15

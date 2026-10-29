@@ -6,7 +6,9 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 ## Instruction maintenance
 
-- Never modify AGENTS.md or `.claude/rules/` unless the user explicitly asks to change agent instructions. Finishing a feature, refactor or new convention does not authorize it; mention the suggested change in your report instead.
+- Change agent instructions or their sources only with explicit user consent to that change.
+- Translate requests into minimal, specific, actionable rules. Preserve intent and resolve overlap or contradictions instead of appending the user's wording verbatim.
+- Before writing instructions, ask focused questions whenever intent, scope or conflicts remain unclear.
 - A `<!-- @reference <reference> -->` marker opens a block that `engrenage sync agents` fills with the referenced file, up to the next `@reference` or `<!-- @end -->` marker. Never edit blocks in place: add project rules after an `@end` marker, or change the referenced source.
 - AGENTS.md holds only rules every agent needs. Surface-specific detail lives in `.claude/rules/`, one file per surface. Neither holds feature documentation, file inventories, API details or records of recent changes.
 - When a rule becomes mechanically enforced, remove its prose. List it under the matching "Enforced by tooling" line only when its fix is not automatic and it shapes how code is first written; autofixed formatting and layout rules need no entry.
@@ -22,6 +24,11 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 <!-- @reference @auaust/engrenage/agents/sections/decision-protocol.md -->
 
 ## Decision protocol
+
+Read user communication literally: questions are questions, not implied instructions or politely phrased demands.
+
+- When the user asks "Shouldn't we do that instead?", explain the reasoning behind the current choice and compare the alternative's pros, cons and implications. Keep your judgment; the question alone neither authorizes a change nor requires reopening settled decisions.
+- Treat exploratory questions as an effort to understand the work and its choices. Answer them without inferring a preferred outcome or a request to question everything. Change direction when the user explicitly requests or decides on it.
 
 Pause on real choices: ask the questions and wait for the answers before continuing. When pausing is impossible, end the turn with the questions rather than proceeding on a guess.
 
@@ -74,9 +81,15 @@ Pause on real choices: ask the questions and wait for the answers before continu
 - Delete obsolete starter code and commented-out implementations. Do not add READMEs for features or a `docs/` directory.
 - When work would build on or deepen an architectural violation, correcting it is a prerequisite: stop under the decision protocol with what is required, what exists, the recommended fix and its scope. Correct existing violations you touch.
 - Report relevant nearby inconsistencies without fixing them. Do not do unsolicited cleanup.
-- `.claude/backlog.md` holds deferred work: architectural debt, upstream bugs and failing checks left unfixed. Add an entry when you report such an issue or the user defers work, under the matching numbered category. Point `N.M` is entry `M` of category `N`; remove resolved entries and renumber the rest.
 - Keep secrets in `.env` (documented by `.env.example`), out of source, logs and runtime code.
 - Propose missing or outdated skills, MCP servers, scripts, dependencies or abstractions when they would help. Never add, remove or upgrade them without the user's approval.
+
+<!-- @reference @auaust/engrenage/agents/sections/backlog.md -->
+
+## Backlog
+
+- Record out-of-scope findings and user-deferred work in the shared backlog: questions, bugs, tasks and improvements. Start with `.ai/backlog/index.md` for categories and entry instructions.
+- `.ai/scratchpad.md` holds user notes. Only when asked to handle the scratchpad, follow `.claude/rules/scratchpad.md`.
 
 <!-- @reference @auaust/engrenage/agents/sections/typescript.md -->
 

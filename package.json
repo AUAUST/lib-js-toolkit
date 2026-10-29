@@ -120,7 +120,7 @@
   ],
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
-    "@auaust/engrenage": "^0.4.2",
+    "@auaust/engrenage": "^0.4.3",
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.2",
     "@vitest/coverage-istanbul": "^4.1.11",
