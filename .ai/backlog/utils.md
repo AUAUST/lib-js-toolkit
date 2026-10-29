@@ -40,3 +40,9 @@
 - Proposal: individual polyfill entry points that check at runtime whether the native method exists before installing it. This conflicts with AUAUST/lib-js-toolkit#106, which excludes polyfills because of `sideEffects: false`; such entries would need to be explicitly listed as side-effectful.
 - Outcome: one strategy (polyfill entries, call-time feature detection, hand-written fallbacks, or waiting for the baseline) decided in #106.
 - Done when #106 records the strategy.
+
+## 7. Native alias exports leave statements in bundles
+
+- Bundling `import * as object from "@auaust/toolkit/object"` with only `object.keys` used (rolldown, current `dist/`) keeps a stray `Object.hasOwn;` statement, from `export const hasOwn = Object.hasOwn as HasOwn` in `src/modules/object/hasOwn.ts`. Other `Object.*` aliases are removed. The cause is unverified.
+- Outcome: find why the alias survives and make native alias exports fully removable.
+- Done when an unused alias leaves no code in a bundle.

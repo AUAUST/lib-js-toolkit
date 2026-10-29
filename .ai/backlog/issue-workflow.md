@@ -1,11 +1,11 @@
 # Issue workflow
 
-## 1. Decision recording undefined
+## 1. Agent role on decision issues
 
 - Concerns AUAUST/lib-js-toolkit#103 and its sub-issues, and AUAUST/lib-js-codegen#4.
-- Agents do not know how a decision is recorded (edit the issue's "Settled" section and close it, or comment), whether settling a decision also updates AGENTS.md or `.claude/rules/`, whether they propose or decide on decision issues, or whether one issue maps to one branch, pull request and changeset.
-- Outcome: a decided workflow written where agents read it (AGENTS.md or the tracking issues).
-- Done when the workflow is documented there.
+- Settled in #103: answers go to the owning issue's "Settled" section, and rules are updated in one pass at the end of the migration. Branch and pull request mapping is tracked in `merge.3`. Still open: whether agents only propose on decision issues or may record decisions, and whether an issue is closed once its last question is settled.
+- Outcome: the remaining workflow written in #103.
+- Done when it is documented there.
 
 ## 2. Issue readiness not visible
 

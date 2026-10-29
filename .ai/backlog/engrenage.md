@@ -18,3 +18,15 @@
 - `engrenage sync` writes the rule-mapping table in `AGENTS.override.md` with unaligned columns, so the file fails `prettier --check` right after a sync.
 - Outcome: engrenage formats generated Markdown with the shared Prettier configuration.
 - Done when a fresh sync leaves `AGENTS.override.md` passing `prettier --check`.
+
+## 4. Lint rules assume per-helper toolkit subpaths
+
+- AUAUST/lib-js-toolkit#104 drops toolkit's per-helper subpaths for one entry per module plus the root. Engrenage's `auaust/no-toolkit-root` rule requires `@auaust/toolkit/<helper>` subpaths instead of the root, and its `Math.*`, `Object.*` and `Array.isArray` restriction messages point to `@auaust/toolkit/math`, `/object` and `isArray`. Engrenage's own source also imports about a dozen per-helper subpaths.
+- Outcome: the rules and messages follow the module entries (whether the root becomes allowed is part of it), in the batch of upstream updates at the end of the merge (`agent-instructions.1`), and engrenage's imports migrated.
+- Done when engrenage's rules and source match toolkit's entry points.
+
+## 5. Skill management
+
+- Toolkit may publish a generated agent skill (`documentation.2`). Nothing lists or syncs skills that dependencies provide.
+- Proposal: an engrenage command listing available skills and keeping them up to date, with a package-level declaration of skills (in the spirit of `exports`, but for skills). Check first which conventions or frameworks already exist for distributing skills through packages.
+- Done when engrenage can discover and sync skills declared by dependencies, or obsolete if an existing convention covers it.

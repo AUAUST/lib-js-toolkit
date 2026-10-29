@@ -2,4 +2,4 @@
 
 <!-- scratchpad-placeholder -->
 
-Pwease feed this tiny empty bento box your wiggly bug thoughts and fluffy feature dreams, and a squad of sparkly bunny-chan devs will nom them into backlog mochi, nyaa~! 🍱🐰✨💖
+Kyaa~ this little onigiri-shaped notepad is empty and its tummy is rumbling!! 🍙💕 Drop your squishy bug whispers and sparkly feature wishes here so the mochi-paw dev kittens can pounce on them, uwu~! 🐾✨🌸

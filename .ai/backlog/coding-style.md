@@ -18,9 +18,9 @@
 - Outcome: keep a disable only where no clean alternative exists, scoped as narrowly as possible; refactor the others.
 - Done when each remaining disable has a verified invariant.
 
-## 4. Internal import style undecided
+## 4. Switch internal imports to `#` subpath imports
 
-- `src/` imports `@auaust/toolkit/<function>` through `tsconfig.json` paths; `scripts/` and `eslint.config.ts` load without those aliases, so they use `Object.*` and are exempt from the restricted-properties rule.
-- The package name in source reads like a dependency on the published package and only resolves through tsconfig-aware tools (plain Node resolves it to `dist/` through package self-reference). `#…` subpath imports in `package.json`, as engrenage uses, resolve natively in Node, TypeScript, bundlers and Vitest and cannot leak into consumers' imports, but must not survive in published code or declarations.
-- Outcome: decide the style together with the layout (AUAUST/lib-js-toolkit#104). If `#…` is chosen, check that tsdown inlines or rewrites them in bundles and `.d.ts` files, migrate `src/`, `scripts/` and `eslint.config.ts`, and update the AGENTS.md import rule. Tests keep the package name so they run unchanged against `dist/`.
-- Done when the style is decided and applied, or obsolete if #104 settles it otherwise.
+- Decided in AUAUST/lib-js-toolkit#104: internal imports use `package.json` `#…` subpath imports instead of self-referencing `@auaust/toolkit/<function>`.
+- Today `src/` resolves the package name through `tsconfig.json` paths; `scripts/` and `eslint.config.ts` load without those aliases, so they use `Object.*` and are exempt from the restricted-properties rule. `#…` imports resolve natively in Node, TypeScript, bundlers and Vitest, but must not survive in published code or declarations.
+- Outcome: check that tsdown inlines or rewrites them in bundles and `.d.ts` files, then migrate `src/`, `scripts/` and `eslint.config.ts`. Tests keep the package name so they run unchanged against `dist/`. This is a shared change made before migration agents start (`merge.8`); the AGENTS.md import rule follows in the final rules pass (`agent-instructions.1`).
+- Done when no source file imports the package's own name.

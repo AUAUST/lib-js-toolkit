@@ -19,6 +19,7 @@ Deferred questions, bugs, tasks and improvements.
 
 ## Open categories
 
+- [Merge](merge.md): questions to settle before migration agents batch-import primitive-kit into toolkit (AUAUST/lib-js-toolkit#103).
 - [Coding style](coding-style.md): local formatting, lint warnings and suppressions, and code conventions such as the internal import style.
 - [Utils](utils.md): runtime utilities under `src/utils/` and the planned domains, including missing helpers, conversion and native feature policies.
 - [Documentation](documentation.md): the root README and other published package documentation.
