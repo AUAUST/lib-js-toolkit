@@ -12,6 +12,7 @@ paths:
 - The native or established name is canonical, and a concise alias sits next to it: `toUpperCase`, aliased `upper`. Families follow the same pattern (`toKebabCase`, aliased `kebab`), and a main use is named like its variants: `afterFirst` next to `afterLast`, aliased `after`.
 - Asynchronous variants take the `Async` suffix: `attempt`, `attemptAsync`.
 - When the infinitive is a reserved word, use the past participle, never an affix: `voided`, not `void_`.
+- A function returned by a helper is named after the past participle of the helper's verb: `spy` returns `function spied`, `cache` returns `function cached`.
 
 ## Signatures
 

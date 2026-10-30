@@ -20,11 +20,8 @@ Deferred questions, bugs, tasks and improvements.
 ## Open categories
 
 - [Merge](merge.md): questions to settle before migration agents batch-import primitive-kit into toolkit (AUAUST/lib-js-toolkit#103).
-- [Coding style](coding-style.md): local formatting, lint warnings and suppressions, and code conventions such as the internal import style.
 - [Utils](utils.md): runtime utilities under `src/utils/` and the planned domains, including missing helpers, conversion and native feature policies.
 - [Documentation](documentation.md): the root README and other published package documentation.
 - [Agent instructions](agent-instructions.md): project rules in `AGENTS.md` and `.claude/rules/` that must change.
 - [Issue workflow](issue-workflow.md): how GitHub issues record decisions and express readiness and blocking relations.
 - [Engrenage](engrenage.md): `@auaust/engrenage` shared instructions, CLI commands and generated files.
-- [Codegen](codegen.md): `@auaust/codegen` and moving file generation out of toolkit.
-- [CI](ci.md): CI and publish workflows and the Node.js version they run on.

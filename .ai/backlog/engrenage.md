@@ -31,3 +31,18 @@
 - Toolkit may publish a generated agent skill (`documentation.2`). Nothing lists or syncs skills that dependencies provide.
 - Proposal: an engrenage command listing available skills and keeping them up to date, with a package-level declaration of skills (in the spirit of `exports`, but for skills). Check first which conventions or frameworks already exist for distributing skills through packages.
 - Done when engrenage can discover and sync skills declared by dependencies, or obsolete if an existing convention covers it.
+
+## 6. No blank line required before `throw`
+
+- Engrenage's lint configuration requires a blank line before a `return` that follows other statements (a `padding-line-between-statements` rule: "Add a blank line before a `return` that follows other statements."). `throw` has no such rule.
+- Outcome: the same rule applies to `throw`: a blank line before it unless it is the first statement of its block.
+- Done when engrenage enforces it and toolkit passes `pnpm lint` with it.
+
+## 7. Presets per kind of code
+
+- The library tsconfig preset sets `target: "ESNext"` with no `lib`, and toolkit adds `types: ["node"]` to the whole project, so `src/`, scripts and tests share one set of available APIs. Toolkit's runtime baseline is settled in AUAUST/lib-js-toolkit#150: current baseline, no experimental or non-standard features, isomorphic.
+- Proposal:
+  - The specialized presets define `lib` (and `target`), not only the base one.
+  - Add `bin`/scripts and app presets. Code in `bin/` and `scripts/` always targets Node. Code in `src/` follows the consumer's kind: a library has different requirements than an app.
+  - Tests stay permissive: when `src/` prohibits an API that tests still use, it is usually because the tests mock a server or a filesystem.
+- Done when engrenage ships per-kind presets and toolkit's `src/`, scripts and tests each use the matching one.
