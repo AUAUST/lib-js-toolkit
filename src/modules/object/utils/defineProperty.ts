@@ -1,5 +1,6 @@
 import type { DefinedProperties } from "#types/DefinedProperties";
 import type { Extended } from "#types/Extended";
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 
 type DefineProperty = <
   Target extends object,

@@ -79,4 +79,23 @@ describe("defineProperty", () => {
     expectTypeOf(result.doubled).toEqualTypeOf<number>();
     expect(result.doubled).toBe(4);
   });
+
+  test("accepts explicitly undefined descriptor members", () => {
+    const result = defineProperty({}, "value", {
+      get: undefined,
+      set: undefined,
+      enumerable: undefined,
+    });
+
+    const descriptor = Object.getOwnPropertyDescriptor(result, "value");
+
+    expect(descriptor).toEqual({
+      get: undefined,
+      set: undefined,
+      enumerable: false,
+      configurable: false,
+    });
+
+    expect(result.value).toBeUndefined();
+  });
 });

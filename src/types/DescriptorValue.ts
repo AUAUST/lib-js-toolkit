@@ -1,3 +1,5 @@
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
+
 export type DescriptorValue<
   Descriptor extends PropertyDescriptor,
   Fallback = any,

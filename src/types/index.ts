@@ -52,6 +52,7 @@ export type { ObjectEntry } from "#types/ObjectEntry";
 export type { ObjectKey } from "#types/ObjectKey";
 export type { ObjectValue } from "#types/ObjectValue";
 export type { Primitive } from "#types/Primitive";
+export type { PropertyDescriptor } from "#types/PropertyDescriptor";
 export type { PropertyValue } from "#types/PropertyValue";
 export type { ReadonlyFunction } from "#types/ReadonlyFunction";
 export type { ReadonlyRecord } from "#types/ReadonlyRecord";

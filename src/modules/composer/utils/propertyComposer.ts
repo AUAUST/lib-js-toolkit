@@ -1,4 +1,5 @@
 import { hasOwn } from "#modules/object/utils/hasOwn";
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 
 export type PropertyComposer<
   Name extends PropertyKey = PropertyKey,

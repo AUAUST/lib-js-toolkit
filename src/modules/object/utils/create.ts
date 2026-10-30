@@ -1,5 +1,6 @@
 import type { DefinedProperties } from "#types/DefinedProperties";
 import type { Extended } from "#types/Extended";
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 
 interface Create {
   <Prototype extends object | null>(
@@ -8,7 +9,7 @@ interface Create {
   ): Prototype extends null ? Record<PropertyKey, any> : Prototype;
   <
     Prototype extends object | null,
-    const Descriptors extends PropertyDescriptorMap,
+    const Descriptors extends Record<PropertyKey, PropertyDescriptor>,
   >(
     prototype: Prototype,
     properties: Descriptors &
@@ -21,7 +22,7 @@ interface Create {
   >;
   <Result extends object>(
     prototype: object | null,
-    properties?: PropertyDescriptorMap,
+    properties?: Record<PropertyKey, PropertyDescriptor>,
   ): Result;
 }
 

@@ -19,5 +19,6 @@ Paths below are relative to the project root. Before editing a file, read and fo
 | <code>.changeset/**</code> | <code>.claude/rules/changesets.md</code> |
 | <code>**/*.ts</code> | <code>.claude/rules/code-style.md</code> |
 | <code>src/**/*.ts</code> | <code>.claude/rules/naming.md</code> |
+| <code>tests/**/*.ts</code> | <code>.claude/rules/tests.md</code> |
 
 <!-- @end -->

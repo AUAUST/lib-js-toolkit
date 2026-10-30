@@ -17,6 +17,7 @@ import { finalize } from "#modules/object/utils/finalize";
 import { hasOwn } from "#modules/object/utils/hasOwn";
 import type { FlatEntries } from "#types/FlatEntries";
 import type { MaybeArray } from "#types/MaybeArray";
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 import type { Simplify } from "#types/Simplify";
 import type { UnionToIntersection } from "#types/UnionToIntersection";
 

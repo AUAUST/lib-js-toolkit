@@ -1,8 +1,11 @@
 import type { DescriptorValue } from "#types/DescriptorValue";
+import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 import type { PropertyValue } from "#types/PropertyValue";
 import type { Simplify } from "#types/Simplify";
 
-type WritableDescriptorKey<Descriptors extends PropertyDescriptorMap> = {
+type WritableDescriptorKey<
+  Descriptors extends Record<PropertyKey, PropertyDescriptor>,
+> = {
   [Key in keyof Descriptors]: PropertyDescriptor extends Descriptors[Key]
     ? Key
     : Descriptors[Key] extends { writable: true } | { set(...args: any[]): any }
@@ -11,7 +14,7 @@ type WritableDescriptorKey<Descriptors extends PropertyDescriptorMap> = {
 }[keyof Descriptors];
 
 export type DefinedProperties<
-  Descriptors extends PropertyDescriptorMap,
+  Descriptors extends Record<PropertyKey, PropertyDescriptor>,
   Target = {},
 > = Simplify<
   {
