@@ -31,3 +31,17 @@
 
 - Deferred from the naming conventions: combined checks are named once the basic principles are settled. It may also stay two checks (`isNumber` and `isNotNaN`). Candidates were `isValidNumber`, with the negation `isNotNumberOrNaN`; "valid" must not become a remembered qualifier like `loose`.
 - Done when it is decided whether the combined guard exists, and its name.
+
+## 6. `json` module
+
+- Proposed: a `json` module wrapping the native `JSON` with toolkit-style signatures, never a custom parser. `JSON.stringify(value, null, 2)` becomes `json.stringify(value, 2)` or `json.stringify(value, { space, replacer })`; the name (`stringify`, `toJSON`, `toJson`) follows `.claude/rules/naming.md`.
+- Higher-level helpers such as sorted serialization, so objects with the same keys serialize identically: stable input for `md5`, consistent files.
+- Stays isomorphic: no filesystem access. Parsing with comments needs a library, only allowed under the optional dependency policy (`utils.7`).
+- Done when the module and its helper list are added to the module list (AUAUST/lib-js-toolkit#111), or dropped.
+
+## 7. Optional dependency policy
+
+- Toolkit stays lean and fully tree-shakable. A helper may rely on a library (for example `json` parsing with comments, `utils.6`) only if the library is loaded solely when that helper is used: importing its module, even as a namespace, without calling the helper never loads or bundles it. The helper stays synchronous: if a dynamic `import()` making it asynchronous is the only way, the library is not added.
+- Open: the entry point structure and dependency declaration (optional peer dependency?) meeting this, and how a helper fails at runtime when its dependency is missing.
+- Without such a pattern, the library is dropped: the helper is implemented in toolkit, copied with credits (as `md5`), or left out of scope for consumers to use the library directly.
+- Done when a pattern is found and written as a rule, or toolkit records that it has no runtime dependencies.

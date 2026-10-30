@@ -16,8 +16,9 @@
 ## 3. Generated rules table is not Prettier-formatted
 
 - `engrenage sync` writes the rule-mapping table in `AGENTS.override.md` with unaligned columns, so the file fails `prettier --check` right after a sync.
-- Outcome: engrenage formats generated Markdown with the shared Prettier configuration.
-- Done when a fresh sync leaves `AGENTS.override.md` passing `prettier --check`.
+- Toolkit works around it by listing `/AGENTS.override.md` in the project section of `.prettierignore`.
+- Outcome: engrenage lists `AGENTS.override.md` among the generated files in the defaults section of `.prettierignore`, or formats generated Markdown with the shared Prettier configuration.
+- Done when a fresh sync in any project leaves `AGENTS.override.md` excluded from `prettier --check` or passing it, and toolkit's local entry is removed.
 
 ## 4. Lint rules assume per-helper toolkit subpaths
 
