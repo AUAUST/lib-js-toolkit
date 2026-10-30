@@ -27,7 +27,7 @@ describe("after", () => {
     vi.useFakeTimers();
 
     const callback = {
-      [callable](key: "entry", count = 1, ...values: number[]) {
+      [callable](key: "entry", _value = 1, ..._values: number[]) {
         return Promise.resolve(key);
       },
     };
@@ -95,6 +95,7 @@ describe("after", () => {
     const error = new Error("Asynchronous failure");
 
     const callback = vi.fn(async () => {
+      await Promise.resolve();
       throw error;
     });
 

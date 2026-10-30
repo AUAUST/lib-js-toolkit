@@ -203,7 +203,7 @@ describe("mapped", () => {
         entry: 4,
       },
       {
-        [callable](key: "entry", _value: number) {
+        [callable](_key: "entry", _value: number) {
           return "renamed" as const;
         },
       },

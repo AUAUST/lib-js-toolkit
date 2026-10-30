@@ -23,7 +23,7 @@ export interface PropertyForwarder<
   kind: "property";
   name: Name;
   get(): Source[Property];
-  set?(v: Source[Property]): void;
+  set?: Readonly extends true ? undefined : (v: Source[Property]) => void;
   configurable?: boolean;
   enumerable?: boolean;
 }

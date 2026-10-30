@@ -302,7 +302,7 @@ describe("compose", () => {
         get() {
           return 1;
         },
-        set(value: number) {},
+        set(ignored: number) {},
       }),
       compose.getters({
         value() {

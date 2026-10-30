@@ -49,7 +49,12 @@ describe("cachedAsync", () => {
   });
 
   test.for(primitiveValues)("recognizes fulfilled value %s", async (result) => {
-    const callback = vi.fn(async (_key: object) => result);
+    const callback = vi.fn(async (_key: object) => {
+      await Promise.resolve();
+
+      return result;
+    });
+
     const fn = cachedAsync(callback);
     const key = {};
 
@@ -64,7 +69,11 @@ describe("cachedAsync", () => {
   test.each([false, true])(
     "supports primitive caching %s",
     async (cachePrimitives) => {
-      const callback = vi.fn(async (_key: unknown) => 1);
+      const callback = vi.fn(async (_key: unknown) => {
+        await Promise.resolve();
+
+        return 1;
+      });
 
       const fn = cachedAsync(callback, {
         cachePrimitives,
@@ -88,6 +97,8 @@ describe("cachedAsync", () => {
 
   test("resolves keys once per call and preserves optional and rest arguments", async () => {
     const impl = async (id: number, count = 1, ...suffixes: string[]) => {
+      await Promise.resolve();
+
       return `${id}:${count}${suffixes.join("")}`;
     };
 
@@ -121,10 +132,17 @@ describe("cachedAsync", () => {
   test.each([false, true])(
     "options key resolvers respect primitive caching %s",
     async (cachePrimitives) => {
-      const fn = cachedAsync(async (id: number) => id, {
-        resolveKey: String,
-        cachePrimitives,
-      });
+      const fn = cachedAsync(
+        async (id: number) => {
+          await Promise.resolve();
+
+          return id;
+        },
+        {
+          resolveKey: String,
+          cachePrimitives,
+        },
+      );
 
       await fn(1);
 
@@ -134,7 +152,11 @@ describe("cachedAsync", () => {
 
   test("undefined resolved keys bypass caching", async () => {
     const fn = cachedAsync(
-      async (_id: number) => 1,
+      async (_id: number) => {
+        await Promise.resolve();
+
+        return 1;
+      },
       () => {},
     );
 
@@ -281,6 +303,8 @@ describe("cachedAsync", () => {
     const callback = {
       factor: 2,
       async [callable](id: number) {
+        await Promise.resolve();
+
         return this.factor * id;
       },
     };
@@ -295,6 +319,7 @@ describe("cachedAsync", () => {
     const fn = cachedAsync(callback, resolver);
 
     callback[callable] = async () => {
+      await Promise.resolve();
       throw new Error("retained method expected");
     };
 
@@ -307,6 +332,8 @@ describe("cachedAsync", () => {
 
   test("supports nullary and synchronous resolvers", async () => {
     const nullary = cachedAsync(async () => {
+      await Promise.resolve();
+
       return {
         value: 1,
       };

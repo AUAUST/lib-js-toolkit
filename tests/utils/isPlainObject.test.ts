@@ -46,6 +46,8 @@ describe("isPlainObject", () => {
       yield 1;
     })(),
     (async function* () {
+      await Promise.resolve();
+
       yield 1;
     })(),
     [1, 2][Symbol.iterator](),

@@ -88,6 +88,7 @@ describe("measureAsync", () => {
 
     await expect(
       measureAsync(async () => {
+        await Promise.resolve();
         throw failure;
       }),
     ).rejects.toBe(failure);
