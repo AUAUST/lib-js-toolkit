@@ -40,7 +40,7 @@ export class PipelineError<Input = unknown> extends Error {
     this.cause = cause;
     this.thisValue = thisValue;
 
-    if (cause instanceof Error) {
+    if (cause instanceof Error && cause.stack !== undefined) {
       this.stack = cause.stack;
     }
   }

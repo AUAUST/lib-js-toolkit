@@ -346,7 +346,7 @@ describe("memoized", () => {
     const wrapped = memoized(signature);
 
     expectTypeOf(wrapped).parameters.toEqualTypeOf<
-      [key: "entry", count?: number, ...suffixes: string[]]
+      [key: "entry", count?: number | undefined, ...suffixes: string[]]
     >();
 
     expectTypeOf(wrapped).thisParameter.toEqualTypeOf<void>();

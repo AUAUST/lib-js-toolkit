@@ -5,7 +5,7 @@ import { replacer } from "./utils/replacer";
 
 export async function makeUtility(options: {
   name: string;
-  override?: boolean;
+  override?: boolean | undefined;
 }) {
   const utilityName = options.name;
 

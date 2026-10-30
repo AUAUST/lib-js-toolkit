@@ -57,7 +57,7 @@ describe("isPlainObject", () => {
     Math,
     Reflect,
     Intl,
-    WebAssembly,
+    Reflect.get(globalThis, "WebAssembly"),
     toolkit,
   ])("rejects exotic value %s", (input) => {
     expect(isPlainObject(input)).toBe(false);

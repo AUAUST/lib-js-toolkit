@@ -67,7 +67,7 @@ export interface CachedOptions<
    * Callable objects use their holders as receivers. Resolved once at setup.
    * Returning undefined bypasses cache reads and writes.
    */
-  resolveKey?: KeyResolver<Callback, Key>;
+  resolveKey?: KeyResolver<Callback, Key> | undefined;
 
   /**
    * Caches primitive keys in a strong Map when true.
@@ -75,7 +75,7 @@ export interface CachedOptions<
    *
    * @default false
    */
-  cachePrimitives?: boolean;
+  cachePrimitives?: boolean | undefined;
 }
 
 /**

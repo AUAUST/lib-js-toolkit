@@ -1,6 +1,18 @@
 {
   "extends": "@auaust/engrenage/tsconfig/library.json",
   "compilerOptions": {
+    "target": "ES2024",
+    "lib": [
+      "ES2022",
+      "ES2023.Array",
+      "ES2023.Intl",
+      "ES2024.Collection",
+      "ES2024.Object",
+      "ES2024.Promise",
+      "ES2024.Regexp",
+      "ES2024.String"
+    ],
+    "exactOptionalPropertyTypes": true,
     "paths": {
       "@auaust/toolkit/types": ["./src/types/index.ts"],
       "@auaust/toolkit/errors": ["./src/errors/index.ts"],

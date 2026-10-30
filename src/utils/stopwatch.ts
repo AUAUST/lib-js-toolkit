@@ -100,12 +100,12 @@ export interface StopwatchOptions {
    * Whether to use `performance.now()` instead of `Date.now()` for measuring time.
    * Defaults to `true`, except when `start` is a `Date` and this option is omitted.
    */
-  usePerformance?: boolean;
+  usePerformance?: boolean | undefined;
 
   /**
    * The timestamp to use as the start time for the stopwatch, if different than the current time.
    */
-  startAt?: Date | number;
+  startAt?: Date | number | undefined;
 }
 
 interface PeriodState {

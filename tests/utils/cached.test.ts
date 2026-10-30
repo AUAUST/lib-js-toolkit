@@ -160,7 +160,7 @@ describe("cached", () => {
       expectTypeOf(fn).toEqualTypeOf<Cached<typeof callback, string>>();
 
       expectTypeOf(fn).parameters.toEqualTypeOf<
-        [input: { id: number }, suffix?: string]
+        [input: { id: number }, suffix?: string | undefined]
       >();
 
       expectTypeOf(fn.has).parameter(0).toEqualTypeOf<string>();
@@ -302,7 +302,7 @@ describe("cached", () => {
     expect(fn("entry", 2, "?")).toBe("!entry:2?");
 
     expectTypeOf(fn).parameters.toEqualTypeOf<
-      [key: "entry", count?: number, ...suffixes: string[]]
+      [key: "entry", count?: number | undefined, ...suffixes: string[]]
     >();
 
     expectTypeOf(fn).thisParameter.toEqualTypeOf<void>();

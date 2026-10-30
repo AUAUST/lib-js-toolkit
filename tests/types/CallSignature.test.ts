@@ -36,11 +36,12 @@ describe("CallSignature", () => {
     }
 
     expectTypeOf<CallParameters<Protocol>>().toEqualTypeOf<
-      readonly [name: string, count?: number, ...flags: boolean[]]
+      readonly [name: string, count?: number | undefined, ...flags: boolean[]]
     >();
 
     expectTypeOf<CallParameters<Protocol | (() => number)>>().toEqualTypeOf<
-      readonly [name: string, count?: number, ...flags: boolean[]] | readonly []
+      | readonly [name: string, count?: number | undefined, ...flags: boolean[]]
+      | readonly []
     >();
   });
 

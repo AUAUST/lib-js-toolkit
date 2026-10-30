@@ -78,12 +78,22 @@
     "publint": "^0.3.24",
     "tsdown": "0.22.14",
     "tsx": "^4.23.15",
-    "typescript": "^6.0.3",
+    "typescript": "6.0.3",
     "vitest": "^4.1.11"
   },
   "sideEffects": false,
   "prettier": "@auaust/engrenage/prettier",
   "packageManager": "pnpm@10.26.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
   "publishConfig": {
     "access": "public"
   }

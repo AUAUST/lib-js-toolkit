@@ -9,7 +9,7 @@ const root = process.cwd();
 export async function makeFromTemplate(
   files: { template: string; destination: string }[],
   transform: (content: string) => Promise<string> | string,
-  options?: { override?: boolean },
+  options?: { override?: boolean | undefined },
 ) {
   const { override = false } = options ?? {};
 

@@ -4,9 +4,9 @@ import { replacer } from "./utils/replacer";
 
 export async function makeProtocol(options: {
   name: string;
-  symbol?: string;
-  interface?: string;
-  override?: boolean;
+  symbol?: string | undefined;
+  interface?: string | undefined;
+  override?: boolean | undefined;
 }) {
   const protocolName = options.name;
 
