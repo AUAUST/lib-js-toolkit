@@ -18,5 +18,6 @@ Paths below are relative to the project root. Before editing a file, read and fo
 | <code>.ai/scratchpad.md</code> | <code>.claude/rules/scratchpad.md</code> |
 | <code>.changeset/**</code> | <code>.claude/rules/changesets.md</code> |
 | <code>**/*.ts</code> | <code>.claude/rules/code-style.md</code> |
+| <code>src/**/*.ts</code> | <code>.claude/rules/naming.md</code> |
 
 <!-- @end -->

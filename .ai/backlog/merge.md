@@ -23,6 +23,7 @@ Questions to settle before migration agents batch-import primitive-kit (AUAUST/l
 - #110 depends on AUAUST/lib-js-codegen#8, but codegen is not bootstrapped (AUAUST/lib-js-codegen#12 open) and engrenage's own barrel markers are known to be brittle (AUAUST/lib-js-engrenage#9). Related: `codegen.1`.
 - Options: A. wait for codegen; B. hand-written barrels now, replaced later by generated output that must be identical; C. engrenage's current `// @barrel` markers now.
 - Edge: hand-written shared barrels (root, `assert`) break per-task file ownership (`merge.2`).
+- Direction from the plan (#120): codegen is first implemented locally in toolkit (`scripts/`), then moved to `@auaust/codegen` once toolkit's foundations are done, so toolkit and codegen are not built on each other at the same time. To confirm: whether that local generator replaces options B and C from the start.
 - Done when the interim barrel mechanism is chosen.
 
 ## 5. Tooling: derived code while metadata cannot be read
@@ -50,277 +51,257 @@ Questions to settle before migration agents batch-import primitive-kit (AUAUST/l
 
 ## 9. Naming: type aliases
 
-- The helper alias rule is settled (#105): a concise alias next to a canonical name (`upper` for `toUpperCase`, `after` for `afterFirst`), plus the converter shorthands (#109). primitive-kit's 27 helper aliases and 42 method aliases are judged by it.
+- The helper alias rule is settled (`.claude/rules/naming.md`): a concise alias next to a canonical name (`upper` for `toUpperCase`, `after` for `afterFirst`), plus the converter shorthands (#109). primitive-kit's 27 helper aliases and 42 method aliases are judged by it.
 - Open: toolkit's root type aliases (`Cached as CachedFn`, `Memoized as MemoizedFn`), which the rule does not cover.
 - Done when kept or dropped.
 
 ## 10. Naming: list or rest arguments
 
-- Subject first is settled (#105). Open: aggregates take a list or rest arguments? primitive-kit's `average(...nums)` and toolkit's `math.sum(...addends)` use rest arguments, which fail on large arrays (argument count limit) and differ from array helpers.
+- Subject first is settled (`.claude/rules/naming.md`). Open: aggregates take a list or rest arguments? primitive-kit's `average(...nums)` and toolkit's `math.sum(...addends)` use rest arguments, which fail on large arrays (argument count limit) and differ from array helpers.
 - Done when the list-versus-rest rule is written.
 
 ## 11. Naming: mutating and copying variants
 
 - primitive-kit pairs mutating and copying helpers as `reverse`/`toReversed`, `sort`/`toSorted`, `deduplicate`/`toDeduplicated`, `collapse`/`toCollapsed`, `shuffle`/`toShuffled`; `pull` mutates. Toolkit uses `transform` (in place) and `mapped` (copy, becoming `object.map`). Native arrays use `reverse`/`toReversed`.
-- Canonical names follow the native ones (#105: `toUpperCase`, `flatMap`), which favours the native `reverse`/`toReversed` pair.
+- Canonical names follow the native ones (`.claude/rules/naming.md`: `toUpperCase`), which favours the native `reverse`/`toReversed` pair.
 - Decide whether mutating helpers exist at all, which naming marks them, and how that coexists with the converter `to…` prefix and the infinitive rule.
 - Done when the rule is written.
 
-## 12. Naming: asynchronous variants
-
-- Toolkit uses an `Async` suffix (`attemptAsync`, `cachedAsync`, `pipeAsync`); primitive-kit has `tryCatchAsync` and `fromAsync`. #107 question 6 (now pending in #122) asks whether async iterables get their own module.
-- Done when the suffix rule and the async iterable scope are decided.
-
-## 13. Naming: `or` fallback helpers
+## 12. Naming: `or` fallback helpers
 
 - primitive-kit has `or` in `strings`, `numbers` and `functions`: first non-empty string, first valid number, first function or `noop`. Each module uses a different validity test.
 - Done when it is decided to keep, rename or drop them, and their validity test per module.
 
-## 14. Naming: guard parameter name
-
-- #105 question 10: `value` is preferred over `input` (a guard asks about the type of a value), but it collides with the root `value()` helper. Rename `value()`, accept the shadowing, or find a third name that avoids the conflict and stays clear.
-- Done when decided.
-
-## 15. Naming: generic callback parameter name
-
-- #105 question 11: the distinction between kinds of functions is kept (called once or on events, kept and called persistently, worked on but not called). Open: the rule choosing the name, and the final list of recognized function kinds with their names (`callback`, `closure`, `fn`, …). Purpose-specific names (`predicate`, `mapper`) are settled. A parameter cannot be named `function` (the module's name, #105).
-- Done when decided.
-
-## 16. Naming: helpers the infinitive rule cannot rename directly
-
-- #105 question 12: `voided` keeps its name and `frozen` is dropped (#105). Open: `readonly`, `plain`, `cachedAsync`, and the predicates `empty`/`filled`.
-- Done when each has a name or a rule covers them.
-
-## 17. Runtime: baseline
+## 13. Runtime: baseline
 
 - #106 question 1: Baseline "widely available", "newly available", or current evergreen plus Node LTS. The engrenage preset uses `target: "ESNext"` with no `lib`, so TypeScript currently accepts any native API.
 - Done when the baseline is chosen.
 
-## 18. Runtime: fallback policy
+## 14. Runtime: fallback policy
 
 - #106 question 2 and `utils.3`: hand-written fallback, call-time feature detection, polyfill entries, or not using a method until it is in the baseline.
 - Done when decided and the #106 feature table is marked native or fallback per row.
 
-## 19. Runtime: where the baseline is declared
+## 15. Runtime: where the baseline is declared
 
 - #106 question 3: `engines`, tsconfig `target`/`lib`, README. `ci.1` adds `devEngines` for development only, which says nothing to consumers.
 - Done when the declaration places are decided.
 
-## 20. Types: opting out of precise keys
+## 16. Types: opting out of precise keys
 
 - #108 question 1: explicit type argument, curried type argument, or a widening identity helper (leaning there; name open).
 - Done when one mechanism is chosen and named.
 
-## 21. Types: literal results
+## 17. Types: literal results
 
 - #108 question 2 (literal only when exact, else `string`) and question 3 (unions distribute, wide input gives wide output; `const` type parameters as a rule?). Locale-aware helpers always return `string`.
 - Done when both rules are confirmed.
 
-## 22. Types: complexity budget
+## 18. Types: complexity budget
 
 - #108 question 4: recursion depth cap with fallback to `string`, and whether CI measures type-check time.
 - Done when the cap and the check are decided.
 
-## 23. Types: numeric literals
+## 19. Types: numeric literals
 
 - #108 question 5: literal arithmetic at type level (`increment(1)` → `2`) in or out.
 - Done when decided.
 
-## 24. Types: tuples
+## 20. Types: tuples
 
 - #108 question 6 and #142 question 7: array helpers preserve tuple shapes or return `T[]`. Readonly inputs and writable copies are settled (#108).
 - Done when decided.
 
-## 25. Types: testing convention
+## 21. Types: testing convention
 
 - #108 question 7: `expectTypeOf` assertions for literal, union and wide inputs on every precise helper.
 - Done when confirmed and added to the test template.
 
-## 26. Conversion: runtime validation of non-coercing helpers
+## 22. Conversion: runtime validation of non-coercing helpers
 
 - #109 settles that `upper(value: string)` does not coerce, but not what happens on `upper(42)` at runtime: rely on the native error (`toUpperCase is not a function`), or check and throw a `TypeError`. The answer applies to every helper and decides whether agents add guards.
 - Done when the rule is written.
 
-## 27. Conversion: nullish passthrough
+## 23. Conversion: nullish passthrough
 
 - `utils.2`: optional chaining in native wrappers so `null`/`undefined` pass through.
 - Done when `utils.2` is settled in #109.
 
-## 28. Conversion: which helpers accept converter input
+## 24. Conversion: which helpers accept converter input
 
 - #109 settles that helpers defined in terms of a converter accept what it accepts, but agents need a criterion or a list (`concat`, `or`, `equals`, `between`?). The fate of primitive-kit's `Stringifiable`, `Numberifiable` and `Arrayable` types is tied to the conversion protocols (#143 question 2).
 - Done when the criterion is written.
 
-## 29. Conversion: `toString` inputs
+## 25. Conversion: `toString` inputs
 
 - #109 question 1: the resolution order is settled. Open: whether `toJSON` takes part, and the array separator (`","` as native `Array.prototype.toString`, or `", "`).
 - Done when the `toString` row of the conversion table is complete.
 
-## 30. Conversion: `toNumber`
+## 26. Conversion: `toNumber`
 
 - #109 question 3. `parse.number` returns `undefined` instead of `NaN` (#109); `toNumber` itself is open. primitive-kit maps `null`/`undefined` and blank strings to `0`, strips `_` separators and falls back to `parseFloat` (`"12px"` → `12`). Native `Number` differs on all three. Return `NaN` or throw on failure.
 - Done when the `toNumber` row is complete.
 
-## 31. Conversion: `toArray`
+## 27. Conversion: `toArray`
 
 - #109 question 4: strings are single values (`["abc"]`), settled. Open: numbers (`[3]`, never a length, proposed; primitive-kit's `toArray(3)` creates a length-3 array), arrays returned as is or copied, array-likes without `Symbol.iterator`, and whether primitive-kit's `wrap` is kept or dropped.
 - Done when the `toArray` row is complete.
 
-## 32. Conversion: `parse` module contents
+## 28. Conversion: `parse` module contents
 
 - #109 question 6 is settled: parsers return `undefined` when the input has no meaningful interpretation; `parse.boolean` and `parse.number` are described in #109. Open: the full list of parsers and what each accepts.
 - Done when the `parse` module is specified.
 
-## 33. Conversion: where converters live
+## 29. Conversion: where converters live
 
-- #105 question 5 and #109 question 7: a conversion lives in the domain owning it, and primitive-kit's source-to-destination helpers (`booleanToString`, …) are expected to be dropped (#105). Open: whether the owner is the source or the target domain, and where the generic converters (`toString`, `toNumber`, …) live and are re-exported. Full-word converters (`array()`) do not exist (#109).
+- #109 question 7: a conversion lives in the domain owning it, and primitive-kit's source-to-destination helpers (`booleanToString`, …) are expected to be dropped (#109). Open: whether the owner is the source or the target domain, and where the generic converters (`toString`, `toNumber`, …) live and are re-exported. Full-word converters (`array()`) do not exist (#109).
 - Done when decided.
 
-## 34. Behaviour: reconciling primitive-kit and toolkit
+## 30. Behaviour: reconciling primitive-kit and toolkit
 
-- Settled: a helper in both libraries is owned by the local refactor tracker, which notes its primitive-kit counterpart (#111), and `isNumber` keeps toolkit's `typeof` semantics (#105). Remaining differences: `isObject` (primitive-kit's `objects` version rejects arrays and takes `allowArray`; its `primitives` version accepts functions; toolkit's accepts arrays, rejects functions), `call`, `once`, `tryCatch`/`attempt`, `merge`/`assign`, `entries`, `keys`.
+- Settled: a helper in both libraries is owned by the local refactor tracker, which notes its primitive-kit counterpart (#111), and `isNumber` keeps toolkit's `typeof` semantics. Remaining differences: `isObject` (primitive-kit's `objects` version rejects arrays and takes `allowArray`; its `primitives` version accepts functions; toolkit's accepts arrays, rejects functions), `call`, `once`, `tryCatch`/`attempt`, `merge`/`assign`, `entries`, `keys`.
 - Tracker rows decide each case (drafted in each module's index issue, #103), but agents need a default: toolkit's behaviour wins unless the row says otherwise?
 - Done when the default rule is written.
 
-## 35. Behaviour: equality
+## 31. Behaviour: equality
 
 - Which comparison helpers use by default: `===`, SameValueZero (`includes`, `Set`) or `Object.is`; shallow or deep `equals`. primitive-kit's string `equals` is case-insensitive by default, and its array `equals` takes a `recursive` flag.
 - Done when the default algorithm and the `equals` contract per module are written.
 
-## 36. Behaviour: options objects and flags
+## 32. Behaviour: options objects and flags
 
 - primitive-kit mixes positional booleans (`equals(a, b, recursive)`, `isObject(value, allowArray)`), options objects (`ComparisonOptions`), and unions of shorthand and options (`slug(value, separator | options)`, `random(length | options)`).
 - Done when the rule for optional behaviour parameters is written.
 
-## 37. Behaviour: indexes and ranges
+## 33. Behaviour: indexes and ranges
 
 - Negative indexes, out-of-range access (`undefined` or throw), and whether `nth` helpers (`afterNth`, `splitNth`, `nthIndexOf`) are zero-based.
 - Done when the rule is written.
 
-## 38. Behaviour: empty inputs
+## 34. Behaviour: empty inputs
 
 - Aggregates and accessors on empty input: `average()` is `NaN` in primitive-kit, `max()` is `-Infinity` natively, `first([])` is `undefined`, random pick from an empty list.
 - Done when the rule (return value or throw) is written.
 
-## 39. Behaviour: numeric edge values
+## 35. Behaviour: numeric edge values
 
-- `NaN`, `±Infinity` and `-0` in predicates (`isPositive`, `isEven`, `isInteger`, `isBetween`), and whether number helpers accept `bigint`. The guards `isNumber`, `isNaN`, `isFinite` are settled (#105).
+- `NaN`, `±Infinity` and `-0` in predicates (`isPositive`, `isEven`, `isInteger`, `isBetween`), and whether number helpers accept `bigint`. The guards `isNumber`, `isNaN`, `isFinite` are settled.
 - Done when the rule is written.
 
-## 40. Behaviour: Unicode and locale
+## 36. Behaviour: Unicode and locale
 
 - Code units or code points for length-based string helpers (`chunk`, `truncate*`, `insertEvery`, `random`); word splitting used by casing helpers (acronyms, digits, non-Latin scripts); `unaccent` normalization; whether locale-aware helpers take a locale argument.
 - Done when the rule is written.
 
-## 41. Behaviour: randomness
+## 37. Behaviour: randomness
 
 - primitive-kit's string `random` uses `crypto.getRandomValues` with a modulo bias; number and array helpers use other sources. Decide the source, whether helpers claim any security, and how tests stay deterministic (injectable generator or mocked source).
 - Done when the rule is written.
 
-## 42. Behaviour: method-name shorthand in callbacks
+## 38. Behaviour: method-name shorthand in callbacks
 
 - primitive-kit's `map(array, "method", ...args)` calls a method by name on each element; toolkit has `callMethod` and `MethodName`. Keep the shorthand on collection helpers or require a callback.
 - Done when decided.
 
-## 43. Behaviour: emptiness
+## 39. Behaviour: emptiness
 
-- primitive-kit has per-module `isNotEmpty`; toolkit has `empty()`, `filled()` and the `emptiable` protocol; #115 proposes `notEmpty`. `isEmptyString`, `isNonEmptyString`, `isEmptyArray` and `isNonEmptyArray` are settled names (#105). Decide whether every module gets such guards, how they relate to `empty()` and the protocol, and whether whitespace-only strings are empty.
+- primitive-kit has per-module `isNotEmpty`; toolkit has `empty()`, `filled()` and the `emptiable` protocol; #115 proposes `notEmpty`. `isEmptyString`, `isNonEmptyString`, `isEmptyArray` and `isNonEmptyArray` are settled names. Decide whether every module gets such guards, how they relate to `empty()` and the protocol, and whether whitespace-only strings are empty.
 - Done when decided.
 
-## 44. Guards: which types get triplets
+## 40. Guards: which types get triplets
 
 - #114 question 3: list every guard (toolkit `src/utils/is*.ts`, primitive-kit `is*`) and mark which get a converter. Every guard of the guards module gets a generated assertion (#114), so this list mostly concerns converters.
 - Done when the checkbox list is in #114.
 
-## 45. Guards: guards with options
+## 41. Guards: guards with options
 
-- #114 question 4: do assertions forward guard options (`isObject(value, allowArray)`)? Depends on `merge.36`.
+- #114 question 4: do assertions forward guard options (`isObject(value, allowArray)`)? Depends on `merge.32`.
 - Done when decided.
 
-## 46. Guards: module boundary
+## 42. Guards: module boundary
 
 - #114 question 5. Settled: the module is named `guard`; the `Number.is*` checks on an unknown input are guards; checks on an already typed number belong to `number` (#111); `isCallable` is a guard and `implementsProtocol` stays in `protocol` (#118). Open: value checks on an unknown input (`isEmptyString`, `isNonEmptyArray`) and checks on other typed values (`isSorted(array)`).
 - Agents need a mechanical criterion: every `is…` helper of both libraries must land in exactly one tracker (#111).
 - Done when the criterion is written in #114.
 
-## 47. Guards: assertion names and placement
+## 43. Guards: assertion names and placement
 
 - #114 question 6: `assertString` or `assertIsString`, derived mechanically from the guard name by the generator. Generated as committed files inside the guards module, or only in the root and `assert` barrels (#116 question 3).
 - Also #114 question 7: a passing check should return its input (`return assertString(value)`), which `asserts` signatures cannot do; proposal: a separate `ensureString` family, maybe exposed as an `ensure` entry.
 - Done when decided.
 
-## 48. Short assertions: form
+## 44. Short assertions: form
 
-- #115 question 1: return the narrowed value (proposal) or an `asserts` signature. CamelCase is settled (#105, #115).
-- Must stay consistent with the proposed `ensure` family (`merge.47`).
+- #115 question 1: return the narrowed value (proposal) or an `asserts` signature. CamelCase is settled (#115).
+- Must stay consistent with the proposed `ensure` family (`merge.43`).
 - Done when decided.
 
-## 49. Short assertions: set and location
+## 45. Short assertions: set and location
 
 - #115 questions 3 and 5: which of `notNull`, `notUndefined`, `notNullish`, `notNaN`, `notEmpty`, `notBlank`, `notZero`, `finite`; exported from `assert` (then not purely generated), the root, or both.
 - Done when decided.
 
-## 50. Dispatch: name and module
+## 46. Dispatch: name and module
 
-- #113 questions 1 and 3: `overload`, `dispatch`, `byType`, `typeSwitch`, `polymorphic`; in the `function` module (#105)?
+- #113 questions 1 and 3: `overload`, `dispatch`, `byType`, `typeSwitch`, `polymorphic`; in the `function` module?
 - Done when decided.
 
-## 51. Dispatch: function trap
+## 47. Dispatch: function trap
 
 - #113 question 2: functions go to `object`, get a `function` trap, or a grouping trap (`container`) like `nullish`.
 - Done when decided.
 
-## 52. Dispatch: introspection
+## 48. Dispatch: introspection
 
 - #113 question 5: expose the traps (to extend later) or stay opaque.
 - Done when decided.
 
-## 53. Barrels: final generation design
+## 49. Barrels: final generation design
 
 - #110 questions 1 (whole files or marker blocks), 2 (committed with a check mode: recommended), 4 (first version without metadata) and 6 (where the check runs). Interim mechanism: `merge.4`.
 - Done when decided and written into AUAUST/lib-js-codegen#8 where it applies.
 
-## 54. Metadata: declaration form and flags
+## 50. Metadata: declaration form and flags
 
 - #116 questions 1 (exported `defineMacro` object, JSDoc tags, or manifest) and 2 (`index`, `assertion`, `parser`, `alias`: which for the merge). Agents write this in every helper file, so it must be fixed before the first module even if generation comes later (`merge.5`).
 - Done when the form and flags are decided.
 
-## 55. Metadata: generated output layout
+## 51. Metadata: generated output layout
 
 - #116 questions 3 (generated assertions as committed files or only in barrels) and 4 (how a re-export-only module such as `assert` is declared and enforced).
 - Done when decided.
 
-## 56. Tests: porting primitive-kit tests
+## 52. Tests: porting primitive-kit tests
 
 - primitive-kit has 205 test files. `AGENTS.md` asks for the minimum tests needed; a migration may need parity. Options: port and adapt every case, use them as a reference for edge cases only, or write new minimal tests. Also whether a coverage threshold applies.
 - Done when the rule is in the playbook.
 
-## 57. Documentation: `@behavior` tag during the migration
+## 53. Documentation: `@behavior` tag during the migration
 
 - Proposed: a custom JSDoc tag giving the minimal behaviour an agent needs to decide whether to use a helper, usually one line (`@behavior Equivalent to Array.prototype.map`), read by the generated agent skill (`documentation.2`). The JSDoc rules for the migration are otherwise settled (#103).
 - Done when it is decided whether migration agents write the tag now, with its wording rule, or it is added later.
 
-## 58. Documentation: migration guide for primitive-kit users
+## 54. Documentation: migration guide for primitive-kit users
 
 - A primitive-kit → toolkit mapping (name, subpath, behaviour change) would help dependents and could be derived from the trackers' rows. Related: `documentation.1`.
 - Done when it is decided whether the guide exists, where, and whether it is generated.
 
-## 59. Dependents: freeze and deprecation
+## 55. Dependents: freeze and deprecation
 
 - #112 questions 1 and 3: final primitive-kit release pointing to toolkit, `@deprecated` JSDoc per export, `npm deprecate` (a manual public action).
 - Done when decided.
 
-## 60. Dependents: migration timing
+## 56. Dependents: migration timing
 
 - #112 question 2: migrate each dependent as its modules land, or all at the end. Engrenage is affected twice: it imports primitive-kit and toolkit's dropped per-helper subpaths (`engrenage.4`).
 - Done when decided.
 
-## 61. Build: empty module entries break `typecheck:dist`
+## 57. Build: empty module entries break `typecheck:dist`
 
 - Found while applying #104: the empty modules (`export {};` in `array`, `assert`, `async`, `boolean`, `function`, `guard`, `iterable`, `maplike`, `number`, `parse`, `setlike`, `string`) bundle to `dist/<module>.d.mts` containing only `export { index_d_exports as t };` with no definition, so `engrenage typecheck:dist` fails with TS2304 and `pnpm build` stops before `vitest:dist`. Source mode (lint, typecheck, tests) is unaffected.
 - Done when it is decided how an empty module entry is emitted (tsdown/rolldown-plugin-dts fix or a placeholder export) and `pnpm build` passes.
 
-## 62. Build: root namespace identity differs in `dist/`
+## 58. Build: root namespace identity differs in `dist/`
 
 - Found while applying #104: the identity test in `tests/index.test.ts` (`toolkit.object === @auaust/toolkit/object`) passes in source mode and fails in `vitest:dist`. The root exports a synthesized namespace object (`__exportAll`), while `dist/object.mjs` re-exports the bindings as a real module namespace, so the two objects differ.
 - Done when it is decided whether the identity is a contract the build must honour (and how) or the test and #104/#114 wording are relaxed.

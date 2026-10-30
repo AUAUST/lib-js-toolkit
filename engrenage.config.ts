@@ -18,4 +18,7 @@ export default defineConfig({
       };
     },
   },
+  code: {
+    generatedFiles: ["AGENTS.override.md"],
+  },
 });

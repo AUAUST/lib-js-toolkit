@@ -29,5 +29,5 @@
 
 ## 5. Guard for "number and not `NaN`"
 
-- Deferred from AUAUST/lib-js-toolkit#105 question 9: combined checks are named once the basic principles are settled. It may also stay two checks (`isNumber` and `isNotNaN`). Candidates were `isValidNumber`, with the negation `isNotNumberOrNaN`; "valid" must not become a remembered qualifier like `loose`.
+- Deferred from the naming conventions: combined checks are named once the basic principles are settled. It may also stay two checks (`isNumber` and `isNotNaN`). Candidates were `isValidNumber`, with the negation `isNotNumberOrNaN`; "valid" must not become a remembered qualifier like `loose`.
 - Done when it is decided whether the combined guard exists, and its name.

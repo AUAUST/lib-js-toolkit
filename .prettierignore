@@ -21,4 +21,7 @@ eslint-suppressions.json
 # Changelog
 CHANGELOG.md
 
+# Codegen
+/AGENTS.override.md
+
 # @end
