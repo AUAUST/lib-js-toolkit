@@ -1,10 +1,10 @@
 import { StateError } from "#errors/StateError";
-import { isNaN } from "#modules/math/utils/isNaN";
+import { isNaN } from "#modules/number/utils/isNaN";
+import { isNumber } from "#modules/number/utils/isNumber";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import { finalize } from "#modules/object/utils/finalize";
 import { freeze } from "#modules/object/utils/freeze";
 import { frozen } from "#utils/frozen";
-import { isNumber } from "#utils/isNumber";
 import { plain } from "#utils/plain";
 import { readonly } from "#utils/readonly";
 

@@ -1,7 +1,7 @@
+import { isCallable } from "#modules/function/utils/isCallable";
+import { isContainer } from "#modules/guard/utils/isContainer";
 import { assign } from "#modules/object/utils/assign";
 import { identity } from "#utils/identity";
-import { isCallable } from "#utils/isCallable";
-import { isContainer } from "#utils/isContainer";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { Callable } from "#modules/protocol/types/Callable";
 import type { Callee } from "#types/Callee";

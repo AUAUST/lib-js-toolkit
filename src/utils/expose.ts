@@ -1,6 +1,6 @@
 import { entries } from "#modules/object/utils/entries";
 import { finalize } from "#modules/object/utils/finalize";
-import { isObject } from "#utils/isObject";
+import { isObject } from "#modules/object/utils/isObject";
 
 let defaultTarget: Record<PropertyKey, any> | undefined;
 

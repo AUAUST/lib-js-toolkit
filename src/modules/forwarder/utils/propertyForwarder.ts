@@ -1,5 +1,5 @@
+import { isPropertyKey } from "#modules/guard/utils/isPropertyKey";
 import { ownDescriptor } from "#modules/object/utils/ownDescriptor";
-import { isPropertyKey } from "#utils/isPropertyKey";
 import type { ForwardAs } from "#modules/forwarder/utils/forwardAs";
 import type { IsNever } from "#types/IsNever";
 

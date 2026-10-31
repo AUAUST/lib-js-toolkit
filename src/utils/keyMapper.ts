@@ -1,7 +1,7 @@
+import { isCallable } from "#modules/function/utils/isCallable";
+import { isNumber } from "#modules/number/utils/isNumber";
 import { hasOwn } from "#modules/object/utils/hasOwn";
 import { constant } from "#utils/constant";
-import { isCallable } from "#utils/isCallable";
-import { isNumber } from "#utils/isNumber";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

@@ -1,4 +1,4 @@
-import { isObject } from "#utils/isObject";
+import { isObject } from "#modules/object/utils/isObject";
 import { keyMapper } from "#utils/keyMapper";
 import {
   mappedKeys,

@@ -1,4 +1,4 @@
-import { isCallable } from "#utils/isCallable";
+import { isCallable } from "#modules/function/utils/isCallable";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

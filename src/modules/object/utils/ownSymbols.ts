@@ -1,4 +1,4 @@
-import { isContainer } from "#utils/isContainer";
+import { isContainer } from "#modules/guard/utils/isContainer";
 
 export function ownSymbols<Target extends {}>(
   target: Target,

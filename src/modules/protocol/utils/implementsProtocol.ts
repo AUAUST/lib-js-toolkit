@@ -1,4 +1,4 @@
-import { isContainer } from "#utils/isContainer";
+import { isContainer } from "#modules/guard/utils/isContainer";
 import type { ProtocolRegistry } from "#modules/protocol/types/ProtocolRegistry";
 
 export function implementsProtocol<Protocol extends keyof ProtocolRegistry>(

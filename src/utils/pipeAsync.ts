@@ -1,6 +1,6 @@
 import { PipelineError } from "#errors/PipelineError";
-import { isArray } from "#utils/isArray";
-import { isBoolean } from "#utils/isBoolean";
+import { isArray } from "#modules/array/utils/isArray";
+import { isBoolean } from "#modules/boolean/utils/isBoolean";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { AsyncCallee } from "#types/AsyncCallee";
 import type { PipeCondition } from "#utils/pipe";

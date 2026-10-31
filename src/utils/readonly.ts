@@ -1,7 +1,7 @@
 import { ReadonlyError } from "#errors/ReadonlyError";
+import { isContainer } from "#modules/guard/utils/isContainer";
 import { finalize } from "#modules/object/utils/finalize";
 import { hasOwn } from "#modules/object/utils/hasOwn";
-import { isContainer } from "#utils/isContainer";
 
 const readonlySymbol = Symbol("readonly");
 

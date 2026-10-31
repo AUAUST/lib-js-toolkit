@@ -1,3 +1,4 @@
+import { isArray } from "#modules/array/utils/isArray";
 import { getterComposer } from "#modules/composer/utils/getterComposer";
 import { getterComposers } from "#modules/composer/utils/getterComposers";
 import { isPropertyComposer } from "#modules/composer/utils/isPropertyComposer";
@@ -11,7 +12,6 @@ import { valueComposers } from "#modules/composer/utils/valueComposers";
 import { create } from "#modules/object/utils/create";
 import { defineProperty } from "#modules/object/utils/defineProperty";
 import { finalize } from "#modules/object/utils/finalize";
-import { isArray } from "#utils/isArray";
 import type { DefinedProperties } from "#types/DefinedProperties";
 import type { Extended } from "#types/Extended";
 import type { Fn } from "#types/Fn";

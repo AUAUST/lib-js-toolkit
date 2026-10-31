@@ -1,12 +1,12 @@
 /* eslint-disable auaust/no-loose-equal */
 
 import { StateError } from "#errors/StateError";
-import { isNaN } from "#modules/math/utils/isNaN";
+import { isBoolean } from "#modules/boolean/utils/isBoolean";
+import { isCallable } from "#modules/function/utils/isCallable";
+import { isNaN } from "#modules/number/utils/isNaN";
 import { call } from "#utils/call";
 import { empty } from "#utils/empty";
 import { filled } from "#utils/filled";
-import { isBoolean } from "#utils/isBoolean";
-import { isCallable } from "#utils/isCallable";
 import type { Callee } from "#types/Callee";
 import type { IsLiteral } from "#types/IsLiteral";
 import type { KeyAsString } from "#types/KeyAsString";

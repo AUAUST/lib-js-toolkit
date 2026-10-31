@@ -1,6 +1,6 @@
 import { hasOwn } from "#modules/object/utils/hasOwn";
+import { isObject } from "#modules/object/utils/isObject";
 import { ownKeys } from "#modules/object/utils/ownKeys";
-import { isObject } from "#utils/isObject";
 import type { PropertyComposer } from "#modules/composer/utils/propertyComposer";
 
 export function isPropertyComposer(value: unknown): value is PropertyComposer {

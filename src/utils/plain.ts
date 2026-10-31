@@ -1,6 +1,6 @@
+import { isContainer } from "#modules/guard/utils/isContainer";
 import { assign } from "#modules/object/utils/assign";
 import { create } from "#modules/object/utils/create";
-import { isContainer } from "#utils/isContainer";
 
 /**
  * Returns a new null-prototype object, copying own enumerable properties.

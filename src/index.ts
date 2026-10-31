@@ -1,4 +1,3 @@
-export { isNaN } from "#modules/math/utils/isNaN";
 export { after } from "#utils/after";
 export { apply, type Apply } from "#utils/apply";
 export { applyMethod } from "#utils/applyMethod";
@@ -40,24 +39,6 @@ export { expose, type Expose } from "#utils/expose";
 export { filled } from "#utils/filled";
 export { frozen } from "#utils/frozen";
 export { identity } from "#utils/identity";
-export { isArray } from "#utils/isArray";
-export { isBigInt } from "#utils/isBigInt";
-export { isBoolean } from "#utils/isBoolean";
-export { isCallable } from "#utils/isCallable";
-export { isContainer } from "#utils/isContainer";
-export { isFunction } from "#utils/isFunction";
-export { isNull } from "#utils/isNull";
-export { isNullish } from "#utils/isNullish";
-export { isNumber } from "#utils/isNumber";
-export { isObject } from "#utils/isObject";
-export { isPlainObject } from "#utils/isPlainObject";
-export { isPromise } from "#utils/isPromise";
-export { isPromiseLike } from "#utils/isPromiseLike";
-export { isPropertyKey } from "#utils/isPropertyKey";
-export { isRegisteredSymbol } from "#utils/isRegisteredSymbol";
-export { isString } from "#utils/isString";
-export { isSymbol } from "#utils/isSymbol";
-export { isUndefined } from "#utils/isUndefined";
 export {
   keyMapper,
   type KeyMap,
@@ -136,6 +117,7 @@ export * as boolean from "#modules/boolean/index";
 export * as composer from "#modules/composer/index";
 export * as forwarder from "#modules/forwarder/index";
 export * as function from "#modules/function/index";
+export * from "#modules/guard/index";
 export * as guard from "#modules/guard/index";
 export * as iterable from "#modules/iterable/index";
 export * as maplike from "#modules/maplike/index";

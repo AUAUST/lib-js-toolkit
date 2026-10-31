@@ -1,4 +1,4 @@
-import { isString } from "#utils/isString";
+import { isString } from "#modules/string/utils/isString";
 
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message

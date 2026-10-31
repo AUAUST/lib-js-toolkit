@@ -1,5 +1,5 @@
+import { isObject } from "#modules/object/utils/isObject";
 import { keys } from "#modules/object/utils/keys";
-import { isObject } from "#utils/isObject";
 import { keyMapper } from "#utils/keyMapper";
 import { plain } from "#utils/plain";
 import { resolveCallable } from "#utils/resolveCallable";

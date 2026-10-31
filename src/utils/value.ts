@@ -1,5 +1,5 @@
+import { isCallable } from "#modules/function/utils/isCallable";
 import { apply } from "#utils/apply";
-import { isCallable } from "#utils/isCallable";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { CallSignature } from "#types/CallSignature";

@@ -1,5 +1,5 @@
+import { isCallable } from "#modules/function/utils/isCallable";
 import { apply } from "#utils/apply";
-import { isCallable } from "#utils/isCallable";
 import type { Callee } from "#types/Callee";
 import type { IfNever } from "#types/IfNever";
 import type { MethodName } from "#types/MethodName";

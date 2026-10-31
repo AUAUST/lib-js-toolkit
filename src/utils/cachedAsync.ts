@@ -1,3 +1,4 @@
+import { isCallable } from "#modules/function/utils/isCallable";
 import { assign } from "#modules/object/utils/assign";
 import {
   cached,
@@ -6,7 +7,6 @@ import {
   type KeyResolver,
 } from "#utils/cached";
 import { identity } from "#utils/identity";
-import { isCallable } from "#utils/isCallable";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

@@ -1,6 +1,6 @@
+import { isFunction } from "#modules/function/utils/isFunction";
 import { callable } from "#modules/protocol/symbols";
 import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
-import { isFunction } from "#utils/isFunction";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";

@@ -1,5 +1,5 @@
-import { isNaN } from "#modules/math/utils/isNaN";
 import { max } from "#modules/math/utils/max";
+import { isNaN } from "#modules/number/utils/isNaN";
 import { assign } from "#modules/object/utils/assign";
 import { resolveCallable } from "#utils/resolveCallable";
 import type { Callee } from "#types/Callee";

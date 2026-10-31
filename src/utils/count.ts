@@ -1,11 +1,11 @@
-import { isSafeInteger } from "#modules/math/utils/isSafeInteger";
+import { isNumber } from "#modules/number/utils/isNumber";
+import { isSafeInteger } from "#modules/number/utils/isSafeInteger";
+import { isObject } from "#modules/object/utils/isObject";
+import { isPlainObject } from "#modules/object/utils/isPlainObject";
 import { keys } from "#modules/object/utils/keys";
 import { countable } from "#modules/protocol/symbols";
 import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
-import { isNumber } from "#utils/isNumber";
-import { isObject } from "#utils/isObject";
-import { isPlainObject } from "#utils/isPlainObject";
-import { isString } from "#utils/isString";
+import { isString } from "#modules/string/utils/isString";
 import type { Countable } from "#modules/protocol/types/Countable";
 
 export function count(

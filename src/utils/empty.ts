@@ -1,8 +1,8 @@
+import { isNumber } from "#modules/number/utils/isNumber";
 import { emptiable } from "#modules/protocol/symbols";
 import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { isString } from "#modules/string/utils/isString";
 import { count } from "#utils/count";
-import { isNumber } from "#utils/isNumber";
-import { isString } from "#utils/isString";
 import { memberValue } from "#utils/memberValue";
 import type { EmptyValueOf } from "#types/EmptyValueOf";
 

@@ -1,6 +1,6 @@
+import { isArray } from "#modules/array/utils/isArray";
 import { freeze } from "#modules/object/utils/freeze";
-import { isArray } from "#utils/isArray";
-import { isPlainObject } from "#utils/isPlainObject";
+import { isPlainObject } from "#modules/object/utils/isPlainObject";
 import { plain } from "#utils/plain";
 import type { ReadonlyFunction } from "#types/ReadonlyFunction";
 

@@ -1,4 +1,4 @@
-import { isContainer } from "#utils/isContainer";
+import { isContainer } from "#modules/guard/utils/isContainer";
 
 export function ownKeys<Target extends {}>(target: Target): (keyof Target)[] {
   return isContainer(target)

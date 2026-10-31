@@ -1,8 +1,8 @@
-import { isNaN } from "#modules/math/utils/isNaN";
+import { isArray } from "#modules/array/utils/isArray";
+import { isCallable } from "#modules/function/utils/isCallable";
+import { isNaN } from "#modules/number/utils/isNaN";
+import { isString } from "#modules/string/utils/isString";
 import { call } from "#utils/call";
-import { isArray } from "#utils/isArray";
-import { isCallable } from "#utils/isCallable";
-import { isString } from "#utils/isString";
 import { value, type ResolvedValue } from "#utils/value";
 import type { Callee } from "#types/Callee";
 
