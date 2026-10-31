@@ -26,3 +26,16 @@
 - Open: the entry point structure and dependency declaration (optional peer dependency?) meeting this, and how a helper fails at runtime when its dependency is missing.
 - Without such a pattern, the library is dropped: the helper is implemented in toolkit, copied with credits (as `md5`), or left out of scope for consumers to use the library directly.
 - Done when a pattern is found and written as a rule, or toolkit records that it has no runtime dependencies.
+
+## 5. Centralized error messages (lang)
+
+- AUAUST/lib-js-toolkit#119 proposed a `lang` directory of type-checked message keys, a builder resolving a `message` argument as a key or raw text, optional translations injected without being bundled, a keys-only opt-out, and possibly a public translator. Deferred on 2026-10-31: inline English messages are not a problem today (#119 question 1 settled the error classes).
+- Outcome: decide whether centralizing messages pays for itself (bundle size, consistency, translations) once toolkit has enough thrown errors to compare.
+- Done when #119's questions 2 to 6 are settled, or obsolete if inline messages are kept for good.
+
+## 6. Boolean conversion protocol
+
+- AUAUST/lib-js-toolkit#143 dropped conversion protocols for now: `toString` and `toNumber` rely on `Symbol.toPrimitive`, `toArray` on `Symbol.iterator`, and `toBoolean` is a strict `!!value`, so it can never read a protocol.
+- If a value needs to choose how it is interpreted as a boolean, the candidate is a `booleanifiable` protocol read by `parseBoolean` only (#118 conventions: symbol `booleanifiable`, interface `Booleanifiable`, key `Protocol.booleanifiable`).
+- Done when a concrete use case adds it, or obsolete if none appears by the end of the merge.
+

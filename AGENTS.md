@@ -57,8 +57,8 @@ Pause on real choices: ask the questions and wait for the answers before continu
 ## Source organization and public API
 
 - One primary helper per file, in the module owning the kind of value it handles, or in `src/utils/` when it is type-agnostic. One reusable type per `src/types/<Name>.ts`, one error class per `src/errors/<Name>.ts`. Keep tightly coupled helpers, overloads and utility-specific types with their owner; split independent concepts into separate modules.
-- Protocols live in `src/protocols/<name>/index.ts`. Preserve their symbol identities, `Symbol.for` keys, module augmentation and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection.
-- Maintain the public barrels `src/index.ts`, `src/types.ts` and `src/errors.ts`. Keep root and subpath exports consistent with the intended API; never expose internal helpers.
+- Protocols live in the `protocol` module: symbols in `src/modules/protocol/symbols.ts`, types in `src/modules/protocol/types/`. `ProtocolRegistry` lists toolkit's protocols directly; consumers augment it through `@auaust/toolkit/protocol`. Preserve symbol identities, `Symbol.for` keys and `ProtocolRegistry` contracts. Reuse `implementsProtocol` for protocol detection.
+- Maintain the public barrels: the root `src/index.ts`, `src/types/index.ts`, `src/errors/index.ts` and each `src/modules/<module>/index.ts`. Keep root and module exports consistent with the intended API; never expose internal helpers.
 - Preserve observable behavior: `this` binding, argument forwarding, return values, property descriptors, mutation, error causes and promise settlement. Changes to these or to exported types are API changes.
 - Asynchronous and stateful utilities stay explicit about pending work, cleanup and errors. Follow each utility's documented scheduling and state contract rather than swallowing failures or changing timing.
 - Preserve tree shaking and `sideEffects: false`: no observable initialization side effects, no unnecessary imports between independent utilities.
@@ -68,7 +68,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 ## Imports and types
 
 - Import sibling helpers, reusable types, errors and protocols through the internal import paths the project configures (`package.json` `imports`). Never import the root barrel from runtime modules.
-- Keep relative imports where tooling or type and error barrels need them, and keep tooling imports compatible with the configured ESM loaders.
+- Barrels use the internal import paths too. Keep relative imports only where tooling needs them, and keep tooling imports compatible with the configured ESM loaders.
 - Types are public API. Preserve generic inference, literal types, overloads, type predicates, readonly tuples, optional and rest parameters, `this` parameters and synchronous or asynchronous return contracts.
 - Prefer `unknown` for data that must be narrowed. Use `any` only where a generic constraint or another supported type contract needs it; do not replace it where that changes assignability or inference.
 - Reusable type complexity lives in `src/types/`; types specific to one utility stay with it.
@@ -138,7 +138,7 @@ Pause on real choices: ask the questions and wait for the answers before continu
 
 ## Toolkit tests
 
-- Tests mirror the source areas: `tests/utils/`, `tests/modules/`, `tests/types/`, `tests/protocols/`, with package and shared protocol tests at the root. Never add tests under `src/`.
+- Tests mirror the source areas: `tests/utils/`, `tests/modules/<module>/` (a guard's tests follow its file's module, even though it is exported from `guard`), `tests/types/`, with package tests at the root and shared fixtures in `tests/fixtures/`. Never add tests under `src/`.
 - All tests for a helper, including type assertions and inference regressions, stay in its `<name>.test.ts`. Split cross-helper work among each helper's own file.
 - Test public behavior through package imports so source and built-package modes exercise the same contracts. Assert changed type contracts with `expectTypeOf` or `assertType`.
 - Cover the relevant edge cases: empty input, optional values, errors, `this` binding, argument preservation and asynchronous outcomes. Control timers deterministically and restore timers and mocks after use.
