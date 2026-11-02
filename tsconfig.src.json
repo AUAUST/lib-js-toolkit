@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts"],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.src.tsbuildinfo",
+    "target": "ESNext",
+    "noLib": true,
+    "types": ["typescript-baseline-lib/year/2023"]
+  }
+}

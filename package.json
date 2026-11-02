@@ -63,34 +63,38 @@
   },
   "files": [
     "dist",
+    "data",
     "src"
   ],
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
-    "@auaust/engrenage": "^0.4.3",
+    "@auaust/engrenage": "^0.6.0",
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.2",
     "@vitest/coverage-istanbul": "^4.1.11",
+    "baseline-browser-mapping": "^2.11.0",
     "cleye": "^2.7.0",
     "eslint": "^10.13.0",
     "jiti": "^2.7.0",
+    "node-releases": "^2.0.0",
     "prettier": "^3.9.10",
     "publint": "^0.3.24",
     "tsdown": "0.22.14",
     "tsx": "^4.23.15",
     "typescript": "6.0.3",
+    "typescript-baseline-lib": "^0.1.0",
     "vitest": "^4.1.11"
   },
   "sideEffects": false,
   "prettier": "@auaust/engrenage/prettier",
   "packageManager": "pnpm@10.26.0",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22"
   },
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=24.0.0",
+      "version": "24",
       "onFail": "error"
     }
   },

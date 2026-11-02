@@ -4,6 +4,7 @@ export default defineConfig({
   presets: ["library"],
   agents: {
     preferred: ["claude", "codex"],
+    attribution: false,
   },
   define: {
     values({ packageJson: { name, version, license } }) {
@@ -18,7 +19,7 @@ export default defineConfig({
       };
     },
   },
-  code: {
-    generatedFiles: ["AGENTS.override.md"],
+  src: {
+    baseline: "2026-10",
   },
 });

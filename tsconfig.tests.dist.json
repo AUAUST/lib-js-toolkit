@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.tests.json",
+  "compilerOptions": {
+    "paths": {},
+    "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.tests.dist.tsbuildinfo",
+    "skipLibCheck": false
+  }
+}

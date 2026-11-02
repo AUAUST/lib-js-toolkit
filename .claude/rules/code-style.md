@@ -10,12 +10,23 @@ paths:
 ## Enforced by tooling
 
 - Prettier (`@auaust/engrenage/prettier`) and ESLint (`@auaust/engrenage/eslint`) enforce formatting and layout. Run ESLint with `--fix` on changed files, then resolve the remaining messages; each names the expected form.
-- Not fixed automatically, so write them correctly from the start: concise arrow bodies limited to an identifier, literal, member access, negation, comparison, call or template literal; `x == null` for nullish checks; runtime `typeof` only as `typeof x === "undefined"`; named exports outside tool configs and declared default-export files; static imports in source directories; every promise awaited, returned or `void`ed, and never spread or tested for truthiness; `await` only on values that may be promises; test files only under the test directories.
+
+Write these correctly from the start, since no tool fixes them:
+
+- Limit concise arrow bodies to an identifier, literal, member access, negation, comparison, call or template literal.
+- Check for nullish values with `x == null`.
+- Use runtime `typeof` only as `typeof x === "undefined"`.
+- Use named exports, except in tool configs and declared default-export files.
+- Use static imports in source directories.
+- Await, return or `void` every promise, and never spread it or test it for truthiness.
+- Use `await` only on values that may be promises.
+- Put test files only under the test directories.
+- Write each `@debt` marker as `@debt <statement>` at the start of its own comment.
 
 ## Not checked by tools
 
 - camelCase for functions and variables, PascalCase for classes, components and types. Keep the `create…`, `use…`, `define…`, `get…`, `is…`, `has…` prefixes. Never rename platform-defined identifiers.
-- Separate sibling statements with one blank line by default. Only two or three short, simple declarations of the same kind may stay together. A long or complex declaration (a call with a callback, a conditional, a template with several interpolations) stands alone, and once one does, its siblings follow suit.
+- Separate sibling statements with one blank line; only a run of two or three declarations of the same kind may stay together, and only when each fits on one line with no callback, conditional or template of several interpolations.
 - Put substantial computation, awaited calls, method chains and mapped or filtered arrays on their own lines when they are distinct steps.
 - A concise arrow body that Prettier would wrap becomes a block with an explicit `return`.
 - Module-level named functions are `function` declarations; a `const` arrow is only for a logic-free wrapper.

@@ -15,10 +15,11 @@ Paths below are relative to the project root. Before editing a file, read and fo
 | <code>.ai/agent-lock.md</code> | <code>.claude/rules/agent-lock.md</code> |
 | <code>.ai/backlog/*.md</code> | <code>.claude/rules/agent-lock.md</code> |
 | <code>.ai/backlog/*.md</code> | <code>.claude/rules/backlog.md</code> |
-| <code>.ai/scratchpad.md</code> | <code>.claude/rules/scratchpad.md</code> |
-| <code>.changeset/**</code> | <code>.claude/rules/changesets.md</code> |
 | <code>**/*.ts</code> | <code>.claude/rules/code-style.md</code> |
 | <code>src/**/*.ts</code> | <code>.claude/rules/naming.md</code> |
 | <code>tests/**/*.ts</code> | <code>.claude/rules/tests.md</code> |
+| All files | <code>.claude/rules/debt-markers.md</code> |
+| All files | <code>.claude/rules/git.md</code> |
+| All files | <code>.claude/rules/no-attribution.md</code> |
 
 <!-- @end -->

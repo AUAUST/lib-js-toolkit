@@ -20,5 +20,17 @@
       "@auaust/toolkit": ["./src/index.ts"]
     },
     "types": ["node"]
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.src.json"
+    },
+    {
+      "path": "./tsconfig.tests.json"
+    },
+    {
+      "path": "./tsconfig.scripts.json"
+    }
+  ]
 }
