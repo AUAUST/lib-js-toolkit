@@ -320,6 +320,7 @@ describe("cachedAsync", () => {
 
     callback[callable] = async () => {
       await Promise.resolve();
+
       throw new Error("retained method expected");
     };
 

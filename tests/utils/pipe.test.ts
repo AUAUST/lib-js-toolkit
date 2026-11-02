@@ -133,6 +133,7 @@ describe("pipe", () => {
 
     try {
       wrapped(4);
+
       throw new Error("Expected a pipeline failure");
     } catch (error) {
       expect(error).toBeInstanceOf(PipelineError);

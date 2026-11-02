@@ -136,6 +136,7 @@ describe("pipeAsync", () => {
 
     const throwError = async (ignored: number) => {
       await Promise.resolve();
+
       throw new Error("Test error");
     };
 
@@ -196,6 +197,7 @@ describe("pipeAsync", () => {
 
     try {
       await wrapped(4);
+
       throw new Error("Expected a pipeline failure");
     } catch (error) {
       expect(error).toBeInstanceOf(PipelineError);

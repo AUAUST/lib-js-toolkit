@@ -96,6 +96,7 @@ describe("after", () => {
 
     const callback = vi.fn(async () => {
       await Promise.resolve();
+
       throw error;
     });
 
