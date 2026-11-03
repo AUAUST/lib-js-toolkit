@@ -21,5 +21,12 @@ export default defineConfig({
   },
   src: {
     baseline: "2026-10",
+    apis: ["timers", "performance", "console", "disposable", "float16"],
+    exports: {
+      "./types": "./src/types/index.ts",
+      "./errors": "./src/errors/index.ts",
+      "./*": "./src/modules/*/index.ts",
+      ".": "./src/index.ts",
+    },
   },
 });

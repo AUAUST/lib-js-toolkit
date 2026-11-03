@@ -4,7 +4,27 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.src.tsbuildinfo",
     "target": "ESNext",
-    "noLib": true,
-    "types": ["typescript-baseline-lib/year/2023"]
+    "lib": [
+      "es2021",
+      "es2022.array",
+      "es2022.error",
+      "es2022.object",
+      "es2022.regexp",
+      "es2022.string",
+      "es2023.array",
+      "es2023.intl",
+      "es2024.collection",
+      "es2024.object",
+      "es2024.promise",
+      "es2024.regexp",
+      "es2024.string"
+    ],
+    "types": [
+      "@auaust/engrenage/apis/timers",
+      "@auaust/engrenage/apis/performance",
+      "@auaust/engrenage/apis/console",
+      "@auaust/engrenage/apis/disposable",
+      "@auaust/engrenage/apis/float16"
+    ]
   }
 }

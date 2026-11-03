@@ -33,7 +33,7 @@ export function memberValue(
   ...args: any[]
 ): unknown {
   if (target == null) {
-    return undefined;
+    return;
   }
 
   const value = target[property];
