@@ -7,9 +7,112 @@ on:
     branches:
       - main
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  publish:
-    name: Publish to npm
+  check:
+    name: Check
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
+
+      - name: Check
+        run: pnpm run ci:check
+
+  test:
+    name: Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
+
+      - name: Test
+        run: pnpm run ci:test
+
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
+
+      - name: Build
+        run: pnpm run ci:build
+
+      - name: Upload the build output
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-output
+          path: |
+            .
+            !**/node_modules/**
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    name: Release
+
+    needs:
+      - check
+      - test
+      - build
 
     permissions:
       id-token: write
@@ -35,17 +138,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
 
-      - name: Check
-        run: pnpm run ci:check
-
-      - name: Test
-        run: pnpm run ci:test
-
-      - name: Build
-        run: pnpm run ci:build
+      - name: Download the build output
+        uses: actions/download-artifact@v8
+        with:
+          name: build-output
+          path: .
 
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v2
         with:
           publish-script: pnpm run ci:publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}

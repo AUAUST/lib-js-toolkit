@@ -1,0 +1,17 @@
+pre-commit:
+  commands:
+    engrenage:
+      only:
+        - &a1
+          run: test -n "$CLAUDECODE"
+      run: pnpm --silent engrenage gate --staged
+    engrenage-local:
+      skip:
+        - run: test -n "$CLAUDECODE"
+      run: pnpm --silent engrenage gate --staged --everyone
+commit-msg:
+  commands:
+    engrenage:
+      only:
+        - run: test -n "$CLAUDECODE"
+      run: pnpm --silent engrenage gate --message {1}

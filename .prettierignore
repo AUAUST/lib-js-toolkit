@@ -1,14 +1,10 @@
 # @ignore defaults
 
 # Package locks
-pnpm-lock.yaml
 package-lock.json
 yarn.lock
 bun.lock
 bun.lockb
-
-# ESLint
-eslint-suppressions.json
 
 # @ignore project
 
@@ -18,10 +14,16 @@ eslint-suppressions.json
 # Coverage
 /coverage
 
-# Changelog
-CHANGELOG.md
-
-# Codegen
+# Codex
 /AGENTS.override.md
+
+# Changelog
+/**/CHANGELOG.md
+
+# ESLint
+/eslint-suppressions.json
+
+# pnpm
+/pnpm-lock.yaml
 
 # @end

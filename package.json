@@ -27,15 +27,20 @@
     "lint:fix": "engrenage eslint:fix",
     "lint:suppress": "engrenage eslint:suppress",
     "make": "tsx scripts/make/index.ts",
-    "prepare": "engrenage sync",
+    "prepare": "engrenage sync && lefthook install",
     "ready": "pnpm install --frozen-lockfile && engrenage sync && pnpm run ci",
     "test": "engrenage vitest && engrenage typecheck",
     "typecheck": "engrenage typecheck",
     "watch": "engrenage vitest:watch --"
   },
   "imports": {
+    "#errors": "./src/errors/index.ts",
     "#errors/*": "./src/errors/*.ts",
     "#modules/*": "./src/modules/*.ts",
+    "#package.json": "./package.json",
+    "#scripts/*": "./scripts/*.ts",
+    "#tests/*": "./tests/*.ts",
+    "#types": "./src/types/index.ts",
     "#types/*": "./src/types/*.ts",
     "#utils/*": "./src/utils/*.ts"
   },
@@ -68,7 +73,7 @@
   ],
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
-    "@auaust/engrenage": "^0.7.0",
+    "@auaust/engrenage": "^0.9.0",
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.5",
     "@vitest/coverage-istanbul": "^5.0.5",
@@ -76,6 +81,8 @@
     "cleye": "^2.7.0",
     "eslint": "^10.13.0",
     "jiti": "^2.7.0",
+    "jscpd": "^5.0.0",
+    "lefthook": "^2.0.0",
     "node-releases": "^2.0.0",
     "prettier": "^3.9.10",
     "publint": "^0.3.25",
@@ -103,6 +110,6 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   }
 }

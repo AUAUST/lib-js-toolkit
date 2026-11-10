@@ -1,5 +1,13 @@
 {
   "extends": "@auaust/engrenage/tsconfig/library.json",
+  "compilerOptions": {
+    "paths": {
+      "@auaust/toolkit/types": ["./src/types/index.ts"],
+      "@auaust/toolkit/errors": ["./src/errors/index.ts"],
+      "@auaust/toolkit/*": ["./src/modules/*/index.ts"],
+      "@auaust/toolkit": ["./src/index.ts"]
+    }
+  },
   "files": [],
   "references": [
     {
@@ -11,13 +19,5 @@
     {
       "path": "./tsconfig.scripts.json"
     }
-  ],
-  "compilerOptions": {
-    "paths": {
-      "@auaust/toolkit/types": ["./src/types/index.ts"],
-      "@auaust/toolkit/errors": ["./src/errors/index.ts"],
-      "@auaust/toolkit/*": ["./src/modules/*/index.ts"],
-      "@auaust/toolkit": ["./src/index.ts"]
-    }
-  }
+  ]
 }

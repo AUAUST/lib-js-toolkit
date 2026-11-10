@@ -1,7 +1,8 @@
 import { define, defineConfig } from "@auaust/engrenage/config";
 
 export default defineConfig({
-  presets: ["library"],
+  preset: "library",
+  visibility: "private",
   agents: {
     preferred: ["claude", "codex"],
     attribution: false,

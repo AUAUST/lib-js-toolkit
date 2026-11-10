@@ -13,14 +13,12 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 ### Writing instructions
 
-- Apply these rules wherever you draft agent instructions, including wording proposed in issues and backlog entries.
+- Apply these rules, on top of the writing rules, wherever you draft agent instructions, including wording proposed in issues and backlog entries.
 - State each rule as the behavior it must produce. Reuse the request's wording only where it is already the clearest and shortest; never carry over its examples.
 - Phrase a rule so that applying it precisely produces the right outcome; never list the cases that motivated it.
 - Add an example only when the rule cannot be stated without one.
 - Write one short, specific, imperative rule per sentence.
-- Use a sentence for a single rule, a list for independent rules and a table for rules that vary along shared dimensions.
 - Merge a new rule into any rule it overlaps or contradicts instead of adding it alongside.
-- Choose the clearest and shortest wording that keeps the meaning, and rephrase wording that falls short of these rules in the sections you edit.
 
 <!-- @reference @auaust/engrenage/agents/sections/precedence.md -->
 
@@ -40,13 +38,13 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 ## Decision protocol
 
-| Situation                                                                                                                                                                                                                           | Do                                                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The user asks a question                                                                                                                                                                                                            | Answer it as a question, never as an implied instruction: explain the current choice and compare any alternative it raises by pros, cons and implications. Keep your judgment and leave settled decisions closed.         |
-| The user explicitly asks for or decides on a change                                                                                                                                                                                 | Change direction.                                                                                                                                                                                                         |
-| Obvious choice: one option is clearly better and fits the established architecture                                                                                                                                                  | Proceed, and report the decision with the alternative you discarded.                                                                                                                                                      |
-| Real choice: the options are comparably good, each has significant costs, or the work needs an undecided behavioral policy or architectural contract (a pattern, ownership boundary, shared lifecycle, role directory or namespace) | Finish only the work no open question affects, then pause with each question's options, trade-offs and your recommendation, a short done/pending/blocked state, and enough context that the reply needs only the answers. |
-| Answers arrive                                                                                                                                                                                                                      | Resume the same task, and pause again with a new batch when they change earlier assumptions.                                                                                                                              |
+| Situation                                                                                                                                                                                                                           | Do                                                                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The user asks a question                                                                                                                                                                                                            | Answer it as a question, never as an implied instruction: explain the current choice and compare any alternative it raises by pros, cons and implications. Keep your judgment and leave settled decisions closed.                                                                                     |
+| The user explicitly asks for or decides on a change                                                                                                                                                                                 | Analyse it. When the analysis contradicts it, or its reach goes past what it names (a reversed decision, a changed shared contract, rework elsewhere), pause before acting on it: state the conflict or the reach, what it discards and the alternative your role allows. Otherwise change direction. |
+| Obvious choice: one option is clearly better and fits the established architecture                                                                                                                                                  | Proceed, and report the decision with the alternative you discarded.                                                                                                                                                                                                                                  |
+| Real choice: the options are comparably good, each has significant costs, or the work needs an undecided behavioral policy or architectural contract (a pattern, ownership boundary, shared lifecycle, role directory or namespace) | Finish only the work no open question affects, then pause with each question's options, trade-offs and your recommendation, a short done/pending/blocked state, and enough context that the reply needs only the answers.                                                                             |
+| Answers arrive                                                                                                                                                                                                                      | Weigh each answer as a request, unless it confirms a reach you stated, then resume the same task, and pause again with a new batch when they change earlier assumptions.                                                                                                                              |
 
 - Follow implications as far ahead as you can before pausing, so every open question arrives in one batch.
 - Wait for the answers; when you cannot wait, end the turn with the questions instead of proceeding on a guess.
@@ -92,15 +90,16 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 ## Implementation
 
 - Quality takes precedence over completion: a workaround that adds architectural debt is not done. Judge quality by clear ownership, authoritative definitions, explicit contracts, predictable execution and state lifetime, readability and minimal necessary complexity, not by line or abstraction count.
-- Before editing, inspect the execution path and existing abstractions. Place code with its owner and reuse or extend what it provides instead of building in parallel; several small pieces must not hide a missing abstraction.
+- Before editing, inspect the execution path. Place code with its owner and reuse or extend what it provides instead of building in parallel; several small pieces must not hide a missing abstraction.
+- Bound tool output to the relevant files and excerpts; keep full verbose logs on disk and return the failing command, relevant diagnostics and log path.
 - Derive behavior from authoritative sources, never from hardcoded lists, flags or example data. Fail clearly on missing invariants; fall back only where the contract says so.
 - Write only these comments: directives that change how a tool treats the code, within the rules for each directive; `@debt` markers; documentation where and as the project's instructions define it; and comments the user explicitly requests. Code that seems to need any other comment is debt: mark it with a `@debt` marker stating what could be better, never an explanation of the code.
 - Change repository-wide configuration only after trying an alternative inside the code you own. Report any configuration change with its reason separately from general code changes.
 - Delete obsolete and commented-out code. Add no feature READMEs or `docs/` directory.
 - Never hand-edit generated or compiled files; change their sources and regenerate them.
-- When work would build on or deepen an architectural violation, fixing it comes first: stop under the decision protocol with what exists and the smallest coherent fix with its scope, never a temporary bypass. Correct violations you touch; report other nearby inconsistencies without fixing them.
+- When work would build on or deepen an architectural violation, fixing it comes first: stop under the decision protocol with what exists and the smallest coherent fix with its scope, never a temporary bypass. Correct violations in the code your change rewrites; record the others as debt markers, discarded solutions or backlog entries.
 - Keep secrets in `.env`, documented by `.env.example`, never in source, logs or runtime code.
-- Propose missing or outdated skills, MCP servers, scripts, dependencies or abstractions when they would help; add, remove or upgrade them only with the user's approval.
+- Propose missing or outdated skills, MCP servers, scripts or abstractions when they would help; add, remove or upgrade them only with the user's approval.
 
 <!-- @reference @auaust/engrenage/agents/sections/backlog.md -->
 
@@ -142,7 +141,9 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 - Before delivery, review the work against architectural boundaries and quality requirements, not only behavior.
 - Write the minimum tests needed for confidence, usually one expected case and one meaningful edge case. Reuse existing tests before adding new ones.
-- Format only changed files, never the whole repository.
+- Run targeted checks during implementation and the gate once at delivery, adding checks only for coverage it lacks.
+- Lint by hand only the files you name, always with `--fix`; leave linting the whole project to the gate.
+- Pass the commit gate with every commit you make; never bypass it.
 - Report actual results and blockers, including unavailable integrations and skipped checks. Never weaken compiler or lint settings to hide failures.
 
 <!-- @end -->

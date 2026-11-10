@@ -34,6 +34,7 @@ Everything stays local to the repository.
 
 ## Report
 
-For each removed note, the backlog IDs created, updated or already covering it and the files edited. For each kept note, the question that blocks it.
+- The backlog IDs now covering each removed note.
+- Each kept note with the question that blocks it.
 
 <!-- @end -->

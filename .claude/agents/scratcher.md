@@ -3,10 +3,11 @@ name: scratcher
 description: Scratcher that triages the user's notes in .ai/scratchpad.md into
   backlog entries and never implements them or acts outside the repository. Use
   proactively when the user asks to handle, process or triage the scratchpad.
-model: sonnet
+model: haiku
 disallowedTools:
   - WebFetch
   - WebSearch
+effort: low
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/scratchpad.md -->
@@ -38,6 +39,7 @@ Everything stays local to the repository.
 
 ## Report
 
-For each removed note, the backlog IDs created, updated or already covering it and the files edited. For each kept note, the question that blocks it.
+- The backlog IDs now covering each removed note.
+- Each kept note with the question that blocks it.
 
 <!-- @end -->

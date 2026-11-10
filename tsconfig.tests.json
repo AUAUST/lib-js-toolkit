@@ -3,6 +3,7 @@
   "include": ["tests/**/*.ts", "tests/**/*.tsx", "env.d.ts"],
   "exclude": ["tests/**/fixtures/**"],
   "compilerOptions": {
+    "incremental": true,
     "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.tests.tsbuildinfo",
     "target": "ESNext",
     "lib": ["ESNext"],

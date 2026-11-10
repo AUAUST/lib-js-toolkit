@@ -2,6 +2,9 @@
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts"],
   "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "incremental": true,
     "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.src.tsbuildinfo",
     "target": "ESNext",
     "lib": [

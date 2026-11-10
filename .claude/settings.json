@@ -1,12 +1,90 @@
 {
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "matcher": "Edit|MultiEdit|Write",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "pnpm --silent engrenage agents claude hook edit"
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook github || exit 2",
+            "if": "Bash(gh issue create *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook github || exit 2",
+            "if": "Bash(gh issue edit *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook github || exit 2",
+            "if": "Bash(gh issue comment *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook git || exit 2",
+            "if": "Bash(git commit *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook git || exit 2",
+            "if": "Bash(git -c *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook git || exit 2",
+            "if": "Bash(git -C *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook git || exit 2",
+            "if": "Bash(git config *)",
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook dispatch || exit 2",
+            "onFailure": "block"
           }
         ]
       }
@@ -16,5 +94,16 @@
     "commit": "",
     "pr": "",
     "sessionUrl": false
-  }
+  },
+  "permissions": {
+    "deny": [
+      "Bash(git commit --no-verify*)",
+      "Bash(git commit -n*)",
+      "Bash(LEFTHOOK=0 *)",
+      "Bash(LEFTHOOK=false *)",
+      "Bash(git config core.hooksPath*)"
+    ],
+    "allow": ["Bash(gh api *issue-field-values*)"]
+  },
+  "subagentPromptCacheTtl": "1h"
 }

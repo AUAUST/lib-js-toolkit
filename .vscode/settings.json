@@ -113,5 +113,24 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "prettier.requireConfig": true,
-  "js/ts.tsdk.path": "node_modules/typescript/lib"
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "json.schemas": [
+    {
+      "fileMatch": ["**/.namespace.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.9.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.1_@_24db675e6122f993e4b02526f00f4234/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
+    },
+    {
+      "fileMatch": ["**/.domain.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.9.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.1_@_24db675e6122f993e4b02526f00f4234/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
+    },
+    {
+      "fileMatch": ["**/.namespace.json"],
+      "url": "./../engrenage.nosync/data/schemas/namespace.schema.json"
+    },
+    {
+      "fileMatch": ["**/.domain.json"],
+      "url": "./../engrenage.nosync/data/schemas/domain.schema.json"
+    }
+  ]
 }

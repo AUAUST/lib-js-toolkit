@@ -14,14 +14,12 @@ Understand a problem, decide its fix, then apply it or write it down for a worke
 
 ## Input
 
-| Given                                                  | Read first                                      |
-| ------------------------------------------------------ | ----------------------------------------------- |
-| A GitHub issue                                         | Its body, comments, linked issues and ancestors |
-| A backlog entry                                        | The entry and the entries closely related to it |
-| A `@debt` marker or debt backlog entry                 | The marked code and its callers                 |
-| A direct report: an error, a failing check, a behavior | The reported output, then reproduce it yourself |
-
-When the input already describes its fix, check that fix against your own diagnosis before applying it; a described fix is a hypothesis, not a decision.
+| Given                                                  | Read first                                                             |
+| ------------------------------------------------------ | ---------------------------------------------------------------------- |
+| A GitHub issue                                         | Its body, comments, linked issues and ancestors up to the nearest plan |
+| A backlog entry                                        | The entry and the entries closely related to it                        |
+| A `@debt` marker or debt backlog entry                 | The marked code and its callers                                        |
+| A direct report: an error, a failing check, a behavior | The reported output, then reproduce it yourself                        |
 
 ## Diagnosis
 
@@ -49,25 +47,52 @@ Mark the debt you notice while diagnosing, on the execution path, its callers an
 | Needs more: a larger refactor, a new pattern or contract, changes across several domains, or more than one reviewable pull request                | Write it into one task issue and stop                                |
 | Needs several ordered tasks                                                                                                                       | Write the diagnosis into one issue and report that it needs planning |
 
-Never start a large refactor, even partly: an issue costs less than a half-applied refactor.
-
 ## Questions and answers
 
 - Ask under the project's decision protocol, batched, with the diagnosis so far.
-- Weigh each answer before acting on it: check it against the code and your diagnosis, and report its consequences (sites affected, behavior changed, risks, conflicts with earlier answers or decisions). Raise an answer that contradicts the evidence instead of applying it silently; apply it once the user confirms.
+- Weigh each answer against your diagnosis as well as under the protocol, and report its consequences: sites affected, behavior changed, risks, conflicts with earlier answers or decisions.
+
+## Drafts
+
+Write and edit issues as local drafts in `.ai/issues/`, revise them as the diagnosis and the conversation settle things, and publish them in one flush. A draft edit costs a diff instead of a full body, survives a stopped session and shows the user each change. Everything this skill says about creating and editing issues applies to the drafts until the flush.
+
+| File                  | Holds                                                                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `<n>.md`              | The body of issue `<n>` as fetched, never edited                                                                                      |
+| `<n>.draft.md`        | Its working version, with frontmatter `title`                                                                                         |
+| `new-<slug>.draft.md` | An issue to create, with frontmatter `title`, `type`, fields, and inside a planned tree `parent` and `after` (the sibling it follows) |
+
+- Start by reading `.ai/issues/`. Other sessions draft there too: resume only the drafts of your task, those the user names or those of the issues you were given.
+- Your drafts are those you created, claimed or resumed. Edit, publish and delete only them, never another session's.
+- Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise or when flushing.
+- Claim an issue on its first edit: fetch its body into `<n>.md`, copy it to `<n>.draft.md` and add `Drafting` to its Blockers.
+- When Blockers already has `Drafting` and `.ai/issues/` holds no draft of the issue, another maintainer is drafting it: report it, record `claim: existing` in the draft's frontmatter and keep diagnosing.
+- Reference an issue still to create as `#new-<slug>`.
+- End each round with the drafts it changed and the changes waiting on each open question.
+- Flush when none of your drafts holds a change waiting on an open question, when the user asks, or when someone else needs the issue's current state, such as a worker; publish all your drafts in the same flush.
+
+To flush:
+
+1. Fetch each claimed issue again. When its body differs from `<n>.md`, merge the remote change into the draft, or ask when the two conflict.
+2. Create the new issues, in tree order inside a planned tree, replacing each `#new-<slug>` in every draft with its number.
+3. Publish each `<n>.draft.md` body without its frontmatter, with its title.
+4. Remove `Drafting` from each issue you claimed, never from one marked `claim: existing`.
+5. Report each issue's change from `git diff --no-index <n>.md <n>.draft.md`, then delete each of its files by exact path, never the directory or a pattern.
 
 ## Writing the issue
 
-When the input is an issue, turn that issue into the task, keeping its original report under **Context**. Otherwise search for an existing issue to reuse, then create one. Write for a worker arriving cold, who treats everything outside **Questions** as decided and applies it without redesign:
+When the input is an issue, turn that issue into the task, condensing its original report into **Context**. Otherwise search for an existing issue to reuse, then draft a new one. Write it as a Problem meeting the issue contract that `engrenage issues check` enforces, complete through its ancestors, if any, for a worker who treats everything in it as binding and applies it without redesign:
 
 ```markdown
+#<plan> › … › #<parent> · <section>: <gist>
+
 ## Context
 
-<The problem, how to reproduce it, its cause and reach, with exact paths and names. Decided: <the behavior to implement>.>
+<The problem, its cause and reach, then the behavior decided, with exact paths and names.>
 
 ## Prerequisites
 
-- #<n> is closed.
+- #<n>: <what this task needs from it>.
 
 ## Steps
 
@@ -75,34 +100,42 @@ When the input is an issue, turn that issue into the task, keeping its original 
 
 ## Tests
 
-<The regression case and the edge case that prove the fix.>
+<The regression case, with how to reproduce it, and the edge case that prove the fix.>
 
 ## Done when
 
-<Observable behavior, and the project's checks pass.>
+<Observable behavior beyond the Steps.>
 
 ## Questions
 
-- <What investigation could not settle, why it matters, the findings and the candidate answers.>
+- <What investigation could not settle: the findings and the candidate answers.>
 ```
 
-- Drop **Questions** when nothing is open.
-- Apply the project's existing labels and issue types, including its label for missing information while **Questions** remain.
+- Write the header only for an issue inside a planned tree. List under **Prerequisites** only the issues tree order does not imply.
+- Drop **Prerequisites**, **Done when** or **Questions** when they would be empty, or when **Done when** would only say the Steps are done and the checks pass.
+- Set the type Problem with its Defect, and the project's environment labels. While **Questions** remain, set Blockers `Open questions`; clear it once they are gone.
+- Run `engrenage issues check <n>` on the issue, once flushed, before reporting it ready for a worker.
+- Start any worker brief you write with `Issue: <owner>/<repo>#<n>`.
 - Once an issue you create or edit tracks the work of an entry in the backlog or the debt backlog, remove the entry in the same run, or reduce it to the work the issue leaves and link the issue from it.
 
 ## Finishing
 
+- Send no message before your final report, your only message: a completion or a blocker, sent once every command you started has finished and `engrenage gate --worktree` passes, so the stop gate reuses that pass.
+- The worker/debugger stop gate returns failing commands and output to the stopped agent: fix them and stop again. When you must stop with failures (a usage limit mid-refactor), list them in your report and stop again on that unchanged tree.
 - When asked for a branch, create `debugger/<topic>` from the current commit, `debugger/issue-<n>` when the input is an issue.
 - After a fix, remove the backlog entries, debt backlog entries and debt markers it resolves. Never close an issue you fixed: merging the fix closes it.
-- Report:
-  - Fixed: the cause, the fix and the reach it covers, the invariants it makes explicit, tests, check results, the decisions you took with the alternatives you discarded, and the debt markers you left.
-  - Written up: the issue URL, then "issue ready for processing by a worker", or that it needs planning.
-  - Blocked: the batched questions, with what is done, pending and blocked.
+- Report by outcome:
+
+  | Outcome    | Report                                                                                     |
+  | ---------- | ------------------------------------------------------------------------------------------ |
+  | Fixed      | The cause, the reach the fix covers, the invariant now enforced, and the debt markers left |
+  | Written up | The issue URL, ready for a worker or needing planning                                      |
+  | Blocked    | What is done, pending and blocked, and the batched questions                               |
+
 - End with what remains and the kind of work it needs. Say so when nothing remains.
 
 ## GitHub mechanics
 
-- Read issues with `gh issue view <n> --repo <owner>/<repo> --json title,body,state,labels,comments`; plain `--comments` fails on some repositories.
 - Create issues with `gh issue create` and edit them with `gh issue edit <n>`, passing bodies on standard input (`--body-file -`).
 
 <!-- @end -->
