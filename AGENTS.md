@@ -20,6 +20,45 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 - Write one short, specific, imperative rule per sentence.
 - Merge a new rule into any rule it overlaps or contradicts instead of adding it alongside.
 
+<!-- @reference @auaust/engrenage/agents/sections/writing.md -->
+
+## Writing
+
+- Apply these rules to everything you write other than code: messages, reports, issues, comments, backlog and debt entries, instructions.
+- State each fact once, where its owner keeps it. Elsewhere, link to it with its gist so the reader knows whether to follow the link.
+- State the core idea exactly, with its reason in one clause; never hedge it or blur it into vague wording.
+- Prefer fragments and keywords to full sentences wherever the meaning stays exact.
+- Drop every sentence the reader would not miss.
+- Choose the clearest and shortest wording that keeps the meaning, and rephrase wording that falls short of these rules in the text you edit.
+
+### Structure
+
+| Content                                | Form                                         |
+| -------------------------------------- | -------------------------------------------- |
+| A single point                         | Sentence                                     |
+| Independent points                     | List                                         |
+| Three or more facts sharing dimensions | Table                                        |
+| Hierarchy, layout or layers            | ASCII tree or box diagram in a code block    |
+| Flow or dependency graph               | Mermaid, or an ASCII diagram in a code block |
+
+- Draw any hierarchy or flow before describing it, and describe only what the figure does not show.
+- Never use images or inline SVG: agents cannot read them back. Use other diagram languages only where the project already does.
+- Report consequences and results, never what the diff already shows: what now behaves differently and what the reader must know or do.
+
+### Length
+
+| Text                  | Budget in words |
+| --------------------- | --------------- |
+| Goal                  | ~60             |
+| Context               | ~80             |
+| Done when             | ~60             |
+| Comment               | ~150            |
+| Backlog or debt entry | ~60             |
+
+- Give **Steps**, **Tests**, **Planning**, **Questions**, model sections and **Decisions** no budget: make them as complete as a worker needs.
+- Treat a budget as a signal: past it, link to where the detail lives or split the text, never truncate it.
+- Cut repetition to meet a budget, never decisions.
+
 <!-- @reference @auaust/engrenage/agents/sections/precedence.md -->
 
 ## Precedence and conflicts
@@ -33,6 +72,29 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 - When the user confirms such a request, implement it as a one-time exception, never a precedent, and keep every other rule.
 - Never stop for debt that is not architectural: implement the request and mark that debt.
 - When a conflict between rules, code and request has no clear resolution, ask instead of guessing.
+
+<!-- @reference @auaust/engrenage/agents/sections/analysis.md -->
+
+## Analysis
+
+Analyse every request, suggestion and described fix before acting on it, within the research your role allows:
+
+1. **Concern.** Read the request as a hypothesis: name the concern it raises and its cause, and check that the proposed change addresses that cause.
+2. **Ideal.** Work out the soundest solution to the cause as if time, scope and budget had no limit.
+3. **Fit.** Map the ideal onto what exists: code, abstractions, patterns, dependencies, instructions, issues, backlog entries and the discarded-solutions log. Adopt it when the codebase already supports it.
+4. **Reach.** Otherwise trace what the ideal would alter: files, domains, contracts, decisions, issues and instructions.
+5. **Outcome.** Adopt the ideal when your role allows its whole reach. Otherwise adopt what your role allows, and report the ideal, its reach and the alternative you chose.
+
+- Your role sets what you may adopt: your skill's rules, otherwise the reach the request names, pausing under the decision protocol before anything past it.
+- Never adopt a reach your role does not allow, whoever asked: an issue or a proposal costs less than a half-applied refactor.
+- Log each solution you set aside under the discarded-solutions rule, and mark with `@debt` the code your change leaves short of the ideal.
+
+### Dependencies
+
+- Before building a capability, check whether a current dependency or an established library provides it.
+- Weigh a dependency change like any other choice, by its size, the share you would use and its maturity.
+- An experimental, single-maintainer or pre-1.0 library increases the cost of adoption but doesn't automatically rule it out.
+- Before adding a dependency, check the current ones for overlap, and propose a consolidation once several cover what one would.
 
 <!-- @reference @auaust/engrenage/agents/sections/decision-protocol.md -->
 
@@ -56,7 +118,6 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 
 - When given a GitHub issue, read it and each parent issue it links, up to the root. Together with these instructions they define the task; task- and module-specific instructions live in issues, never here.
 - Never resolve a conflict between this file, `.claude/rules/` and the issue chain yourself: stop on the affected item and report the conflict for human review.
-- Before working on an issue, follow `.claude/rules/agent-lock.md`.
 
 ## Project and tools
 
@@ -100,6 +161,29 @@ Apply throughout the repository. Follow these rules in changed code; preserve un
 - When work would build on or deepen an architectural violation, fixing it comes first: stop under the decision protocol with what exists and the smallest coherent fix with its scope, never a temporary bypass. Correct violations in the code your change rewrites; record the others as debt markers, discarded solutions or backlog entries.
 - Keep secrets in `.env`, documented by `.env.example`, never in source, logs or runtime code.
 - Propose missing or outdated skills, MCP servers, scripts or abstractions when they would help; add, remove or upgrade them only with the user's approval.
+
+<!-- @reference @auaust/engrenage/agents/sections/structure.md -->
+
+## Project structure
+
+```
+environment          src, bin, scripts, tests, data, tooling: own directories and import rights
+└─ namespace         groups domains in layers (layered architecture)
+   └─ domain         one concern: `index` surface, plus an `entry` package entry when public
+      ├─ role        directory or file with a fixed contract and effect level
+      └─ sub-domain  same rules
+```
+
+- The generated project maps (`.claude/rules/project-map.md`, `project-map/<environment>.md`) carry the layout, visibility, aliases, roles and imports lint enforces: read the map of each environment you edit, and never restate it.
+- Change the structure only in its description, the config and the `.namespace.json` and `.domain.json` files beside the directories they describe, then run `engrenage sync`. A new layer, namespace, role or public domain is an architectural contract under the decision protocol.
+- Give each declared namespace, domain and role a one-line `purpose`; one that is hard to state or overlaps another reveals a design problem.
+- Place code in the domain owning its concern, in the role whose contract fits it. A concern several domains share gets its own domain in the lowest layer holding everything it needs.
+- Order sub-domains by inserting a namespace with layers; a domain never orders its children.
+- Give a concern a contract domain only when it has two engines or a consumer needs its intent without the engine: its `ports/` state intents and conventions, never one engine's options; tool domains implement them in `adapters/`, and the composing layer injects them.
+- Import through the generated `#…` aliases, never relative paths.
+- Put generated modules where a handwritten one would go, with a header naming their generator.
+- Keep `bin` commands thin: their logic lives in the domains owning it.
+- Test public behavior through its public specifier; use `.src` only to reach internals.
 
 <!-- @reference @auaust/engrenage/agents/sections/backlog.md -->
 

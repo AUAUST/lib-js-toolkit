@@ -6,7 +6,7 @@ paths:
 # Project map: tests
 
 ```
-tests/
+tests/  (global roles: fixtures utils)
 ```
 
-Unclassified: `tests/fixtures`, `tests/modules`, `tests/types`, `tests/utils`
+Unclassified: `tests/modules`, `tests/types`

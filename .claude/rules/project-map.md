@@ -54,9 +54,16 @@ Effect levels, purest first: `pure` < `confined` < `observing` < `effectful`. A 
 - `observing`: Read the context or write diagnostics without changing state later operations read.
 - `effectful`: Change state later operations can read, including staged writes and spawned processes.
 
-| Role         | Purpose                                                                                            | Files           | Level     | Imports | Environments |
-| ------------ | -------------------------------------------------------------------------------------------------- | --------------- | --------- | ------- | ------------ |
-| `index`      | The domain's public surface.                                                                       | `index.ts`      |           |         | `scripts`    |
-| `executable` | A program's executable: it loads the program's root group and runs it.                             | `executable.ts` |           |         | `scripts`    |
-| `commands`   | One command's description, arguments and options, and the glue to its action.                      | `*.ts`          |           |         | `scripts`    |
-| `actions`    | The behavior of one command, without its name, aliases or argument structure, loaded when it runs. |                 | effectful |         | `scripts`    |
+| Role         | Purpose                                                                                            | Files           | Level     | Imports   | Environments     |
+| ------------ | -------------------------------------------------------------------------------------------------- | --------------- | --------- | --------- | ---------------- |
+| `utils`      | Confined functions, one per module.                                                                |                 | confined  |           | `src`            |
+| `constants`  | Deeply read-only constants of the domain.                                                          | `constants.ts`  | pure      | public    | `src`            |
+| `entrypoint` | The package entry of a public domain, re-exporting the public subset of its surface.               | `entry.ts`      |           |           | `src`            |
+| `errors`     | Error classes, importable module by module.                                                        |                 | pure      | public    | `src`            |
+| `index`      | The domain's public surface.                                                                       | `index.ts`      |           |           | `src`, `scripts` |
+| `types`      | Types only, one per module.                                                                        |                 |           | type-only | `src`            |
+| `testutils`  | Reusable test utilities.                                                                           |                 | effectful |           | `tests`          |
+| `fixtures`   | Static test inputs.                                                                                |                 | pure      |           | `tests`          |
+| `executable` | A program's executable: it loads the program's root group and runs it.                             | `executable.ts` |           |           | `scripts`        |
+| `commands`   | One command's description, arguments and options, and the glue to its action.                      | `*.ts`          |           |           | `scripts`        |
+| `actions`    | The behavior of one command, without its name, aliases or argument structure, loaded when it runs. |                 | effectful |           | `scripts`        |
