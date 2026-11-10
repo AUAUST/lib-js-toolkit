@@ -2,6 +2,7 @@ import { vi } from "vitest";
 
 export function createSpies() {
   const shared = {};
+
   let sequence = 0;
 
   function nextString(..._args: unknown[]) {

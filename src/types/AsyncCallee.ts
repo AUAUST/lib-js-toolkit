@@ -9,4 +9,6 @@ export type AsyncCallee<
   Return = any,
   Arguments extends readonly any[] = any[],
   This = any,
-> = AsyncCallable<Return, Arguments, This> | AsyncFn<Return, Arguments, This>;
+> =
+  | AsyncCallable<Return, Arguments, This>
+  | AsyncFn<Return, Arguments, This>;

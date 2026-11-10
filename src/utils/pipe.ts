@@ -7,7 +7,8 @@ import type { Callee } from "#types/Callee";
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;
 
 export type PipeCondition<This, In> =
-  boolean | Callee<boolean, [value: In], This>;
+  | boolean
+  | Callee<boolean, [value: In], This>;
 
 export type PipeEntry<This, In, Out> =
   | TransformFn<This, In, Out>

@@ -114,10 +114,10 @@ interface PeriodState {
 }
 
 function resolveOptions(options: StopwatchOptions) {
-  const usePerformance =
+  const usePerformance = (
     options.usePerformance ??
-    (globalThis.performance !== undefined &&
-      !(options.startAt instanceof Date));
+    (globalThis.performance !== undefined && !(options.startAt instanceof Date))
+  );
 
   const now = usePerformance
     ? performance.now.bind(performance)

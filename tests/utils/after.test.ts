@@ -64,12 +64,11 @@ describe("after", () => {
         throw error;
       });
 
-      const callback =
-        kind === "function"
-          ? execute
-          : {
-              [callable]: execute,
-            };
+      const callback = kind === "function"
+        ? execute
+        : {
+            [callable]: execute,
+          };
 
       const promise = after.call(context, callback, 10, "entry");
 

@@ -10,9 +10,10 @@ describe("isContainer", () => {
     (value) => {
       const input: unknown = value;
 
-      const expected =
+      const expected = (
         input !== null &&
-        (typeof input === "object" || typeof input === "function");
+        (typeof input === "object" || typeof input === "function")
+      );
 
       expect(isContainer(input)).toBe(expected);
 

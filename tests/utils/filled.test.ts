@@ -231,13 +231,9 @@ describe("filled", () => {
   });
 
   test("infers filled element types when filtering", () => {
-    const values: ("" | " " | "value" | null | 0)[] = [
-      "",
-      " ",
-      "value",
-      null,
-      0,
-    ];
+    const values: (
+      "" | " " | "value" | null | 0
+    )[] = ["", " ", "value", null, 0];
 
     const result = values.filter(filled);
 

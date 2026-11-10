@@ -75,6 +75,7 @@ describe("protocols", () => {
 
     const asyncIterable: unknown = (async function* () {
       await Promise.resolve();
+
       yield 1;
     })();
 

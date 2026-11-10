@@ -19,22 +19,28 @@ import type { UnionToIntersection } from "#types/UnionToIntersection";
 
 export type CompositionInput = PropertyComposer | readonly PropertyComposer[];
 
-type FirstEntry<Entries extends readonly CompositionInput[]> =
-  Entries extends readonly [infer First extends PropertyComposer, ...unknown[]]
-    ? Exclude<keyof First, keyof PropertyDescriptor | "name"> extends never
-      ? Entries
-      : never
-    : Entries;
+type FirstEntry<
+  Entries extends readonly CompositionInput[],
+> = Entries extends readonly [
+  infer First extends PropertyComposer,
+  ...unknown[],
+]
+  ? Exclude<keyof First, keyof PropertyDescriptor | "name"> extends never
+    ? Entries
+    : never
+  : Entries;
 
-type EntryDescriptors<Entry extends PropertyComposer> =
-  Entry extends PropertyComposer<infer Name, infer Descriptor>
-    ? Record<Name, Descriptor>
-    : never;
+type EntryDescriptors<
+  Entry extends PropertyComposer,
+> = Entry extends PropertyComposer<infer Name, infer Descriptor>
+  ? Record<Name, Descriptor>
+  : never;
 
-export type ComposedEntry<Entry extends PropertyComposer> =
-  Entry extends PropertyComposer
-    ? DefinedProperties<EntryDescriptors<Entry>, Record<PropertyKey, undefined>>
-    : never;
+export type ComposedEntry<
+  Entry extends PropertyComposer,
+> = Entry extends PropertyComposer
+  ? DefinedProperties<EntryDescriptors<Entry>, Record<PropertyKey, undefined>>
+  : never;
 
 export type Composed<
   Base extends object,
@@ -60,15 +66,18 @@ export type Composed<
         >
       >;
 
-type InputEntry<Input extends CompositionInput> =
-  Input extends readonly PropertyComposer[] ? Input[number] : Input;
+type InputEntry<
+  Input extends CompositionInput,
+> = Input extends readonly PropertyComposer[] ? Input[number] : Input;
 
-type LockedNames<Entry> =
-  Entry extends PropertyComposer<infer Name, infer Descriptor>
-    ? Descriptor extends { configurable: false }
-      ? Name
-      : never
-    : never;
+type LockedNames<Entry> = Entry extends PropertyComposer<
+  infer Name,
+  infer Descriptor
+>
+  ? Descriptor extends { configurable: false }
+    ? Name
+    : never
+  : never;
 
 type ValidEntries<
   Entries extends readonly CompositionInput[],

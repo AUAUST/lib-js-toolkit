@@ -35,10 +35,11 @@ export interface MethodForwardingOptions<
   enumerable?: boolean;
 }
 
-export type ForwardedMethod<Forward extends AnyMethodForwarder> =
-  Forward extends MethodForwarder<infer Source, infer Method, infer Name>
-    ? { [K in Name]: Source[Method] }
-    : never;
+export type ForwardedMethod<
+  Forward extends AnyMethodForwarder,
+> = Forward extends MethodForwarder<infer Source, infer Method, infer Name>
+  ? { [K in Name]: Source[Method] }
+  : never;
 
 export function methodForwarder<
   const Source extends object,

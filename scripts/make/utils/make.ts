@@ -56,7 +56,8 @@ export function codeFile(template: string, file: string | string[]) {
 export function testFile(template: string, file: string | string[]) {
   return {
     template: `${template}.test.txt`,
-    destination:
-      join("tests", ...(isString(file) ? [file] : file)) + ".test.ts",
+    destination: (
+      join("tests", ...(isString(file) ? [file] : file)) + ".test.ts"
+    ),
   };
 }

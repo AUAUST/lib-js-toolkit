@@ -40,17 +40,18 @@ export interface PropertyForwardingOptions<
   configurable?: boolean;
 }
 
-export type ForwardedProperty<Forward extends AnyPropertyForwarder> =
-  Forward extends PropertyForwarder<
-    infer Source,
-    infer Property,
-    infer Name,
-    infer Readonly
-  >
-    ? Readonly extends true
-      ? { readonly [K in Name]: Source[Property] }
-      : { [K in Name]: Source[Property] }
-    : never;
+export type ForwardedProperty<
+  Forward extends AnyPropertyForwarder,
+> = Forward extends PropertyForwarder<
+  infer Source,
+  infer Property,
+  infer Name,
+  infer Readonly
+>
+  ? Readonly extends true
+    ? { readonly [K in Name]: Source[Property] }
+    : { [K in Name]: Source[Property] }
+  : never;
 
 export function propertyForwarder<
   const Source extends object,
@@ -122,9 +123,10 @@ export function propertyForwarder(
 
   const descriptor = ownDescriptor(source, sourceProperty);
 
-  const writable =
+  const writable = (
     !options?.readonly &&
-    (!descriptor || (descriptor.writable ?? descriptor.set !== undefined));
+    (!descriptor || (descriptor.writable ?? descriptor.set !== undefined))
+  );
 
   const {
     configurable = descriptor?.configurable ?? true,

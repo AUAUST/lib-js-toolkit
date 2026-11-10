@@ -12,9 +12,10 @@ export async function makeProtocol(options: {
 
   const symbolName = options.symbol || protocolName;
 
-  const interfaceName =
+  const interfaceName = (
     options.interface ||
-    protocolName.at(0)!.toUpperCase() + protocolName.slice(1);
+    protocolName.at(0)!.toUpperCase() + protocolName.slice(1)
+  );
 
   const paths = await makeFromTemplate(
     [

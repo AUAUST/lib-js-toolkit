@@ -10,8 +10,9 @@ describe("isRegisteredSymbol", () => {
     (value) => {
       const input: unknown = value;
 
-      const expected =
-        typeof input === "symbol" && Symbol.keyFor(input) !== undefined;
+      const expected = (
+        typeof input === "symbol" && Symbol.keyFor(input) !== undefined
+      );
 
       expect(isRegisteredSymbol(input)).toBe(expected);
 

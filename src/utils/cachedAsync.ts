@@ -150,10 +150,9 @@ export function cachedAsync(
   function accessor(this: void, ...args: unknown[]): unknown {
     const key = keyFor(...args);
 
-    const entry =
-      hasKeyResolver && key === undefined
-        ? createEntry(key, ...args)
-        : entries(key, ...args);
+    const entry = hasKeyResolver && key === undefined
+      ? createEntry(key, ...args)
+      : entries(key, ...args);
 
     return entry.fulfilled ? entry.result : entry.promise;
   }

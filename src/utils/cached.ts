@@ -13,7 +13,9 @@ import type { Fn } from "#types/Fn";
 export type CacheResolver<
   Return = any,
   Arguments extends readonly any[] = any[],
-> = Callable<Return, Arguments> | Fn<Return, Arguments, void>;
+> =
+  | Callable<Return, Arguments>
+  | Fn<Return, Arguments, void>;
 
 export type KeyResolver<Callback extends Callee, Key> = Callee<
   Key,

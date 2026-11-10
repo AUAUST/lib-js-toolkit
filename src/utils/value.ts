@@ -8,7 +8,9 @@ export type ResolvableValue<
   Result,
   Arguments extends readonly any[] = any,
   This = any,
-> = Result | Callee<Result, Arguments, This>;
+> =
+  | Result
+  | Callee<Result, Arguments, This>;
 
 export type ResolvedValue<Value> = Value extends Callee
   ? CallReturnType<Value>

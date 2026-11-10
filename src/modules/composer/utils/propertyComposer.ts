@@ -31,16 +31,17 @@ export function propertyComposer<
   Key extends PropertyKey,
   const Descriptor extends PropertyCompositionDescriptor,
 >(key: Key, descriptor: Descriptor): PropertyComposer<Key, Descriptor> {
-  const defaults: PropertyDescriptor =
+  const defaults: PropertyDescriptor = (
     hasOwn(descriptor, "get") || hasOwn(descriptor, "set")
-      ? {
-          get: undefined,
-          set: undefined,
-        }
-      : {
-          value: undefined,
-          writable: false,
-        };
+  )
+    ? {
+        get: undefined,
+        set: undefined,
+      }
+    : {
+        value: undefined,
+        writable: false,
+      };
 
   return {
     ...defaults,

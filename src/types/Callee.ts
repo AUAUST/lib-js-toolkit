@@ -9,4 +9,6 @@ export type Callee<
   Return = any,
   Arguments extends readonly any[] = any[],
   This = any,
-> = Callable<Return, Arguments, This> | Fn<Return, Arguments, This>;
+> =
+  | Callable<Return, Arguments, This>
+  | Fn<Return, Arguments, This>;

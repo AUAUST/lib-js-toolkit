@@ -4,4 +4,6 @@ export type MaybeFn<
   Return = any,
   Arguments extends readonly any[] = any[],
   This = any,
-> = Return | Fn<Return, Arguments, This>;
+> =
+  | Return
+  | Fn<Return, Arguments, This>;
