@@ -53,6 +53,7 @@
     "./async": "./dist/async.mjs",
     "./boolean": "./dist/boolean.mjs",
     "./composer": "./dist/composer.mjs",
+    "./ensure": "./dist/ensure.mjs",
     "./errors": "./dist/errors.mjs",
     "./forwarder": "./dist/forwarder.mjs",
     "./function": "./dist/function.mjs",

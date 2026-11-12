@@ -55,6 +55,7 @@ function doReadonly<Target extends readonly any[]>(
 function doReadonly<Target>(array: Target[]): readonly Target[];
 function doReadonly<Target extends object>(object: Target): Readonly<Target>;
 function doReadonly(object: any): any {
+  // @debt Hand-rolls `assertContainer`; adopting it throws an `AssertionError` (still a `TypeError`), an observable change for a changeset.
   if (!isContainer(object)) {
     throw new TypeError("Expected an object or function");
   }

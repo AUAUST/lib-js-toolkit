@@ -1,0 +1,3 @@
+{
+  "purpose": "Helpers returning a value once a guard passes, throwing otherwise."
+}

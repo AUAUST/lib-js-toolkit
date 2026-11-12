@@ -19,6 +19,7 @@ export type * from "#types/EmptyValue";
 export type * from "#types/EmptyValueOf";
 export type * from "#types/Extended";
 export type * from "#types/ExtractLiteral";
+export type * from "#types/Falsy";
 export type * from "#types/FilledContainer";
 export type * from "#types/FilledMember";
 export type * from "#types/FilledString";

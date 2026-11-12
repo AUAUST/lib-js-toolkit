@@ -10,6 +10,7 @@
       "@auaust/toolkit/async": ["./src/modules/async/entry.ts"],
       "@auaust/toolkit/boolean": ["./src/modules/boolean/entry.ts"],
       "@auaust/toolkit/composer": ["./src/modules/composer/entry.ts"],
+      "@auaust/toolkit/ensure": ["./src/modules/ensure/entry.ts"],
       "@auaust/toolkit/forwarder": ["./src/modules/forwarder/entry.ts"],
       "@auaust/toolkit/function": ["./src/modules/function/entry.ts"],
       "@auaust/toolkit/general": ["./src/modules/general/entry.ts"],

@@ -13,6 +13,7 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ async*  Helpers over promises and asynchronous values.
    ├─ boolean*  Helpers over booleans.
    ├─ composer*  Compose objects from getters, properties and values.
+   ├─ ensure*  Helpers returning a value once a guard passes, throwing otherwise.
    ├─ forwarder*  Forward properties and methods from one object to another.
    ├─ function*  Helpers over functions and callables.
    ├─ general*  Type-agnostic helpers, exposed flat at the root.

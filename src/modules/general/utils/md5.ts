@@ -13,6 +13,7 @@ import { isString } from "#modules/string/guards/isString";
  * @see https://github.com/enyo/md5/blob/master/index.js
  */
 export function md5(input: string): string {
+  // @debt Hand-rolls `assertString`; adopting it throws an `AssertionError` (still a `TypeError`), an observable change for a changeset.
   if (!isString(input)) {
     throw new TypeError("Input must be a string");
   }

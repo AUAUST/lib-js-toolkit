@@ -16,3 +16,4 @@
 - `Formatting` and `Release` labels in toolkit: engrenage parity — one toolkit issue each (#193, #112)
 - cognitive-complexity limit 8 or lower: toolkit complexity limit — forces splitting flat switches and single loops (`compare`, remapping loop, `pipeAsync` condition)
 - `TextEncoder` in `md5`: UTF-8 encoding — maps lone surrogates to U+FFFD, changing hashes
+- `src/types/Guard.ts`: share the guard signature of `ensure` and `ensure.not` — adds a public type #172 keeps module-private; an `internals` module suffices
