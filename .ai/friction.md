@@ -29,3 +29,4 @@
 - engrenage planning issue publish: published a toolkit draft referencing `#{engrenage.new-…}` together with that new engrenage draft, then a `#{engrenage.521}` reference inside a code span — the first stayed literal (referrer published before the new issue existed), the second because code spans are not rendered; re-claimed and wrote the literal `AUAUST/lib-js-engrenage#521`
 - worktree isolation guard: chained `git checkout` and a python heredoc ending in `git diff` in one Bash call — refused as unverifiable; split into single `git -C` calls and used Edit/Write
 - zsh: unquoted `--include=*.md` and `echo =====` separator again — `nomatch` and `=word` expansion failed both; used `git grep` and dropped the separator
+- engrenage gate --worktree: checking an uncommitted leaf without staging — no instruction names the flag; found it in `engrenage gate --help`

@@ -37,6 +37,4 @@ Write these correctly from the start, since no tool fixes them:
 ## Toolkit additions
 
 - Use TypeScript for authored library, test and tooling code.
-- Name files after their primary concept, following the existing function, type, error and protocol conventions.
-- Export-only barrels keep their exports contiguous.
 - Keep getters and setters where property access belongs to the contract.

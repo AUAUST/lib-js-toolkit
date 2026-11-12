@@ -5,6 +5,9 @@ paths:
 
 # Tests
 
+- All tests for a helper, including type assertions and inference regressions, stay in its `<name>.test.ts`. Split cross-helper work among each helper's own file.
+- Cover the relevant edge cases: empty input, optional values, errors, `this` binding, argument preservation and asynchronous outcomes. Control timers deterministically and restore timers and mocks after use.
+
 ## Fixtures
 
 - Shared inputs live in `tests/fixtures/`, one file per kind of input: `values.ts`, `objects.ts`, `callbacks.ts`. Reuse them before writing inline data; inline data is for a case only one test needs.
@@ -13,7 +16,7 @@ paths:
 
 ## Types
 
-- Every helper with a precise type asserts its results with `expectTypeOf`, for each input shape it distinguishes:
+- Every helper with a precise type asserts its results with `expectTypeOf` or `assertType`, for each input shape it distinguishes:
 
 | Input            | Expected result                         | Example                                      |
 | ---------------- | --------------------------------------- | -------------------------------------------- |

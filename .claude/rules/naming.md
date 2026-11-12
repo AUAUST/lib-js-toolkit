@@ -31,7 +31,7 @@ paths:
 
 - Guards: `isString`, `isNotString`, `isEmptyString`.
 - Protocols: symbol `callable`, interface `Callable`, key `Symbol.for("Protocol.callable")`.
-- Modules are singular, one lowercase word, named after the contract when grouping by one: `string`, `maplike`. Role directories are plural: `utils`, `types`.
+- Modules are singular, one lowercase word, named after the contract when grouping by one: `string`, `maplike`.
 - Constants are camelCase: `whitespacePattern`, never `WHITESPACE_PATTERN`.
 - A renamed type keeps no alias for its old name.
 
