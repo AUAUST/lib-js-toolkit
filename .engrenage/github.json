@@ -139,22 +139,130 @@
       "nodeId": "R_kgDOQjseBA",
       "labels": [
         {
+          "id": 13058557206,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnFFg",
+          "name": "Async",
+          "description": "Promises, timers and asynchronous control flow, including the async variants of other helpers."
+        },
+        {
+          "id": 13058558081,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnIgQ",
+          "name": "Codegen",
+          "description": "Generated code and its generators: derived export names, scaffolding and helper metadata they read."
+        },
+        {
+          "id": 13058556958,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnEHg",
+          "name": "Collections",
+          "description": "Helpers over arrays, iterables, maps and sets, eager or lazy."
+        },
+        {
+          "id": 13058557578,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnGig",
+          "name": "Conversion",
+          "description": "Converters, parsers and the coercion policy."
+        },
+        {
+          "id": 13058558557,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnKXQ",
+          "name": "Delivery",
+          "description": "CI workflows, changesets, versions, changelogs and publishing."
+        },
+        {
+          "id": 13058558284,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnJTA",
+          "name": "Dependencies",
+          "description": "Dependencies and their upgrades, `@auaust/engrenage` included."
+        },
+        {
           "id": 12972381107,
           "nodeId": "LA_kwDOQjseBM8AAAADBTbTsw",
           "name": "Documentation",
-          "description": "Improvements or additions to the documentation."
+          "description": "Public documentation: README, JSDoc and contract docs."
+        },
+        {
+          "id": 13058557848,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnHmA",
+          "name": "Errors",
+          "description": "Error classes, the thrown-error policy and error messages."
+        },
+        {
+          "id": 13058557115,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnEuw",
+          "name": "Functions",
+          "description": "Helpers over functions and callables: wrappers, caching, timing, predicates and dispatch."
+        },
+        {
+          "id": 13058557292,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnFbA",
+          "name": "General",
+          "description": "Type-agnostic helpers of the `general` module, exported flat at the root."
+        },
+        {
+          "id": 13058557448,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnGCA",
+          "name": "Guards",
+          "description": "Type predicates and the assertions and `ensure` helpers derived from them."
+        },
+        {
+          "id": 13058558152,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnIyA",
+          "name": "Linting",
+          "description": "Lint rules and conventions, other than structure boundaries."
+        },
+        {
+          "id": 13058558402,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnJwg",
+          "name": "Metalbrain",
+          "description": "Instruction content and agent records: AGENTS.md sections, rule files, skills, backlog and logs."
+        },
+        {
+          "id": 13058557034,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnEag",
+          "name": "Objects",
+          "description": "Helpers over objects and their properties: access, mapping, merging, composition and forwarding."
+        },
+        {
+          "id": 13058558230,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnJFg",
+          "name": "Packaging",
+          "description": "Build outputs, entries and exports, the emitted manifest and bundling."
+        },
+        {
+          "id": 13058556891,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnD2w",
+          "name": "Primitives",
+          "description": "Helpers over strings, numbers, booleans and math, and randomness."
+        },
+        {
+          "id": 13058557670,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnG5g",
+          "name": "Protocols",
+          "description": "Protocol symbols, `ProtocolRegistry`, protocol detection and protocol support in helpers."
+        },
+        {
+          "id": 13058557938,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnH8g",
+          "name": "Runtime",
+          "description": "The runtime baseline: supported environments, native features used and their fallbacks."
+        },
+        {
+          "id": 13058558014,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnIPg",
+          "name": "Structure",
+          "description": "Namespaces, domains, roles, aliases, barrels, project maps and import boundaries."
         },
         {
           "id": 12972381097,
           "nodeId": "LA_kwDOQjseBM8AAAADBTbTqQ",
           "name": "Tests",
-          "description": "Related to test suites."
+          "description": "Test suites, their layout and fixtures."
         },
         {
-          "id": 12972381091,
-          "nodeId": "LA_kwDOQjseBM8AAAADBTbTow",
-          "name": "Tooling",
-          "description": "Tooling, scripts, bin and related."
+          "id": 13058557753,
+          "nodeId": "LA_kwDOQjseBM8AAAADClnHOQ",
+          "name": "Typing",
+          "description": "Type-level contracts and compiler settings: inference, precision, overloads, src/types and tsconfig."
         }
       ]
     }

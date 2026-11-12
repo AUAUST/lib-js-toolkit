@@ -17,11 +17,29 @@ Labels are each repository's own: pick them by their description.
 
 ### `toolkit`
 
-| Label         | Description                                     |
-| ------------- | ----------------------------------------------- |
-| Documentation | Improvements or additions to the documentation. |
-| Tests         | Related to test suites.                         |
-| Tooling       | Tooling, scripts, bin and related.              |
+| Label         | Description                                                                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| Async         | Promises, timers and asynchronous control flow, including the async variants of other helpers.       |
+| Codegen       | Generated code and its generators: derived export names, scaffolding and helper metadata they read.  |
+| Collections   | Helpers over arrays, iterables, maps and sets, eager or lazy.                                        |
+| Conversion    | Converters, parsers and the coercion policy.                                                         |
+| Delivery      | CI workflows, changesets, versions, changelogs and publishing.                                       |
+| Dependencies  | Dependencies and their upgrades, `@auaust/engrenage` included.                                       |
+| Documentation | Public documentation: README, JSDoc and contract docs.                                               |
+| Errors        | Error classes, the thrown-error policy and error messages.                                           |
+| Functions     | Helpers over functions and callables: wrappers, caching, timing, predicates and dispatch.            |
+| General       | Type-agnostic helpers of the `general` module, exported flat at the root.                            |
+| Guards        | Type predicates and the assertions and `ensure` helpers derived from them.                           |
+| Linting       | Lint rules and conventions, other than structure boundaries.                                         |
+| Metalbrain    | Instruction content and agent records: AGENTS.md sections, rule files, skills, backlog and logs.     |
+| Objects       | Helpers over objects and their properties: access, mapping, merging, composition and forwarding.     |
+| Packaging     | Build outputs, entries and exports, the emitted manifest and bundling.                               |
+| Primitives    | Helpers over strings, numbers, booleans and math, and randomness.                                    |
+| Protocols     | Protocol symbols, `ProtocolRegistry`, protocol detection and protocol support in helpers.            |
+| Runtime       | The runtime baseline: supported environments, native features used and their fallbacks.              |
+| Structure     | Namespaces, domains, roles, aliases, barrels, project maps and import boundaries.                    |
+| Tests         | Test suites, their layout and fixtures.                                                              |
+| Typing        | Type-level contracts and compiler settings: inference, precision, overloads, src/types and tsconfig. |
 
 ### `engrenage`
 
