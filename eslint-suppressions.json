@@ -102,11 +102,6 @@
       "count": 2
     }
   },
-  "src/modules/general/utils/match.ts": {
-    "auaust/cognitive-complexity": {
-      "count": 1
-    }
-  },
   "src/modules/guard/guards/isBigInt.ts": {
     "auaust/role-companions": {
       "count": 2

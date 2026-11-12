@@ -69,27 +69,22 @@ export function match(
 
   for (const [predicates, result] of cases) {
     for (const predicate of isArray(predicates) ? predicates : [predicates]) {
-      if (isCallable(predicate) && call(predicate, target)) {
-        return value(result);
-      }
-
-      if (predicate === target) {
-        return value(result);
-      }
-
-      if (
-        predicate instanceof RegExp &&
-        isString(target) &&
-        predicate.test(target)
-      ) {
-        return value(result);
-      }
-
-      if (isNaN(predicate) && isNaN(target)) {
+      if (matchesPredicate(predicate, target)) {
         return value(result);
       }
     }
   }
 
   return value(fallback)!;
+}
+
+function matchesPredicate(predicate: unknown, target: unknown): boolean {
+  return (
+    (isCallable(predicate) && Boolean(call(predicate, target))) ||
+    predicate === target ||
+    (predicate instanceof RegExp &&
+      isString(target) &&
+      predicate.test(target)) ||
+    (isNaN(predicate) && isNaN(target))
+  );
 }
