@@ -150,6 +150,7 @@ Analyse every request, suggestion and described fix before acting on it, within 
 
 ## Implementation
 
+- Do the work a request asks of you yourself; dispatch an agent only when your skill directs it or the user asks for one.
 - Quality takes precedence over completion: a workaround that adds architectural debt is not done. Judge quality by clear ownership, authoritative definitions, explicit contracts, predictable execution and state lifetime, readability and minimal necessary complexity, not by line or abstraction count.
 - Before editing, inspect the execution path. Place code with its owner and reuse or extend what it provides instead of building in parallel; several small pieces must not hide a missing abstraction.
 - Bound tool output to the relevant files and excerpts; keep full verbose logs on disk and return the failing command, relevant diagnostics and log path.

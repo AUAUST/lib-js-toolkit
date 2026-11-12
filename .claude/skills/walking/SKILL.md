@@ -1,20 +1,20 @@
 ---
-name: issue-walking
+name: walking
 description: Walk a planned tree of GitHub issues in order, dispatching each
   leaf to a worker or debugger, then reviewing and committing it. Use only when
   the user asks to walk an issue tree.
 disable-model-invocation: true
 ---
 
-<!-- @reference @auaust/engrenage/agents/skills/issue-walking.md -->
+<!-- @reference @auaust/engrenage/agents/skills/walking.md -->
 
-# Issue walking
+# Walking
 
 Walk an issue tree in the main session: route each issue by the handling table, review each leaf's diff, commit it and report. You own sequencing, routing, review and commits; you design and implement nothing.
 
 ## Handling table
 
-Start at the issue the user names and run `engrenage planning walk check <n>` on it once per routing decision: it reports every issue of the tree in walk order with its state (open, closed, or closed by a local commit), `blockers`, findings, open **Planning** and **Questions** and local commits, then the next actionable issue. Handle each issue by the first matching row; the `complexity` row applies on top of the row that dispatches.
+Start at the issue the user names and run `engrenage planning walk check <n>` on it once per routing decision: it reports every issue of the tree in tree order, each parent above its sub-issues, with its state (open, closed, or closed by a local commit), `blockers`, findings, open **Planning** and **Questions** and local commits, then the ready set, every issue actionable in turn, and the next issue. Handle each issue by the first matching row; the `complexity` row applies on top of the row that dispatches.
 
 | Issue                                                         | Walker                                                                                                                                                      |
 | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -23,7 +23,7 @@ Start at the issue the user names and run `engrenage planning walk check <n>` on
 | Open sub-issues                                               | Walk them in order (a `segment`'s in any order), meanwhile handling the issue's own findings by the rows below without stopping the walk; then its own work |
 | `plan` or `segment` with no open sub-issue                    | Closes with its last leaf's commit                                                                                                                          |
 | `blockers` `drafting`, with `.ai/issues/<n>.draft.md` present | Stop: it is being planned                                                                                                                                   |
-| `blockers` `drafting`, with no local draft                    | Ask the user whether to clear the claim and walk it; on yes, remove `drafting` and handle it by the next rows                                               |
+| `blockers` `drafting`, with no local draft                    | Ask the user whether to clear the claim and walk it; on yes, run `engrenage planning issue release <n>` and handle it by the next rows                      |
 | Any `blockers`, or an open blocked-by issue                   | Stop and report                                                                                                                                             |
 | Has findings for **Planning**, `outdated` or structure        | Stop; send it to the consultant                                                                                                                             |
 | Has **Questions** open                                        | Stop; batch the questions to the user                                                                                                                       |
@@ -37,11 +37,20 @@ Start at the issue the user names and run `engrenage planning walk check <n>` on
 ## Dispatching
 
 - Dispatch every leaf to a new agent: a worker under the issue-implementation skill, a debugger under the debugging skill.
-- Resume the same agent to answer its question or return review gaps and the failing commands and output from its stop or commit gate.
-- Brief with `Issue: <owner>/<repo>#<n>` as the first line, which the dispatch hook checks, then the header chain, the plan sections the issue names and the commits the check lists towards the issue, for reference. Never paste issue or plan content: the agent reads it itself.
+- Resume the same agent to answer its question, return review gaps and the failing commands and output from its stop or commit gate, or pass on a merger's findings.
+- Brief a leaf's agent with `Issue: <owner>/<repo>#<n>` as the first line, which the dispatch hook checks, then the header chain, the plan sections the issue names and the commits the check lists towards the issue, for reference. Never paste issue or plan content: the agent reads it itself.
+- Brief a debugger given a merger's walk or boundary findings with those findings and no `Issue:` line: they belong to no single issue.
 - Complete a leaf on the agent's final report, a completion or a blocker; never wait for a later agent-finished event, which may never wake you.
-- Finish review, repairs and the passing commit gate before dispatching the next leaf in the same worktree.
 - Stay inactive between agent events: end your turn where the client wakes you, otherwise wait with its longest timeout. Never poll or sleep; request progress only when a decision depends on it.
+
+## Concurrency
+
+- Keep up to K leaves of the ready set in flight: K = 4 unless the walk request sets it ("pool 2"; "no pool" or "sequential" mean K = 1), and K = 1 under Codex.
+- At K = 1, dispatch in the main checkout, and finish review, repairs and the passing commit gate before dispatching the next leaf; past it, the rules below apply.
+- Dispatch each leaf in the background with `isolation: "worktree"`, briefing the walked branch's `HEAD` commit.
+- Integrate finished leaves one at a time, in report order. First dispatch a new merger under the merging skill, briefed as its §Brief states for a concurrent walk, then resume the leaf's agent with the merger's leaf findings, or none, so its stop gate checks the worktree the merger left. Then review as §After each leaf and §Checkpoints, cherry-pick the checkpoint commits, apply the uncommitted rest, and make the closing commit. Last, brief a new debugger with the merger's walk findings and the leaf findings the leaf's agent declined, when any, and handle the outcome by §After a debugger.
+- Leave integration conflicts to the merger's rebase; when it reports a conflict needing design, resume the leaf's agent to rebase its worktree onto the walked branch, then dispatch a new merger.
+- Remove a leaf's worktree after its closing commit, then refill the pool from a fresh `walk check`.
 
 ## After a debugger
 
@@ -58,6 +67,12 @@ Start at the issue the user names and run `engrenage planning walk check <n>` on
 3. Commit under the project's git rules, closing the issue and every segment or parent it completes. Do not run the checks: the commit gate runs them.
 4. Report one row to the user: issue · consequences · decisions and deviations.
 
+## Boundary reviews
+
+- With K = 1, when a segment closes and at the walk's end, dispatch a new merger under the merging skill in the main checkout, briefed as its §Brief states for a sequential walk, with the range since the previous merger run or the walk's start.
+- Brief a new debugger with its findings, when any, and handle the outcome by §After a debugger.
+- Commit the debt markers, backlog entries and discarded-solutions lines the merger added with the debugger's fix, or alone when there is none.
+
 ## Checkpoints
 
 A worker commits at each `Checkpoint:` line of its issue; your final commit closes the issue.
@@ -69,15 +84,12 @@ A worker commits at each `Checkpoint:` line of its issue; your final commit clos
 ## Consultant
 
 - Start the `planner` subagent on first need with the plan number, and resume the same agent through the client’s messaging or resume tool.
+- Start a new consultant instead when a segment closes, when the current one has been idle longer than the prompt-cache lifetime, or once its reported context exceeds twice what it started with: past that, every resumed turn re-reads more history than a fresh start costs. Brief the new one with the plan number and the decisions taken so far.
 - Call it only for an unresolved worker stop, a deviation changing planned behavior, contracts, scope or tree order, or an issue fitting no handling row; answer nothing from code yourself.
 - Batch what it sends back to the user with its findings and recommendations; meanwhile walk only the leaves it does not affect.
 
 ## Report
 
-End at the end of the tree or at a stop, with the table of walked leaves, then what is pending or blocked and why.
-
-## GitHub mechanics
-
-- Remove `drafting` by clearing `blockers` with `gh api -X DELETE repos/{owner}/{repo}/issues/<n>/issue-field-values/<id>`, then posting its other values, if any, with `gh api -X POST repos/{owner}/{repo}/issues/<n>/issue-field-values --input -` and `{"issue_field_values":[{"field_id":<id>,"value":["<option>"]}]}` on standard input; the field id comes from `gh api orgs/{org}/issue-fields`.
+End at the end of the tree or at a stop, with the table of walked leaves, then each merger run's findings and where each went, then what is pending or blocked and why.
 
 <!-- @end -->

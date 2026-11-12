@@ -170,8 +170,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       '@auaust/engrenage':
-        specifier: ^0.10.0
-        version: 0.10.0(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.2(@typescript-eslint/parser@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@5.0.5)(baseline-browser-mapping@2.11.34)(eslint@10.14.0(jiti@2.7.0))(jiti@2.7.0)(jscpd@5.4.3)(lefthook@2.2.2)(magicast@0.5.5)(node-releases@2.0.63)(prettier@3.9.10)(tsdown@0.23.1(@arethetypeswrong/core@0.18.5)(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+        specifier: ^0.11.0
+        version: 0.11.0(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.2(@typescript-eslint/parser@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@5.0.5)(baseline-browser-mapping@2.11.34)(eslint@10.14.0(jiti@2.7.0))(jiti@2.7.0)(jscpd@5.4.3)(lefthook@2.2.2)(magicast@0.5.5)(node-releases@2.0.63)(prettier@3.9.10)(tsdown@0.23.1(@arethetypeswrong/core@0.18.5)(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
       '@changesets/cli':
         specifier: ^3.0.3
         version: 3.0.3
@@ -236,8 +236,8 @@ packages:
     resolution: {integrity: sha512-9ytjzGwxjm9Uz7I9avfbt5vlQt6uk9uRRESzJjqrznl6WKvI6dwYTo+vJ3U02Wrq/mR3iql/PzhvHhKdJIAjDQ==}
     engines: {node: '>=20'}
 
-  '@auaust/engrenage@0.10.0':
-    resolution: {integrity: sha512-yfxQZmyjZ50FuW1GwBs0WfmbojQJ7gIKPwTLCufwoVXXBqOTB2XKdMadlk4gu2FPZAFQXHl8E6F4Rajjxto8VA==}
+  '@auaust/engrenage@0.11.0':
+    resolution: {integrity: sha512-6xxs8i2Qp3/v3R9wMYQhFkknXma2/XvyCZ8Q/HZH+mMR6EZWN/AowZnya7nX45XMNyy3OwLc96GKFg+ijFTmkg==}
     engines: {node: '>=24'}
     hasBin: true
     peerDependencies:
@@ -2463,7 +2463,7 @@ snapshots:
       typescript: 5.6.1-rc
       validate-npm-package-name: 5.0.1
 
-  '@auaust/engrenage@0.10.0(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.2(@typescript-eslint/parser@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@5.0.5)(baseline-browser-mapping@2.11.34)(eslint@10.14.0(jiti@2.7.0))(jiti@2.7.0)(jscpd@5.4.3)(lefthook@2.2.2)(magicast@0.5.5)(node-releases@2.0.63)(prettier@3.9.10)(tsdown@0.23.1(@arethetypeswrong/core@0.18.5)(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
+  '@auaust/engrenage@0.11.0(@changesets/cli@3.0.3)(@typescript-eslint/eslint-plugin@8.72.2(@typescript-eslint/parser@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.72.2(eslint@10.14.0(jiti@2.7.0))(typescript@6.0.3))(@vitest/coverage-istanbul@5.0.5)(baseline-browser-mapping@2.11.34)(eslint@10.14.0(jiti@2.7.0))(jiti@2.7.0)(jscpd@5.4.3)(lefthook@2.2.2)(magicast@0.5.5)(node-releases@2.0.63)(prettier@3.9.10)(tsdown@0.23.1(@arethetypeswrong/core@0.18.5)(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.14.0(jiti@2.7.0))
       '@standard-schema/spec': 1.1.0

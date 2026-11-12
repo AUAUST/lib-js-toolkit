@@ -139,6 +139,14 @@
     {
       "fileMatch": ["**/.domain.json"],
       "url": "./node_modules/.pnpm/@auaust+engrenage@0.10.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__6ca29abb0cdaf404c68ee5bd5d48c0eb/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
+    },
+    {
+      "fileMatch": ["**/.namespace.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.11.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__1893e97a6974eacfb736290834291b4d/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
+    },
+    {
+      "fileMatch": ["**/.domain.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.11.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__1893e97a6974eacfb736290834291b4d/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
     }
   ]
 }

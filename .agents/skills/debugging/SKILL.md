@@ -13,6 +13,8 @@ Understand a problem, decide its fix, then apply it or write it down for a worke
 
 ## Input
 
+When dispatched in a worktree, first check out the briefed commit, detached, when the worktree starts elsewhere, then install dependencies offline from the lockfile.
+
 | Given                                                  | Read first                                                             |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
 | A GitHub issue                                         | Its body, comments, linked issues and ancestors up to the nearest plan |
@@ -55,10 +57,10 @@ Mark the debt you notice while diagnosing, on the execution path, its callers an
 
 Write and edit issues as local drafts in `.ai/issues/`, revise them as the diagnosis and the conversation settle things, and publish them together. A draft edit costs a diff instead of a full body, survives a stopped session and shows the user each change. Everything this skill says about creating and editing issues applies to the drafts until they are published.
 
-| File             | Holds                                                                                        |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| `<ref>.md`       | The issue as `claim` fetched it, never edited: the base `publish` merges against             |
-| `<ref>.draft.md` | The manifest as frontmatter, then the body; `<ref>` is `123`, `new-foo` or `toolkit.new-foo` |
+| File             | Holds                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| `<ref>.md`       | The issue as `claim` fetched it, never edited: the base `publish` merges against                            |
+| `<ref>.draft.md` | The manifest as frontmatter, then the body; `<ref>` is `123`, `toolkit.123`, `new-foo` or `toolkit.new-foo` |
 
 | Manifest key   | Holds                                                                                                        |
 | -------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -71,19 +73,19 @@ Write and edit issues as local drafts in `.ai/issues/`, revise them as the diagn
 | `state`        | `open`, `completed`, `not planned` or `duplicate`                                                            |
 | `claim`        | `existing` when another maintainer held `drafting` at claim                                                  |
 
-| Reference            | Means                                 |
-| -------------------- | ------------------------------------- |
-| `#123`               | Issue 123 of the current repository   |
-| `#{toolkit.123}`     | Issue 123 of the registered `toolkit` |
-| `#{new-foo}`         | Local draft `new-foo`                 |
-| `#{toolkit.new-foo}` | Local draft created in `toolkit`      |
+| Reference            | Means                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| `#123`               | Issue 123 of the current repository, only in a draft of that repository                                |
+| `#{toolkit.123}`     | Issue 123 of the registered `toolkit`, the current repository's included in another repository's draft |
+| `#{new-foo}`         | Local draft `new-foo`                                                                                  |
+| `#{toolkit.new-foo}` | Local draft created in `toolkit`                                                                       |
 
 - Write types, fields, options and labels by the GitHub names of the planning sheet.
 - Start by reading `.ai/issues/`. Other sessions draft there too: resume only the drafts of your task, those the user names or those of the issues you were given.
 - Your drafts are those you created, claimed or resumed. Edit, check and publish only them, never another session's.
 - Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise.
 - Create an issue with `engrenage planning issue create <type> [--slug <slug>] [--repo <name>] [--parent <ref> [--after <ref>]]`: it writes the manifest with each field's options and the body skeleton, and lists the draft in its parent's `subIssues`.
-- Claim an issue on its first edit with `engrenage planning issue claim <refs>`. When it records `claim: existing`, another maintainer is drafting the issue: report it and keep diagnosing.
+- Claim an issue on its first edit with `engrenage planning issue claim <refs>`. Claim another repository's issue as `<repo>.123`: it takes no `drafting` lock. When it records `claim: existing`, another maintainer is drafting the issue: report it and keep diagnosing.
 - Fill or remove every section `create` writes: `check` fails on an empty one.
 - Order children only through their parent's `subIssues`: `publish` attaches and orders sub-issues, renders a plan's **Roadmap** from them and each header's ancestor chain from the tree. Write none of them by hand.
 - End each round with the drafts it changed and the changes waiting on each open question.
@@ -133,6 +135,7 @@ When the input is an issue, turn that issue into the task, condensing its origin
 
 - Send no message before your final report, your only message: a completion or a blocker, sent once every command you started has finished and `engrenage gate --worktree` passes, so the stop gate reuses that pass.
 - The worker/debugger stop gate returns failing commands and output to the stopped agent: fix them and stop again. When you must stop with failures (a usage limit mid-refactor), list them in your report and stop again on that unchanged tree.
+- When resumed with a merger's findings, fix each one your input's reach covers, and report the rest with the reason.
 - When asked for a branch, create `debugger/<topic>` from the current commit, `debugger/issue-<n>` when the input is an issue.
 - After a fix, remove the backlog entries, debt backlog entries and debt markers it resolves. Never close an issue you fixed: merging the fix closes it.
 - Report by outcome:

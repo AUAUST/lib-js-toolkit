@@ -35,6 +35,7 @@ ehthumbs.db
 # Editors
 .idea
 .fleet
+.claude/worktrees
 .nova
 *.sublime-workspace
 *.sw?

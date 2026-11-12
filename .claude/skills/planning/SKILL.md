@@ -1,5 +1,5 @@
 ---
-name: issue-planning
+name: planning
 description: Plan work as a tree of GitHub issues (a plan, ordered items, and
   segments grouping independent ones) without implementing it. Use proactively
   in the main session, or as the walker's consultant, when the user asks to
@@ -7,9 +7,9 @@ description: Plan work as a tree of GitHub issues (a plan, ordered items, and
   planned issues, so its questions reach the user directly.
 ---
 
-<!-- @reference @auaust/engrenage/agents/skills/issue-planning.md -->
+<!-- @reference @auaust/engrenage/agents/skills/planning.md -->
 
-# Issue planning
+# Planning
 
 Turn a goal into a tree of GitHub issues that workers walk in order and implement without further design. Design happens here, in issues; implementation follows the tree.
 
@@ -29,10 +29,10 @@ Edit nothing but issues and instruction or context files, apart from code the us
 
 Create and edit issues as local drafts in `.ai/issues/` and publish them together. A draft edit costs a diff instead of a full body, survives a stopped session and shows the user each change. Everything this skill says about creating and editing issues applies to the drafts until they are published.
 
-| File             | Holds                                                                                        |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| `<ref>.md`       | The issue as `claim` fetched it, never edited: the base `publish` merges against             |
-| `<ref>.draft.md` | The manifest as frontmatter, then the body; `<ref>` is `123`, `new-foo` or `toolkit.new-foo` |
+| File             | Holds                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| `<ref>.md`       | The issue as `claim` fetched it, never edited: the base `publish` merges against                            |
+| `<ref>.draft.md` | The manifest as frontmatter, then the body; `<ref>` is `123`, `toolkit.123`, `new-foo` or `toolkit.new-foo` |
 
 | Manifest key   | Holds                                                                                                        |
 | -------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -45,19 +45,19 @@ Create and edit issues as local drafts in `.ai/issues/` and publish them togethe
 | `state`        | `open`, `completed`, `not planned` or `duplicate`                                                            |
 | `claim`        | `existing` when another maintainer held `drafting` at claim                                                  |
 
-| Reference            | Means                                 |
-| -------------------- | ------------------------------------- |
-| `#123`               | Issue 123 of the current repository   |
-| `#{toolkit.123}`     | Issue 123 of the registered `toolkit` |
-| `#{new-foo}`         | Local draft `new-foo`                 |
-| `#{toolkit.new-foo}` | Local draft created in `toolkit`      |
+| Reference            | Means                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| `#123`               | Issue 123 of the current repository, only in a draft of that repository                                |
+| `#{toolkit.123}`     | Issue 123 of the registered `toolkit`, the current repository's included in another repository's draft |
+| `#{new-foo}`         | Local draft `new-foo`                                                                                  |
+| `#{toolkit.new-foo}` | Local draft created in `toolkit`                                                                       |
 
 - Write types, fields, options and labels by the GitHub names of the planning sheet.
 - Start by reading `.ai/issues/`. Other sessions draft there too: resume only the drafts of your task, those the user names or those of the issues you were given.
 - Your drafts are those you created, claimed or resumed. Edit, check and publish only them, never another session's.
 - Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise.
 - Create an issue with `engrenage planning issue create <type> [--slug <slug>] [--repo <name>] [--parent <ref> [--after <ref>]]`: it writes the manifest with each field's options and the body skeleton, and lists the draft in its parent's `subIssues`.
-- Claim an issue on its first edit with `engrenage planning issue claim <refs>`. When it records `claim: existing`, another maintainer is drafting the issue: report it and keep planning.
+- Claim an issue on its first edit with `engrenage planning issue claim <refs>`. Claim another repository's issue as `<repo>.123`: it takes no `drafting` lock. When it records `claim: existing`, another maintainer is drafting the issue: report it and keep planning.
 - Fill or remove every section `create` writes: `check` fails on an empty one.
 - Order children only through their parent's `subIssues`: `publish` attaches and orders sub-issues, renders a plan's **Roadmap** from them and each header's ancestor chain from the tree. Write none of them by hand.
 - End each round with the drafts it changed and the changes waiting on each open question.
@@ -146,19 +146,23 @@ Extract a part of a plan into its own plan when the Roadmap grows too long to sc
 
 ## Ordering
 
-Order expresses urgency, not importance: a task comes first because later work stands on it.
+Order expresses urgency, not importance: a task comes first because later work stands on it. The walker runs a segment's members at once and a sequence's items one at a time, so place an item after another only for a dependency you can name.
 
-| Situation                                                     | Placement                                                                         |
-| ------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| B depends on A                                                | B after all of its dependencies                                                   |
-| Later work depends on a task and nothing can run alongside it | Alone in the sequence; never a single-item segment                                |
-| Two or more tasks can be done at the same point               | One segment. Touching the same files is fine; needing each other's output is not. |
-| A segment member needs another member's result                | Moved after the segment, or merged with it if they are one feature                |
-| Adjacent segments, the later one independent of the earlier   | Merged, to keep the sequence short                                                |
+| Situation                                                                      | Placement                                                                                                      |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| B depends on A                                                                 | B after all of its dependencies                                                                                |
+| B needs from A only a piece A does not use itself: a helper, a type, an option | The piece moved into B, both in one segment                                                                    |
+| Later work depends on a task and nothing can run alongside it                  | Alone in the sequence; never a single-item segment                                                             |
+| Two or more tasks can be done at the same point                                | One segment. Touching the same files is fine; needing each other's output is not.                              |
+| A segment member needs another member's result                                 | Reshaped as above when it can be; otherwise moved after the segment, or merged with it if they are one feature |
+| Adjacent segments, the later one independent of the earlier                    | Merged, to keep the sequence short                                                                             |
+
+- Move a piece between tasks only when each stays one coherent feature, verifiable without the other.
+- Never add or split an item only to run work concurrently: each leaf adds a dispatch, a merge and a review.
 
 ## How workers read issues
 
-Workers implement one issue at a time under the issue-implementation skill, and the walker routes each issue by the issue-walking skill's handling table. Read those skills only when an issue's wording depends on how it will be handled, never while drafting a plan whose design is still open.
+Workers implement one issue at a time under the issue-implementation skill, and the walker routes each issue by the walking skill's handling table. Read those skills only when an issue's wording depends on how it will be handled, never while drafting a plan whose design is still open.
 
 ## Procedure
 

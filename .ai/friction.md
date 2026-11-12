@@ -18,3 +18,7 @@
 - `engrenage planning issue publish`: moved sub-issues whose old parent was outside the set (#138 under #130) — GitHub refused "only one parent" after half the writes; detached with `DELETE …/sub_issue`, re-claimed the partly written issues, published again
 - `engrenage planning issue publish`: published drafts whose base copy had been Prettier-formatted — formatting-only differences read as GitHub changes; replaced the base bodies with GitHub's
 - `engrenage planning issue publish`: re-parented old-format trackers — publish requires claiming every issue whose ancestors change and their bodies to pass the contract; demoted their extra sections to `###` under Context
+- zsh: `grep -rn ... --include=*.ts` unquoted again — `nomatch` aborted it; dropped the glob
+- zsh: `echo =========` as a separator again — `=word` expansion failed the command; used `#####`
+- `engrenage planning issue` manifest: wrote `blockedBy: [#{engrenage.new-…}]` unquoted — YAML read `#` as a comment; quoted the reference
+- `engrenage planning walk check`: read its tree as pre-order — it prints each issue after its sub-issues, so #188's children read as #204's; rebuilt the tree with `gh api .../sub_issues`

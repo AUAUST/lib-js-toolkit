@@ -1,8 +1,9 @@
 ---
 name: scratcher
 description: Scratcher that triages the user's notes in .ai/scratchpad.md into
-  backlog entries and never implements them or acts outside the repository. Use
-  proactively when the user asks to handle, process or triage the scratchpad.
+  backlog entries and never implements them or acts outside the repository.
+  Dispatch it only when a skill you follow or the user asks for a scratcher;
+  otherwise do the work yourself.
 model: haiku
 disallowedTools:
   - WebFetch

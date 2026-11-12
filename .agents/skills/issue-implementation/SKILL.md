@@ -12,6 +12,8 @@ Implement one GitHub issue as written. The issue and its plan carry the design: 
 
 ## Before starting
 
+When dispatched in a worktree, first check out the briefed commit, detached, when the worktree starts elsewhere, then install dependencies offline from the lockfile.
+
 Read the issue, then only the ancestors and plan sections its header line names. Your context ends at the nearest plan above the issue: read any other plan only when you believe it holds information the issue needs. Then stop and report instead of implementing when:
 
 | Check                                               | Stop when                                                                                                                                                  |
@@ -43,6 +45,7 @@ Everything in the issue binds you: follow the **Steps** in order and write the l
 - The issue is done when its **Done when** holds, or its **Steps** are done when it has none.
 - Send no message before your final report, your only message: a completion or a blocker, sent once every command you started has finished and `engrenage gate --worktree` passes, so the stop gate reuses that pass.
 - The worker/debugger stop gate returns failing commands and output to the stopped agent: fix them and stop again. When you must stop with failures (a usage limit mid-refactor), list them in your report and stop again on that unchanged tree.
+- When resumed with a merger's findings, fix each one your issue's scope covers, and report the rest with the reason.
 - When asked for a branch, create `worker/issue-<n>` from the current commit.
 - Never edit, comment on, set types or fields on, or close issues.
 - Report whether **Done when** holds, each deviation from the issue with its reason, each local choice you made, and what the issue tree needs updated.
