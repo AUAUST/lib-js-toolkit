@@ -1,0 +1,95 @@
+import { isArray } from "#modules/array/guards/isArray";
+import { isCallable } from "#modules/function/guards/isCallable";
+import { call } from "#modules/general/utils/call";
+import { value, type ResolvedValue } from "#modules/general/utils/value";
+import { isNaN } from "#modules/number/guards/isNaN";
+import { isString } from "#modules/string/guards/isString";
+import type { Callee } from "#types/Callee";
+
+type Predicate<T> = Callee<unknown, [value: T]>;
+
+type FunctionalCase<T, V> =
+  | readonly [readonly Predicate<T>[], Callee<V, [never?: undefined]>]
+  | readonly [Predicate<T>, Callee<V, [never?: undefined]>];
+
+type LiteralCase<V> = readonly [unknown, V] | readonly [readonly unknown[], V];
+
+type Case<T, V> = FunctionalCase<T, V> | LiteralCase<V>;
+
+type CaseResult<C> = C extends readonly [any, infer V]
+  ? ResolvedValue<V>
+  : never;
+
+type CasesResult<Cases extends readonly unknown[]> = CaseResult<Cases[number]>;
+
+export function match<
+  V,
+  Cases extends readonly FunctionalCase<undefined, V>[],
+  Fallback = undefined,
+>(
+  cases: Cases,
+  fallback?: Fallback,
+): CasesResult<Cases> | ResolvedValue<Fallback>;
+export function match<
+  V,
+  Cases extends readonly LiteralCase<V>[],
+  Fallback = undefined,
+>(
+  cases: Cases,
+  fallback?: Fallback,
+): CasesResult<Cases> | ResolvedValue<Fallback>;
+export function match<
+  T,
+  Cases extends readonly Case<T, any>[],
+  Fallback = undefined,
+>(
+  target: T,
+  cases: Cases,
+  fallback?: Fallback,
+): CasesResult<Cases> | ResolvedValue<Fallback>;
+export function match(
+  targetOrCases: unknown,
+  casesOrFallback?: readonly Case<unknown, unknown>[],
+  fallback?: unknown,
+): unknown {
+  let target: unknown, cases: readonly Case<unknown, unknown>[];
+
+  if (
+    arguments.length <= 2 &&
+    isArray(targetOrCases) &&
+    !isArray(casesOrFallback)
+  ) {
+    target = undefined;
+    cases = targetOrCases as readonly Case<unknown, unknown>[];
+    fallback = casesOrFallback;
+  } else {
+    target = targetOrCases;
+    cases = casesOrFallback!;
+  }
+
+  for (const [predicates, result] of cases) {
+    for (const predicate of isArray(predicates) ? predicates : [predicates]) {
+      if (isCallable(predicate) && call(predicate, target)) {
+        return value(result);
+      }
+
+      if (predicate === target) {
+        return value(result);
+      }
+
+      if (
+        predicate instanceof RegExp &&
+        isString(target) &&
+        predicate.test(target)
+      ) {
+        return value(result);
+      }
+
+      if (isNaN(predicate) && isNaN(target)) {
+        return value(result);
+      }
+    }
+  }
+
+  return value(fallback)!;
+}

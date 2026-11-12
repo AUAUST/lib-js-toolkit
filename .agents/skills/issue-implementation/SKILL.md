@@ -21,7 +21,7 @@ Read the issue, then only the ancestors and plan sections its header line names.
 | Sub-issues                                          | Some are open. Report them in order: each is worked on its own before the issue's remaining work, and a segment has no work beyond its sub-issues.         |
 | The plan, the reference for shared names and shapes | It disagrees with the issue.                                                                                                                               |
 | **Planning** or **Questions**                       | Either is present.                                                                                                                                         |
-| Blockers                                            | Any is set.                                                                                                                                                |
+| `blockers`                                          | Any is set.                                                                                                                                                |
 
 ## Reading the issue
 

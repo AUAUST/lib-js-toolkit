@@ -1,4 +1,4 @@
-import { isContainer } from "#modules/guard/utils/isContainer";
+import { isContainer } from "#modules/guard/guards/isContainer";
 
 export function ownNames<Target extends {}>(
   target: Target,

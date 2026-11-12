@@ -2,10 +2,27 @@
   "extends": "@auaust/engrenage/tsconfig/library.json",
   "compilerOptions": {
     "paths": {
-      "@auaust/toolkit/types": ["./src/types/index.ts"],
+      "@auaust/toolkit": ["./src/entry.ts"],
       "@auaust/toolkit/errors": ["./src/errors/index.ts"],
-      "@auaust/toolkit/*": ["./src/modules/*/index.ts"],
-      "@auaust/toolkit": ["./src/index.ts"]
+      "@auaust/toolkit/types": ["./src/types/index.ts"],
+      "@auaust/toolkit/array": ["./src/modules/array/entry.ts"],
+      "@auaust/toolkit/assert": ["./src/modules/assert/entry.ts"],
+      "@auaust/toolkit/async": ["./src/modules/async/entry.ts"],
+      "@auaust/toolkit/boolean": ["./src/modules/boolean/entry.ts"],
+      "@auaust/toolkit/composer": ["./src/modules/composer/entry.ts"],
+      "@auaust/toolkit/forwarder": ["./src/modules/forwarder/entry.ts"],
+      "@auaust/toolkit/function": ["./src/modules/function/entry.ts"],
+      "@auaust/toolkit/general": ["./src/modules/general/entry.ts"],
+      "@auaust/toolkit/guard": ["./src/modules/guard/entry.ts"],
+      "@auaust/toolkit/iterable": ["./src/modules/iterable/entry.ts"],
+      "@auaust/toolkit/maplike": ["./src/modules/maplike/entry.ts"],
+      "@auaust/toolkit/math": ["./src/modules/math/entry.ts"],
+      "@auaust/toolkit/number": ["./src/modules/number/entry.ts"],
+      "@auaust/toolkit/object": ["./src/modules/object/entry.ts"],
+      "@auaust/toolkit/parse": ["./src/modules/parse/entry.ts"],
+      "@auaust/toolkit/protocol": ["./src/modules/protocol/entry.ts"],
+      "@auaust/toolkit/setlike": ["./src/modules/setlike/entry.ts"],
+      "@auaust/toolkit/string": ["./src/modules/string/entry.ts"]
     }
   },
   "files": [],

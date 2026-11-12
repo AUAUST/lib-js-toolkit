@@ -32,7 +32,7 @@ An entry is ready for action when it needs no further decision: a located bug wi
 
 - Write nothing to GitHub but issues, and only in a repository for which `gh repo view <owner>/<repo> --json owner --jq .owner.login` prints `AUAUST`. Work owned elsewhere stays in the backlog.
 - Search for an existing issue first (`gh issue list --repo <owner>/<repo> --state all --search "<keywords>"`) and reuse it.
-- Write for a maintainer of the target repository, to the issue contract that `engrenage issues check` enforces: a Task, a Problem, or an Idea for what is not accepted yet, with the contract's sections and the title `<area>: <what it does>` or `<area>: <problem>`. State the context, the faulty behavior or need with exact names and paths, how to reproduce it when known, the expected outcome and the repository where it was found.
+- Write for a maintainer of the target repository, to the issue contract that `engrenage planning issue check` enforces: a `task`, a `problem`, or an `idea` for what is not accepted yet, with the contract's sections and a title stating what it does or the problem, without prefix, in sentence case without trailing punctuation. State the context, the faulty behavior or need with exact names and paths, how to reproduce it when known, the expected outcome and the repository where it was found.
 - Create it with `gh issue create --repo <owner>/<repo> --title "<title>" --body-file -`, passing the body on standard input.
 - Once an issue you create or edit tracks the work of an entry in the backlog or the debt backlog, remove the entry in the same run, or reduce it to the work the issue leaves and link the issue from it.
 

@@ -23,6 +23,9 @@ bun.lockb
 # ESLint
 /eslint-suppressions.json
 
+# GitHub snapshot
+/.engrenage/github.json
+
 # pnpm
 /pnpm-lock.yaml
 

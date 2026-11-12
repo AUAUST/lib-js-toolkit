@@ -1,0 +1,409 @@
+{
+  "repositories": {
+    "engrenage": {
+      "repository": "AUAUST/lib-js-engrenage",
+      "id": 1432155732,
+      "nodeId": "R_kgDOVVz2VA",
+      "labels": [
+        {
+          "id": 13054394305,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho_wQ",
+          "name": "Agents",
+          "description": "Agent runtimes: Claude and Codex settings, hooks, gates, dispatch, models, efforts."
+        },
+        {
+          "id": 13054393869,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho-DQ",
+          "name": "CLI",
+          "description": "Commands, actions and process handling."
+        },
+        {
+          "id": 13054392507,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho4uw",
+          "name": "Configuration",
+          "description": "Config loading, options, sections and definers."
+        },
+        {
+          "id": 13054393336,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho7-A",
+          "name": "Dependencies",
+          "description": "pnpm, dependency policies, peer and bundled dependencies."
+        },
+        {
+          "id": 12818979854,
+          "nodeId": "LA_kwDOVVz2VM8AAAAC_BIcDg",
+          "name": "Documentation",
+          "description": "Public documentation: README, JSDoc and contract docs."
+        },
+        {
+          "id": 13054393992,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho-iA",
+          "name": "Editor",
+          "description": "Editor settings, integrations and JSON Schemas."
+        },
+        {
+          "id": 13054392615,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho5Jw",
+          "name": "Extensions",
+          "description": "The extension registry and the surfaces extensions contribute."
+        },
+        {
+          "id": 13054392208,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho3kA",
+          "name": "Formatting",
+          "description": "Formatting conventions and their enforcement: Prettier, editor and synced files."
+        },
+        {
+          "id": 13054393545,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho8yQ",
+          "name": "Gate",
+          "description": "The commit and agent gates."
+        },
+        {
+          "id": 13054393445,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho8ZQ",
+          "name": "Git",
+          "description": "Commit conventions, Git hooks and repository files."
+        },
+        {
+          "id": 13054393741,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho9jQ",
+          "name": "Init",
+          "description": "Project initialization steps."
+        },
+        {
+          "id": 13054392298,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho36g",
+          "name": "Linting",
+          "description": "Lint rules and conventions, other than structure boundaries."
+        },
+        {
+          "id": 13017319571,
+          "nodeId": "LA_kwDOVVz2VM8AAAADB-SIkw",
+          "name": "Metalbrain",
+          "description": "Instruction content: AGENTS.md sections, rule files and skills."
+        },
+        {
+          "id": 13054393059,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho64w",
+          "name": "Packaging",
+          "description": "Build outputs, entries and exports, the emitted manifest and bundling."
+        },
+        {
+          "id": 13054394237,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho_fQ",
+          "name": "Planning",
+          "description": "The issue protocol, drafts, planning commands and the GitHub snapshot."
+        },
+        {
+          "id": 13054394128,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho_EA",
+          "name": "Presets",
+          "description": "Project and platform presets."
+        },
+        {
+          "id": 13054393189,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho7ZQ",
+          "name": "Release",
+          "description": "Changesets, versions, changelogs and publishing workflows."
+        },
+        {
+          "id": 13054392410,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho4Wg",
+          "name": "Structure",
+          "description": "Namespaces, domains, roles, aliases, barrels, project maps and import boundaries."
+        },
+        {
+          "id": 13054393630,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho9Hg",
+          "name": "Sync",
+          "description": "Sync targets, synced and generated files."
+        },
+        {
+          "id": 12818979867,
+          "nodeId": "LA_kwDOVVz2VM8AAAAC_BIcGw",
+          "name": "Tests",
+          "description": "The test runner, test selection and the test suites."
+        },
+        {
+          "id": 13054392726,
+          "nodeId": "LA_kwDOVVz2VM8AAAADCho5lg",
+          "name": "TypeScript",
+          "description": "tsconfig composition, type checking and declarations."
+        }
+      ]
+    },
+    "toolkit": {
+      "repository": "AUAUST/lib-js-toolkit",
+      "id": 1111170564,
+      "nodeId": "R_kgDOQjseBA",
+      "labels": [
+        {
+          "id": 12972381107,
+          "nodeId": "LA_kwDOQjseBM8AAAADBTbTsw",
+          "name": "Documentation",
+          "description": "Improvements or additions to the documentation."
+        },
+        {
+          "id": 12972381097,
+          "nodeId": "LA_kwDOQjseBM8AAAADBTbTqQ",
+          "name": "Tests",
+          "description": "Related to test suites."
+        },
+        {
+          "id": 12972381091,
+          "nodeId": "LA_kwDOQjseBM8AAAADBTbTow",
+          "name": "Tooling",
+          "description": "Tooling, scripts, bin and related."
+        }
+      ]
+    }
+  },
+  "organizations": {
+    "AUAUST": {
+      "types": [
+        {
+          "id": 930749304,
+          "nodeId": "IT_kwDOBzL3Ec43eht4",
+          "name": "Idea",
+          "description": "Something to consider, without a clear specification yet. ",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Defect",
+            "Nature"
+          ]
+        },
+        {
+          "id": 930549961,
+          "nodeId": "IT_kwDOBzL3Ec43dxDJ",
+          "name": "Plan",
+          "description": "Goal, design, decisions and roadmap.",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Complexity",
+            "Defect",
+            "Nature",
+            "Priority"
+          ]
+        },
+        {
+          "id": 18354882,
+          "nodeId": "IT_kwDOBzL3Ec4BGBLC",
+          "name": "Problem",
+          "description": "Something wrong or unexpected to fix.",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Complexity",
+            "Defect",
+            "Priority"
+          ]
+        },
+        {
+          "id": 930551439,
+          "nodeId": "IT_kwDOBzL3Ec43dxaP",
+          "name": "Resource",
+          "description": "Reference material kept for its content.",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Material"
+          ]
+        },
+        {
+          "id": 930550967,
+          "nodeId": "IT_kwDOBzL3Ec43dxS3",
+          "name": "Segment",
+          "description": "Organisational wrapper for items sharing a context.",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Priority"
+          ]
+        },
+        {
+          "id": 18354880,
+          "nodeId": "IT_kwDOBzL3Ec4BGBLA",
+          "name": "Task",
+          "description": "Something added, improved or changed.",
+          "enabled": true,
+          "pinnedFields": [
+            "Blockers",
+            "Complexity",
+            "Nature",
+            "Priority"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "id": 49515091,
+          "nodeId": "IFMS_kgDOAvOKUw",
+          "name": "Blockers",
+          "description": "Something preventing a settled issue from starting.",
+          "visibility": "all",
+          "dataType": "multi_select",
+          "options": [
+            {
+              "id": 86690537,
+              "name": "Awaiting others",
+              "description": "Waits on a person or party outside the tracker.\r\n"
+            },
+            {
+              "id": 86690538,
+              "name": "Delayed",
+              "description": "Postponed on purpose."
+            },
+            {
+              "id": 86746413,
+              "name": "Drafting",
+              "description": "A maintainer is working on a rewrite locally making the remote content potentially obsolete."
+            },
+            {
+              "id": 86690535,
+              "name": "Open questions",
+              "description": "Intent accepted but decisions, answers or context are missing."
+            },
+            {
+              "id": 86690536,
+              "name": "Outdated",
+              "description": "Written against code or decisions that changed and needs a refresh before work."
+            }
+          ]
+        },
+        {
+          "id": 23937868,
+          "nodeId": "IFSS_kgDOAW1DTA",
+          "name": "Complexity",
+          "description": "Relative level of effort required for completing this issue.",
+          "visibility": "organization_members_only",
+          "dataType": "single_select",
+          "options": [
+            {
+              "id": 86703806,
+              "name": "Complex",
+              "description": "Substantial uncertainty, interacting constraints or dependencies."
+            },
+            {
+              "id": 41885265,
+              "name": "Involved",
+              "description": "Requires analysis and consideration, but remains reasonably contained."
+            },
+            {
+              "id": 41885267,
+              "name": "Trivial",
+              "description": "Small and mechanical with little context needed."
+            }
+          ]
+        },
+        {
+          "id": 49504871,
+          "nodeId": "IFSS_kgDOAvNiZw",
+          "name": "Defect",
+          "description": "Specializes a problem or a plan.",
+          "visibility": "all",
+          "dataType": "single_select",
+          "options": [
+            {
+              "id": 86672619,
+              "name": "Bug",
+              "description": "Behavior is broken."
+            },
+            {
+              "id": 86672620,
+              "name": "Debt",
+              "description": "Works, but could be cleaner."
+            },
+            {
+              "id": 86714326,
+              "name": "Performance",
+              "description": "Works, but too slow or too costly."
+            }
+          ]
+        },
+        {
+          "id": 49513335,
+          "nodeId": "IFSS_kgDOAvODdw",
+          "name": "Material",
+          "description": "Specializes a resource.",
+          "visibility": "all",
+          "dataType": "single_select",
+          "options": [
+            {
+              "id": 86687453,
+              "name": "Archive",
+              "description": "A snapshot kept for history or a record of past decisions."
+            },
+            {
+              "id": 86687454,
+              "name": "Reference",
+              "description": "Outside material worth considering or used as a knowledge base."
+            },
+            {
+              "id": 87021984,
+              "name": "Report",
+              "description": "The result of an analysis kept for reference."
+            },
+            {
+              "id": 86687455,
+              "name": "Specification",
+              "description": "Our own rules for how something must be."
+            }
+          ]
+        },
+        {
+          "id": 49504799,
+          "nodeId": "IFSS_kgDOAvNiHw",
+          "name": "Nature",
+          "description": "Specializes a task or a plan.",
+          "visibility": "all",
+          "dataType": "single_select",
+          "options": [
+            {
+              "id": 86672498,
+              "name": "Chore",
+              "description": "No product change: dependencies, CI, docs, cleanup."
+            },
+            {
+              "id": 86672496,
+              "name": "Feature",
+              "description": "A capability that did not exist."
+            },
+            {
+              "id": 86672497,
+              "name": "Improvement",
+              "description": "Existing behavior made better."
+            }
+          ]
+        },
+        {
+          "id": 23937865,
+          "nodeId": "IFSS_kgDOAW1DSQ",
+          "name": "Priority",
+          "description": "Current importance level assigned to this issue",
+          "visibility": "organization_members_only",
+          "dataType": "single_select",
+          "options": [
+            {
+              "id": 41885262,
+              "name": "High priority",
+              "description": "Before normal work."
+            },
+            {
+              "id": 41885264,
+              "name": "Low priority",
+              "description": "After normal work."
+            },
+            {
+              "id": 41885261,
+              "name": "Urgent",
+              "description": "Before any other work."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

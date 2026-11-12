@@ -1,5 +1,13 @@
 allowBuilds:
   "unrs-resolver": true
   esbuild: true
+  lefthook: false
 minimumReleaseAgeExclude:
   - "@auaust/*"
+permissions:
+  cleye:
+    skills: true
+  lefthook:
+    build: true
+overrides:
+  "@auaust/engrenage": link:../engrenage.nosync

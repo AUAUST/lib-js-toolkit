@@ -14,25 +14,25 @@ Walk an issue tree in the main session: route each issue by the handling table, 
 
 ## Handling table
 
-Start at the issue the user names and run `engrenage issues check <n>` on each issue before routing it: it reports the issue's sub-issues and blocking issues as open, closed by a local commit or closed on GitHub, the local commits towards the issue, and the issue's own findings, counting local closes as closed. Handle each issue by the first matching row; the Complexity row applies on top of the row that dispatches.
+Start at the issue the user names and run `engrenage planning walk check <n>` on it once per routing decision: it reports every issue of the tree in walk order with its state (open, closed, or closed by a local commit), `blockers`, findings, open **Planning** and **Questions** and local commits, then the next actionable issue. Handle each issue by the first matching row; the `complexity` row applies on top of the row that dispatches.
 
-| Issue                                                                      | Walker                                                                                                                                                    |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Closed, or closed by a local commit                                        | Skip                                                                                                                                                      |
-| A Plan other than the one walked                                           | Stop: walked on its own                                                                                                                                   |
-| Open sub-issues                                                            | Walk them in order (a Segment's in any order), meanwhile handling the issue's own findings by the rows below without stopping the walk; then its own work |
-| Plan or Segment with no open sub-issue                                     | Closes with its last leaf's commit                                                                                                                        |
-| Blockers `Drafting`, with `.ai/issues/<n>.draft.md` present                | Stop: it is being planned                                                                                                                                 |
-| Blockers `Drafting`, with no local draft                                   | Ask the user whether to clear the claim and walk it; on yes, remove `Drafting` and handle it by the next rows                                             |
-| Any Blockers, or an open blocked-by issue                                  | Stop and report                                                                                                                                           |
-| Fails `engrenage issues check` for **Planning**, **Outdated** or structure | Stop; send it to the consultant                                                                                                                           |
-| Fails for **Questions**                                                    | Stop; batch the questions to the user                                                                                                                     |
-| Problem without **Steps**                                                  | Debugger                                                                                                                                                  |
-| Task or Problem with **Steps**                                             | Worker                                                                                                                                                    |
-| Complexity `Complex` or `Trivial`                                          | Dispatched with `effort: high` (Complex) or `effort: low` (Trivial); otherwise the agent's defaults                                                       |
-| Resource or Idea in a tree                                                 | Never dispatched; report it to the consultant                                                                                                             |
+| Issue                                                         | Walker                                                                                                                                                      |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Closed, or closed by a local commit                           | Skip                                                                                                                                                        |
+| A `plan` other than the one walked                            | Stop: walked on its own                                                                                                                                     |
+| Open sub-issues                                               | Walk them in order (a `segment`'s in any order), meanwhile handling the issue's own findings by the rows below without stopping the walk; then its own work |
+| `plan` or `segment` with no open sub-issue                    | Closes with its last leaf's commit                                                                                                                          |
+| `blockers` `drafting`, with `.ai/issues/<n>.draft.md` present | Stop: it is being planned                                                                                                                                   |
+| `blockers` `drafting`, with no local draft                    | Ask the user whether to clear the claim and walk it; on yes, remove `drafting` and handle it by the next rows                                               |
+| Any `blockers`, or an open blocked-by issue                   | Stop and report                                                                                                                                             |
+| Has findings for **Planning**, `outdated` or structure        | Stop; send it to the consultant                                                                                                                             |
+| Has **Questions** open                                        | Stop; batch the questions to the user                                                                                                                       |
+| `problem` without **Steps**                                   | Debugger                                                                                                                                                    |
+| `task` or `problem` with **Steps**                            | Worker                                                                                                                                                      |
+| `complexity` set                                              | Worker: `effort: medium` for `involved` or `complex`. Debugger: `effort: low` for `trivial`, `effort: high` for `complex`. Otherwise the agent's default    |
+| `resource` or `idea` in a tree                                | Never dispatched; report it to the consultant                                                                                                               |
 
-Priority never reorders a tree: order states dependencies.
+`priority` never reorders a tree: order states dependencies.
 
 ## Dispatching
 
@@ -78,6 +78,6 @@ End at the end of the tree or at a stop, with the table of walked leaves, then w
 
 ## GitHub mechanics
 
-- Remove `Drafting` by clearing Blockers with `gh api -X DELETE repos/{owner}/{repo}/issues/<n>/issue-field-values/<id>`, then posting its other values, if any, with `gh api -X POST repos/{owner}/{repo}/issues/<n>/issue-field-values --input -` and `{"issue_field_values":[{"field_id":<id>,"value":["<option>"]}]}` on standard input; the field id comes from `gh api orgs/{org}/issue-fields`.
+- Remove `drafting` by clearing `blockers` with `gh api -X DELETE repos/{owner}/{repo}/issues/<n>/issue-field-values/<id>`, then posting its other values, if any, with `gh api -X POST repos/{owner}/{repo}/issues/<n>/issue-field-values --input -` and `{"issue_field_values":[{"field_id":<id>,"value":["<option>"]}]}` on standard input; the field id comes from `gh api orgs/{org}/issue-fields`.
 
 <!-- @end -->

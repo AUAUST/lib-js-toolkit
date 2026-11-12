@@ -1,4 +1,4 @@
-import { isPropertyKey } from "#modules/guard/utils/isPropertyKey";
+import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { ownDescriptor } from "#modules/object/utils/ownDescriptor";
 import type { ForwardAs } from "#modules/forwarder/utils/forwardAs";
 import type { MethodName } from "#types/MethodName";

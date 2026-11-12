@@ -1,0 +1,4 @@
+{
+  "purpose": "Type-agnostic helpers, exposed flat at the root.",
+  "reexport": "flat"
+}

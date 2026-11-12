@@ -1,0 +1,5 @@
+{
+  "purpose": "Every type predicate of the toolkit, exposed flat and as a namespace.",
+  "reexport": ["namespace", "flat"],
+  "collects": ["guards"]
+}

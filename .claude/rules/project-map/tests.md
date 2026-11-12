@@ -6,7 +6,6 @@ paths:
 # Project map: tests
 
 ```
-tests/  (global roles: fixtures utils)
+tests/  (global roles: fixtures)
+└─ src/  mirrors src
 ```
-
-Unclassified: `tests/modules`, `tests/types`

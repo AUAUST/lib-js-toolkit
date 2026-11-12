@@ -1,12 +1,8 @@
 {
   "extends": "./tsconfig.tests.json",
   "include": [
-    "tests/**/*.spec.ts",
-    "tests/**/*.spec.tsx",
     "tests/**/*.test.ts",
     "tests/**/*.test.tsx",
-    "tests/**/*.spec.dist.ts",
-    "tests/**/*.spec.dist.tsx",
     "tests/**/*.test.dist.ts",
     "tests/**/*.test.dist.tsx",
     "env.d.ts"

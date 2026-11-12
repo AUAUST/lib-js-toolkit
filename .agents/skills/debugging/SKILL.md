@@ -53,37 +53,49 @@ Mark the debt you notice while diagnosing, on the execution path, its callers an
 
 ## Drafts
 
-Write and edit issues as local drafts in `.ai/issues/`, revise them as the diagnosis and the conversation settle things, and publish them in one flush. A draft edit costs a diff instead of a full body, survives a stopped session and shows the user each change. Everything this skill says about creating and editing issues applies to the drafts until the flush.
+Write and edit issues as local drafts in `.ai/issues/`, revise them as the diagnosis and the conversation settle things, and publish them together. A draft edit costs a diff instead of a full body, survives a stopped session and shows the user each change. Everything this skill says about creating and editing issues applies to the drafts until they are published.
 
-| File                  | Holds                                                                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `<n>.md`              | The body of issue `<n>` as fetched, never edited                                                                                      |
-| `<n>.draft.md`        | Its working version, with frontmatter `title`                                                                                         |
-| `new-<slug>.draft.md` | An issue to create, with frontmatter `title`, `type`, fields, and inside a planned tree `parent` and `after` (the sibling it follows) |
+| File             | Holds                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| `<ref>.md`       | The issue as `claim` fetched it, never edited: the base `publish` merges against             |
+| `<ref>.draft.md` | The manifest as frontmatter, then the body; `<ref>` is `123`, `new-foo` or `toolkit.new-foo` |
 
+| Manifest key   | Holds                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------ |
+| `title`        | The issue title                                                                                              |
+| `type`         | A type's GitHub name                                                                                         |
+| `labels`       | Label names of the target repository                                                                         |
+| `<field name>` | For each field pinned to the type, under its GitHub name: an option name, or a list for a multi-select field |
+| `subIssues`    | The children in order; in a `plan`, `{ ref, gist, sections }` entries                                        |
+| `blockedBy`    | Prerequisites, as references                                                                                 |
+| `state`        | `open`, `completed`, `not planned` or `duplicate`                                                            |
+| `claim`        | `existing` when another maintainer held `drafting` at claim                                                  |
+
+| Reference            | Means                                 |
+| -------------------- | ------------------------------------- |
+| `#123`               | Issue 123 of the current repository   |
+| `#{toolkit.123}`     | Issue 123 of the registered `toolkit` |
+| `#{new-foo}`         | Local draft `new-foo`                 |
+| `#{toolkit.new-foo}` | Local draft created in `toolkit`      |
+
+- Write types, fields, options and labels by the GitHub names of the planning sheet.
 - Start by reading `.ai/issues/`. Other sessions draft there too: resume only the drafts of your task, those the user names or those of the issues you were given.
-- Your drafts are those you created, claimed or resumed. Edit, publish and delete only them, never another session's.
-- Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise or when flushing.
-- Claim an issue on its first edit: fetch its body into `<n>.md`, copy it to `<n>.draft.md` and add `Drafting` to its Blockers.
-- When Blockers already has `Drafting` and `.ai/issues/` holds no draft of the issue, another maintainer is drafting it: report it, record `claim: existing` in the draft's frontmatter and keep diagnosing.
-- Reference an issue still to create as `#new-<slug>`.
+- Your drafts are those you created, claimed or resumed. Edit, check and publish only them, never another session's.
+- Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise.
+- Create an issue with `engrenage planning issue create <type> [--slug <slug>] [--repo <name>] [--parent <ref> [--after <ref>]]`: it writes the manifest with each field's options and the body skeleton, and lists the draft in its parent's `subIssues`.
+- Claim an issue on its first edit with `engrenage planning issue claim <refs>`. When it records `claim: existing`, another maintainer is drafting the issue: report it and keep diagnosing.
+- Fill or remove every section `create` writes: `check` fails on an empty one.
+- Order children only through their parent's `subIssues`: `publish` attaches and orders sub-issues, renders a plan's **Roadmap** from them and each header's ancestor chain from the tree. Write none of them by hand.
 - End each round with the drafts it changed and the changes waiting on each open question.
-- Flush when none of your drafts holds a change waiting on an open question, when the user asks, or when someone else needs the issue's current state, such as a worker; publish all your drafts in the same flush.
-
-To flush:
-
-1. Fetch each claimed issue again. When its body differs from `<n>.md`, merge the remote change into the draft, or ask when the two conflict.
-2. Create the new issues, in tree order inside a planned tree, replacing each `#new-<slug>` in every draft with its number.
-3. Publish each `<n>.draft.md` body without its frontmatter, with its title.
-4. Remove `Drafting` from each issue you claimed, never from one marked `claim: existing`.
-5. Report each issue's change from `git diff --no-index <n>.md <n>.draft.md`, then delete each of its files by exact path, never the directory or a pattern.
+- Run `engrenage planning issue check <refs>` on the drafts you changed before publishing them.
+- Publish when none of your drafts holds a change waiting on an open question, when the user asks, or when someone else needs the issue's current state, such as a worker, with `engrenage planning issue publish <refs>` on all your drafts at once. Before publishing, report each claimed issue's change from `git diff --no-index <ref>.md <ref>.draft.md`.
 
 ## Writing the issue
 
-When the input is an issue, turn that issue into the task, condensing its original report into **Context**. Otherwise search for an existing issue to reuse, then draft a new one. Write it as a Problem meeting the issue contract that `engrenage issues check` enforces, complete through its ancestors, if any, for a worker who treats everything in it as binding and applies it without redesign:
+When the input is an issue, turn that issue into the task, condensing its original report into **Context**. Otherwise search for an existing issue to reuse, then draft a new one. Write it as a `problem` meeting the issue contract that `engrenage planning issue check` enforces, complete through its ancestors, if any, for a worker who treats everything in it as binding and applies it without redesign:
 
 ```markdown
-#<plan> › … › #<parent> · <section>: <gist>
+<sections>: <gist>
 
 ## Context
 
@@ -112,8 +124,8 @@ When the input is an issue, turn that issue into the task, condensing its origin
 
 - Write the header only for an issue inside a planned tree. List under **Prerequisites** only the issues tree order does not imply.
 - Drop **Prerequisites**, **Done when** or **Questions** when they would be empty, or when **Done when** would only say the Steps are done and the checks pass.
-- Set the type Problem with its Defect, and the project's environment labels. While **Questions** remain, set Blockers `Open questions`; clear it once they are gone.
-- Run `engrenage issues check <n>` on the issue, once flushed, before reporting it ready for a worker.
+- Set the type `problem` with its `defect`, and the repository's labels whose description fits the issue. While **Questions** remain, set `blockers` to `questions`; clear it once they are gone.
+- Run `engrenage planning issue check <n>` on the issue, once flushed, before reporting it ready for a worker.
 - Start any worker brief you write with `Issue: <owner>/<repo>#<n>`.
 - Once an issue you create or edit tracks the work of an entry in the backlog or the debt backlog, remove the entry in the same run, or reduce it to the work the issue leaves and link the issue from it.
 
@@ -132,9 +144,5 @@ When the input is an issue, turn that issue into the task, condensing its origin
   | Blocked    | What is done, pending and blocked, and the batched questions                               |
 
 - End with what remains and the kind of work it needs. Say so when nothing remains.
-
-## GitHub mechanics
-
-- Create issues with `gh issue create` and edit them with `gh issue edit <n>`, passing bodies on standard input (`--body-file -`).
 
 <!-- @end -->

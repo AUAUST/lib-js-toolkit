@@ -13,23 +13,24 @@
 - When the summary needs "and" to cover several changes, name what they have in common instead.
 - Limit the message body to one `Closes #<n>` consecutive line per issue the commit resolves and one `Towards #<n>` line per issue it advances without resolving, on consecutive lines.
 
-| Type      | Main purpose                                                              |
-| --------- | ------------------------------------------------------------------------- |
-| `feat`    | New feature                                                               |
-| `fix`     | Bug fix                                                                   |
-| `imp`     | Improvement to something that exists, or any change to agent instructions |
-| `cq`      | Code change that keeps behavior                                           |
-| `docs`    | Comments, markers, documentation, backlog and scratchpad files            |
-| `css`     | Styling and layout                                                        |
-| `tests`   | Tests                                                                     |
-| `update`  | Dependency updates                                                        |
-| `content` | Content a CMS stores in git                                               |
-| `assets`  | Images and other files the code uses, other than content                  |
-| `files`   | Adding, renaming or moving files and directories                          |
-| `snap`    | Checkpoint of unfinished work                                             |
-| `config`  | Configuration and environment files                                       |
-| `debug`   | Temporary experiment, to be reverted                                      |
-| `meta`    | Repository matters other than code: license, CI                           |
+| Type      | Main purpose                                                 |
+| --------- | ------------------------------------------------------------ |
+| `feat`    | New feature                                                  |
+| `fix`     | Bug fix                                                      |
+| `imp`     | Improvement to something that exists                         |
+| `cq`      | Code change that keeps behavior                              |
+| `docs`    | Comments and documentation for human readers                 |
+| `brain`   | Agentic programming: what steers agents and what they record |
+| `css`     | Styling and layout                                           |
+| `tests`   | Tests                                                        |
+| `update`  | Dependency updates                                           |
+| `content` | Content a CMS stores in git                                  |
+| `assets`  | Images and other files the code uses, other than content     |
+| `files`   | Adding, renaming or moving files and directories             |
+| `snap`    | Checkpoint of unfinished work                                |
+| `config`  | Configuration and environment files, other than agents'      |
+| `debug`   | Temporary experiment, to be reverted                         |
+| `meta`    | Repository matters other than code: license, CI              |
 
 ## GitHub
 

@@ -1,7 +1,7 @@
-import { isArray } from "#modules/array/utils/isArray";
+import { isArray } from "#modules/array/guards/isArray";
+import { isPropertyComposer } from "#modules/composer/guards/isPropertyComposer";
 import { getterComposer } from "#modules/composer/utils/getterComposer";
 import { getterComposers } from "#modules/composer/utils/getterComposers";
-import { isPropertyComposer } from "#modules/composer/utils/isPropertyComposer";
 import {
   propertyComposer,
   type PropertyComposer,

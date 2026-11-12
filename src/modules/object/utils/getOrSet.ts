@@ -1,4 +1,8 @@
-import { value, type ResolvedValue, type ValueInput } from "#utils/value";
+import {
+  value,
+  type ResolvedValue,
+  type ValueInput,
+} from "#modules/general/utils/value";
 import type { InitializedProperty } from "#types/InitializedProperty";
 
 export function getOrSet<Target extends object, Key extends PropertyKey, Value>(
