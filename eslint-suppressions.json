@@ -211,10 +211,5 @@
     "auaust/role-companions": {
       "count": 2
     }
-  },
-  "tests/src/modules/general/pipeAsync.test.ts": {
-    "auaust/no-identical-functions": {
-      "count": 3
-    }
   }
 }

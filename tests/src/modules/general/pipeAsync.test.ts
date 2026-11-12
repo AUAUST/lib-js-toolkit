@@ -4,20 +4,20 @@ import { pipeAsync } from "@auaust/toolkit";
 import { PipelineError } from "@auaust/toolkit/errors";
 import { callable } from "@auaust/toolkit/protocol";
 
+const add = async (x: number) => {
+  await Promise.resolve();
+
+  return x + 2;
+};
+
+const multiply = async (x: number) => {
+  await Promise.resolve();
+
+  return x * 3;
+};
+
 describe("pipeAsync", () => {
   test("composes functions from left to right", async () => {
-    const add = async (x: number) => {
-      await Promise.resolve();
-
-      return x + 2;
-    };
-
-    const multiply = async (x: number) => {
-      await Promise.resolve();
-
-      return x * 3;
-    };
-
     const subtract = async (x: number) => {
       await Promise.resolve();
 
@@ -82,16 +82,10 @@ describe("pipeAsync", () => {
   });
 
   test("works with synchronous functions in the pipeline", async () => {
-    const add = (x: number) => x + 2;
-
-    const multiply = async (x: number) => {
-      await Promise.resolve();
-
-      return x * 3;
-    };
+    const addSync = (x: number) => x + 2;
 
     const subtract = (x: number) => x - 5;
-    const pipedFunction = pipeAsync(add, multiply, subtract);
+    const pipedFunction = pipeAsync(addSync, multiply, subtract);
 
     return pipedFunction(4).then((result) => {
       // ((4 + 2) * 3) - 5 = 13
@@ -128,22 +122,10 @@ describe("pipeAsync", () => {
   });
 
   test("handles errors in the pipeline", async () => {
-    const add = async (x: number) => {
-      await Promise.resolve();
-
-      return x + 2;
-    };
-
     const throwError = async (ignored: number) => {
       await Promise.resolve();
 
       throw new Error("Test error");
-    };
-
-    const multiply = async (x: number) => {
-      await Promise.resolve();
-
-      return x * 3;
     };
 
     const pipedFunction = pipeAsync(add, throwError, multiply);

@@ -67,6 +67,7 @@ describe("pipe", () => {
     expect(result2).toBe(-95);
   });
 
+  // @debt Assertions run only inside `catch`: a pipeline that stops throwing passes silently; assert the throw with `expect(...).toThrow` or `expect.assertions`.
   test("throws a PipelineError with useful information on failure", () => {
     const fn1 = (x: number) => x + 1;
 
