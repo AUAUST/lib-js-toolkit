@@ -22,3 +22,6 @@
 - zsh: `echo =========` as a separator again — `=word` expansion failed the command; used `#####`
 - `engrenage planning issue` manifest: wrote `blockedBy: [#{engrenage.new-…}]` unquoted — YAML read `#` as a comment; quoted the reference
 - `engrenage planning walk check`: read its tree as pre-order — it prints each issue after its sub-issues, so #188's children read as #204's; rebuilt the tree with `gh api .../sub_issues`
+- worktree isolation guard: compound Bash commands (heredocs, loops, `git mv` in chains) — refused as unverifiable; split into separate plain commands or used Write
+- walking skill: dispatching a merger to integrate a concurrent leaf — no merging skill or merger agent exists in the project; `engrenage agents skills add merging` adds both, but the merger agent type only loads in a new session
+- engrenage gate --worktree: ran gate on a rebased #204 worktree — sync --check failed on AGENTS.override.md left stale by main 46766cf; regenerated with engrenage sync
