@@ -145,6 +145,7 @@ export function compare(
   a = a.valueOf();
   b = b.valueOf();
 
+  // @debt Runtime type dispatch via native `typeof` outside the guards; the type-dispatch helper (AUAUST/lib-js-toolkit#113) should own it.
   switch (typeof a) {
     case "string":
     case "number":
