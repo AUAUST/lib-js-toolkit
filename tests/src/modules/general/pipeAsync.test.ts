@@ -130,11 +130,13 @@ describe("pipeAsync", () => {
 
     const pipedFunction = pipeAsync(add, throwError, multiply);
 
-    return pipedFunction(4).catch((error) => {
-      expect(error).toBeInstanceOf(PipelineError);
-      expect(error.message).toContain("Test error");
-      expect(error.fn).toBe(throwError);
-      expect(error.input).toBe(6);
+    await expect(pipedFunction(4)).rejects.toSatisfy((error) => {
+      return (
+        error instanceof PipelineError &&
+        error.message.includes("Test error") &&
+        error.fn === throwError &&
+        error.input === 6
+      );
     });
   });
 

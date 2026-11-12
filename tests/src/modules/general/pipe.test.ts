@@ -67,7 +67,6 @@ describe("pipe", () => {
     expect(result2).toBe(-95);
   });
 
-  // @debt Assertions run only inside `catch`: a pipeline that stops throwing passes silently; assert the throw with `expect(...).toThrow` or `expect.assertions`.
   test("throws a PipelineError with useful information on failure", () => {
     const fn1 = (x: number) => x + 1;
 
@@ -79,18 +78,26 @@ describe("pipe", () => {
 
     const pipedFunction = pipe(fn1, fn2, fn3);
 
+    let failure: unknown;
+
     try {
       pipedFunction(5);
-    } catch (error: any) {
-      expect(error).toBeInstanceOf(PipelineError);
-      expect(error.name).toBe("PipelineError");
-      expect(error.message).toMatch(/Pipeline step failed/);
-      expect(error.message).toMatch(/Intentional failure/);
-      expect(error.step).toBe(1); // 0 indexed
-      expect(error.input).toBe(6);
-      expect(error.fn).toBe(fn2);
-      expect(error.cause.message).toBe("Intentional failure");
+    } catch (error) {
+      failure = error;
     }
+
+    expect(failure).toBeInstanceOf(PipelineError);
+
+    expect(failure).toMatchObject({
+      name: "PipelineError",
+      message: expect.stringMatching(
+        /Pipeline step failed.*Intentional failure/s,
+      ),
+      step: 1,
+      input: 6,
+      fn: fn2,
+      cause: { message: "Intentional failure" },
+    });
   });
 
   test("resolves callable steps and conditions once", () => {
