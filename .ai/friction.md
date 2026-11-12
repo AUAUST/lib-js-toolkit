@@ -26,3 +26,4 @@
 - walking skill: dispatching a merger to integrate a concurrent leaf — no merging skill or merger agent exists in the project; `engrenage agents skills add merging` adds both, but the merger agent type only loads in a new session
 - engrenage gate --worktree: ran gate on a rebased #204 worktree — sync --check failed on AGENTS.override.md left stale by main 46766cf; regenerated with engrenage sync
 - worktree isolation guard: chained `cd && git …` and `git -C .` commands — refused as unverifiable; ran plain `git` from the worktree cwd in separate calls
+- engrenage planning issue publish: published a toolkit draft referencing `#{engrenage.new-…}` together with that new engrenage draft, then a `#{engrenage.521}` reference inside a code span — the first stayed literal (referrer published before the new issue existed), the second because code spans are not rendered; re-claimed and wrote the literal `AUAUST/lib-js-engrenage#521`
