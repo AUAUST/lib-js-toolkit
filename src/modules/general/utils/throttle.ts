@@ -70,6 +70,7 @@ export function throttle<Callback extends Callee>(
     if (now >= throttledUntil) {
       execute.call(this, ...args);
 
+      // @debt Adds the raw `delay` instead of the validated `interval`, so a coerced non-number delay concatenates.
       throttledUntil = now + delay;
 
       return true;

@@ -1,5 +1,3 @@
-/* eslint-disable auaust/no-loose-equal */
-
 import { StateError } from "#errors/StateError";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { isCallable } from "#modules/function/guards/isCallable";
@@ -93,12 +91,13 @@ export function compare(
     case "=": {
       return (
         (empty(a) && empty(b)) ||
-        a.valueOf() == b.valueOf() ||
+        String(a.valueOf()) === String(b.valueOf()) ||
         (isNaN(a) && isNaN(b))
       );
     }
 
     case "==": {
+      // eslint-disable-next-line auaust/no-loose-equal -- implements the "==" operator
       return a == b;
     }
 
@@ -107,6 +106,7 @@ export function compare(
     }
 
     case "!=": {
+      // eslint-disable-next-line auaust/no-loose-equal -- implements the "!=" operator
       return a != b;
     }
 

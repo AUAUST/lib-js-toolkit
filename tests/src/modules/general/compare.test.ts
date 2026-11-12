@@ -15,6 +15,8 @@ describe("compare", () => {
     [[], "=", null, true],
     [5, "=", 6, false],
     [NaN, "=", 0, false],
+    [true, "=", 1, false],
+    [0, "=", "", false],
     [5, "==", "5", true],
     ["test", "==", "test", true],
     [true, "==", true, true],

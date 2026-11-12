@@ -18,6 +18,24 @@ describe("debounce", () => {
 
   afterEach(() => vi.useRealTimers());
 
+  test("runs a call made from inside the callback with its own arguments", () => {
+    const calls: unknown[] = [];
+
+    const fn = debounce((value: string) => {
+      calls.push(value);
+
+      if (value === "first") {
+        fn("second");
+      }
+    }, 10);
+
+    fn("first");
+    vi.advanceTimersByTime(10);
+    vi.advanceTimersByTime(10);
+
+    expect(calls).toStrictEqual(["first", "second"]);
+  });
+
   test.for([[], [1], [1, 2, 3]])(
     "coalesces calls using the last arguments %s",
     (args) => {

@@ -44,8 +44,13 @@ export function debounce<Callback extends Callee>(
   const execute = resolveCallable(callback);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  let withThis: CallThisParameterType<Callback>;
-  let withArgs: CallParameters<Callback>;
+
+  let pendingCall:
+    | {
+        thisArg: CallThisParameterType<Callback>;
+        args: CallParameters<Callback>;
+      }
+    | undefined;
 
   function debounce(
     this: CallThisParameterType<Callback>,
@@ -53,9 +58,7 @@ export function debounce<Callback extends Callee>(
   ): boolean {
     const pending = clear();
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    withThis = this;
-    withArgs = args;
+    pendingCall = { thisArg: this, args };
     timeoutId = setTimeout(flush, delay);
 
     return pending;
@@ -75,18 +78,18 @@ export function debounce<Callback extends Callee>(
   function flush() {
     const pending = clear();
 
-    if (pending) {
-      Reflect.apply(execute, withThis, withArgs);
-      withThis = undefined!;
-      withArgs = undefined!;
+    if (pending && pendingCall) {
+      const { thisArg, args } = pendingCall;
+
+      pendingCall = undefined;
+      Reflect.apply(execute, thisArg, args);
     }
 
     return pending;
   }
 
   function cancel() {
-    withThis = undefined!;
-    withArgs = undefined!;
+    pendingCall = undefined;
 
     return clear();
   }

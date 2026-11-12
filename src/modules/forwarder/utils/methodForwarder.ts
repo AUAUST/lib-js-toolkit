@@ -99,27 +99,27 @@ export function methodForwarder(
 
   const forwarders = new WeakMap<object, (...args: unknown[]) => unknown>();
 
+  function createForwarder(receiver: object) {
+    return function forwarder(this: unknown, ...args: unknown[]) {
+      return Reflect.apply(
+        Reflect.get(source, sourceMethod, source),
+        this == null || this === receiver ? source : this,
+        args,
+      );
+    };
+  }
+
   return {
     kind: "method",
     name: targetMethod,
     configurable,
     enumerable,
     get() {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const receiver = this;
-
-      let forwarder = forwarders.get(receiver);
+      let forwarder = forwarders.get(this);
 
       if (!forwarder) {
-        forwarder = function forwarder(this: unknown, ...args: unknown[]) {
-          return Reflect.apply(
-            Reflect.get(source, sourceMethod, source),
-            this == null || this === receiver ? source : this,
-            args,
-          );
-        };
-
-        forwarders.set(receiver, forwarder);
+        forwarder = createForwarder(this);
+        forwarders.set(this, forwarder);
       }
 
       return forwarder;
