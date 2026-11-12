@@ -9,5 +9,3 @@ permissions:
     skills: true
   lefthook:
     build: true
-overrides:
-  "@auaust/engrenage": link:../engrenage.nosync
