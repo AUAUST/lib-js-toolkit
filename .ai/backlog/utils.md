@@ -39,3 +39,7 @@
 - If a value needs to choose how it is interpreted as a boolean, the candidate is a `booleanifiable` protocol read by `parseBoolean` only (#118 conventions: symbol `booleanifiable`, interface `Booleanifiable`, key `Protocol.booleanifiable`).
 - Done when a concrete use case adds it, or obsolete if none appears by the end of the merge.
 
+## 7. Optional generators
+
+- From AUAUST/lib-js-toolkit#151 (closed): `@throws` tags derived from `throw` statements carrying a `@cause` comment, as an engrenage extension in `tooling/`. First check it is automatable; open on rethrows and shared error builders (AUAUST/lib-js-toolkit#119). The missing native helpers check is entry 1.
+- Done when chosen and turned into an issue, or dropped.

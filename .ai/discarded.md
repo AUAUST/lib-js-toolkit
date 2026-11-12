@@ -11,3 +11,8 @@
 - `tooling/barrels` local extension: toolkit barrels — engrenage renders every barrel (AUAUST/lib-js-engrenage#441); at most `barrels.exports` contributions stay local
 - `symbols` role with `subpath: true`: `./protocol/symbols` — generated entry would stop re-exporting the symbols; no such subpath exists today
 - `types` role with `index` and `subpath` in every module: `./types` from the global role — also exposes `./protocol/types` and drops its types from the `protocol` entry; `index`/`subpath` `"root"` instead (AUAUST/lib-js-engrenage#483, AUAUST/lib-js-engrenage#493)
+- one GitHub label per toolkit module: issue search by area — stale when helpers relocate (#176), most modules under ~5 issues; value-kind labels instead
+- `Tooling` label in toolkit: tooling issues findable — implied by every narrower tooling label; retired in the label report
+- `Formatting` and `Release` labels in toolkit: engrenage parity — one toolkit issue each (#193, #112)
+- cognitive-complexity limit 8 or lower: toolkit complexity limit — forces splitting flat switches and single loops (`compare`, remapping loop, `pipeAsync` condition)
+- `TextEncoder` in `md5`: UTF-8 encoding — maps lone surrogates to U+FFFD, changing hashes
