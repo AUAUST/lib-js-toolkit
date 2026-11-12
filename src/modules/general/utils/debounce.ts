@@ -1,3 +1,4 @@
+import { toDelay } from "#modules/general/internals/toDelay";
 import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
@@ -41,6 +42,7 @@ export function debounce<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Debounced<Callback> {
+  const wait = toDelay(delay, "debounce delay");
   const execute = resolveCallable(callback);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -59,7 +61,8 @@ export function debounce<Callback extends Callee>(
     const pending = clear();
 
     pendingCall = { thisArg: this, args };
-    timeoutId = setTimeout(flush, delay);
+    // @debt Delays above the timer maximum (2^31 - 1 ms), `Infinity` included, overflow and fire almost immediately, while `throttle` honors them.
+    timeoutId = setTimeout(flush, wait);
 
     return pending;
   }

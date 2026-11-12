@@ -89,10 +89,17 @@ export function compare(
 
   switch (operator) {
     case "=": {
+      if (empty(a) && empty(b)) {
+        return true;
+      }
+
+      if (a == null || b == null) {
+        return false;
+      }
+
+      // @debt Throws on objects without `valueOf`, such as null-prototype objects.
       return (
-        (empty(a) && empty(b)) ||
-        String(a.valueOf()) === String(b.valueOf()) ||
-        (isNaN(a) && isNaN(b))
+        String(a.valueOf()) === String(b.valueOf()) || (isNaN(a) && isNaN(b))
       );
     }
 

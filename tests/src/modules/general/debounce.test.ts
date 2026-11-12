@@ -121,4 +121,19 @@ describe("debounce", () => {
       [10, undefined],
     ]);
   });
+
+  test("rejects a delay that is not a number or is negative", () => {
+    expect(() => debounce(vi.fn(), Number.NaN)).toThrow(TypeError);
+    expect(() => debounce(vi.fn(), -1)).toThrow(RangeError);
+  });
+
+  test("accepts a zero delay", () => {
+    const callback = vi.fn();
+    const fn = debounce(callback, 0);
+
+    fn(1);
+    vi.advanceTimersByTime(0);
+
+    expect(callback).toHaveBeenCalledExactlyOnceWith(1);
+  });
 });

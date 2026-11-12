@@ -139,4 +139,22 @@ describe("throttle", () => {
       [10, undefined],
     ]);
   });
+
+  test("rejects an interval that is not a number or is negative", () => {
+    expect(() => throttle(vi.fn(), Number.NaN)).toThrow(TypeError);
+    expect(() => throttle(vi.fn(), -1)).toThrow(RangeError);
+  });
+
+  test("uses the coerced interval for the cooldown", () => {
+    const callback = vi.fn();
+    const fn = throttle(callback, "10" as unknown as number);
+
+    expect(fn(1)).toBe(true);
+    expect(fn.remaining()).toBe(10);
+
+    vi.advanceTimersByTime(10);
+
+    expect(fn(2)).toBe(true);
+    expect(callback.mock.calls).toEqual([[1], [2]]);
+  });
 });

@@ -1,6 +1,6 @@
+import { toDelay } from "#modules/general/internals/toDelay";
 import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { max } from "#modules/math/utils/max";
-import { isNaN } from "#modules/number/guards/isNaN";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
@@ -39,19 +39,7 @@ export function throttle<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Throttled<Callback> {
-  const interval = Number(delay);
-
-  if (isNaN(interval)) {
-    throw new TypeError(`Invalid throttle interval: ${String(delay)}`, {
-      cause: delay,
-    });
-  }
-
-  if (interval < 0) {
-    throw new RangeError(`Throttle interval must not be negative`, {
-      cause: delay,
-    });
-  }
+  const interval = toDelay(delay, "throttle interval");
 
   const execute = resolveCallable(callback);
 
@@ -70,8 +58,7 @@ export function throttle<Callback extends Callee>(
     if (now >= throttledUntil) {
       execute.call(this, ...args);
 
-      // @debt Adds the raw `delay` instead of the validated `interval`, so a coerced non-number delay concatenates.
-      throttledUntil = now + delay;
+      throttledUntil = now + interval;
 
       return true;
     }
