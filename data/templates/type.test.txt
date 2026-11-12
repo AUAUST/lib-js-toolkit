@@ -1,8 +1,0 @@
-import type { {{type}} } from "@auaust/toolkit/types";
-import { describe, expectTypeOf, test } from "vitest";
-
-describe("{{type}}", () => {
-  test("preserves its input type", () => {
-    expectTypeOf<{{type}}<"literal">>().toEqualTypeOf<"literal">();
-  });
-});

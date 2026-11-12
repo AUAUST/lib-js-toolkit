@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["*.config.ts", ".*.ts", "tooling/**/*.ts", "tooling/**/*.tsx"],
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.tooling.tsbuildinfo",
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "types": ["node"]
+  }
+}

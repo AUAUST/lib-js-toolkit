@@ -122,10 +122,9 @@ export default defineConfig({
     roles: [testutils(), fixtures()],
     mirror: true,
   },
-  scripts: {
-    tree: "domains",
-  },
   tooling: {
+    // @debt explicit only because engrenage writes no tsconfig for tooling while the scripts environment it inherits from is inactive (AUAUST/lib-js-engrenage#521)
+    tsconfig: {},
     roles: [index(), utils(), operations()],
   },
 });

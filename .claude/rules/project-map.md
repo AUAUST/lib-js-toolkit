@@ -18,32 +18,29 @@ Trees: `name*` public domain, `{…}` sub-domains, `#alias/…` import alias, `[
 
 ## Environments
 
-The matrix states environment grants; domain and role boundaries still apply. No importer but its environment's root `executable.ts` may import a root index or entry file of `src`, `scripts`, `tooling`. `scripts`, `tooling` import `src` only through a domain's `index.ts`, `entry.ts` and public roles.
+The matrix states environment grants; domain and role boundaries still apply. No importer but its environment's root `executable.ts` may import a root index or entry file of `src`, `tooling`. `tooling` import `src` only through a domain's `index.ts`, `entry.ts` and public roles.
 
 | Category           | Meaning                           |
 | ------------------ | --------------------------------- |
 | `public-entries`   | the package name and its subpaths |
 | `internal-aliases` | `#…` aliases into `src`           |
 | `tests`            | the tests environment's files     |
-| `scripts`          | the scripts environment's files   |
 | `tooling`          | the tooling environment's files   |
-| `data`             | the data environment's files      |
 | `dist-artefacts`   | the build output                  |
 
-| from / to | public-entries | internal-aliases | tests | scripts | tooling | data  | dist-artefacts | map                                    |
-| --------- | -------------- | ---------------- | ----- | ------- | ------- | ----- | -------------- | -------------------------------------- |
-| `src`     | yes            | yes              | never | never   | never   | never | yes            | `.claude/rules/project-map/src.md`     |
-| `tests`   | per variant    | per variant      | yes   | yes     | yes     | yes   | yes            | `.claude/rules/project-map/tests.md`   |
-| `scripts` | yes            | yes              | never | yes     | never   | yes   | yes            | `.claude/rules/project-map/scripts.md` |
-| `tooling` | yes            | yes              | never | never   | yes     | never | yes            | `.claude/rules/project-map/tooling.md` |
+| from / to | public-entries | internal-aliases | tests | tooling | dist-artefacts | map                                    |
+| --------- | -------------- | ---------------- | ----- | ------- | -------------- | -------------------------------------- |
+| `src`     | yes            | yes              | never | never   | yes            | `.claude/rules/project-map/src.md`     |
+| `tests`   | per variant    | per variant      | yes   | yes     | yes            | `.claude/rules/project-map/tests.md`   |
+| `tooling` | yes            | yes              | never | yes     | yes            | `.claude/rules/project-map/tooling.md` |
 
 ## Test files
 
-| Files                     | Runs against    | May import                                                                  | Never                     |
-| ------------------------- | --------------- | --------------------------------------------------------------------------- | ------------------------- |
-| `**/*.test.{ts,tsx}`      | source and dist | `public-entries`, `tests`, `scripts`, `tooling`, `data`, `dist-artefacts`   | `internal-aliases`, `bin` |
-| `**/*.test.src.{ts,tsx}`  | source          | `internal-aliases`, `tests`, `scripts`, `tooling`, `data`, `dist-artefacts` | `public-entries`          |
-| `**/*.test.dist.{ts,tsx}` | dist            | `public-entries`, `tests`, `scripts`, `tooling`, `data`, `dist-artefacts`   | `internal-aliases`, `bin` |
+| Files                     | Runs against    | May import                                               | Never                     |
+| ------------------------- | --------------- | -------------------------------------------------------- | ------------------------- |
+| `**/*.test.{ts,tsx}`      | source and dist | `public-entries`, `tests`, `tooling`, `dist-artefacts`   | `internal-aliases`, `bin` |
+| `**/*.test.src.{ts,tsx}`  | source          | `internal-aliases`, `tests`, `tooling`, `dist-artefacts` | `public-entries`          |
+| `**/*.test.dist.{ts,tsx}` | dist            | `public-entries`, `tests`, `tooling`, `dist-artefacts`   | `internal-aliases`, `bin` |
 
 ## Roles
 

@@ -1,5 +1,0 @@
-import { implementsProtocol } from "@auaust/toolkit/protocols";
-
-export function {{utility}}(value: unknown): unknown {
-  throw new Error("Utility not implemented.");
-}
