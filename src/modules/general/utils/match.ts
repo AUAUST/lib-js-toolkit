@@ -75,7 +75,7 @@ export function match(
     }
   }
 
-  return value(fallback)!;
+  return value(fallback);
 }
 
 function matchesPredicate(predicate: unknown, target: unknown): boolean {
@@ -84,7 +84,24 @@ function matchesPredicate(predicate: unknown, target: unknown): boolean {
     predicate === target ||
     (predicate instanceof RegExp &&
       isString(target) &&
-      predicate.test(target)) ||
+      testsFromStart(predicate, target)) ||
     (isNaN(predicate) && isNaN(target))
   );
+}
+
+// @debt Reimplements `String#search` because `unicorn/prefer-regexp-test` rejects it for existence checks.
+function testsFromStart(predicate: RegExp, target: string): boolean {
+  if (!predicate.global && !predicate.sticky) {
+    return predicate.test(target);
+  }
+
+  const { lastIndex } = predicate;
+
+  predicate.lastIndex = 0;
+
+  try {
+    return predicate.test(target);
+  } finally {
+    predicate.lastIndex = lastIndex;
+  }
 }

@@ -82,6 +82,18 @@ describe("match", () => {
     expect(match("12345", cases)).toBe("number string");
   });
 
+  test.each([/x/g, /x/y])(
+    "matches stateful regular expression %s without carrying state",
+    (predicate) => {
+      const cases = [[predicate, "matched"]] as const;
+
+      expect(match("x", cases)).toBe("matched");
+      expect(match("x", cases)).toBe("matched");
+      expect(match("ax", cases)).toBe(predicate.sticky ? undefined : "matched");
+      expect(predicate.lastIndex).toBe(0);
+    },
+  );
+
   test("handles a lack of target value", () => {
     expect(
       match([
