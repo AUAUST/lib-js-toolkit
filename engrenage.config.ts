@@ -11,6 +11,8 @@ import {
   utils,
 } from "@auaust/engrenage/roles";
 
+import { createBarrelsExtension } from "#tooling/barrels/index";
+
 const guards = createRolePreset({
   name: "guards",
   purpose: "Type predicates over a candidate, exported by the module and the guard entry.",
@@ -51,9 +53,18 @@ const internals = createRolePreset({
   public: false,
 });
 
+const operations = createRolePreset({
+  name: "operations",
+  purpose: "Functions that read the project's files or structure, one per module.",
+  exports: "named-match",
+  effects: "observing",
+  public: false,
+});
+
 export default defineConfig({
   preset: "library",
   visibility: "private",
+  extensions: [createBarrelsExtension()],
   agents: {
     preferred: ["claude", "codex"],
     attribution: false,
@@ -113,5 +124,8 @@ export default defineConfig({
   },
   scripts: {
     tree: "domains",
+  },
+  tooling: {
+    roles: [index(), utils(), operations()],
   },
 });

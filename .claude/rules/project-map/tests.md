@@ -7,5 +7,6 @@ paths:
 
 ```
 tests/  (global roles: fixtures)
-└─ src/  mirrors src
+├─ src/  mirrors src
+└─ tooling/  mirrors tooling
 ```
