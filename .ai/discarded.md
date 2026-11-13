@@ -23,3 +23,4 @@
 - MCP server for helper lookup: agents writing toolkit helpers — running process and tool schema for data a skill file holds
 - errors on generic helper calls (`map` → `pluck`): specialisations agents miss — fail legitimate code; non-failing edit-time hints instead
 - `iterable/internals` argument validation: shared nullish, iterable and callback prologue of `map` and `filter` — three guard lines with per-helper messages; #142 keeps validation inline in each helper
+- `@behavior` tag: one-line helper behaviour for agents — superseded by `@native` and `@relates` (#183)

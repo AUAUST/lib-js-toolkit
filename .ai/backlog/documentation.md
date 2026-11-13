@@ -9,7 +9,7 @@
 ## 2. Agent skill for toolkit
 
 - Agents discover toolkit's helpers by reading the source. A generated skill would list every helper with a dense description, so an agent that installs it knows the library's capabilities at once.
-- Proposal: toolkit exposes a skill entry point generated from the helpers' JSDoc (description and the proposed `@behavior` tag, `merge.14`), distributed to consumers through pnpm dependency skills.
+- Proposal: toolkit exposes a skill entry point generated from the helpers' JSDoc (description, `@native` and `@relates` tags, #183), distributed to consumers through pnpm dependency skills.
 - Outcome: the skill format and its generation from JSDoc decided.
 - Done when toolkit publishes a generated skill, or obsolete if skills turn out not to fit.
 

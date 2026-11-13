@@ -43,9 +43,3 @@
 
 - From AUAUST/lib-js-toolkit#151 (closed): `@throws` tags derived from `throw` statements carrying a `@cause` comment, as an engrenage extension in `tooling/`. First check it is automatable; open on rethrows and shared error builders (AUAUST/lib-js-toolkit#119). The missing native helpers check is entry 1.
 - Done when chosen and turned into an issue, or dropped.
-
-## 8. Delay checks in `sleep` and `after`
-
-- `sleep` and `after` accept any delay unchecked, unlike `debounce` and `throttle`, which reject NaN (TypeError) and negative values (RangeError) through the internal `toDelay` helper.
-- Decided by the user: both throw synchronously, before returning a promise.
-- Done when both call `toDelay`, with tests and a changeset.
