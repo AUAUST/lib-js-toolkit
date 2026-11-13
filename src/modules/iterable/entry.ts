@@ -3,6 +3,9 @@
 export { isIterable } from "#modules/iterable/guards/isIterable";
 export { filter } from "#modules/iterable/utils/filter";
 export { map } from "#modules/iterable/utils/map";
+export { memoize } from "#modules/iterable/utils/memoize";
 export type * from "#modules/iterable/guards/isIterable";
+export type * from "#modules/iterable/types/MemoizedIterable";
 export type * from "#modules/iterable/utils/filter";
 export type * from "#modules/iterable/utils/map";
+export type * from "#modules/iterable/utils/memoize";
