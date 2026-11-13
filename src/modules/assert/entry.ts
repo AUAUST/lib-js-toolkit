@@ -11,6 +11,7 @@ export { assertFunction as isFunction } from "#modules/assert/utils/assertFuncti
 export { assertInteger as isInteger } from "#modules/assert/utils/assertInteger";
 export { assertNaN as isNaN } from "#modules/assert/utils/assertNaN";
 export { assertNotBigInt as isNotBigInt } from "#modules/assert/utils/assertNotBigInt";
+export { assertNotBoolean as isNotBoolean } from "#modules/assert/utils/assertNotBoolean";
 export { assertNotFunction as isNotFunction } from "#modules/assert/utils/assertNotFunction";
 export { assertNotNull as isNotNull } from "#modules/assert/utils/assertNotNull";
 export { assertNotNullish as isNotNullish } from "#modules/assert/utils/assertNotNullish";
@@ -45,6 +46,7 @@ export type * from "#modules/assert/utils/assertFunction";
 export type * from "#modules/assert/utils/assertInteger";
 export type * from "#modules/assert/utils/assertNaN";
 export type * from "#modules/assert/utils/assertNotBigInt";
+export type * from "#modules/assert/utils/assertNotBoolean";
 export type * from "#modules/assert/utils/assertNotFunction";
 export type * from "#modules/assert/utils/assertNotNull";
 export type * from "#modules/assert/utils/assertNotNullish";

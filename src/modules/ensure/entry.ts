@@ -12,6 +12,7 @@ export { ensureFunction as isFunction } from "#modules/ensure/utils/ensureFuncti
 export { ensureInteger as isInteger } from "#modules/ensure/utils/ensureInteger";
 export { ensureNaN as isNaN } from "#modules/ensure/utils/ensureNaN";
 export { ensureNotBigInt as isNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
+export { ensureNotBoolean as isNotBoolean } from "#modules/ensure/utils/ensureNotBoolean";
 export { ensureNotFunction as isNotFunction } from "#modules/ensure/utils/ensureNotFunction";
 export { ensureNotNull as isNotNull } from "#modules/ensure/utils/ensureNotNull";
 export { ensureNotNullish as isNotNullish } from "#modules/ensure/utils/ensureNotNullish";
@@ -47,6 +48,7 @@ export type * from "#modules/ensure/utils/ensureFunction";
 export type * from "#modules/ensure/utils/ensureInteger";
 export type * from "#modules/ensure/utils/ensureNaN";
 export type * from "#modules/ensure/utils/ensureNotBigInt";
+export type * from "#modules/ensure/utils/ensureNotBoolean";
 export type * from "#modules/ensure/utils/ensureNotFunction";
 export type * from "#modules/ensure/utils/ensureNotNull";
 export type * from "#modules/ensure/utils/ensureNotNullish";

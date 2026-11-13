@@ -9,6 +9,7 @@ import { ensureFunction } from "#modules/ensure/utils/ensureFunction";
 import { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 import { ensureNaN } from "#modules/ensure/utils/ensureNaN";
 import { ensureNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
+import { ensureNotBoolean } from "#modules/ensure/utils/ensureNotBoolean";
 import { ensureNotFunction } from "#modules/ensure/utils/ensureNotFunction";
 import { ensureNotNull } from "#modules/ensure/utils/ensureNotNull";
 import { ensureNotNullish } from "#modules/ensure/utils/ensureNotNullish";
@@ -52,6 +53,7 @@ export interface Ensure {
   readonly isInteger: typeof ensureInteger;
   readonly isNaN: typeof ensureNaN;
   readonly isNotBigInt: typeof ensureNotBigInt;
+  readonly isNotBoolean: typeof ensureNotBoolean;
   readonly isNotFunction: typeof ensureNotFunction;
   readonly isNotNull: typeof ensureNotNull;
   readonly isNotNullish: typeof ensureNotNullish;
@@ -103,6 +105,7 @@ export const ensure: Ensure = assign(
     isInteger: ensureInteger,
     isNaN: ensureNaN,
     isNotBigInt: ensureNotBigInt,
+    isNotBoolean: ensureNotBoolean,
     isNotFunction: ensureNotFunction,
     isNotNull: ensureNotNull,
     isNotNullish: ensureNotNullish,
