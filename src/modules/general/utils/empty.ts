@@ -6,7 +6,9 @@ import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
 import { isString } from "#modules/string/guards/isString";
 import type { EmptyValueOf } from "#types/EmptyValueOf";
 
-/** Checks for nullish values, blank strings, empty containers, or custom emptiness. */
+/**
+ * Checks for nullish values, blank strings, empty containers, or custom emptiness.
+ */
 export function empty<Value>(input: Value): input is EmptyValueOf<Value> {
   if (input == null) {
     return true;

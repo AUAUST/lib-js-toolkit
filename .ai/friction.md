@@ -75,3 +75,4 @@
 - pnpm ci: invoked pnpm built-in reinstall — used pnpm run ci for project script.
 - gh issue view: pause review reads — sandbox network blocked; retried with escalation.
 - pnpm exec: pause duplication review — sandbox signature lookup stalled and failed; retried with escalation.
+- pnpm dependency skills: found where `.claude/skills/pnpm-*` links come from — no instruction names pnpm `permissions.<pkg>.skills`; read `pnpm-workspace.yaml` and the symlink

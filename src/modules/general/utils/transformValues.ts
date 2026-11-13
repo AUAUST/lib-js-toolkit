@@ -10,7 +10,9 @@ export function transformValues<
     [
       value: Target[keyof Target],
       key: keyof Target,
-      /** @internal */
+      /**
+       * @internal
+       */
       sourceKey: keyof Target,
     ]
   >,

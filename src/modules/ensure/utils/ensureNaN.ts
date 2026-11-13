@@ -1,6 +1,8 @@
 import { assertNaN } from "#modules/assert/utils/assertNaN";
 
-/** Returns the candidate when it is NaN; otherwise throws an `AssertionError`. */
+/**
+ * Returns the candidate when it is NaN; otherwise throws an `AssertionError`.
+ */
 export function ensureNaN<Candidate>(
   candidate: Candidate,
   message?: string,

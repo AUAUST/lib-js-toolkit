@@ -6,7 +6,9 @@ import type { ObjectKey } from "#types/ObjectKey";
 import type { ObjectValue } from "#types/ObjectValue";
 import type { ToRecordKey } from "#types/ToRecordKey";
 
-/** Projects copied properties into a record, excluding array methods and metadata. */
+/**
+ * Projects copied properties into a record, excluding array methods and metadata.
+ */
 export type MappedSource<
   Source,
   IncludeSymbols extends boolean = true,

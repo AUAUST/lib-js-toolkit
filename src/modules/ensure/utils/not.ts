@@ -1,7 +1,9 @@
 import { AssertionError } from "#errors/AssertionError";
 import type { Guard } from "#modules/ensure/internals/Guard";
 
-/** Returns the candidate when the guard fails; otherwise throws an `AssertionError`. */
+/**
+ * Returns the candidate when the guard fails; otherwise throws an `AssertionError`.
+ */
 export function not<Candidate, Guarded>(
   guard: Guard<Guarded>,
   candidate: Candidate,

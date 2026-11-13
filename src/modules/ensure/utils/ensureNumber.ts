@@ -1,6 +1,8 @@
 import { assertNumber } from "#modules/assert/utils/assertNumber";
 
-/** Returns the candidate when it is a number; otherwise throws an `AssertionError`. */
+/**
+ * Returns the candidate when it is a number; otherwise throws an `AssertionError`.
+ */
 export function ensureNumber<Candidate>(
   candidate: Candidate,
   message?: string,

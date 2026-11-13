@@ -76,7 +76,9 @@ export interface Ensure {
   readonly isUndefined: typeof ensureUndefined;
 }
 
-/** Returns the candidate when the guard passes; otherwise throws an `AssertionError`. Every `ensure` helper is attached; importing it bundles them all. */
+/**
+ * Returns the candidate when the guard passes; otherwise throws an `AssertionError`. Every `ensure` helper is attached; importing it bundles them all.
+ */
 export const ensure: Ensure = assign(
   function ensure<Candidate, Guarded>(
     guard: Guard<Guarded>,

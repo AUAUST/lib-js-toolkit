@@ -1,6 +1,8 @@
 import { AssertionError } from "#errors/AssertionError";
 
-/** Throws an `AssertionError` unless the candidate is null; narrows it in place. */
+/**
+ * Throws an `AssertionError` unless the candidate is null; narrows it in place.
+ */
 export function assertNull(
   candidate: unknown,
   message = "Expected null.",

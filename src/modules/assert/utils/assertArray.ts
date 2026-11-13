@@ -1,7 +1,9 @@
 import { AssertionError } from "#errors/AssertionError";
 import { isArray } from "#modules/array/guards/isArray";
 
-/** Throws an `AssertionError` unless the candidate is an array; narrows it in place. */
+/**
+ * Throws an `AssertionError` unless the candidate is an array; narrows it in place.
+ */
 export function assertArray(
   candidate: unknown,
   message = "Expected an array.",

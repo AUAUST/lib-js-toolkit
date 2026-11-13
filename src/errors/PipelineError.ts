@@ -3,16 +3,24 @@ import type { Callee } from "#types/Callee";
 export class PipelineError<Input = unknown> extends Error {
   public readonly name = "PipelineError";
 
-  /** The function that caused the error in the pipeline. */
+  /**
+   * The function that caused the error in the pipeline.
+   */
   public readonly fn: Callee;
 
-  /** The index of the function in the pipeline where the error occurred. */
+  /**
+   * The index of the function in the pipeline where the error occurred.
+   */
   public readonly step: number;
 
-  /** The value of `this`` when the error occurred. */
+  /**
+   * The value of `this`` when the error occurred.
+   */
   public readonly thisValue: unknown;
 
-  /** The input that was provided to the function that caused the error. */
+  /**
+   * The input that was provided to the function that caused the error.
+   */
   public readonly input: Input;
 
   constructor({

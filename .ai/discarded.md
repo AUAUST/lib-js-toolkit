@@ -19,3 +19,6 @@
 - `src/types/Guard.ts`: share the guard signature of `ensure` and `ensure.not` — adds a public type #172 keeps module-private; an `internals` module suffices
 - pure-rand: public secure 32-bit draw — seeded PRNG contract adds no value over the existing host wrapper
 - crypto-random-string: public secure 32-bit draw — string generation adds dependencies for an existing numeric host wrapper
+- always-loaded helper list rule: agents writing toolkit helpers — hundreds of lines in every TypeScript session; on-demand skill instead
+- MCP server for helper lookup: agents writing toolkit helpers — running process and tool schema for data a skill file holds
+- errors on generic helper calls (`map` → `pluck`): specialisations agents miss — fail legitimate code; non-failing edit-time hints instead

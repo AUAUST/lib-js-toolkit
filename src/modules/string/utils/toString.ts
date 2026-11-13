@@ -1,7 +1,9 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { isString } from "#modules/string/guards/isString";
 
-/** Converts input to a string without mutation; objects without conversion hooks throw natively.
+/**
+ * Converts input to a string without mutation; objects without conversion hooks throw natively.
+ *
  * @shorthand s
  */
 export function toString<Input extends string>(input: Input): Input;

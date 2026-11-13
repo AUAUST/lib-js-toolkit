@@ -71,7 +71,9 @@ export interface Assert {
   readonly isUndefined: typeof assertUndefined;
 }
 
-/** Throws an `AssertionError` when the condition is falsy; every assertion is attached. Importing it bundles them all. */
+/**
+ * Throws an `AssertionError` when the condition is falsy; every assertion is attached. Importing it bundles them all.
+ */
 export const assert: Assert = assign<
   (condition: unknown, message?: string) => asserts condition,
   [Omit<Assert, never>]

@@ -1,6 +1,8 @@
 import { assertNull } from "#modules/assert/utils/assertNull";
 
-/** Returns the candidate when it is null; otherwise throws an `AssertionError`. */
+/**
+ * Returns the candidate when it is null; otherwise throws an `AssertionError`.
+ */
 export function ensureNull<Candidate>(
   candidate: Candidate,
   message?: string,

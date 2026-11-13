@@ -1,6 +1,8 @@
 import { assertString } from "#modules/assert/utils/assertString";
 
-/** Returns the candidate when it is a string; otherwise throws an `AssertionError`. */
+/**
+ * Returns the candidate when it is a string; otherwise throws an `AssertionError`.
+ */
 export function ensureString<Candidate>(
   candidate: Candidate,
   message?: string,

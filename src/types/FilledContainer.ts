@@ -1,4 +1,6 @@
-/** Possible nonempty containers, preserving readonly and tuple contracts. */
+/**
+ * Possible nonempty containers, preserving readonly and tuple contracts.
+ */
 export type FilledContainer<Value> = Value extends readonly unknown[]
   ? Value extends readonly []
     ? never

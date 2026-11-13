@@ -1,4 +1,6 @@
-/** Whitespace characters removed by String.prototype.trim(). */
+/**
+ * Whitespace characters removed by String.prototype.trim().
+ */
 export type Whitespace =
   | " "
   | "\t"
