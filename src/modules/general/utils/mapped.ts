@@ -8,6 +8,7 @@ import {
 import { mappedValues } from "#modules/general/utils/mappedValues";
 import { plain } from "#modules/general/utils/plain";
 import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { isContainer } from "#modules/guard/guards/isContainer";
 import { isObject } from "#modules/object/guards/isObject";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -130,16 +131,16 @@ export function mapped(
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
   transform?: Callee,
 ) {
+  if (!map && transform && isContainer(source)) {
+    return mappedValues(source, transform);
+  }
+
   if (!isObject(source)) {
     return source;
   }
 
   if (!transform) {
     return mappedKeys(source, map);
-  }
-
-  if (!map) {
-    return mappedValues(source, transform);
   }
 
   const mapper = keyMapper(map);

@@ -188,6 +188,23 @@ describe("mapped", () => {
     expect(tuple).toEqual({ 0: "1", 1: "2" });
   });
 
+  test("transforms function properties when delegating value transformation", () => {
+    const marker = Symbol("marker");
+    const source = Object.assign(() => 1, { count: 2, [marker]: 3 });
+
+    const result = mapped(source, undefined, String);
+
+    expectTypeOf(result).toEqualTypeOf<{ count: string; [marker]: string }>();
+    expect(Object.getPrototypeOf(result)).toBe(null);
+    expect(result.count).toBe("2");
+    expect(result[marker]).toBe("3");
+    expect(result).toHaveProperty("length", "0");
+    expect(source.count).toBe(2);
+    expect(source()).toBe(1);
+    expect(mapped(source)).toBe(source);
+    expect(mapped(source, { count: "total" }, String)).toBe(source);
+  });
+
   test("passes values to mappers and original and mapped keys to transformers", () => {
     const mapper = vi.fn((key: string, _value: number) => {
       return key === "a" ? "renamed" : true;
