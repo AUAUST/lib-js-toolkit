@@ -5,6 +5,7 @@ import { isNaN } from "#modules/number/guards/isNaN";
  * Throws a `TypeError` when it is not a number and a `RangeError` when it is negative.
  */
 export function toDelay(delay: number, label: string): number {
+  // @debt Reuse the number module's toNumber converter instead of native coercion.
   const milliseconds = Number(delay);
 
   if (isNaN(milliseconds)) {

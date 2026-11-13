@@ -2,6 +2,7 @@ import { isArray } from "#modules/array/guards/isArray";
 import { isBigInt } from "#modules/guard/guards/isBigInt";
 import { isNaN } from "#modules/number/guards/isNaN";
 import { isNumber } from "#modules/number/guards/isNumber";
+import { toNumber } from "#modules/number/utils/toNumber";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
 
@@ -20,14 +21,14 @@ export function parseNumber(input: unknown): number | undefined {
       return;
     }
 
-    const number = Number(trimmed.replaceAll("_", ""));
+    const number = toNumber(trimmed.replaceAll("_", ""));
 
     return isNaN(number) ? undefined : number;
   }
 
   if (isBigInt(input)) {
     return input >= -Number.MAX_SAFE_INTEGER && input <= Number.MAX_SAFE_INTEGER
-      ? Number(input)
+      ? toNumber(input)
       : undefined;
   }
 
@@ -35,7 +36,7 @@ export function parseNumber(input: unknown): number | undefined {
     return;
   }
 
-  const number = Number(input);
+  const number = toNumber(input);
 
   return isNaN(number) ? undefined : number;
 }

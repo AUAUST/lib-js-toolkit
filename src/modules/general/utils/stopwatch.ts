@@ -139,6 +139,7 @@ function resolveOptions(options: StopwatchOptions) {
     };
   }
 
+  // @debt Reuse the number module's toNumber converter instead of native coercion.
   if (isNaN((startAt = Number(startAt)))) {
     throw new TypeError(`Invalid startAt value: '${options.startAt}'`);
   }
