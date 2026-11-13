@@ -6,7 +6,11 @@ import {
   propertyComposer,
   type PropertyComposer,
 } from "#modules/composer/utils/propertyComposer";
-import { propertyComposers } from "#modules/composer/utils/propertyComposers";
+import {
+  propertyComposers,
+  type ComposedProperties,
+  type PropertyComposers,
+} from "#modules/composer/utils/propertyComposers";
 import { valueComposer } from "#modules/composer/utils/valueComposer";
 import { valueComposers } from "#modules/composer/utils/valueComposers";
 import { create } from "#modules/object/utils/create";
@@ -50,11 +54,20 @@ export type Composed<
   ...infer Tail extends CompositionInput[],
 ]
   ? Composed<
-      Head extends readonly PropertyComposer[]
-        ? Composed<Base, Head>
-        : Head extends PropertyComposer
-          ? Extended<Base, ComposedEntry<Head>>
-          : never,
+      Exclude<
+        keyof PropertyComposers<{}>,
+        keyof PropertyComposer[]
+      > extends keyof Head
+        ? Base extends Fn
+          ? Extended<Base, ComposedProperties<Head>>
+          : keyof Base extends never
+            ? ComposedProperties<Head>
+            : Extended<Base, ComposedProperties<Head>>
+        : Head extends readonly PropertyComposer[]
+          ? Composed<Base, Head>
+          : Head extends PropertyComposer
+            ? Extended<Base, ComposedEntry<Head>>
+            : never,
       Tail
     >
   : Entries extends readonly []

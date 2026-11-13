@@ -1,14 +1,17 @@
 import { getterComposer } from "#modules/composer/utils/getterComposer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
-import type { PropertyComposer } from "#modules/composer/utils/propertyComposer";
+import type { PropertyComposers } from "#modules/composer/utils/propertyComposers";
 
 export function getterComposers<
   Getters extends Record<PropertyKey, (this: any) => unknown>,
 >(
   getters: Getters,
-): {
-  [Key in keyof Getters]-?: PropertyComposer<Key, { get: Getters[Key] }>;
-}[keyof Getters][] {
+): PropertyComposers<
+  {
+    [Key in keyof Getters]: { readonly get: Getters[Key] };
+  },
+  { readonly [Key in keyof Getters]: ReturnType<Getters[Key]> }
+> {
   return ownKeys(getters).map((key) => {
     return getterComposer(key, getters[key]);
   });

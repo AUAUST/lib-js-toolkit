@@ -48,6 +48,93 @@ describe("compose", () => {
     });
   });
 
+  test("preserves generic getter maps", () => {
+    function fromGetters<Getters extends Record<PropertyKey, () => unknown>>(
+      getters: Getters,
+    ): { readonly [Key in keyof Getters]: ReturnType<Getters[Key]> } {
+      return compose(compose.getters(getters));
+    }
+
+    function fromGettersWithBase<
+      Getters extends Record<PropertyKey, () => unknown>,
+    >(
+      getters: Getters,
+    ): { readonly [Key in keyof Getters]: ReturnType<Getters[Key]> } {
+      return compose({}, compose.getters(getters));
+    }
+
+    expect(fromGetters({ answer: () => 42 }).answer).toBe(42);
+    expect(fromGettersWithBase({ answer: () => 42 }).answer).toBe(42);
+  });
+
+  test("preserves generic value maps", () => {
+    function fromValues<Values extends object>(
+      values: Values,
+    ): { -readonly [Key in keyof Values]: Values[Key] } {
+      return compose(compose.values(values));
+    }
+
+    function fromValuesWithBase<Values extends object>(
+      values: Values,
+    ): { -readonly [Key in keyof Values]: Values[Key] } {
+      return compose({}, compose.values(values));
+    }
+
+    expect(fromValues({ answer: 42 }).answer).toBe(42);
+    expect(fromValuesWithBase({ answer: 42 }).answer).toBe(42);
+  });
+
+  test("preserves readonly maps and declared numeric and symbol keys", () => {
+    const token = Symbol("token");
+
+    const getters = { 1: () => 42, [token]: () => "token" } as const;
+    const result = compose(compose.getters(getters));
+
+    expect(result[1]).toBe(42);
+    expect(result[token]).toBe("token");
+
+    expectTypeOf(result).toEqualTypeOf<{
+      readonly 1: number;
+      readonly [token]: string;
+    }>();
+
+    const values = { answer: 42 } as const;
+    const writable = compose(compose.values(values));
+
+    expectTypeOf(writable).toEqualTypeOf<{ answer: 42 }>();
+  });
+
+  test("preserves mixed descriptor map modifiers", () => {
+    const descriptors = {
+      fixed: { value: "fixed" },
+      mutable: { value: 42, writable: true },
+      computed: { get: () => true },
+    } as const;
+
+    const result = compose(compose.properties(descriptors));
+
+    expect(result.fixed).toBe("fixed");
+    expect(result.mutable).toBe(42);
+    expect(result.computed).toBe(true);
+
+    expectTypeOf(result).toEqualTypeOf<{
+      readonly fixed: "fixed";
+      mutable: 42;
+      readonly computed: boolean;
+    }>();
+  });
+
+  test("composes hand-built property composer arrays", () => {
+    const entries: ReturnType<
+      typeof compose.value<"answer", number>
+    >[] = [compose.value("answer", 42)];
+
+    const result = compose(entries);
+
+    expect(result.answer).toBe(42);
+    expectTypeOf(result).toEqualTypeOf<{ answer: number }>();
+  });
+
   test("creates null-prototype objects without a base", () => {
     const empty = compose();
     const result = compose(compose.value("value", 1));
