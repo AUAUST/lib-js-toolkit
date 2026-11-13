@@ -32,7 +32,7 @@ export interface Stopwatch<Identifier = unknown> {
   readonly periods: readonly Period[];
   /**
    * Records a new lap and returns the elapsed time since the last lap.
-   * Throws an `StateError` while the timer is paused or stopped.
+   * @throws {StateError} while the timer is paused or stopped.
    */
   lap(key?: Identifier): number;
   /**

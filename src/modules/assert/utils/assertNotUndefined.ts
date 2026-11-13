@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotUndefined } from "#modules/guard/guards/isNotUndefined";
 
 /**
- * Throws an `AssertionError` when the candidate is undefined; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is undefined; removes it from the candidate's type in place.
  */
 export function assertNotUndefined<Candidate>(
   candidate: Candidate,

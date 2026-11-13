@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotSymbol } from "#modules/guard/guards/isNotSymbol";
 
 /**
- * Throws an `AssertionError` when the candidate is a symbol; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is a symbol; removes it from the candidate's type in place.
  */
 export function assertNotSymbol<Candidate>(
   candidate: Candidate,

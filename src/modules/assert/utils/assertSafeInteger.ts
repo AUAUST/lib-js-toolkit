@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 
 /**
- * Throws an `AssertionError` unless the candidate is a safe integer; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a safe integer; narrows it in place.
  */
 export function assertSafeInteger(
   candidate: unknown,

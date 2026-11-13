@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotFunction } from "#modules/function/guards/isNotFunction";
 
 /**
- * Throws an `AssertionError` when the candidate is a function; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is a function; removes it from the candidate's type in place.
  */
 export function assertNotFunction<Candidate>(
   candidate: Candidate,

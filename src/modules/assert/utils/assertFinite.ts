@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isFinite } from "#modules/number/guards/isFinite";
 
 /**
- * Throws an `AssertionError` unless the candidate is a finite number; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a finite number; narrows it in place.
  */
 export function assertFinite(
   candidate: unknown,

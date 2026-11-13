@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 
 /**
- * Throws an `AssertionError` unless the candidate is a symbol; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a symbol; narrows it in place.
  */
 export function assertSymbol(
   candidate: unknown,

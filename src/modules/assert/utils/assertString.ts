@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import { isString } from "#modules/string/guards/isString";
 
 /**
- * Throws an `AssertionError` unless the candidate is a string; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a string; narrows it in place.
  */
 export function assertString(
   candidate: unknown,

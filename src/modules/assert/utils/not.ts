@@ -2,7 +2,7 @@ import { AssertionError } from "#errors/AssertionError";
 import type { Falsy } from "#types/Falsy";
 
 /**
- * Throws an `AssertionError` when the condition is truthy.
+ * @throws {AssertionError} when the condition is truthy.
  */
 export function not(
   condition: unknown,
