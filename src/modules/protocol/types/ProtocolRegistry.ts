@@ -5,9 +5,7 @@ import type { Emptiable } from "#modules/protocol/types/Emptiable";
 import type { Primitive } from "#types/Primitive";
 
 export interface ProtocolRegistry {
-  [Symbol.asyncDispose]: AsyncDisposable;
   [Symbol.asyncIterator]: AsyncIterable<any>;
-  [Symbol.dispose]: Disposable;
   [Symbol.hasInstance]: {
     [Symbol.hasInstance]<T>(
       this: new (...args: any[]) => T,

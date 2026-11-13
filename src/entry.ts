@@ -87,6 +87,7 @@ export * as number from "#modules/number/entry";
 export * as object from "#modules/object/entry";
 export * as parse from "#modules/parse/entry";
 export * as protocol from "#modules/protocol/entry";
+export * as random from "#modules/random/entry";
 export * as setlike from "#modules/setlike/entry";
 export * as string from "#modules/string/entry";
 export type * from "#types";

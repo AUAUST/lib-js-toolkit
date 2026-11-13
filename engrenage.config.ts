@@ -84,7 +84,7 @@ export default defineConfig({
   },
   src: {
     baseline: "2026-10",
-    apis: ["timers", "performance", "console", "disposable", "float16"],
+    apis: ["timers", "performance", "console", "crypto"],
     roles: [
       entry(),
       index(),

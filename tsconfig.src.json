@@ -26,8 +26,7 @@
       "@auaust/engrenage/apis/timers",
       "@auaust/engrenage/apis/performance",
       "@auaust/engrenage/apis/console",
-      "@auaust/engrenage/apis/disposable",
-      "@auaust/engrenage/apis/float16"
+      "@auaust/engrenage/apis/crypto"
     ]
   }
 }

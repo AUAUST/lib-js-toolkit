@@ -64,6 +64,7 @@
     "./object": "./dist/object.mjs",
     "./parse": "./dist/parse.mjs",
     "./protocol": "./dist/protocol.mjs",
+    "./random": "./dist/random.mjs",
     "./setlike": "./dist/setlike.mjs",
     "./string": "./dist/string.mjs",
     "./types": "./dist/types.mjs"

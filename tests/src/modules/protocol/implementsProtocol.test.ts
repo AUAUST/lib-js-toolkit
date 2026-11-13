@@ -96,33 +96,6 @@ describe("protocols", () => {
     }
   });
 
-  test("narrows synchronous and asynchronous disposal protocols", () => {
-    const disposable: unknown = {
-      [Symbol.dispose]() {},
-    };
-
-    const asyncDisposable: unknown = {
-      async [Symbol.asyncDispose]() {},
-    };
-
-    if (implementsProtocol(Symbol.dispose, disposable)) {
-      expectTypeOf(disposable).toEqualTypeOf<Disposable>();
-      expectTypeOf(disposable[Symbol.dispose]).toEqualTypeOf<() => void>();
-    } else {
-      expect.unreachable("The value should implement Symbol.dispose.");
-    }
-
-    if (implementsProtocol(Symbol.asyncDispose, asyncDisposable)) {
-      expectTypeOf(asyncDisposable).toEqualTypeOf<AsyncDisposable>();
-
-      expectTypeOf(asyncDisposable[Symbol.asyncDispose]).toEqualTypeOf<
-        () => PromiseLike<void>
-      >();
-    } else {
-      expect.unreachable("The value should implement Symbol.asyncDispose.");
-    }
-  });
-
   test("narrows language operator protocols", () => {
     const instanceChecker: unknown = {
       [Symbol.hasInstance]: (value: any) => value === 42,
