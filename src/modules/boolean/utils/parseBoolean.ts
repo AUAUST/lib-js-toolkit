@@ -1,3 +1,4 @@
+import { toBoolean } from "#modules/boolean/utils/toBoolean";
 import { filled } from "#modules/general/utils/filled";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
@@ -20,5 +21,5 @@ export function parseBoolean(input: unknown): boolean {
     return filled(input);
   }
 
-  return !!input;
+  return toBoolean(input);
 }

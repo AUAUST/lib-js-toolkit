@@ -1,5 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
-import { isFunction } from "#modules/function/guards/isFunction";
+import { isIterable } from "#modules/iterable/guards/isIterable";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { isObject } from "#modules/object/guards/isObject";
 
@@ -21,11 +21,11 @@ export function parseArray(input: unknown): readonly unknown[] | undefined {
     return;
   }
 
-  // @debt Iterable and array-like detection casts instead of narrowing; replace with `isIterable` (#170) and an array-like guard.
-  if (isFunction(input, Symbol.iterator)) {
-    return Array.from(input as Iterable<unknown>);
+  if (isIterable(input)) {
+    return Array.from(input);
   }
 
+  // @debt Array-like detection casts instead of narrowing; replace with an array-like guard.
   const { length } = input as { length?: unknown };
 
   return isSafeInteger(length) && length >= 0
