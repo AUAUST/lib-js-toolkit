@@ -3,6 +3,7 @@ import { ensureArray } from "#modules/ensure/utils/ensureArray";
 import { ensureBigInt } from "#modules/ensure/utils/ensureBigInt";
 import { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
 import { ensureCallable } from "#modules/ensure/utils/ensureCallable";
+import { ensureCallableMember } from "#modules/ensure/utils/ensureCallableMember";
 import { ensureContainer } from "#modules/ensure/utils/ensureContainer";
 import { ensureFinite } from "#modules/ensure/utils/ensureFinite";
 import { ensureFunction } from "#modules/ensure/utils/ensureFunction";
@@ -50,6 +51,7 @@ export interface Ensure {
   readonly isBigInt: typeof ensureBigInt;
   readonly isBoolean: typeof ensureBoolean;
   readonly isCallable: typeof ensureCallable;
+  readonly isCallableMember: typeof ensureCallableMember;
   readonly isContainer: typeof ensureContainer;
   readonly isFinite: typeof ensureFinite;
   readonly isFunction: typeof ensureFunction;
@@ -105,6 +107,7 @@ export const ensure: Ensure = assign(
     isBigInt: ensureBigInt,
     isBoolean: ensureBoolean,
     isCallable: ensureCallable,
+    isCallableMember: ensureCallableMember,
     isContainer: ensureContainer,
     isFinite: ensureFinite,
     isFunction: ensureFunction,

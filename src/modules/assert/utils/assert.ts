@@ -3,6 +3,7 @@ import { assertArray } from "#modules/assert/utils/assertArray";
 import { assertBigInt } from "#modules/assert/utils/assertBigInt";
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 import { assertCallable } from "#modules/assert/utils/assertCallable";
+import { assertCallableMember } from "#modules/assert/utils/assertCallableMember";
 import { assertContainer } from "#modules/assert/utils/assertContainer";
 import { assertFinite } from "#modules/assert/utils/assertFinite";
 import { assertFunction } from "#modules/assert/utils/assertFunction";
@@ -45,6 +46,7 @@ export interface Assert {
   readonly isBigInt: typeof assertBigInt;
   readonly isBoolean: typeof assertBoolean;
   readonly isCallable: typeof assertCallable;
+  readonly isCallableMember: typeof assertCallableMember;
   readonly isContainer: typeof assertContainer;
   readonly isFinite: typeof assertFinite;
   readonly isFunction: typeof assertFunction;
@@ -100,6 +102,7 @@ export const assert: Assert = assign<
     isBigInt: assertBigInt,
     isBoolean: assertBoolean,
     isCallable: assertCallable,
+    isCallableMember: assertCallableMember,
     isContainer: assertContainer,
     isFinite: assertFinite,
     isFunction: assertFunction,
