@@ -14,6 +14,7 @@ import { ensureNotNull } from "#modules/ensure/utils/ensureNotNull";
 import { ensureNotNullish } from "#modules/ensure/utils/ensureNotNullish";
 import { ensureNotNumber } from "#modules/ensure/utils/ensureNotNumber";
 import { ensureNotObject } from "#modules/ensure/utils/ensureNotObject";
+import { ensureNotString } from "#modules/ensure/utils/ensureNotString";
 import { ensureNotSymbol } from "#modules/ensure/utils/ensureNotSymbol";
 import { ensureNotUndefined } from "#modules/ensure/utils/ensureNotUndefined";
 import { ensureNull } from "#modules/ensure/utils/ensureNull";
@@ -56,6 +57,7 @@ export interface Ensure {
   readonly isNotNullish: typeof ensureNotNullish;
   readonly isNotNumber: typeof ensureNotNumber;
   readonly isNotObject: typeof ensureNotObject;
+  readonly isNotString: typeof ensureNotString;
   readonly isNotSymbol: typeof ensureNotSymbol;
   readonly isNotUndefined: typeof ensureNotUndefined;
   readonly isNull: typeof ensureNull;
@@ -104,6 +106,7 @@ export const ensure: Ensure = assign(
     isNotNullish: ensureNotNullish,
     isNotNumber: ensureNotNumber,
     isNotObject: ensureNotObject,
+    isNotString: ensureNotString,
     isNotSymbol: ensureNotSymbol,
     isNotUndefined: ensureNotUndefined,
     isNull: ensureNull,

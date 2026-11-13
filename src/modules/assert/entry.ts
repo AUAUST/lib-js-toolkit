@@ -16,6 +16,7 @@ export { assertNotNull as isNotNull } from "#modules/assert/utils/assertNotNull"
 export { assertNotNullish as isNotNullish } from "#modules/assert/utils/assertNotNullish";
 export { assertNotNumber as isNotNumber } from "#modules/assert/utils/assertNotNumber";
 export { assertNotObject as isNotObject } from "#modules/assert/utils/assertNotObject";
+export { assertNotString as isNotString } from "#modules/assert/utils/assertNotString";
 export { assertNotSymbol as isNotSymbol } from "#modules/assert/utils/assertNotSymbol";
 export { assertNotUndefined as isNotUndefined } from "#modules/assert/utils/assertNotUndefined";
 export { assertNull as isNull } from "#modules/assert/utils/assertNull";
@@ -49,6 +50,7 @@ export type * from "#modules/assert/utils/assertNotNull";
 export type * from "#modules/assert/utils/assertNotNullish";
 export type * from "#modules/assert/utils/assertNotNumber";
 export type * from "#modules/assert/utils/assertNotObject";
+export type * from "#modules/assert/utils/assertNotString";
 export type * from "#modules/assert/utils/assertNotSymbol";
 export type * from "#modules/assert/utils/assertNotUndefined";
 export type * from "#modules/assert/utils/assertNull";

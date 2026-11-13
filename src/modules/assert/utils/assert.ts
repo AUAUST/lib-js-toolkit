@@ -14,6 +14,7 @@ import { assertNotNull } from "#modules/assert/utils/assertNotNull";
 import { assertNotNullish } from "#modules/assert/utils/assertNotNullish";
 import { assertNotNumber } from "#modules/assert/utils/assertNotNumber";
 import { assertNotObject } from "#modules/assert/utils/assertNotObject";
+import { assertNotString } from "#modules/assert/utils/assertNotString";
 import { assertNotSymbol } from "#modules/assert/utils/assertNotSymbol";
 import { assertNotUndefined } from "#modules/assert/utils/assertNotUndefined";
 import { assertNull } from "#modules/assert/utils/assertNull";
@@ -51,6 +52,7 @@ export interface Assert {
   readonly isNotNullish: typeof assertNotNullish;
   readonly isNotNumber: typeof assertNotNumber;
   readonly isNotObject: typeof assertNotObject;
+  readonly isNotString: typeof assertNotString;
   readonly isNotSymbol: typeof assertNotSymbol;
   readonly isNotUndefined: typeof assertNotUndefined;
   readonly isNull: typeof assertNull;
@@ -99,6 +101,7 @@ export const assert: Assert = assign<
     isNotNullish: assertNotNullish,
     isNotNumber: assertNotNumber,
     isNotObject: assertNotObject,
+    isNotString: assertNotString,
     isNotSymbol: assertNotSymbol,
     isNotUndefined: assertNotUndefined,
     isNull: assertNull,
