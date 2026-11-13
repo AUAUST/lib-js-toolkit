@@ -130,6 +130,37 @@ describe("memoize", () => {
     expect(thrown).toBe(failure);
   });
 
+  test("stores a protocol-violating result as the failure, never retried", () => {
+    const next = vi.fn(() => {
+      return undefined as never;
+    });
+
+    const memoized = memoize<number>({
+      [Symbol.iterator]: () => {
+        return { next };
+      },
+    });
+
+    let first: unknown;
+    let second: unknown;
+
+    try {
+      memoized.realize();
+    } catch (error) {
+      first = error;
+    }
+
+    try {
+      memoized.realize();
+    } catch (error) {
+      second = error;
+    }
+
+    expect(first).toBeInstanceOf(TypeError);
+    expect(second).toBe(first);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
   test("throws on non-iterables and passes nullish through", () => {
     expect(() => memoize(42 as never)).toThrow(TypeError);
     expect(memoize(null)).toBeUndefined();

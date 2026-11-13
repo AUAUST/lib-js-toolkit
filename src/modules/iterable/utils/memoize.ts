@@ -42,10 +42,11 @@ export function memoize<Value>(
       return false;
     }
 
-    let result: IteratorResult<Value>;
+    let done: Maybe<boolean>;
+    let value: Value;
 
     try {
-      result = upstream.next();
+      ({ done, value } = upstream.next());
     } catch (error) {
       state = "failed";
       failure = error;
@@ -53,13 +54,13 @@ export function memoize<Value>(
       throw error;
     }
 
-    if (result.done) {
+    if (done) {
       state = "done";
 
       return false;
     }
 
-    cache.push(result.value);
+    cache.push(value);
 
     return true;
   }
