@@ -46,4 +46,20 @@ test("infers each overload and shares its shorthand", () => {
   expectTypeOf(toArray(null)).toEqualTypeOf<[]>();
   expectTypeOf(toArray(new Set<number>())).toEqualTypeOf<number[]>();
   expectTypeOf(toArray("a")).toEqualTypeOf<string[]>();
+  expectTypeOf(toArray(1 as unknown)).toEqualTypeOf<unknown[]>();
+});
+
+test("types each union member as it converts", () => {
+  const input = "ab" as string | Set<number>;
+
+  expect(toArray(input)).toEqual(["ab"]);
+  expectTypeOf(toArray(input)).toEqualTypeOf<string[] | number[]>();
+
+  expectTypeOf(toArray(1 as boolean | number)).toEqualTypeOf<
+    (boolean | number)[]
+  >();
+
+  expectTypeOf(
+    toArray([1] as readonly number[] | Map<string, 1> | undefined),
+  ).toEqualTypeOf<readonly number[] | [string, 1][] | []>();
 });
