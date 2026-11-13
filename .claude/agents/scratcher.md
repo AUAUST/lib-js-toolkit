@@ -5,10 +5,12 @@ description: Scratcher that triages the user's notes in .ai/scratchpad.md into
   Dispatch it only when a skill you follow or the user asks for a scratcher;
   otherwise do the work yourself.
 model: haiku
-disallowedTools:
-  - WebFetch
-  - WebSearch
 effort: low
+tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/scratchpad.md -->

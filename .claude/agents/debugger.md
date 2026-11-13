@@ -7,8 +7,6 @@ description: Debugger that investigates a bug, issue, backlog entry, debt marker
   yourself. Its report ends with what remains and the kind of work it needs.
 model: opus
 effort: medium
-disallowedTools:
-  - SendMessage
 hooks:
   Stop:
     - hooks:
@@ -20,6 +18,13 @@ hooks:
             found");d=n}process.stdout.write(d)')" && cd --
             "$engrenage_hook_root" && pnpm --silent engrenage agents claude hook
             stop || exit 2
+tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Skill
+  - ToolSearch
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/debugging.md -->

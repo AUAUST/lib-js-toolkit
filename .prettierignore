@@ -14,6 +14,9 @@ bun.lockb
 # Coverage
 /coverage
 
+# Agent stats
+/.ai/stats
+
 # Codex
 /AGENTS.override.md
 

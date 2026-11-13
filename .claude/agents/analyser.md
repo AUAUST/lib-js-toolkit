@@ -8,8 +8,15 @@ description: Analyser that works out the concern behind a request, its ideal
   and the kind of work it needs.
 model: opus
 effort: high
-disallowedTools:
-  - SendMessage
+tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Skill
+  - ToolSearch
+  - WebSearch
+  - WebFetch
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/analysis.md -->

@@ -30,3 +30,4 @@
 - worktree isolation guard: chained `git checkout` and a python heredoc ending in `git diff` in one Bash call — refused as unverifiable; split into single `git -C` calls and used Edit/Write
 - zsh: unquoted `--include=*.md` and `echo =====` separator again — `nomatch` and `=word` expansion failed both; used `git grep` and dropped the separator
 - engrenage gate --worktree: checking an uncommitted leaf without staging — no instruction names the flag; found it in `engrenage gate --help`
+- engrenage planning issue check: bare `#n` refs in a draft for another repo — rejected; qualified every ref as `#{repo.n}`, including the draft repo's own

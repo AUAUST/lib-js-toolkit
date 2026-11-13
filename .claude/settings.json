@@ -88,6 +88,30 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook record || exit 2",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "engrenage_hook_root=\"$(node -e 'const fs=require(\"node:fs\"),p=require(\"node:path\");let d=process.cwd();while(!fs.existsSync(p.join(d,\"package.json\"))){const n=p.dirname(d);if(n===d)throw Error(\"No consumer package found\");d=n}process.stdout.write(d)')\" && cd -- \"$engrenage_hook_root\" && pnpm --silent engrenage agents claude hook record || exit 2",
+            "async": true
+          }
+        ]
+      }
     ]
   },
   "attribution": {

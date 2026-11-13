@@ -5,8 +5,6 @@ description: Worker that implements one GitHub issue as written and stops to
   or the user asks for a worker; otherwise do the work yourself.
 model: opus
 effort: low
-disallowedTools:
-  - SendMessage
 hooks:
   Stop:
     - hooks:
@@ -18,6 +16,13 @@ hooks:
             found");d=n}process.stdout.write(d)')" && cd --
             "$engrenage_hook_root" && pnpm --silent engrenage agents claude hook
             stop || exit 2
+tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Skill
+  - ToolSearch
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/issue-implementation.md -->

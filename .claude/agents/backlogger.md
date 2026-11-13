@@ -6,10 +6,12 @@ description: Backlogger that brings backlog entries up to date with new
   otherwise do the work yourself. Its report ends with what remains and the kind
   of work it needs.
 model: opus
-disallowedTools:
-  - WebFetch
-  - WebSearch
 effort: low
+tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
 ---
 
 <!-- @reference @auaust/engrenage/agents/skills/backlog-handling.md -->

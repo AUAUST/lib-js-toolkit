@@ -52,4 +52,7 @@ ehthumbs.db
 # Coverage
 /coverage
 
+# Agent stats
+/.ai/stats
+
 # @end
