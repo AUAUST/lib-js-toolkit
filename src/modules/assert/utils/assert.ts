@@ -7,6 +7,7 @@ import { assertContainer } from "#modules/assert/utils/assertContainer";
 import { assertFinite } from "#modules/assert/utils/assertFinite";
 import { assertFunction } from "#modules/assert/utils/assertFunction";
 import { assertInteger } from "#modules/assert/utils/assertInteger";
+import { assertIterable } from "#modules/assert/utils/assertIterable";
 import { assertNaN } from "#modules/assert/utils/assertNaN";
 import { assertNotArray } from "#modules/assert/utils/assertNotArray";
 import { assertNotBigInt } from "#modules/assert/utils/assertNotBigInt";
@@ -47,6 +48,7 @@ export interface Assert {
   readonly isFinite: typeof assertFinite;
   readonly isFunction: typeof assertFunction;
   readonly isInteger: typeof assertInteger;
+  readonly isIterable: typeof assertIterable;
   readonly isNaN: typeof assertNaN;
   readonly isNotArray: typeof assertNotArray;
   readonly isNotBigInt: typeof assertNotBigInt;
@@ -100,6 +102,7 @@ export const assert: Assert = assign<
     isFinite: assertFinite,
     isFunction: assertFunction,
     isInteger: assertInteger,
+    isIterable: assertIterable,
     isNaN: assertNaN,
     isNotArray: assertNotArray,
     isNotBigInt: assertNotBigInt,

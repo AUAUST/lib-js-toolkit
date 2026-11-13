@@ -10,6 +10,7 @@ export { ensureContainer as isContainer } from "#modules/ensure/utils/ensureCont
 export { ensureFinite as isFinite } from "#modules/ensure/utils/ensureFinite";
 export { ensureFunction as isFunction } from "#modules/ensure/utils/ensureFunction";
 export { ensureInteger as isInteger } from "#modules/ensure/utils/ensureInteger";
+export { ensureIterable as isIterable } from "#modules/ensure/utils/ensureIterable";
 export { ensureNaN as isNaN } from "#modules/ensure/utils/ensureNaN";
 export { ensureNotArray as isNotArray } from "#modules/ensure/utils/ensureNotArray";
 export { ensureNotBigInt as isNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
@@ -47,6 +48,7 @@ export type * from "#modules/ensure/utils/ensureContainer";
 export type * from "#modules/ensure/utils/ensureFinite";
 export type * from "#modules/ensure/utils/ensureFunction";
 export type * from "#modules/ensure/utils/ensureInteger";
+export type * from "#modules/ensure/utils/ensureIterable";
 export type * from "#modules/ensure/utils/ensureNaN";
 export type * from "#modules/ensure/utils/ensureNotArray";
 export type * from "#modules/ensure/utils/ensureNotBigInt";

@@ -7,6 +7,7 @@ import { ensureContainer } from "#modules/ensure/utils/ensureContainer";
 import { ensureFinite } from "#modules/ensure/utils/ensureFinite";
 import { ensureFunction } from "#modules/ensure/utils/ensureFunction";
 import { ensureInteger } from "#modules/ensure/utils/ensureInteger";
+import { ensureIterable } from "#modules/ensure/utils/ensureIterable";
 import { ensureNaN } from "#modules/ensure/utils/ensureNaN";
 import { ensureNotArray } from "#modules/ensure/utils/ensureNotArray";
 import { ensureNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
@@ -52,6 +53,7 @@ export interface Ensure {
   readonly isFinite: typeof ensureFinite;
   readonly isFunction: typeof ensureFunction;
   readonly isInteger: typeof ensureInteger;
+  readonly isIterable: typeof ensureIterable;
   readonly isNaN: typeof ensureNaN;
   readonly isNotArray: typeof ensureNotArray;
   readonly isNotBigInt: typeof ensureNotBigInt;
@@ -105,6 +107,7 @@ export const ensure: Ensure = assign(
     isFinite: ensureFinite,
     isFunction: ensureFunction,
     isInteger: ensureInteger,
+    isIterable: ensureIterable,
     isNaN: ensureNaN,
     isNotArray: ensureNotArray,
     isNotBigInt: ensureNotBigInt,

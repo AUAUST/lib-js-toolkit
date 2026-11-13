@@ -9,6 +9,7 @@ export { assertContainer as isContainer } from "#modules/assert/utils/assertCont
 export { assertFinite as isFinite } from "#modules/assert/utils/assertFinite";
 export { assertFunction as isFunction } from "#modules/assert/utils/assertFunction";
 export { assertInteger as isInteger } from "#modules/assert/utils/assertInteger";
+export { assertIterable as isIterable } from "#modules/assert/utils/assertIterable";
 export { assertNaN as isNaN } from "#modules/assert/utils/assertNaN";
 export { assertNotArray as isNotArray } from "#modules/assert/utils/assertNotArray";
 export { assertNotBigInt as isNotBigInt } from "#modules/assert/utils/assertNotBigInt";
@@ -45,6 +46,7 @@ export type * from "#modules/assert/utils/assertContainer";
 export type * from "#modules/assert/utils/assertFinite";
 export type * from "#modules/assert/utils/assertFunction";
 export type * from "#modules/assert/utils/assertInteger";
+export type * from "#modules/assert/utils/assertIterable";
 export type * from "#modules/assert/utils/assertNaN";
 export type * from "#modules/assert/utils/assertNotArray";
 export type * from "#modules/assert/utils/assertNotBigInt";
