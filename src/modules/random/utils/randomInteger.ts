@@ -1,4 +1,4 @@
-import { randomUint32 } from "#modules/random/internals/randomUint32";
+import { randomUint32 } from "#modules/random/utils/randomUint32";
 
 /** Returns a uniform integer in [min, max]. Throws RangeError for unsafe bounds or spans. Draws from the host's cryptographically secure generator (`crypto.getRandomValues`), with no guarantee beyond the host's. */
 export function randomInteger(min: number, max: number): number {

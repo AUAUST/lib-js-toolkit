@@ -17,3 +17,5 @@
 - cognitive-complexity limit 8 or lower: toolkit complexity limit — forces splitting flat switches and single loops (`compare`, remapping loop, `pipeAsync` condition)
 - `TextEncoder` in `md5`: UTF-8 encoding — maps lone surrogates to U+FFFD, changing hashes
 - `src/types/Guard.ts`: share the guard signature of `ensure` and `ensure.not` — adds a public type #172 keeps module-private; an `internals` module suffices
+- pure-rand: public secure 32-bit draw — seeded PRNG contract adds no value over the existing host wrapper
+- crypto-random-string: public secure 32-bit draw — string generation adds dependencies for an existing numeric host wrapper
