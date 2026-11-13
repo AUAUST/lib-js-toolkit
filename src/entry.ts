@@ -7,6 +7,8 @@ export const BUILD = frozen({
 });
 
 // @barrel domains
+export { toArray } from "#modules/array/utils/toArray";
+export { toArray as a } from "#modules/array/utils/toArray";
 export { assertArray } from "#modules/assert/utils/assertArray";
 export { assertBigInt } from "#modules/assert/utils/assertBigInt";
 export { assertBoolean } from "#modules/assert/utils/assertBoolean";
@@ -16,6 +18,7 @@ export { assertFinite } from "#modules/assert/utils/assertFinite";
 export { assertFunction } from "#modules/assert/utils/assertFunction";
 export { assertInteger } from "#modules/assert/utils/assertInteger";
 export { assertNaN } from "#modules/assert/utils/assertNaN";
+export { assertNotArray } from "#modules/assert/utils/assertNotArray";
 export { assertNotBigInt } from "#modules/assert/utils/assertNotBigInt";
 export { assertNotBoolean } from "#modules/assert/utils/assertNotBoolean";
 export { assertNotFunction } from "#modules/assert/utils/assertNotFunction";
@@ -52,6 +55,7 @@ export { ensureFinite } from "#modules/ensure/utils/ensureFinite";
 export { ensureFunction } from "#modules/ensure/utils/ensureFunction";
 export { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 export { ensureNaN } from "#modules/ensure/utils/ensureNaN";
+export { ensureNotArray } from "#modules/ensure/utils/ensureNotArray";
 export { ensureNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
 export { ensureNotBoolean } from "#modules/ensure/utils/ensureNotBoolean";
 export { ensureNotFunction } from "#modules/ensure/utils/ensureNotFunction";
