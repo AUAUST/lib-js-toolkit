@@ -86,38 +86,219 @@ describe("mappedValues", () => {
     });
   });
 
-  test("omits symbol properties from results and transformer arguments", () => {
+  test("includes string, numeric and symbol keys in object types", () => {
     const marker = Symbol("marker");
 
     const source = {
       entry: 4,
+      1: true,
       [marker]: "symbol value",
     };
 
+    const calls: unknown[][] = [];
     const copied = mappedValues(source);
 
-    const result = mappedValues(source, (value, key) => {
-      expectTypeOf(value).toEqualTypeOf<number>();
-      expectTypeOf(key).toEqualTypeOf<"entry">();
+    const result = mappedValues(source, (value, key, sourceKey) => {
+      expectTypeOf(value).toEqualTypeOf<number | boolean | string>();
+      expectTypeOf(key).toEqualTypeOf<"entry" | 1 | typeof marker>();
+      expectTypeOf(sourceKey).toEqualTypeOf<"entry" | 1 | typeof marker>();
+      calls.push([value, key, sourceKey]);
 
       return String(value);
     });
 
-    expectTypeOf(copied).toEqualTypeOf<{
-      entry: number;
-    }>();
+    expectTypeOf(copied).toEqualTypeOf<typeof source>();
 
     expectTypeOf(result).toEqualTypeOf<{
       entry: string;
+      1: string;
+      [marker]: string;
     }>();
 
-    expect(Reflect.ownKeys(copied)).toEqual(["entry"]);
-    expect(Reflect.ownKeys(result)).toEqual(["entry"]);
+    expect(result[1]).toBe("true");
+    expect(result["1"]).toBe("true");
+
+    expect(calls).toEqual([
+      [true, "1", "1"],
+      [4, "entry", "entry"],
+      ["symbol value", marker, marker],
+    ]);
+
+    const symbolsOnly = { [marker]: 2 };
+
+    expect(mappedValues(symbolsOnly)).toEqual(symbolsOnly);
+    expect(mappedValues(symbolsOnly, (value) => value * 2)[marker]).toBe(4);
+  });
+
+  test("visits every own object key and copies fresh writable properties", () => {
+    const marker = Symbol("marker");
+    const hiddenMarker = Symbol("hidden");
+    const inheritedMarker = Symbol("inherited");
+    const nested = {};
+
+    const source = {
+      visible: nested,
+      hidden: 3,
+      [marker]: 4,
+      [hiddenMarker]: 5,
+    };
+
+    Object.setPrototypeOf(source, { inherited: 1, [inheritedMarker]: 2 });
+
+    Object.defineProperties(source, {
+      visible: {
+        writable: false,
+        configurable: false,
+      },
+      hidden: {
+        enumerable: false,
+        writable: false,
+        configurable: false,
+      },
+      [marker]: {
+        writable: false,
+        configurable: false,
+      },
+      [hiddenMarker]: {
+        enumerable: false,
+        writable: false,
+        configurable: false,
+      },
+    });
+
+    const descriptors = Object.getOwnPropertyDescriptors(source);
+    const calls: PropertyKey[] = [];
+
+    const result = mappedValues(source, (value, key, sourceKey) => {
+      expect(key).toBe(sourceKey);
+      expect(value).toBe(source[key]);
+      calls.push(key);
+
+      return value;
+    });
+
+    const copied = mappedValues(source);
+
+    expect(calls).toEqual(Reflect.ownKeys(source));
+
+    for (const output of [result, copied]) {
+      expect(Object.getPrototypeOf(output)).toBeNull();
+      expect(Reflect.ownKeys(output)).toEqual(Reflect.ownKeys(source));
+      expect(output.visible).toBe(nested);
+
+      for (const key of Reflect.ownKeys(output)) {
+        expect(Object.getOwnPropertyDescriptor(output, key)).toEqual({
+          value: Reflect.get(source, key),
+          writable: true,
+          configurable: true,
+          enumerable: true,
+        });
+      }
+    }
+
+    expect(Object.getOwnPropertyDescriptors(source)).toEqual(descriptors);
+  });
+
+  test("keeps generic records indexable and preserves transformer write-back", () => {
+    interface Box {
+      n: number;
+    }
+
+    function generic<Source extends Record<string, Box>>(
+      source: Source,
+      key: keyof Source,
+    ) {
+      const result = mappedValues(source, (box) => {
+        return { doubled: box.n * 2 };
+      });
+
+      const entry = result[key];
+
+      expectTypeOf(entry.doubled).toEqualTypeOf<number>();
+
+      const again = mappedValues(result, (value) => value.doubled);
+
+      function copyValues(
+        value: Source[keyof Source],
+        key: keyof Source,
+        sourceKey: keyof Source,
+      ) {
+        output[key] = value;
+        output[sourceKey] = value;
+
+        return value;
+      }
+
+      const output: { [Key in keyof Source]: Source[Key] } = { ...source };
+
+      mappedValues(source, copyValues);
+
+      return again[key];
+    }
+
+    function symbols<Source extends Record<PropertyKey, Box>>(source: Source) {
+      const output: { [Key in keyof Source]: Source[Key] } = { ...source };
+
+      mappedValues(source, (box, key, sourceKey) => {
+        output[key] = box;
+        output[sourceKey] = box;
+
+        return box;
+      });
+
+      return output;
+    }
+
+    const marker = Symbol("marker");
+
+    expect(
+      generic(
+        {
+          entry: { n: 2 },
+        },
+        "entry",
+      ),
+    ).toBe(4);
+
+    expect(
+      symbols({
+        [marker]: { n: 2 },
+      })[marker].n,
+    ).toBe(2);
+  });
+
+  test("makes transformed readonly objects writable and keeps optional properties", () => {
+    const source: {
+      readonly required: number;
+      readonly optional?: number;
+    } = { required: 1 };
+
+    const result = mappedValues(source, (value) => String(value));
+
+    expectTypeOf(result).toEqualTypeOf<{
+      required: string;
+      optional?: string;
+    }>();
+
+    result.required = "changed";
+
+    expect(source.required).toBe(1);
+    expect(result.optional).toBeUndefined();
   });
 
   test("types primitive inputs as their copied records", () => {
     const characters = mappedValues("ab");
     const empty = mappedValues(42);
+
+    expect(mappedValues(null)).toEqual({});
+    expect(mappedValues(undefined)).toEqual({});
+    expect(mappedValues(false)).toEqual({});
+    expect(mappedValues(Symbol("primitive"))).toEqual({});
+
+    expect(mappedValues("ab", (value) => value.toUpperCase())).toEqual({
+      0: "A",
+      1: "B",
+    });
 
     expectTypeOf(characters).toEqualTypeOf<Record<`${number}`, string>>();
     expectTypeOf(empty).toEqualTypeOf<{}>();

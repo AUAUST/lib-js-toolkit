@@ -128,6 +128,66 @@ describe("mapped", () => {
     expect(result[destinationSymbol]).toBe("4");
   });
 
+  test("maps every own object key when delegating value transformation", () => {
+    const marker = Symbol("marker");
+    const inheritedMarker = Symbol("inherited");
+    const prototype = { inherited: 3, [inheritedMarker]: 4 };
+    const source = { entry: 1, [marker]: 2 };
+
+    Object.setPrototypeOf(source, prototype);
+    Object.defineProperty(source, "entry", { enumerable: false });
+
+    const visited: PropertyKey[] = [];
+
+    const result = mapped(source, undefined, (value, key, sourceKey) => {
+      visited.push(sourceKey);
+      expect(key).toBe(sourceKey);
+      expectTypeOf(value).toEqualTypeOf<number>();
+      expectTypeOf(key).toEqualTypeOf<"entry" | typeof marker>();
+      expectTypeOf(sourceKey).toEqualTypeOf<typeof key>();
+
+      return value * 2;
+    });
+
+    expect(visited).toEqual(["entry", marker]);
+
+    expectTypeOf(result).toEqualTypeOf<{ entry: number; [marker]: number }>();
+    expect(result).toEqual({ entry: 2, [marker]: 4 });
+    expect(Reflect.ownKeys(result)).toEqual(["entry", marker]);
+
+    function generic<Source extends Record<PropertyKey, number>>(
+      source: Source,
+      key: keyof Source,
+    ) {
+      const output: { [Key in keyof Source]: Source[Key] } = { ...source };
+
+      const result = mapped(source, undefined, (value, key, sourceKey) => {
+        output[key] = value;
+        output[sourceKey] = value;
+
+        return String(value);
+      });
+
+      return result[key];
+    }
+
+    expect(generic(source, marker)).toBe("2");
+
+    const tuple = mapped([1, 2] as const, undefined, (value, key) => {
+      expectTypeOf(value).toEqualTypeOf<1 | 2>();
+      expectTypeOf(key).toEqualTypeOf<`${number}`>();
+
+      return String(value);
+    });
+
+    expectTypeOf(tuple).toEqualTypeOf<{
+      readonly 0: string;
+      readonly 1: string;
+    }>();
+
+    expect(tuple).toEqual({ 0: "1", 1: "2" });
+  });
+
   test("passes values to mappers and original and mapped keys to transformers", () => {
     const mapper = vi.fn((key: string, _value: number) => {
       return key === "a" ? "renamed" : true;

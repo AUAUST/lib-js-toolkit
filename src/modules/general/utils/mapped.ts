@@ -18,13 +18,35 @@ import type { ToRecordKey } from "#types/ToRecordKey";
 /**
  * Copies properties into a null-prototype record, optionally mapping keys and
  * values. Mapping visits enumerable string keys, including inherited ones.
- * Without either mapper, copies own enumerable strings and symbols.
+ * With only a value transformer, objects include every own string and symbol
+ * key, including non-enumerables, and exclude inherited keys; arrays produce
+ * indexed records. Without either mapper, copies own enumerable strings and symbols.
  */
 export function mapped<Source extends Record<string, any>>(
   source: Source,
   map?: undefined,
   transformer?: undefined,
 ): MappedSource<Source>;
+export function mapped<Items extends readonly unknown[], Return>(
+  source: Items,
+  map: undefined,
+  transformer: Callee<
+    Return,
+    [
+      value: ObjectValue<Items>,
+      key: ObjectKey<Items>,
+      sourceKey: ObjectKey<Items>,
+    ]
+  >,
+): { [Key in keyof MappedSource<Items, false>]: Return };
+export function mapped<Source extends object, Return>(
+  source: Source,
+  map: undefined,
+  transformer: Callee<
+    Return,
+    [value: Source[keyof Source], key: keyof Source, sourceKey: keyof Source]
+  >,
+): { -readonly [Key in keyof Source]: Return };
 export function mapped<
   Source extends Record<string, any>,
   Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>,
@@ -106,7 +128,7 @@ export function mapped(
   map?:
     | Record<string, PropertyKey | false>
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
-  transform?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
+  transform?: Callee,
 ) {
   if (!isObject(source)) {
     return source;
