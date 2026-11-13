@@ -1,10 +1,11 @@
+import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { randomUint32 } from "#modules/random/utils/randomUint32";
 
 /** Returns a uniform integer in [min, max]. Throws RangeError for unsafe bounds or spans. Draws from the host's cryptographically secure generator (`crypto.getRandomValues`), with no guarantee beyond the host's. */
 export function randomInteger(min: number, max: number): number {
   if (
-    !Number.isSafeInteger(min) ||
-    !Number.isSafeInteger(max) ||
+    !isSafeInteger(min) ||
+    !isSafeInteger(max) ||
     min > max ||
     max - min > Number.MAX_SAFE_INTEGER
   ) {

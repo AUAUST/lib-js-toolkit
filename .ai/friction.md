@@ -31,3 +31,47 @@
 - zsh: unquoted `--include=*.md` and `echo =====` separator again — `nomatch` and `=word` expansion failed both; used `git grep` and dropped the separator
 - engrenage gate --worktree: checking an uncommitted leaf without staging — no instruction names the flag; found it in `engrenage gate --help`
 - engrenage planning issue check: bare `#n` refs in a draft for another repo — rejected; qualified every ref as `#{repo.n}`, including the draft repo's own
+- tests project map: where a shared test helper may live — map lists only `fixtures` as global role and says nothing of `testutils` placement; confirmed `tests/testutils/` via `engrenage structure` on a scratch copy
+- zsh: unquoted `--include=*.ts` in grep again — `nomatch` aborted the command; reran without it
+- Agent isolation worktree: resumed a stopped worker with a clean worktree — the harness had removed the unchanged worktree; re-dispatched a new worker
+- GitHub network: sandbox walk check stalled and gh failed — reran with network escalation.
+- gh network sandbox: read #97/#207 — sandbox could not connect to api.github.com; retried with network escalation
+- pnpm version verification: planning check in network sandbox — npm signature fetch stalled then failed; retried with network escalation
+- approval scope: read #171 within #207 walk — automatic review missed roadmap membership; supplied #207 Roadmap evidence and retry succeeded
+- worktree setup: sandbox denied Git metadata and pnpm bootstrap stalled — retried worktree creation and offline install with escalation
+- pnpm exec: sandbox bootstrap stalled during sync — retried with escalation
+- zsh: testutils glob matched no files — inspected generated aliases with rg instead
+- gh issue view: sandbox could not reach api.github.com — retried read with escalation
+- gh: sandbox issue read — network unavailable; retried escalated.
+- git worktree: create isolated checkout — sandbox blocked git metadata; retried escalated.
+- gh GraphQL: read issue fields — field unavailable; used REST issue metadata.
+- pnpm: sandbox exec — registry lookup stalled; used escalated commands.
+- worktree permissions: git worktree add — sandbox blocked git metadata; escalated.
+- GitHub network: gh issue view — sandbox blocked API; escalated.
+- pnpm sandbox: offline install and version stalled — escalated install preserved signature verification.
+- process inventory: ps — sandbox blocked process list; polled sessions instead.
+- source inspection: guessed MappedSource type path — read owner mappedKeys instead.
+- tsc invocation: standalone file check — TypeScript 6 requires --ignoreConfig beside tsconfig; added flag.
+- pnpm ci: attempted CI script — pnpm selected its install command; used pnpm run ci.
+- gh issue view: review issue reads — sandbox network unavailable; retried escalated.
+- pnpm exec: duplication review — sandbox bootstrap stalled; interrupted and retried escalated.
+- process inventory: ps — sandbox denied listing; polled the running command.
+- pnpm sandbox: focused tests stalled during bootstrap — interrupted and ran escalated.
+- process inventory: ps — sandbox denied process inspection; used existing friction log to identify pnpm bootstrap.
+- GitHub network: random issue search — sandbox blocked API; retried escalated.
+- engrenage planning issue check: legacy #161 has no issue type — classified its settled randomness contract as Resource/Specification.
+- web registry access: npm metadata URLs inaccessible — fetched registry JSON with Python for dependency comparison.
+- Worktree: assigned path absent — created detached worktree after metadata approval.
+- GitHub fields: direct union selection failed — selected concrete field type.
+- GitHub network: sandbox request failed — retried with network approval.
+- pnpm sandbox: sync and Vitest stalled without output — interrupted and reran with approval.
+- GitHub: gh issue view — sandbox network blocked; retried with approved network access.
+- Git worktrees: git stash push — sandbox could not write shared index; retried with approved metadata access.
+- Vitest: focused pnpm exec run — sandbox stalled before output; interrupted and retried with approved process access.
+- Process inspection: ps — sandbox denied process listing; checked command log instead.
+- worktree: briefed path absent — created detached worktree with escalation.
+- pnpm: sandbox invocation stalled — reran with escalation.
+- GitHub fields: projectItems query lacked read:project — read repository issue fields instead.
+- pnpm ci: invoked pnpm built-in reinstall — used pnpm run ci for project script.
+- gh issue view: pause review reads — sandbox network blocked; retried with escalation.
+- pnpm exec: pause duplication review — sandbox signature lookup stalled and failed; retried with escalation.
