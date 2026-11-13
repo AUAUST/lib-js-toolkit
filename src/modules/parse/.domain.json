@@ -1,1 +1,4 @@
-{ "purpose": "Parsers converting unknown input to a type." }
+{
+  "purpose": "Parsers converting unknown input to a type.",
+  "collects": ["utils"]
+}

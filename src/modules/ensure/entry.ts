@@ -15,6 +15,7 @@ export { ensureNotBigInt as isNotBigInt } from "#modules/ensure/utils/ensureNotB
 export { ensureNotFunction as isNotFunction } from "#modules/ensure/utils/ensureNotFunction";
 export { ensureNotNull as isNotNull } from "#modules/ensure/utils/ensureNotNull";
 export { ensureNotNullish as isNotNullish } from "#modules/ensure/utils/ensureNotNullish";
+export { ensureNotNumber as isNotNumber } from "#modules/ensure/utils/ensureNotNumber";
 export { ensureNotObject as isNotObject } from "#modules/ensure/utils/ensureNotObject";
 export { ensureNotSymbol as isNotSymbol } from "#modules/ensure/utils/ensureNotSymbol";
 export { ensureNotUndefined as isNotUndefined } from "#modules/ensure/utils/ensureNotUndefined";
@@ -48,6 +49,7 @@ export type * from "#modules/ensure/utils/ensureNotBigInt";
 export type * from "#modules/ensure/utils/ensureNotFunction";
 export type * from "#modules/ensure/utils/ensureNotNull";
 export type * from "#modules/ensure/utils/ensureNotNullish";
+export type * from "#modules/ensure/utils/ensureNotNumber";
 export type * from "#modules/ensure/utils/ensureNotObject";
 export type * from "#modules/ensure/utils/ensureNotSymbol";
 export type * from "#modules/ensure/utils/ensureNotUndefined";

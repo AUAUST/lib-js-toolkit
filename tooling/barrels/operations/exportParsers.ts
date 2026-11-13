@@ -32,18 +32,15 @@ export async function exportParsers(
     }),
   );
 
-  return [
-    ...exports,
-    ...parsers.flat().flatMap(({ file, binding }) => {
-      const split = splitPrefix(binding, ["parse"]);
+  return parsers.flat().flatMap(({ file, binding }) => {
+    const split = splitPrefix(binding, ["parse"]);
 
-      return split == null
-        ? []
-        : {
-            file,
-            binding,
-            name: lowerFirst(split.type),
-          };
-    }),
-  ];
+    return split == null
+      ? []
+      : {
+          file,
+          binding,
+          name: lowerFirst(split.type),
+        };
+  });
 }

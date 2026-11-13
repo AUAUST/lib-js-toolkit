@@ -23,7 +23,7 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ math*  Math helpers and native Math statics.
    ├─ number*  Helpers over numbers.
    ├─ object*  Object helpers and native Object statics.
-   ├─ parse*  Parsers converting unknown input to a type.
+   ├─ parse*[collects: utils]  Parsers converting unknown input to a type.
    ├─ protocol*  Protocol symbols, their types and detection.
    ├─ random*  Secure numeric randomness and an explicit insecure generator.
    ├─ setlike*  Helpers over sets and set-like collections.

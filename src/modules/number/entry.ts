@@ -3,10 +3,17 @@
 export { isFinite } from "#modules/number/guards/isFinite";
 export { isInteger } from "#modules/number/guards/isInteger";
 export { isNaN } from "#modules/number/guards/isNaN";
+export { isNotNumber } from "#modules/number/guards/isNotNumber";
 export { isNumber } from "#modules/number/guards/isNumber";
 export { isSafeInteger } from "#modules/number/guards/isSafeInteger";
+export { parseNumber } from "#modules/number/utils/parseNumber";
+export { toNumber } from "#modules/number/utils/toNumber";
+export { toNumber as n } from "#modules/number/utils/toNumber";
 export type * from "#modules/number/guards/isFinite";
 export type * from "#modules/number/guards/isInteger";
 export type * from "#modules/number/guards/isNaN";
+export type * from "#modules/number/guards/isNotNumber";
 export type * from "#modules/number/guards/isNumber";
 export type * from "#modules/number/guards/isSafeInteger";
+export type * from "#modules/number/utils/parseNumber";
+export type * from "#modules/number/utils/toNumber";

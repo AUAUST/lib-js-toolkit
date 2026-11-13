@@ -33,7 +33,7 @@ const baseFiles: Record<string, string> = {
   "engrenage.config.ts": config,
   "src/entry.ts": "// @barrel domains\n// @end\n",
   "src/modules/string/.domain.json": `{ "purpose": "Strings." }\n`,
-  "src/modules/parse/.domain.json": `{ "purpose": "Parsers." }\n`,
+  "src/modules/parse/.domain.json": `{ "purpose": "Parsers.", "collects": ["utils"] }\n`,
   "src/modules/assert/.domain.json": `{ "purpose": "Assertions." }\n`,
   "src/modules/ensure/.domain.json": `{ "purpose": "Ensured values." }\n`,
   "src/modules/string/utils/toString.ts": "/** @shorthand s */\nexport function toString(value: unknown): string {\n  return String(value);\n}\n",
@@ -114,6 +114,11 @@ describe("createBarrelsExtension", () => {
       expect(stringEntry).toContain("export { toString }");
       expect(stringEntry).toContain("export { toString as s }");
       expect(parseEntry).toContain("export { parseString as string }");
+      expect(parseEntry).not.toContain("toString");
+      expect(parseEntry).not.toContain(" as s }");
+      expect(parseEntry).not.toContain("assertString");
+      expect(parseEntry).not.toContain("export { assert }");
+      expect(parseEntry).not.toContain("defined");
       expect(assertEntry).toContain("export { assertString as isString }");
       expect(assertEntry).toContain("export { assert }");
       expect(assertEntry).not.toContain("export { assertString }");
