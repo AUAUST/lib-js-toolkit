@@ -2,7 +2,9 @@
 
 export { isCallable } from "#modules/function/guards/isCallable";
 export { isFunction } from "#modules/function/guards/isFunction";
+export { isMethod } from "#modules/function/guards/isMethod";
 export { isNotFunction } from "#modules/function/guards/isNotFunction";
 export type * from "#modules/function/guards/isCallable";
 export type * from "#modules/function/guards/isFunction";
+export type * from "#modules/function/guards/isMethod";
 export type * from "#modules/function/guards/isNotFunction";

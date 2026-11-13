@@ -1,4 +1,4 @@
-import { isFunction } from "#modules/function/guards/isFunction";
+import { isMethod } from "#modules/function/guards/isMethod";
 
 /**
  * Checks for an object or function with a function-valued `then` property.
@@ -6,5 +6,5 @@ import { isFunction } from "#modules/function/guards/isFunction";
 export function isPromiseLike<Value>(
   candidate: Value | PromiseLike<Value>,
 ): candidate is PromiseLike<Value> {
-  return isFunction(candidate, "then");
+  return isMethod(candidate, "then");
 }

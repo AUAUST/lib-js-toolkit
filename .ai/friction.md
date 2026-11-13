@@ -78,3 +78,5 @@
 - pnpm dependency skills: found where `.claude/skills/pnpm-*` links come from — no instruction names pnpm `permissions.<pkg>.skills`; read `pnpm-workspace.yaml` and the symlink
 - worktree isolation: ran git inside a chained or heredoc command — refused as unverifiable; split into separate plain commands
 - vitest --typecheck: ran the documented focused command to prove a type regression — reported no type errors on `*.test.ts` expectTypeOf failures; `pnpm typecheck` caught them
+- agent worktree base: brief said main HEAD 3f54c20 — worktree started at older 7690a29; fast-forwarded with git merge --ff-only main
+- worktree isolation: heredoc batch and git status in compound commands refused as unverifiable — split into separate commands and used Write
