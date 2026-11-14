@@ -215,7 +215,7 @@ environment          src, bin, scripts, tests, data, tooling: own directories an
 
 - `pnpm exec vitest run --config vitest.config.ts --typecheck <test-path>` for focused tests.
 - `pnpm lint` and `pnpm typecheck` for source changes; `pnpm test` runs the source suite and type checking. Source-mode Vitest removes `dist/`, so run it before a final build.
-- `pnpm build` for exports, aliases, declarations, compile-time metadata or bundling changes. It builds, validates packaging and reruns the tests against `dist/`. `pnpm ci:check` before delivery of any change; `pnpm ci` to also run the tests and the build.
+- `pnpm build` for exports, aliases, declarations, compile-time metadata or bundling changes. It builds, validates packaging and reruns the tests against `dist/`. `pnpm run ci:check` before delivery of any change; `pnpm run ci` to also run the tests and the build.
 - `pnpm format <files>` on changed files only.
 - `pnpm exec engrenage sync` after upgrading `@auaust/engrenage`; it regenerates the reference blocks, `env.d.ts` and the other derived files.
 - Add a changeset for any change that should be released.

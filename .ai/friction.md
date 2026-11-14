@@ -52,7 +52,6 @@
 - process inventory: ps — sandbox blocked process list; polled sessions instead.
 - source inspection: guessed MappedSource type path — read owner mappedKeys instead.
 - tsc invocation: standalone file check — TypeScript 6 requires --ignoreConfig beside tsconfig; added flag.
-- pnpm ci: attempted CI script — pnpm selected its install command; used pnpm run ci.
 - gh issue view: review issue reads — sandbox network unavailable; retried escalated.
 - pnpm exec: duplication review — sandbox bootstrap stalled; interrupted and retried escalated.
 - process inventory: ps — sandbox denied listing; polled the running command.
@@ -72,7 +71,6 @@
 - worktree: briefed path absent — created detached worktree with escalation.
 - pnpm: sandbox invocation stalled — reran with escalation.
 - GitHub fields: projectItems query lacked read:project — read repository issue fields instead.
-- pnpm ci: invoked pnpm built-in reinstall — used pnpm run ci for project script.
 - gh issue view: pause review reads — sandbox network blocked; retried with escalation.
 - pnpm exec: pause duplication review — sandbox signature lookup stalled and failed; retried with escalation.
 - pnpm dependency skills: found where `.claude/skills/pnpm-*` links come from — no instruction names pnpm `permissions.<pkg>.skills`; read `pnpm-workspace.yaml` and the symlink
@@ -84,3 +82,4 @@
 - zsh: passed a space-separated `$refs` variable to `engrenage planning issue check` — zsh does not word-split, so it read one ref; piped the refs through `xargs`
 - `engrenage planning issue` manifest: closed folded ideas (#178, #181, #182) as `duplicate` — the manifest has no duplicate-of key; named the owner issue in each body instead
 - `engrenage planning issue publish`: published a segment and a task closed as not planned with their header line — fails "header line but no ancestors"; removed the header lines by hand and reran
+- `engrenage planning issue publish`: published six drafts — GitHub 500 on `issue-field-values` before any write; the retry was denied by the auto-mode classifier, so the drafts stay local for the caller to publish
