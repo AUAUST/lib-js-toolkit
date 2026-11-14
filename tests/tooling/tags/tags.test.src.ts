@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+// @debt source-only because the dist guard rejects tooling's transitive source imports (engrenage.4)
+
 import { native, relates } from "#tooling/tags/index";
 
 function validate(declaration: ReturnType<typeof native>, body: string) {

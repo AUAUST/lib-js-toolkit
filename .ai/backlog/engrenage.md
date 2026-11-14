@@ -17,3 +17,9 @@
 - Engrenage treats an environment as active when its directory holds only ignored files: a stray `scripts/make/.DS_Store` revived the removed scripts environment, and `sync --check` failed in the main checkout.
 - Outcome: environment activity counts only tracked or non-ignored files.
 - Done when an environment directory holding only ignored files leaves the environment inactive.
+
+## 4. Dist tests reject tooling's source imports
+
+- The matrix lets `*.test.ts` import `tooling` and `tooling` import internal aliases, but the dist source guard rejects transitive resolutions into `src/`, so `tests/tooling/tags/tags.test.src.ts` stays source-only.
+- Outcome: tooling tests run in source mode only, or lint forbids the chain.
+- Done when such a `*.test.ts` passes both runs or fails lint.
