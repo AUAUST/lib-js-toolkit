@@ -9,3 +9,5 @@
 - Move transform, transformKeys, transformValues, keyMapper, plain, readonly and expose to @auaust/toolkit/object
 - Rename mapped, mappedKeys and mappedValues to object.map, object.mapKeys and object.mapValues
 - Rename object.is to isSelf
+- Add the time module
+- Move measure, measureAsync, now and stopwatch to @auaust/toolkit/time

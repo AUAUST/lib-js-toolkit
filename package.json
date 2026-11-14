@@ -67,6 +67,7 @@
     "./random": "./dist/random.mjs",
     "./setlike": "./dist/setlike.mjs",
     "./string": "./dist/string.mjs",
+    "./time": "./dist/time.mjs",
     "./types": "./dist/types.mjs"
   },
   "files": [

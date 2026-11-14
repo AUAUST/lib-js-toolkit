@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { stopwatch } from "@auaust/toolkit";
+import { stopwatch } from "@auaust/toolkit/time";
 
 describe("stopwatch", () => {
   afterEach(() => {

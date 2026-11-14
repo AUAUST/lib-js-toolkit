@@ -27,5 +27,6 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ protocol*  Protocol symbols, their types and detection.
    ├─ random*  Secure numeric randomness and an explicit insecure generator.
    ├─ setlike*  Helpers over sets and set-like collections.
-   └─ string*  Helpers over strings.
+   ├─ string*  Helpers over strings.
+   └─ time*  Helpers measuring and reading time.
 ```

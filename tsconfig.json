@@ -24,7 +24,8 @@
       "@auaust/toolkit/protocol": ["./src/modules/protocol/entry.ts"],
       "@auaust/toolkit/random": ["./src/modules/random/entry.ts"],
       "@auaust/toolkit/setlike": ["./src/modules/setlike/entry.ts"],
-      "@auaust/toolkit/string": ["./src/modules/string/entry.ts"]
+      "@auaust/toolkit/string": ["./src/modules/string/entry.ts"],
+      "@auaust/toolkit/time": ["./src/modules/time/entry.ts"]
     }
   },
   "files": [],

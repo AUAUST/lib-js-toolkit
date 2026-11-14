@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { now } from "@auaust/toolkit";
+import { now } from "@auaust/toolkit/time";
 
 describe("now", () => {
   afterEach(() => vi.useRealTimers());

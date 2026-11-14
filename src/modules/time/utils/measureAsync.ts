@@ -1,5 +1,5 @@
 import { apply } from "#modules/function/utils/apply";
-import type { MeasureResult } from "#modules/general/utils/measure";
+import type { MeasureResult } from "#modules/time/utils/measure";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
