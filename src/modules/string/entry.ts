@@ -3,11 +3,13 @@
 export { isNotString } from "#modules/string/guards/isNotString";
 export { isString } from "#modules/string/guards/isString";
 export { escapeRegExp } from "#modules/string/utils/escapeRegExp";
+export { md5 } from "#modules/string/utils/md5";
 export { parseString } from "#modules/string/utils/parseString";
 export { toString } from "#modules/string/utils/toString";
 export { toString as s } from "#modules/string/utils/toString";
 export type * from "#modules/string/guards/isNotString";
 export type * from "#modules/string/guards/isString";
 export type * from "#modules/string/utils/escapeRegExp";
+export type * from "#modules/string/utils/md5";
 export type * from "#modules/string/utils/parseString";
 export type * from "#modules/string/utils/toString";

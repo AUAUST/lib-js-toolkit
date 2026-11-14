@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { md5 } from "@auaust/toolkit";
+import { md5 } from "@auaust/toolkit/string";
 
 import { createValues } from "#tests/fixtures/values";
 

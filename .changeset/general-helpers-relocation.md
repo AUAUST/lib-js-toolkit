@@ -11,3 +11,4 @@
 - Rename object.is to isSelf
 - Add the time module
 - Move measure, measureAsync, now and stopwatch to @auaust/toolkit/time
+- Move md5 to @auaust/toolkit/string

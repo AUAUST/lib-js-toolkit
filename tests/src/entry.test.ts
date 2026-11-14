@@ -44,6 +44,7 @@ describe("toolkit", () => {
     "mapped",
     "mappedKeys",
     "mappedValues",
+    "md5",
     "measure",
     "measureAsync",
     "memoized",
