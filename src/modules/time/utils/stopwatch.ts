@@ -271,12 +271,14 @@ export function stopwatch<Identifier>(
     previousLap = current;
 
     laps.push(
-      freeze({
-        index: laps.length,
-        name: key,
-        duration,
-        timestamp: current,
-      }),
+      freeze(
+        plain<Lap<Identifier>>({
+          index: laps.length,
+          name: key,
+          duration,
+          timestamp: current,
+        }),
+      ),
     );
 
     return duration;

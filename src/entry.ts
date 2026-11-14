@@ -1,10 +1,13 @@
 import { freeze } from "#modules/object/utils/freeze";
+import { plain } from "#modules/object/utils/plain";
 
-export const BUILD = freeze({
-  name: __NAME__,
-  version: __VERSION__,
-  license: __LICENSE__,
-});
+export const BUILD = freeze(
+  plain({
+    name: __NAME__,
+    version: __VERSION__,
+    license: __LICENSE__,
+  }),
+);
 
 // @barrel domains
 export { toArray } from "#modules/array/utils/toArray";

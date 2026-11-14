@@ -21,6 +21,7 @@ describe("toolkit", () => {
     expect(version).toBeTypeOf("string");
     expect(license).toBeTypeOf("string");
     expect(Object.isFrozen(BUILD)).toBe(true);
+    expect(Object.getPrototypeOf(BUILD)).toBeNull();
   });
 
   test("re-exports modules as namespaces with the identity of their entry", () => {

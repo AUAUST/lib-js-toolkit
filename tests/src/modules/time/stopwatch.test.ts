@@ -75,6 +75,7 @@ describe("stopwatch", () => {
     expect(timer.lap("second")).toBe(20);
     expect(timer.laps).toHaveLength(2);
     expect(Object.isFrozen(timer.laps[0])).toBe(true);
+    expect(Object.getPrototypeOf(timer.laps[0])).toBeNull();
 
     expect(timer.laps[0]).toEqual({
       index: 0,
