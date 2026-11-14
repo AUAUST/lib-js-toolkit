@@ -12,6 +12,7 @@ import {
 } from "@auaust/engrenage/roles";
 
 import { createBarrelsExtension } from "#tooling/barrels/index";
+import { native, relates, root, shorthand } from "#tooling/tags/index";
 
 const guards = createRolePreset({
   name: "guards",
@@ -132,16 +133,7 @@ export default defineConfig({
   },
   docs: {
     tags: {
-      append: [
-        {
-          name: "shorthand",
-          body: "inline",
-        },
-        {
-          name: "root",
-          body: "none",
-        },
-      ],
+      append: [shorthand(), root(), native(), relates()],
     },
   },
 });
