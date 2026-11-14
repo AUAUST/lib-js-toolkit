@@ -1,7 +1,4 @@
-import { hasOwn } from "#modules/object/utils/hasOwn";
 import { proto } from "#modules/object/utils/proto";
-
-const objectConstructorSource = Function.prototype.toString.call(Object);
 
 export function isPlainObject(
   candidate: unknown,
@@ -17,26 +14,9 @@ export function isPlainObject(
 
   const prototype = proto(candidate);
 
-  if (
+  return (
     prototype === null ||
     prototype === Object.prototype ||
     proto(prototype) === null
-  ) {
-    return true;
-  }
-
-  if (prototype) {
-    if (proto(prototype) !== null) {
-      return false;
-    }
-
-    if (hasOwn(prototype, "constructor")) {
-      return (
-        Function.prototype.toString.call(candidate.constructor) ===
-        objectConstructorSource
-      );
-    }
-  }
-
-  return false;
+  );
 }
