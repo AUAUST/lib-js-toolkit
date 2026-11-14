@@ -1,6 +1,6 @@
-import { frozen } from "#modules/general/utils/frozen";
+import { freeze } from "#modules/object/utils/freeze";
 
-export const BUILD = frozen({
+export const BUILD = freeze({
   name: __NAME__,
   version: __VERSION__,
   license: __LICENSE__,

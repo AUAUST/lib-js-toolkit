@@ -19,6 +19,7 @@ describe("toolkit", () => {
     expect(name).toBe(__NAME__);
     expect(version).toBeTypeOf("string");
     expect(license).toBeTypeOf("string");
+    expect(Object.isFrozen(BUILD)).toBe(true);
   });
 
   test("re-exports modules as namespaces with the identity of their entry", () => {

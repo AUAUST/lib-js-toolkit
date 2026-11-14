@@ -1,5 +1,4 @@
 import { StateError } from "#errors/StateError";
-import { frozen } from "#modules/general/utils/frozen";
 import { plain } from "#modules/general/utils/plain";
 import { readonly } from "#modules/general/utils/readonly";
 import { isNaN } from "#modules/number/guards/isNaN";
@@ -272,7 +271,7 @@ export function stopwatch<Identifier>(
     previousLap = current;
 
     laps.push(
-      frozen({
+      freeze({
         index: laps.length,
         name: key,
         duration,
