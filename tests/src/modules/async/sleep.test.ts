@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { sleep } from "@auaust/toolkit";
+import { sleep } from "@auaust/toolkit/async";
 
 describe("sleep", () => {
   afterEach(() => vi.useRealTimers());

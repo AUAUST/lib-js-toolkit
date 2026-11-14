@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { sleep } from "@auaust/toolkit";
+import { sleep } from "@auaust/toolkit/async";
 import {
   compose,
   getterComposer,

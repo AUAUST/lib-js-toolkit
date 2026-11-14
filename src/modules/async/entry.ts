@@ -2,5 +2,9 @@
 
 export { isPromise } from "#modules/async/guards/isPromise";
 export { isPromiseLike } from "#modules/async/guards/isPromiseLike";
+export { defer } from "#modules/async/utils/defer";
+export { sleep } from "#modules/async/utils/sleep";
 export type * from "#modules/async/guards/isPromise";
 export type * from "#modules/async/guards/isPromiseLike";
+export type * from "#modules/async/utils/defer";
+export type * from "#modules/async/utils/sleep";

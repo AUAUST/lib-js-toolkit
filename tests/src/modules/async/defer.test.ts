@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { defer, type DeferPromise } from "@auaust/toolkit";
+import { defer, type DeferPromise } from "@auaust/toolkit/async";
 
 import { primitiveValues } from "#tests/fixtures/values";
 

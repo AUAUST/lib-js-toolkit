@@ -38,9 +38,11 @@ describe("toolkit", () => {
     "call",
     "callMethod",
     "debounce",
+    "defer",
     "memoized",
     "once",
     "resolveCallable",
+    "sleep",
     "spy",
     "throttle",
   ])("no longer exports the relocated %s at the root", (name) => {

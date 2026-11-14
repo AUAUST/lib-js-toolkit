@@ -2,7 +2,7 @@
 
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { defer } from "@auaust/toolkit";
+import { defer } from "@auaust/toolkit/async";
 import {
   cachedAsync,
   cachedAsync as cachedAsyncSubpath,
