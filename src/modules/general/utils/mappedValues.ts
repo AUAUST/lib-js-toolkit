@@ -1,6 +1,6 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { plain } from "#modules/general/utils/plain";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
 import type { MappedSource } from "#modules/general/utils/mappedKeys";

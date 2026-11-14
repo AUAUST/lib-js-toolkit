@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { resolveCallable } from "@auaust/toolkit";
+import { resolveCallable } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("resolveCallable", () => {

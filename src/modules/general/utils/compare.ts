@@ -1,7 +1,7 @@
 import { isCallable } from "#modules/function/guards/isCallable";
+import { call } from "#modules/function/utils/call";
 import { isComparablePrimitive } from "#modules/general/internals/isComparablePrimitive";
 import { resolveCustomOperator } from "#modules/general/internals/resolveCustomOperator";
-import { call } from "#modules/general/utils/call";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
 import { valueOf } from "#modules/general/utils/valueOf";

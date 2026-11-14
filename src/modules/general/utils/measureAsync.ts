@@ -1,4 +1,4 @@
-import { apply } from "#modules/general/utils/apply";
+import { apply } from "#modules/function/utils/apply";
 import type { MeasureResult } from "#modules/general/utils/measure";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

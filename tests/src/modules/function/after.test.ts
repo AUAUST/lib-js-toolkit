@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { after } from "@auaust/toolkit";
+import { after } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("after", () => {

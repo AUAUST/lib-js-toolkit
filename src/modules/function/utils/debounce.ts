@@ -1,5 +1,5 @@
-import { toDelay } from "#modules/general/internals/toDelay";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { toDelay } from "#modules/function/internals/toDelay";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

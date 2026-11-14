@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { once } from "@auaust/toolkit";
+import { once } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 import { createValues } from "#tests/fixtures/values";

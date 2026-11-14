@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { callMethod } from "@auaust/toolkit";
+import { callMethod } from "@auaust/toolkit/function";
 
 import { createKeyedCollections } from "#tests/fixtures/values";
 

@@ -1,3 +1,4 @@
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
 import { keyMapper } from "#modules/general/utils/keyMapper";
 import {
@@ -8,7 +9,6 @@ import {
 } from "#modules/general/utils/mappedKeys";
 import { mappedValues } from "#modules/general/utils/mappedValues";
 import { plain } from "#modules/general/utils/plain";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { isObject } from "#modules/object/guards/isObject";
 import type { Callee } from "#types/Callee";

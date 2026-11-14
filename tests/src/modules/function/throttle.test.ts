@@ -8,7 +8,7 @@ import {
   vi,
 } from "vitest";
 
-import { throttle, type Throttled } from "@auaust/toolkit";
+import { throttle, type Throttled } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("throttle", () => {

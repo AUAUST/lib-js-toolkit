@@ -1,8 +1,9 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { applyMethod, call, callMethod, type Callee } from "@auaust/toolkit";
+import { applyMethod, call, callMethod } from "@auaust/toolkit/function";
 import { isCallableMember } from "@auaust/toolkit/guard";
 import { callable } from "@auaust/toolkit/protocol";
+import type { Callee } from "@auaust/toolkit";
 
 import { primitiveValues } from "#tests/fixtures/values";
 

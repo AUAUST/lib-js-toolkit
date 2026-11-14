@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";

@@ -1,5 +1,5 @@
-import { toDelay } from "#modules/general/internals/toDelay";
-import { apply } from "#modules/general/utils/apply";
+import { toDelay } from "#modules/function/internals/toDelay";
+import { apply } from "#modules/function/utils/apply";
 import type { AsyncCallee } from "#types/AsyncCallee";
 
 /**

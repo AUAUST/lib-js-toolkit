@@ -1,4 +1,4 @@
-import { call } from "#modules/general/utils/call";
+import { call } from "#modules/function/utils/call";
 import type { Callee } from "#types/Callee";
 
 export function tap<V, This = any>(

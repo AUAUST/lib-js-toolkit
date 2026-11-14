@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { spy } from "@auaust/toolkit";
+import { spy } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("spy", () => {

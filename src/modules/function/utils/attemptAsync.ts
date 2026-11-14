@@ -1,28 +1,17 @@
-import { apply } from "#modules/general/utils/apply";
+import { apply } from "#modules/function/utils/apply";
+import type { AttemptResult } from "#modules/function/utils/attempt";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export type AttemptResult<Result> =
-  | {
-      success: true;
-      result: Result;
-      error: undefined;
-    }
-  | {
-      success: false;
-      result: undefined;
-      error: unknown;
-    };
-
-export function attempt<Callback extends Callee>(
+export async function attemptAsync<Callback extends Callee>(
   this: CallThisParameterType<Callback>,
   callback: Callback,
   ...args: CallParameters<Callback>
-): AttemptResult<CallReturnType<Callback>> {
+): Promise<AttemptResult<Awaited<CallReturnType<Callback>>>> {
   try {
-    const result = apply.call(this, callback, args);
+    const result = await Promise.resolve(apply.call(this, callback, args));
 
     return {
       success: true,

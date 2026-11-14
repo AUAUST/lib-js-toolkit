@@ -1,7 +1,7 @@
 import { PipelineError } from "#errors/PipelineError";
 import { isArray } from "#modules/array/guards/isArray";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;

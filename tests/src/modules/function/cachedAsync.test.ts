@@ -2,12 +2,12 @@
 
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
+import { defer } from "@auaust/toolkit";
 import {
   cachedAsync,
   cachedAsync as cachedAsyncSubpath,
-  defer,
   type CachedAsync,
-} from "@auaust/toolkit";
+} from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 import { primitiveValues } from "#tests/fixtures/values";

@@ -1,13 +1,13 @@
 import { isCallable } from "#modules/function/guards/isCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { identity } from "#modules/general/utils/identity";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { assign } from "#modules/object/utils/assign";
 import { defineGetter } from "#modules/object/utils/defineGetter";
 import type {
   CachedOptions,
   CacheResolver,
   KeyResolver,
-} from "#modules/general/utils/cached";
+} from "#modules/function/utils/cached";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";

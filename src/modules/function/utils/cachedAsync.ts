@@ -4,9 +4,9 @@ import {
   type CachedOptions,
   type CacheResolver,
   type KeyResolver,
-} from "#modules/general/utils/cached";
+} from "#modules/function/utils/cached";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { identity } from "#modules/general/utils/identity";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";

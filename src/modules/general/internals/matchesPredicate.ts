@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { call } from "#modules/general/utils/call";
+import { call } from "#modules/function/utils/call";
 import { sameValueZero } from "#modules/general/utils/sameValueZero";
 import { isString } from "#modules/string/guards/isString";
 

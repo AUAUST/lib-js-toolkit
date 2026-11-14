@@ -1,7 +1,7 @@
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { remapKeys } from "#modules/general/internals/remapKeys";
 import { keyMapper } from "#modules/general/utils/keyMapper";
 import { plain } from "#modules/general/utils/plain";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { transformKeys } from "#modules/general/utils/transformKeys";
 import { transformValues } from "#modules/general/utils/transformValues";
 import { isObject } from "#modules/object/guards/isObject";

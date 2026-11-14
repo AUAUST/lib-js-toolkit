@@ -1,6 +1,6 @@
 import { isCallable } from "#modules/function/guards/isCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { constant } from "#modules/general/utils/constant";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { isNumber } from "#modules/number/guards/isNumber";
 import { hasOwn } from "#modules/object/utils/hasOwn";
 import type { Callee } from "#types/Callee";

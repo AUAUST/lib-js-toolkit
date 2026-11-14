@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { assign } from "#modules/object/utils/assign";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import type { Callee } from "#types/Callee";

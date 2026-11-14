@@ -1,7 +1,7 @@
 import { PipelineError } from "#errors/PipelineError";
 import { isArray } from "#modules/array/guards/isArray";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { PipeCondition } from "#modules/general/utils/pipe";
 import type { AsyncCallee } from "#types/AsyncCallee";
 

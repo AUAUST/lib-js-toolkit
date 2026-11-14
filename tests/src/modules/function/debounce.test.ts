@@ -8,7 +8,7 @@ import {
   vi,
 } from "vitest";
 
-import { debounce } from "@auaust/toolkit";
+import { debounce } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("debounce", () => {

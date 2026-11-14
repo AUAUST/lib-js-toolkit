@@ -2,7 +2,11 @@
 
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { cached, type Cached, type CachedOptions } from "@auaust/toolkit";
+import {
+  cached,
+  type Cached,
+  type CachedOptions,
+} from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 import {

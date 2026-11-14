@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 

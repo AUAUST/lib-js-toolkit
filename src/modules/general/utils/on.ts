@@ -1,4 +1,4 @@
-import { apply } from "#modules/general/utils/apply";
+import { apply } from "#modules/function/utils/apply";
 import { value, type ResolvedValue } from "#modules/general/utils/value";
 import type { Callee } from "#types/Callee";
 

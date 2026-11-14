@@ -1,6 +1,6 @@
 import { StateError } from "#errors/StateError";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
-import { call } from "#modules/general/utils/call";
+import { call } from "#modules/function/utils/call";
 import type { CustomOperators } from "#modules/general/utils/compare";
 
 /**

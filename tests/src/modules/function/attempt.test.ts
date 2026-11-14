@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { attempt, type AttemptResult } from "@auaust/toolkit";
+import { attempt, type AttemptResult } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("attempt", () => {

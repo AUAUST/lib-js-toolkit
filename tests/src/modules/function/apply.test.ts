@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { apply, call } from "@auaust/toolkit";
+import { apply, call } from "@auaust/toolkit/function";
 import { assign, freeze } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocol";
 import type { Callee } from "@auaust/toolkit/types";

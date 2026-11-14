@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 
+import * as root from "@auaust/toolkit";
 import { BUILD, object as rootObject } from "@auaust/toolkit";
 import * as object from "@auaust/toolkit/object";
 
@@ -24,5 +25,25 @@ describe("toolkit", () => {
 
   test("re-exports modules as namespaces with the identity of their entry", () => {
     expect(rootObject).toBe(object);
+  });
+
+  test.each([
+    "after",
+    "apply",
+    "applyMethod",
+    "attempt",
+    "attemptAsync",
+    "cached",
+    "cachedAsync",
+    "call",
+    "callMethod",
+    "debounce",
+    "memoized",
+    "once",
+    "resolveCallable",
+    "spy",
+    "throttle",
+  ])("no longer exports the relocated %s at the root", (name) => {
+    expect(root).not.toHaveProperty(name);
   });
 });

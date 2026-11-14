@@ -1,6 +1,6 @@
 import { isCallable } from "#modules/function/guards/isCallable";
+import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import { identity } from "#modules/general/utils/identity";
-import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { assign } from "#modules/object/utils/assign";
 import type { Callable } from "#modules/protocol/types/Callable";

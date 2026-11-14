@@ -1,4 +1,4 @@
-import { after } from "#modules/general/utils/after";
+import { after } from "#modules/function/utils/after";
 import { noop } from "#modules/general/utils/noop";
 
 /**
