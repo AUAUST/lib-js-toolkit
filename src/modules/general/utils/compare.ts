@@ -5,7 +5,6 @@ import { call } from "#modules/general/utils/call";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
 import { valueOf } from "#modules/general/utils/valueOf";
-import { isNaN } from "#modules/number/guards/isNaN";
 import type { Callee } from "#types/Callee";
 import type { IsLiteral } from "#types/IsLiteral";
 import type { KeyAsString } from "#types/KeyAsString";
@@ -160,5 +159,5 @@ function resolvesToSameString(a: unknown, b: unknown): boolean {
   }
 
   // @debt `String()` still throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.
-  return String(valueOf(a)) === String(valueOf(b)) || (isNaN(a) && isNaN(b));
+  return String(valueOf(a)) === String(valueOf(b));
 }

@@ -1,20 +1,19 @@
 import { isCallable } from "#modules/function/guards/isCallable";
 import { call } from "#modules/general/utils/call";
-import { isNaN } from "#modules/number/guards/isNaN";
+import { sameValueZero } from "#modules/general/utils/sameValueZero";
 import { isString } from "#modules/string/guards/isString";
 
 /**
  * Tests one `match` predicate against the target: a callable's truthy result,
- * identity, a `RegExp` tested from the start of a string target, or `NaN`.
+ * SameValueZero equality, or a `RegExp` tested from the start of a string target.
  */
 export function matchesPredicate(predicate: unknown, target: unknown): boolean {
   return (
     (isCallable(predicate) && Boolean(call(predicate, target))) ||
-    predicate === target ||
+    sameValueZero(predicate, target) ||
     (predicate instanceof RegExp &&
       isString(target) &&
-      testsFromStart(predicate, target)) ||
-    (isNaN(predicate) && isNaN(target))
+      testsFromStart(predicate, target))
   );
 }
 

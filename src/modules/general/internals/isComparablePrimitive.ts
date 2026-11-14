@@ -7,9 +7,12 @@ import { isString } from "#modules/string/guards/isString";
  * Checks for a primitive `compare` orders with relational operators.
  */
 export function isComparablePrimitive(
-  value: unknown,
-): value is string | number | bigint | boolean {
+  candidate: unknown,
+): candidate is string | number | bigint | boolean {
   return (
-    isString(value) || isNumber(value) || isBigInt(value) || isBoolean(value)
+    isString(candidate) ||
+    isNumber(candidate) ||
+    isBigInt(candidate) ||
+    isBoolean(candidate)
   );
 }
