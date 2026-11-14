@@ -31,10 +31,14 @@ describe("sleep", () => {
   });
 
   test("throws a TypeError synchronously on a NaN delay", () => {
-    expect(() => sleep(NaN)).toThrow(TypeError);
+    expect(() => sleep(NaN)).toThrow(
+      new TypeError("A delay must be a number."),
+    );
   });
 
   test("throws a RangeError synchronously on a negative delay", () => {
-    expect(() => sleep(-1)).toThrow(RangeError);
+    expect(() => sleep(-1)).toThrow(
+      new RangeError("A delay must be non-negative."),
+    );
   });
 });

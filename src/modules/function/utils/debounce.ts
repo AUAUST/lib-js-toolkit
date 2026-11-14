@@ -42,7 +42,7 @@ export function debounce<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Debounced<Callback> {
-  const wait = toDelay(delay, "debounce delay");
+  const wait = toDelay(delay);
   const execute = resolveCallable(callback);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;

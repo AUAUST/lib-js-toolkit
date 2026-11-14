@@ -39,7 +39,7 @@ export function throttle<Callback extends Callee>(
   callback: Callback,
   delay: number,
 ): Throttled<Callback> {
-  const interval = toDelay(delay, "throttle interval");
+  const interval = toDelay(delay);
 
   const execute = resolveCallable(callback);
 

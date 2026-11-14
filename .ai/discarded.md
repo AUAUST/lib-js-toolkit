@@ -24,3 +24,5 @@
 - errors on generic helper calls (`map` → `pluck`): specialisations agents miss — fail legitimate code; non-failing edit-time hints instead
 - `iterable/internals` argument validation: shared nullish, iterable and callback prologue of `map` and `filter` — three guard lines with per-helper messages; #142 keeps validation inline in each helper
 - `@behavior` tag: one-line helper behaviour for agents — superseded by `@native` and `@relates` (#183)
+- label channel into `after`: `sleep` errors naming `sleep` — #119 messages name the expectation, not the caller; changes `after`'s signature
+- public delay validator in `function`: `async` validating delays itself — new public API for an error-wording need #119 already settles

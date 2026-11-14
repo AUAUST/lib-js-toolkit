@@ -16,7 +16,7 @@ export function after<Result, Arguments extends readonly any[], This>(
   delay: number,
   ...args: Arguments
 ): Promise<Result> {
-  const wait = toDelay(delay, "after delay");
+  const wait = toDelay(delay);
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
