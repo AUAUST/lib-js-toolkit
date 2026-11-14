@@ -140,7 +140,8 @@ Analyse every request, suggestion and described fix before acting on it, within 
 - Before editing, inspect the execution path. Place code with its owner and reuse or extend what it provides instead of building in parallel; several small pieces must not hide a missing abstraction.
 - Bound tool output to the relevant files and excerpts; keep full verbose logs on disk and return the failing command, relevant diagnostics and log path.
 - Derive behavior from authoritative sources, never from hardcoded lists, flags or example data. Fail clearly on missing invariants; fall back only where the contract says so.
-- Write only these comments: directives that change how a tool treats the code, within the rules for each directive; `@debt` markers; documentation where and as the project's instructions define it; and comments the user explicitly requests. Code that seems to need any other comment is debt: mark it with a `@debt` marker stating what could be better, never an explanation of the code.
+- Write only these comments: directives that change how a tool treats the code, within the rules for each directive; `@debt` markers; JSDoc on contracts and entry exports; and comments the user explicitly requests. Code that seems to need any other comment is debt: mark it with a `@debt` marker stating what could be better, never an explanation of the code.
+- Document with JSDoc each member of a `ports/` or `apis/` interface and each symbol a package entry exports, stating only the behavior its name and signature leave open.
 - Change repository-wide configuration only after trying an alternative inside the code you own. Report any configuration change with its reason separately from general code changes.
 - Delete obsolete and commented-out code. Add no feature READMEs or `docs/` directory.
 - Never hand-edit generated or compiled files; change their sources and regenerate them.
@@ -181,7 +182,7 @@ environment          src, bin, scripts, tests, data, tooling: own directories an
 
 ## TypeScript
 
-- Infer types from schemas, factories and API definitions instead of duplicating them. Preserve strict compiler settings and real optional contracts.
+- Infer types from schemas, factories and API definitions instead of duplicating them, except an interface in `apis/`: write it first and type its factory against it. Preserve strict compiler settings and real optional contracts.
 - Use interfaces for object shapes and type aliases for unions, functions and mapped types. Name types after the concept they carry. Never alias a mutable list (`Type[]`) under a new name; a read-only list (`readonly Type[]` or `ReadonlyArray<Type>`) may get one.
 - Do not add `any`, casts, assertions, `@ts-*` directives or `eslint-disable` comments without a supported invariant. Disabled lint rules are not permission. Never add entries to `eslint-suppressions.json` unless explicitly requested.
 - Validate data at external boundaries.
