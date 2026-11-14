@@ -1,6 +1,5 @@
+import { isString } from "@auaust/toolkit";
 import type { TagDeclaration } from "@auaust/engrenage/docs";
-
-import { isString } from "#modules/string/guards/isString";
 
 /**
  * Builds a tag body schema accepting the bodies `pattern` matches whole and
