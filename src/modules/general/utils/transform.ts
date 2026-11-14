@@ -1,10 +1,10 @@
+import { remapKeys } from "#modules/general/internals/remapKeys";
 import { keyMapper } from "#modules/general/utils/keyMapper";
 import { plain } from "#modules/general/utils/plain";
 import { resolveCallable } from "#modules/general/utils/resolveCallable";
 import { transformKeys } from "#modules/general/utils/transformKeys";
 import { transformValues } from "#modules/general/utils/transformValues";
 import { isObject } from "#modules/object/guards/isObject";
-import { keys } from "#modules/object/utils/keys";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 
@@ -113,33 +113,5 @@ export function transform(
 
   const transformer = resolveCallable(transform);
 
-  const overrides = new Set<PropertyKey>();
-
-  for (const key of keys(originals)) {
-    const wasOverwritten = overrides.has(key);
-
-    const value = originals[key];
-
-    const newKey = mapper(key, value);
-
-    if (newKey === false || newKey == null) {
-      if (!wasOverwritten) {
-        delete target[key];
-      }
-
-      continue;
-    }
-
-    const actualKey = newKey === true ? key : newKey;
-
-    overrides.add(actualKey);
-
-    target[actualKey] = transformer(value, actualKey, key);
-
-    if (actualKey !== key && !wasOverwritten) {
-      delete target[key];
-    }
-  }
-
-  return target;
+  return remapKeys(target, originals, mapper, transformer);
 }

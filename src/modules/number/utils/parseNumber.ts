@@ -18,15 +18,7 @@ export function parseNumber(input: unknown): number | undefined {
   }
 
   if (isString(input)) {
-    const trimmed = input.trim();
-
-    if (!trimmed || invalidSeparatorPattern.test(trimmed)) {
-      return;
-    }
-
-    const number = toNumber(trimmed.replaceAll("_", ""));
-
-    return isNaN(number) ? undefined : number;
+    return parseNumericString(input);
   }
 
   if (isBigInt(input)) {
@@ -40,6 +32,18 @@ export function parseNumber(input: unknown): number | undefined {
   }
 
   const number = toNumber(input);
+
+  return isNaN(number) ? undefined : number;
+}
+
+function parseNumericString(input: string): number | undefined {
+  const trimmed = input.trim();
+
+  if (!trimmed || invalidSeparatorPattern.test(trimmed)) {
+    return;
+  }
+
+  const number = toNumber(trimmed.replaceAll("_", ""));
 
   return isNaN(number) ? undefined : number;
 }

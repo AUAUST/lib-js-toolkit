@@ -1,9 +1,7 @@
 import { isArray } from "#modules/array/guards/isArray";
-import { isCallable } from "#modules/function/guards/isCallable";
-import { call } from "#modules/general/utils/call";
+import { matchesPredicate } from "#modules/general/internals/matchesPredicate";
+import { resolveMatchArguments } from "#modules/general/internals/resolveMatchArguments";
 import { value, type ResolvedValue } from "#modules/general/utils/value";
-import { isNaN } from "#modules/number/guards/isNaN";
-import { isString } from "#modules/string/guards/isString";
 import type { Callee } from "#types/Callee";
 
 type Predicate<T> = Callee<unknown, [value: T]>;
@@ -52,20 +50,9 @@ export function match(
   casesOrFallback?: readonly Case<unknown, unknown>[],
   fallback?: unknown,
 ): unknown {
-  let target: unknown, cases: readonly Case<unknown, unknown>[];
-
-  if (
-    arguments.length <= 2 &&
-    isArray(targetOrCases) &&
-    !isArray(casesOrFallback)
-  ) {
-    target = undefined;
-    cases = targetOrCases as readonly Case<unknown, unknown>[];
-    fallback = casesOrFallback;
-  } else {
-    target = targetOrCases;
-    cases = casesOrFallback!;
-  }
+  const [target, cases, resolvedFallback] = resolveMatchArguments<
+    readonly Case<unknown, unknown>[]
+  >(arguments.length, targetOrCases, casesOrFallback, fallback);
 
   for (const [predicates, result] of cases) {
     for (const predicate of isArray(predicates) ? predicates : [predicates]) {
@@ -75,33 +62,5 @@ export function match(
     }
   }
 
-  return value(fallback);
-}
-
-function matchesPredicate(predicate: unknown, target: unknown): boolean {
-  return (
-    (isCallable(predicate) && Boolean(call(predicate, target))) ||
-    predicate === target ||
-    (predicate instanceof RegExp &&
-      isString(target) &&
-      testsFromStart(predicate, target)) ||
-    (isNaN(predicate) && isNaN(target))
-  );
-}
-
-// @debt Reimplements `String#search` because `unicorn/prefer-regexp-test` rejects it for existence checks.
-function testsFromStart(predicate: RegExp, target: string): boolean {
-  if (!predicate.global && !predicate.sticky) {
-    return predicate.test(target);
-  }
-
-  const { lastIndex } = predicate;
-
-  predicate.lastIndex = 0;
-
-  try {
-    return predicate.test(target);
-  } finally {
-    predicate.lastIndex = lastIndex;
-  }
+  return value(resolvedFallback);
 }

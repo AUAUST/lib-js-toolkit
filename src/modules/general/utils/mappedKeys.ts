@@ -1,3 +1,4 @@
+import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
 import { keyMapper } from "#modules/general/utils/keyMapper";
 import { plain } from "#modules/general/utils/plain";
 import type { Callee } from "#types/Callee";
@@ -107,13 +108,13 @@ export function mappedKeys(source: any, map?: any) {
   for (const key in source) {
     const value = source[key];
 
-    const mappedKey = mapper(key, value);
+    const mappedKey = resolveMappedKey(mapper(key, value), key);
 
-    if (mappedKey === false || mappedKey == null) {
+    if (mappedKey === undefined) {
       continue;
     }
 
-    result[mappedKey === true ? key : mappedKey] = value;
+    result[mappedKey] = value;
   }
 
   return result;

@@ -41,42 +41,37 @@ function rstr2hex(input: string): string {
 
 function string2rstrUtf8(input: string): string {
   let output = "";
-  let index = -1;
-  let x, y;
 
-  while (++index < input.length) {
-    x = input.charCodeAt(index);
-    y = index + 1 < input.length ? input.charCodeAt(index + 1) : 0;
-
-    if (0xd800 <= x && x <= 0xdbff && 0xdc00 <= y && y <= 0xdfff) {
-      x = 0x10000 + ((x & 0x03ff) << 10) + (y & 0x03ff);
-      index++;
-    }
-
-    if (x <= 0x7f) {
-      output += String.fromCharCode(x);
-    } else if (x <= 0x7ff) {
-      output += String.fromCharCode(
-        0xc0 | ((x >>> 6) & 0x1f),
-        0x80 | (x & 0x3f),
-      );
-    } else if (x <= 0xffff) {
-      output += String.fromCharCode(
-        0xe0 | ((x >>> 12) & 0x0f),
-        0x80 | ((x >>> 6) & 0x3f),
-        0x80 | (x & 0x3f),
-      );
-    } else if (x <= 0x1fffff) {
-      output += String.fromCharCode(
-        0xf0 | ((x >>> 18) & 0x07),
-        0x80 | ((x >>> 12) & 0x3f),
-        0x80 | ((x >>> 6) & 0x3f),
-        0x80 | (x & 0x3f),
-      );
-    }
+  for (const character of input) {
+    output += encodeCodePoint(character.codePointAt(0)!);
   }
 
   return output;
+}
+
+function encodeCodePoint(x: number): string {
+  if (x <= 0x7f) {
+    return String.fromCharCode(x);
+  }
+
+  if (x <= 0x7ff) {
+    return String.fromCharCode(0xc0 | ((x >>> 6) & 0x1f), 0x80 | (x & 0x3f));
+  }
+
+  if (x <= 0xffff) {
+    return String.fromCharCode(
+      0xe0 | ((x >>> 12) & 0x0f),
+      0x80 | ((x >>> 6) & 0x3f),
+      0x80 | (x & 0x3f),
+    );
+  }
+
+  return String.fromCharCode(
+    0xf0 | ((x >>> 18) & 0x07),
+    0x80 | ((x >>> 12) & 0x3f),
+    0x80 | ((x >>> 6) & 0x3f),
+    0x80 | (x & 0x3f),
+  );
 }
 
 function rstr2binl(input: string): number[] {

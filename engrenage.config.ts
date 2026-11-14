@@ -127,6 +127,9 @@ export default defineConfig({
     tsconfig: {},
     roles: [index(), utils(), operations()],
   },
+  format: {
+    maxCognitiveComplexity: 10,
+  },
   docs: {
     tags: {
       append: [

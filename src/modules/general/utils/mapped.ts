@@ -1,3 +1,4 @@
+import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
 import { keyMapper } from "#modules/general/utils/keyMapper";
 import {
   mappedKeys,
@@ -150,13 +151,11 @@ export function mapped(
   const mapped = plain<Record<PropertyKey, any>>();
 
   for (const key in source) {
-    const newKey = mapper(key, source[key]);
+    const actualKey = resolveMappedKey(mapper(key, source[key]), key);
 
-    if (newKey === false || newKey == null) {
+    if (actualKey === undefined) {
       continue;
     }
-
-    const actualKey = newKey === true ? key : newKey;
 
     mapped[actualKey] = transformer(source[key], actualKey, key);
   }

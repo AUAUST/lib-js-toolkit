@@ -1,6 +1,6 @@
-import { StateError } from "#errors/StateError";
-import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { isCallable } from "#modules/function/guards/isCallable";
+import { isComparablePrimitive } from "#modules/general/internals/isComparablePrimitive";
+import { resolveCustomOperator } from "#modules/general/internals/resolveCustomOperator";
 import { call } from "#modules/general/utils/call";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
@@ -72,36 +72,15 @@ export function compare(
     return !!call(operator, a, b);
   }
 
-  if (customOperators && operator in customOperators) {
-    const customOperator = customOperators[operator];
+  const customOperator = resolveCustomOperator(operator, customOperators);
 
-    if (isBoolean(customOperator)) {
-      return customOperator;
-    }
-
-    if (customOperator == null) {
-      throw new StateError(
-        `Attempted to use a disabled operator '${operator}'`,
-      );
-    }
-
-    return !!call(customOperator, a, b);
+  if (customOperator) {
+    return customOperator(a, b);
   }
 
   switch (operator) {
     case "=": {
-      if (empty(a) && empty(b)) {
-        return true;
-      }
-
-      if (a == null || b == null) {
-        return false;
-      }
-
-      // @debt `String()` still throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.
-      return (
-        String(valueOf(a)) === String(valueOf(b)) || (isNaN(a) && isNaN(b))
-      );
+      return resolvesToSameString(a, b);
     }
 
     case "==": {
@@ -146,31 +125,8 @@ export function compare(
   a = valueOf(a);
   b = valueOf(b);
 
-  // @debt Runtime type dispatch via native `typeof` outside the guards; the type-dispatch helper (AUAUST/lib-js-toolkit#113) should own it.
-  switch (typeof a) {
-    case "string":
-    case "number":
-    case "bigint":
-    case "boolean": {
-      break;
-    }
-
-    default: {
-      return false;
-    }
-  }
-
-  switch (typeof b) {
-    case "string":
-    case "number":
-    case "bigint":
-    case "boolean": {
-      break;
-    }
-
-    default: {
-      return false;
-    }
+  if (!isComparablePrimitive(a) || !isComparablePrimitive(b)) {
+    return false;
   }
 
   switch (operator) {
@@ -192,4 +148,17 @@ export function compare(
   }
 
   throw new TypeError(`Unknown operator '${operator}'`);
+}
+
+function resolvesToSameString(a: unknown, b: unknown): boolean {
+  if (empty(a) && empty(b)) {
+    return true;
+  }
+
+  if (a == null || b == null) {
+    return false;
+  }
+
+  // @debt `String()` still throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.
+  return String(valueOf(a)) === String(valueOf(b)) || (isNaN(a) && isNaN(b));
 }

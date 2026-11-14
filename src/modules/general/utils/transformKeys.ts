@@ -1,5 +1,5 @@
+import { remapKeys } from "#modules/general/internals/remapKeys";
 import { keyMapper } from "#modules/general/utils/keyMapper";
-import { keys } from "#modules/object/utils/keys";
 import type {
   FunctionMappedKey,
   RecordMappedKey,
@@ -43,33 +43,5 @@ export function transformKeys(target: any, map?: any) {
     ...target,
   };
 
-  const overrides = new Set<PropertyKey>();
-
-  for (const key of keys(originals)) {
-    const wasOverwritten = overrides.has(key);
-
-    const value = originals[key];
-
-    const newKey = mapper(key, value);
-
-    if (newKey === false || newKey == null) {
-      if (!wasOverwritten) {
-        delete target[key];
-      }
-
-      continue;
-    }
-
-    const actualKey = newKey === true ? key : newKey;
-
-    overrides.add(actualKey);
-
-    target[actualKey] = value;
-
-    if (actualKey !== key && !wasOverwritten) {
-      delete target[key];
-    }
-  }
-
-  return target;
+  return remapKeys(target, originals, mapper);
 }
