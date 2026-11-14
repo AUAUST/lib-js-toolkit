@@ -1,5 +1,70 @@
 # @auaust/toolkit
 
+## 0.6.0
+
+### Minor Changes
+
+- d0b01c4: - Remove the `method` parameter of `isCallable`
+  - Add `isCallableMember`, `assertCallableMember` and `ensureCallableMember` to check for a callable property under a key
+- 0fa19cc: - Add AssertionError
+  - Add the assert entry: assert, not and one assertion per guard
+  - Add the ensure entry: ensure, not, defined and one ensure helper per guard
+  - Add the Falsy type
+- 568f688: - Remove frozen
+  - Update sleep and after to reject NaN and negative delays
+  - Move after, apply, applyMethod, attempt, attemptAsync, cached, cachedAsync, call, callMethod, debounce, memoized, once, resolveCallable, spy and throttle to @auaust/toolkit/function
+  - Move defer and sleep to @auaust/toolkit/async
+  - Move transform, transformKeys, transformValues, keyMapper, plain, readonly and expose to @auaust/toolkit/object
+  - Rename mapped, mappedKeys and mappedValues to object.map, object.mapKeys and object.mapValues
+  - Rename object.is to isSelf
+  - Add the time module
+  - Move measure, measureAsync, now and stopwatch to @auaust/toolkit/time
+  - Move md5 to @auaust/toolkit/string
+- bca6ad2: - Fix generic object inference in mappedValues and value-only mapped calls.
+  - Map every own string and symbol object key, including non-enumerables, and exclude inherited keys in mappedValues and value-only mapped calls.
+- d91c9d0: - Fix `compare` throwing on the `"="` operator when exactly one side is nullish
+  - Reject a `debounce` delay that is not a number (`TypeError`) or is negative (`RangeError`), like `throttle`
+  - Fix `throttle` adding a non-number interval to the cooldown without coercing it
+- 2c0eedd: - Remove the `method` parameter of `isFunction`
+  - Add `isMethod`, `assertMethod` and `ensureMethod` to check for a function-valued property under a key
+- b826ffc: - Remove isNaN, isFinite, isInteger and isSafeInteger from the math entry; import them from the guard entry or the root
+  - Add the guard entry exports
+  - Add isNotNull, isNotUndefined, isNotNullish, isNotBigInt, isNotSymbol, isNotObject and isNotFunction
+- 8759abb: - Add the random module: random, insecureRandom, randomInteger, randomFloat
+  - Remove math.random; use random.random (secure) or random.insecureRandom
+  - Remove math.f16round, outside the supported runtime baseline
+  - Remove Symbol.dispose and Symbol.asyncDispose from ProtocolRegistry
+- b702c32: - Remove the per-helper subpath exports; import helpers from the root or from their module entry
+  - Replace the `protocols` entries with a single `protocol` entry
+  - Rename the `countOf` protocol symbol to `countable` and the `isEmpty` protocol symbol to `emptiable`
+  - Re-export every module from the root as a namespace
+  - Add the `array`, `assert`, `async`, `boolean`, `function`, `guard`, `iterable`, `maplike`, `number`, `parse`, `setlike` and `string` entries, empty for now
+
+### Patch Changes
+
+- 73f4718: - Add isNotArray, assertNotArray, ensureNotArray, array.toArray (alias a) and array.parseArray
+- 3ed1fbe: - Add isNotBoolean, assertNotBoolean, ensureNotBoolean, boolean.toBoolean (alias b) and boolean.parseBoolean
+- 96634ca: - Declare the supported runtimes: Node.js 22 or later and the Widely Available Baseline of 2026-10-30
+  - Keep the original stack of a `PipelineError` cause only when the cause has one
+  - Add the `PropertyDescriptorInput` type and accept it in `object.defineProperty`, `object.defineProperties`, `object.create`, `DefinedProperties`, `DescriptorValue` and the property composers, so descriptor members may be explicitly `undefined`
+  - Accept an explicit `undefined` for the `cached`, `memoized` and `stopwatch` options
+- 1b6d474: - Fix composer types for generic key sets and keep composed keys' declarations
+- d1ac4fb: - Add string.escapeRegExp
+- ccc9404: - Transform function properties in value-only mapped calls.
+  - Keep randomFloat results finite and within extreme finite bounds.
+- f066754: - Add flag, sameValueZero and valueOf
+- c7491a2: - Add isIterable, assertIterable, ensureIterable, iterable.map and iterable.filter
+- 3f54c20: - Add iterable.memoize and the MemoizedIterable type
+- 54d848c: - Add isNotNumber, assertNotNumber, ensureNotNumber, number.toNumber (alias n) and number.parseNumber
+- e40ee72: - Add randomUint32 to the random module
+- dd9d43b: - Fix `match` alternating results when a regular expression predicate has the `g` or `y` flag
+- 10c0f69: - `compare` with `"="` compares the resolved values as strings, so `true = 1` and `0 = ""` are now `false`
+  - A `debounce` call made from inside the debounced callback now runs with its own arguments instead of losing them
+- cb8017b: - Add isNotString, assertNotString, ensureNotString, string.toString (alias s) and string.parseString
+- dd1194e: - Fix `plain` object inference and constrain explicit type assertions to compatible partial objects
+  - Return empty plain objects for primitive and nullish inputs
+- 89c1afb: Remove `timestamp` from the `BUILD` export
+
 ## 0.5.1
 
 ### Patch Changes
