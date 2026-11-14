@@ -52,8 +52,9 @@ async function listModuleRootExports(
 }
 
 /**
- * Adds to the root `domains` block each converter with its shorthands, each `assert<Type>` and `ensure<Type>`,
- * and each helper tagged `@root`, under their own names.
+ * Adds to the root `domains` block each converter with its shorthands, each
+ * `assert<Type>` and `ensure<Type>`, and each helper tagged `@root`, under their
+ * own names.
  */
 export async function exportRootNames(
   node: StructureNode,

@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotBoolean } from "#modules/boolean/guards/isNotBoolean";
 
 /**
- * @throws {AssertionError} when the candidate is a boolean; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is a boolean; removes it from the
+ * candidate's type in place.
  */
 export function assertNotBoolean<Candidate>(
   candidate: Candidate,

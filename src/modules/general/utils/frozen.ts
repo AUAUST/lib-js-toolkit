@@ -5,8 +5,8 @@ import { freeze } from "#modules/object/utils/freeze";
 import type { ReadonlyFunction } from "#types/ReadonlyFunction";
 
 /**
- * Returns a shallow copy of the given value
- * with all properties marked as readonly.
+ * Returns a shallow copy of the given value with all properties marked as
+ * readonly.
  */
 export function frozen<Target extends Function>(
   value: Target,

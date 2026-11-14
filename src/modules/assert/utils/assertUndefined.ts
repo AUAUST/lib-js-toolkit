@@ -1,7 +1,8 @@
 import { AssertionError } from "#errors/AssertionError";
 
 /**
- * @throws {AssertionError} unless the candidate is undefined; narrows it in place.
+ * @throws {AssertionError} unless the candidate is undefined; narrows it in
+ * place.
  */
 export function assertUndefined(
   candidate: unknown,

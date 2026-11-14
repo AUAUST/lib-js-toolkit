@@ -1,7 +1,8 @@
 import { assertFunction } from "#modules/assert/utils/assertFunction";
 
 /**
- * Returns the candidate when it is a function; otherwise throws an `AssertionError`.
+ * Returns the candidate when it is a function; otherwise throws an
+ * `AssertionError`.
  */
 export function ensureFunction<Candidate>(
   candidate: Candidate,

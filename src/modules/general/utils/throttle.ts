@@ -16,8 +16,8 @@ export type Throttled<Callback extends Callee> = ((
   reset(): void;
 
   /**
-   * Instantly invokes the function, ignoring any cooldown.
-   * It doesn't set or affect the cooldown of other calls.
+   * Instantly invokes the function, ignoring any cooldown. It doesn't set or
+   * affect the cooldown of other calls.
    */
   immediate(
     this: CallThisParameterType<Callback>,
@@ -25,15 +25,15 @@ export type Throttled<Callback extends Callee> = ((
   ): void;
 
   /**
-   * Returns the amount of milliseconds remaining until
-   * the function can be called again.
+   * Returns the amount of milliseconds remaining until the function can be called
+   * again.
    */
   remaining(): number;
 };
 
 /**
- * Returns the throttled function. Calling the returned function returns
- * `true` if the call actually happened, `false` if it was throttled.
+ * Returns the throttled function. Calling the returned function returns `true`
+ * if the call actually happened, `false` if it was throttled.
  */
 export function throttle<Callback extends Callee>(
   callback: Callback,

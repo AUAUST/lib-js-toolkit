@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNullish } from "#modules/guard/guards/isNullish";
 
 /**
- * @throws {AssertionError} unless the candidate is null or undefined; narrows it in place.
+ * @throws {AssertionError} unless the candidate is null or undefined; narrows it
+ * in place.
  */
 export function assertNullish(
   candidate: unknown,

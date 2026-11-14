@@ -82,7 +82,8 @@ export interface Assert {
 }
 
 /**
- * @throws {AssertionError} when the condition is falsy; every assertion is attached. Importing it bundles them all.
+ * @throws {AssertionError} when the condition is falsy; every assertion is
+ * attached. Importing it bundles them all.
  */
 export const assert: Assert = assign<
   (condition: unknown, message?: string) => asserts condition,

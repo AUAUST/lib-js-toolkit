@@ -128,15 +128,17 @@ export default defineConfig({
     roles: [index(), utils(), operations()],
   },
   docs: {
-    tags: [
-      {
-        name: "shorthand",
-        body: "inline",
-      },
-      {
-        name: "root",
-        body: "none",
-      },
-    ],
+    tags: {
+      append: [
+        {
+          name: "shorthand",
+          body: "inline",
+        },
+        {
+          name: "root",
+          body: "none",
+        },
+      ],
+    },
   },
 });

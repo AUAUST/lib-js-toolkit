@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotNull } from "#modules/guard/guards/isNotNull";
 
 /**
- * @throws {AssertionError} when the candidate is null; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is null; removes it from the
+ * candidate's type in place.
  */
 export function assertNotNull<Candidate>(
   candidate: Candidate,

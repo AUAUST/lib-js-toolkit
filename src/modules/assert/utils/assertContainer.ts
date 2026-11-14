@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isContainer } from "#modules/guard/guards/isContainer";
 
 /**
- * @throws {AssertionError} unless the candidate is an object or a function; narrows it in place.
+ * @throws {AssertionError} unless the candidate is an object or a function;
+ * narrows it in place.
  */
 export function assertContainer(
   candidate: unknown,

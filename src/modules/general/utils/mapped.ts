@@ -18,10 +18,10 @@ import type { ToRecordKey } from "#types/ToRecordKey";
 
 /**
  * Copies properties into a null-prototype record, optionally mapping keys and
- * values. Mapping visits enumerable string keys, including inherited ones.
- * With only a value transformer, objects include every own string and symbol
- * key, including non-enumerables, and exclude inherited keys; arrays produce
- * indexed records. Without either mapper, copies own enumerable strings and symbols.
+ * values. Mapping visits enumerable string keys, including inherited ones. With
+ * only a value transformer, objects include every own string and symbol key,
+ * including non-enumerables, and exclude inherited keys; arrays produce indexed
+ * records. Without either mapper, copies own enumerable strings and symbols.
  */
 export function mapped<Source extends Record<string, any>>(
   source: Source,

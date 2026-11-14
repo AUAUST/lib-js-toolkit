@@ -9,7 +9,8 @@ import { isOwnUtilsExport } from "#tooling/barrels/utils/isOwnUtilsExport";
 import { splitPrefix } from "#tooling/barrels/utils/splitPrefix";
 
 /**
- * Renames each `utils/assert<Type>.ts` and `utils/ensure<Type>.ts` to `is<Type>` in the `assert` and `ensure` entries.
+ * Renames each `utils/assert<Type>.ts` and `utils/ensure<Type>.ts` to `is<Type>`
+ * in the `assert` and `ensure` entries.
  */
 export async function exportGuardVariants(
   node: StructureNode,

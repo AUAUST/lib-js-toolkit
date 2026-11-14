@@ -1,7 +1,9 @@
 /**
- * Converts any value to a boolean by truthiness, as `!!value`; never mutates its input.
+ * Converts any value to a boolean by truthiness, as `!!value`; never mutates its
+ * input.
  *
- * @shorthand b */
+ * @shorthand b
+ */
 export function toBoolean<Input extends boolean>(input: Input): Input;
 export function toBoolean(input: unknown): boolean;
 export function toBoolean(input: unknown): boolean {

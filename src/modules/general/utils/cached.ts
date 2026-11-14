@@ -33,8 +33,8 @@ export type Cached<
   ): CallReturnType<Callback>;
 
   /**
-   * Resolves a key without computing or caching a value.
-   * Callable resolvers use their holders as receivers; caller receivers are ignored.
+   * Resolves a key without computing or caching a value. Callable resolvers use
+   * their holders as receivers; caller receivers are ignored.
    */
   keyFor(this: void, ...args: CallParameters<Callback>): Key;
 
@@ -65,15 +65,15 @@ export interface CachedOptions<
   Key = unknown,
 > {
   /**
-   * Resolves the cache key from all callback arguments.
-   * Callable objects use their holders as receivers. Resolved once at setup.
-   * Returning undefined bypasses cache reads and writes.
+   * Resolves the cache key from all callback arguments. Callable objects use
+   * their holders as receivers. Resolved once at setup. Returning undefined
+   * bypasses cache reads and writes.
    */
   resolveKey?: KeyResolver<Callback, Key> | undefined;
 
   /**
-   * Caches primitive keys in a strong Map when true.
-   * These entries remain until explicitly deleted or cleared.
+   * Caches primitive keys in a strong Map when true. These entries remain until
+   * explicitly deleted or cleared.
    *
    * @default false
    */
@@ -81,8 +81,8 @@ export interface CachedOptions<
 }
 
 /**
- * Caches results by the first argument, weakly for object and function keys.
- * A key resolver can override the first argument; undefined bypasses the cache.
+ * Caches results by the first argument, weakly for object and function keys. A
+ * key resolver can override the first argument; undefined bypasses the cache.
  * Passing a key resolver directly enables primitive caching. In options,
  * `resolveKey` leaves `cachePrimitives` false by default.
  */

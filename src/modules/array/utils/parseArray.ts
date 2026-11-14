@@ -4,7 +4,8 @@ import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { isObject } from "#modules/object/guards/isObject";
 
 /**
- * Parses input to an array without mutation, or `undefined` when it is neither an array, an iterable object nor an array-like.
+ * Parses input to an array without mutation, or `undefined` when it is neither
+ * an array, an iterable object nor an array-like.
  */
 export function parseArray<Input extends readonly unknown[]>(
   input: Input,

@@ -1,5 +1,6 @@
 /**
- * Returns `true` if the candidate is a registered symbol, registered with `Symbol.for`.
+ * Returns `true` if the candidate is a registered symbol, registered with
+ * `Symbol.for`.
  */
 export function isRegisteredSymbol(candidate: unknown): candidate is symbol {
   return (

@@ -10,8 +10,8 @@ export type Debounced<Callback extends Callee> = ((
   ...args: CallParameters<Callback>
 ) => boolean) & {
   /**
-   * Cancels any pending execution of the debounced function.
-   * Returns `true` if a pending execution was canceled.
+   * Cancels any pending execution of the debounced function. Returns `true` if
+   * a pending execution was canceled.
    */
   cancel(): boolean;
 
@@ -22,9 +22,9 @@ export type Debounced<Callback extends Callee> = ((
   flush(): boolean;
 
   /**
-   * Instantly invokes the function, ignoring any pending delay.
-   * It ignores any pending delay. Consider using it along `cancel()`
-   * or using `flush()` instead to avoid duplicate executions.
+   * Instantly invokes the function, ignoring any pending delay. It ignores any
+   * pending delay. Consider using it along `cancel()` or using `flush()` instead
+   * to avoid duplicate executions.
    */
   immediate(
     this: CallThisParameterType<Callback>,
@@ -33,10 +33,10 @@ export type Debounced<Callback extends Callee> = ((
 };
 
 /**
- * Returns the debounced function. Calling the returned function delays
- * the execution of the callback until after the specified delay has passed
- * only if it has not been called again during that delay. It returns a
- * `boolean` indicating whether the call replaced a pending execution.
+ * Returns the debounced function. Calling the returned function delays the
+ * execution of the callback until after the specified delay has passed only if it
+ * has not been called again during that delay. It returns a `boolean` indicating
+ * whether the call replaced a pending execution.
  */
 export function debounce<Callback extends Callee>(
   callback: Callback,

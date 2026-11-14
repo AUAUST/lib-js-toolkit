@@ -4,7 +4,8 @@ import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
 
 /**
- * Interprets a value as a boolean: `"false"`, blank strings, zero and empty containers are `false`; never mutates its input.
+ * Interprets a value as a boolean: `"false"`, blank strings, zero and empty
+ * containers are `false`; never mutates its input.
  */
 export function parseBoolean(input: unknown): boolean {
   if (input == null) {

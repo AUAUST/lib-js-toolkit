@@ -21,8 +21,9 @@ function declaresBinding(statement: ts.Statement, binding: string): boolean {
 // @debt Shorthands and other barrel metadata are read from JSDoc with the TypeScript compiler API inside toolkit; engrenage should own this metadata reading (AUAUST/lib-js-engrenage#438).
 // @debt Each caller reads and parses `file` again; the shorthand and root contributions both read every converter.
 /**
- * Reads the JSDoc tags on the top-level declarations of `binding` in `file`, mapping each tag name to its distinct comments.
- * A tag without a comment yields an empty string; overloads repeating a tag yield its comment once.
+ * Reads the JSDoc tags on the top-level declarations of `binding` in `file`,
+ * mapping each tag name to its distinct comments. A tag without a comment yields
+ * an empty string; overloads repeating a tag yield its comment once.
  */
 export async function readJsdocTags(
   config: LoadedConfig,

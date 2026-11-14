@@ -1,5 +1,6 @@
 /**
- * Splits a `<prefix><Type>` name into the first of `prefixes` it starts with and its capitalized `<Type>` rest.
+ * Splits a `<prefix><Type>` name into the first of `prefixes` it starts with and
+ * its capitalized `<Type>` rest.
  */
 export function splitPrefix<Prefix extends string>(
   name: string,

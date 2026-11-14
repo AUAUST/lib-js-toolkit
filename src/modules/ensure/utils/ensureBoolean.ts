@@ -1,7 +1,8 @@
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 
 /**
- * Returns the candidate when it is a boolean; otherwise throws an `AssertionError`.
+ * Returns the candidate when it is a boolean; otherwise throws an
+ * `AssertionError`.
  */
 export function ensureBoolean<Candidate>(
   candidate: Candidate,

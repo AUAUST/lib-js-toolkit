@@ -2,8 +2,8 @@ import type { AsyncCallable } from "#modules/protocol/types/AsyncCallable";
 import type { AsyncFn } from "#types/AsyncFn";
 
 /**
- * A value that supports being called, either because it
- * is a function or implements the `Callable` protocol.
+ * A value that supports being called, either because it is a function or
+ * implements the `Callable` protocol.
  */
 export type AsyncCallee<
   Return = any,

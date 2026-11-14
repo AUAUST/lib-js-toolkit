@@ -9,7 +9,8 @@ import { readShorthands } from "#tooling/barrels/operations/readShorthands";
 import { isOwnUtilsExport } from "#tooling/barrels/utils/isOwnUtilsExport";
 
 /**
- * Adds `export { <helper> as <shorthand> }` to a module entry for each `@shorthand` tag of its utils.
+ * Adds `export { <helper> as <shorthand> }` to a module entry for each
+ * `@shorthand` tag of its utils.
  */
 export async function exportShorthands(
   node: StructureNode,

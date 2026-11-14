@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotObject } from "#modules/object/guards/isNotObject";
 
 /**
- * @throws {AssertionError} when the candidate is an object; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is an object; removes it from the
+ * candidate's type in place.
  */
 export function assertNotObject<Candidate>(
   candidate: Candidate,

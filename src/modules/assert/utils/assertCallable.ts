@@ -3,7 +3,8 @@ import { isCallable } from "#modules/function/guards/isCallable";
 import type { Callee } from "#types/Callee";
 
 /**
- * @throws {AssertionError} unless the candidate is a callable; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a callable; narrows it in
+ * place.
  */
 export function assertCallable(
   candidate: unknown,

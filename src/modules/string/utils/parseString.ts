@@ -8,7 +8,8 @@ import { toString } from "#modules/string/utils/toString";
 const defaultTagPattern = /^\[object [^\]]+\]$/;
 
 /**
- * Returns a human-readable string or undefined when input has no interpretation; never mutates input.
+ * Returns a human-readable string or undefined when input has no interpretation;
+ * never mutates input.
  */
 export function parseString(input: unknown): string | undefined {
   return parse(input, new Set());

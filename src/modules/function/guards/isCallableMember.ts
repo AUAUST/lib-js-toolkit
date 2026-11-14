@@ -5,8 +5,9 @@ import type { Callee } from "#types/Callee";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * Checks for an object or function with a callable property, own or inherited, under `member`.
- * A candidate whose type declares the method keeps its type; any other narrows to an object holding the callable.
+ * Checks for an object or function with a callable property, own or inherited,
+ * under `member`. A candidate whose type declares the method keeps its type; any
+ * other narrows to an object holding the callable.
  */
 export function isCallableMember<Target extends object>(
   candidate: Target,

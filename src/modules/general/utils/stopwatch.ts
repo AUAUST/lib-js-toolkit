@@ -45,7 +45,8 @@ export interface Stopwatch<Identifier = unknown> {
    */
   pause(): void;
   /**
-   * Resumes a paused or stopped timer. Calling this on a running timer has no effect.
+   * Resumes a paused or stopped timer. Calling this on a running timer has no
+   * effect.
    */
   resume(): void;
   /**
@@ -87,7 +88,8 @@ export interface Period {
    */
   readonly start: number;
   /**
-   * The timestamp when this running period ended, or `undefined` while it is active.
+   * The timestamp when this running period ended, or `undefined` while it is
+   * active.
    */
   readonly end: number | undefined;
   /**
@@ -98,13 +100,15 @@ export interface Period {
 
 export interface StopwatchOptions {
   /**
-   * Whether to use `performance.now()` instead of `Date.now()` for measuring time.
-   * Defaults to `true`, except when `start` is a `Date` and this option is omitted.
+   * Whether to use `performance.now()` instead of `Date.now()` for measuring
+   * time. Defaults to `true`, except when `start` is a `Date` and this option is
+   * omitted.
    */
   usePerformance?: boolean | undefined;
 
   /**
-   * The timestamp to use as the start time for the stopwatch, if different than the current time.
+   * The timestamp to use as the start time for the stopwatch, if different than
+   * the current time.
    */
   startAt?: Date | number | undefined;
 }

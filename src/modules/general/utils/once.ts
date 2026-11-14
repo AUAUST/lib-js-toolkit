@@ -7,13 +7,15 @@ import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type OnceFn<Return> = (() => Return) & {
   /**
-   * Clears the cached return value of the function and make the next call trigger the function again.
+   * Clears the cached return value of the function and make the next call trigger
+   * the function again.
    */
   reset(): void;
 } & (
     | {
         /**
-         * Allows to access the return value of the function without calling it if it wasn't called yet.
+         * Allows to access the return value of the function without calling it
+         * if it wasn't called yet.
          */
         readonly value: Return;
         /**

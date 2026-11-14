@@ -4,9 +4,11 @@ import type { MemoizedIterable } from "#modules/iterable/types/MemoizedIterable"
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Wraps an iterable so every pass replays the values already pulled before pulling more; pulls each value once.
- * The source's iterator is obtained at call time and owned for the wrapper's whole life: a pass ending early never closes it, only `close()` does.
- * A source error is rethrown by every later pull past the cached values, never retried. A nullish source returns `undefined`.
+ * Wraps an iterable so every pass replays the values already pulled before
+ * pulling more; pulls each value once. The source's iterator is obtained at call
+ * time and owned for the wrapper's whole life: a pass ending early never closes
+ * it, only `close()` does. A source error is rethrown by every later pull past
+ * the cached values, never retried. A nullish source returns `undefined`.
  *
  * @throws {TypeError} at call time when the source is not iterable.
  */

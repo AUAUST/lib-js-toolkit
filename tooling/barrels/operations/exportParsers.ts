@@ -11,7 +11,8 @@ import { lowerFirst } from "#tooling/barrels/utils/lowerFirst";
 import { splitPrefix } from "#tooling/barrels/utils/splitPrefix";
 
 /**
- * Fills the `parse` entry with `export { parse<Type> as <type> }` for each module's `utils/parse<Type>.ts`.
+ * Fills the `parse` entry with `export { parse<Type> as <type> }` for each
+ * module's `utils/parse<Type>.ts`.
  */
 export async function exportParsers(
   node: StructureNode,

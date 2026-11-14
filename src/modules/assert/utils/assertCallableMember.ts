@@ -4,7 +4,8 @@ import type { Callee } from "#types/Callee";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * @throws {AssertionError} unless the candidate has a callable property under `member`; narrows it in place.
+ * @throws {AssertionError} unless the candidate has a callable property under
+ * `member`; narrows it in place.
  */
 export function assertCallableMember<Target extends object>(
   candidate: Target,

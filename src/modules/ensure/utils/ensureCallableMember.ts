@@ -3,7 +3,8 @@ import type { Callee } from "#types/Callee";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * Returns the candidate when it has a callable property under `member`; otherwise throws an `AssertionError`.
+ * Returns the candidate when it has a callable property under `member`; otherwise
+ * throws an `AssertionError`.
  */
 export function ensureCallableMember<Target extends object>(
   candidate: Target,

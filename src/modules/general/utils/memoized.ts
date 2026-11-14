@@ -62,10 +62,10 @@ export type MemoizedOptions<
 > = Pick<CachedOptions<Callback, Key>, "resolveKey">;
 
 /**
- * Caches results by the first argument or a custom resolved key.
- * Returning undefined from a key resolver bypasses cache reads and writes.
- * Caller receivers are ignored; callable resolvers retain their holders.
- * Both resolvers are resolved once at setup.
+ * Caches results by the first argument or a custom resolved key. Returning
+ * undefined from a key resolver bypasses cache reads and writes. Caller receivers
+ * are ignored; callable resolvers retain their holders. Both resolvers are
+ * resolved once at setup.
  */
 export function memoized<Callback extends CacheResolver, Key>(
   callback: Callback,

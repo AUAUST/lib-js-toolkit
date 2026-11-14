@@ -1,7 +1,8 @@
 import { identifierPattern } from "@auaust/engrenage/typescript/constants";
 
 /**
- * Returns the `@shorthand` names among the JSDoc `tags` of `binding` in `file`, failing on an empty tag or one that is not an identifier.
+ * Returns the `@shorthand` names among the JSDoc `tags` of `binding` in `file`,
+ * failing on an empty tag or one that is not an identifier.
  */
 export function parseShorthands(
   tags: ReadonlyMap<string, readonly string[]>,

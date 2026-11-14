@@ -1,7 +1,8 @@
 import { ensureNotNullish } from "#modules/ensure/utils/ensureNotNullish";
 
 /**
- * Returns the value when it is neither null nor undefined; otherwise throws an `AssertionError`.
+ * Returns the value when it is neither null nor undefined; otherwise throws an
+ * `AssertionError`.
  *
  * @root
  */

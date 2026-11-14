@@ -1,7 +1,8 @@
 import { assertNotNumber } from "#modules/assert/utils/assertNotNumber";
 
 /**
- * Returns the candidate when it is not a number; otherwise throws an `AssertionError`.
+ * Returns the candidate when it is not a number; otherwise throws an
+ * `AssertionError`.
  */
 export function ensureNotNumber<Candidate>(
   candidate: Candidate,

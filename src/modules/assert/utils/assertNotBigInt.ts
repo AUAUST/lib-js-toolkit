@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotBigInt } from "#modules/guard/guards/isNotBigInt";
 
 /**
- * @throws {AssertionError} when the candidate is a bigint; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is a bigint; removes it from the
+ * candidate's type in place.
  */
 export function assertNotBigInt<Candidate>(
   candidate: Candidate,

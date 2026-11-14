@@ -1,7 +1,8 @@
 import { defineExtension } from "@auaust/engrenage/extensions";
 
 /**
- * Creates the extension contributing the barrel export names the structure cannot state.
+ * Creates the extension contributing the barrel export names the structure cannot
+ * state.
  */
 export function createBarrelsExtension() {
   return defineExtension({

@@ -4,7 +4,8 @@ import { readJsdocTags } from "#tooling/barrels/operations/readJsdocTags";
 import { parseShorthands } from "#tooling/barrels/utils/parseShorthands";
 
 /**
- * Reads the `@shorthand` names of `binding` in `file`, failing on an empty tag or one that is not an identifier.
+ * Reads the `@shorthand` names of `binding` in `file`, failing on an empty tag
+ * or one that is not an identifier.
  */
 export async function readShorthands(
   config: LoadedConfig,

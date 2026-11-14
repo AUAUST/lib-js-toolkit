@@ -78,10 +78,10 @@ interface CacheEntry {
 /**
  * Caches asynchronous results with the key semantics and options of `cached()`.
  * Calls share one promise until fulfillment, then return the value synchronously.
- * Unlike `cached()`, primitive keys are cached by default.
- * `value()` exposes only fulfilled values. Rejected entries are removed so calls
- * can retry; synchronous resolver errors propagate without creating an entry.
- * Clearing or deleting pending entries does not cancel or restore them.
+ * Unlike `cached()`, primitive keys are cached by default. `value()` exposes only
+ * fulfilled values. Rejected entries are removed so calls can retry; synchronous
+ * resolver errors propagate without creating an entry. Clearing or deleting
+ * pending entries does not cancel or restore them.
  */
 export function cachedAsync<Callback extends CacheResolver, Key>(
   callback: Callback,

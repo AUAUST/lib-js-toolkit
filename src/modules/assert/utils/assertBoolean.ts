@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 
 /**
- * @throws {AssertionError} unless the candidate is a boolean; narrows it in place.
+ * @throws {AssertionError} unless the candidate is a boolean; narrows it in
+ * place.
  */
 export function assertBoolean(
   candidate: unknown,

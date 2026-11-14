@@ -9,7 +9,8 @@ export type Voided<Callback extends Callee> = (
 ) => void;
 
 /**
- * Returns the resolved callable input as a function that ignores its return value.
+ * Returns the resolved callable input as a function that ignores its return
+ * value.
  */
 export function voided<Callable extends Callee>(
   callback: Callable,

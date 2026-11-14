@@ -3,7 +3,9 @@ import { isIterable } from "#modules/iterable/guards/isIterable";
 import { isString } from "#modules/string/guards/isString";
 
 /**
- * The array `toArray` returns for `Input`, per union member: arrays as is, nullish as `[]`, non-string iterable objects as arrays of their elements, and the remaining members wrapped together in one array.
+ * The array `toArray` returns for `Input`, per union member: arrays as is,
+ * nullish as `[]`, non-string iterable objects as arrays of their elements, and
+ * the remaining members wrapped together in one array.
  */
 export type ToArrayResult<Input> =
   | Extract<Input, readonly unknown[]>
@@ -26,7 +28,8 @@ export type ToArrayResult<Input> =
       : never);
 
 /**
- * Converts input to an array without mutation; an array input is returned as is, not copied.
+ * Converts input to an array without mutation; an array input is returned as is,
+ * not copied.
  *
  * @shorthand a
  */

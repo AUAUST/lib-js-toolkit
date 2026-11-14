@@ -1,7 +1,8 @@
 import { assertPlainObject } from "#modules/assert/utils/assertPlainObject";
 
 /**
- * Returns the candidate when it is a plain object; otherwise throws an `AssertionError`.
+ * Returns the candidate when it is a plain object; otherwise throws an
+ * `AssertionError`.
  */
 export function ensurePlainObject<Candidate>(
   candidate: Candidate,

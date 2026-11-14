@@ -2,8 +2,9 @@ import { apply } from "#modules/general/utils/apply";
 import type { AsyncCallee } from "#types/AsyncCallee";
 
 /**
- * Calls the callback after the delay in milliseconds, forwarding arguments and `this`.
- * Resolves with its result or rejects with its thrown error or rejection reason.
+ * Calls the callback after the delay in milliseconds, forwarding arguments and
+ * `this`. Resolves with its result or rejects with its thrown error or rejection
+ * reason.
  */
 export function after<Result, Arguments extends readonly any[], This>(
   this: This,

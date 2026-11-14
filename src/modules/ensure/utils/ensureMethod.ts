@@ -2,7 +2,8 @@ import { assertMethod } from "#modules/assert/utils/assertMethod";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * Returns the candidate when it has a function-valued property under `method`; otherwise throws an `AssertionError`.
+ * Returns the candidate when it has a function-valued property under `method`;
+ * otherwise throws an `AssertionError`.
  */
 export function ensureMethod<Target extends object>(
   candidate: Target,

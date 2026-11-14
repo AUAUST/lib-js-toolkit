@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isObject } from "#modules/object/guards/isObject";
 
 /**
- * @throws {AssertionError} unless the candidate is an object; narrows it in place.
+ * @throws {AssertionError} unless the candidate is an object; narrows it in
+ * place.
  */
 export function assertObject(
   candidate: unknown,

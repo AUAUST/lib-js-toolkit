@@ -4,8 +4,9 @@ import { get } from "#modules/object/utils/get";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * Checks for an object or function with a function-valued property, own or inherited, under `method`.
- * A candidate whose type declares the method keeps its type; any other narrows to an object holding the method.
+ * Checks for an object or function with a function-valued property, own or
+ * inherited, under `method`. A candidate whose type declares the method keeps
+ * its type; any other narrows to an object holding the method.
  */
 export function isMethod<Target extends object>(
   candidate: Target,

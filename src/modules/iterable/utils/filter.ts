@@ -3,11 +3,14 @@ import { isIterable } from "#modules/iterable/guards/isIterable";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Lazily keeps the values of an iterable the predicate accepts; returns a new single-use iterator and never mutates the source.
- * The predicate receives each value with its index among the values read, kept or not; a type predicate narrows the result.
- * The source is read lazily: changes made to it before a value is pulled are visible. A nullish source returns `undefined`.
+ * Lazily keeps the values of an iterable the predicate accepts; returns a new
+ * single-use iterator and never mutates the source. The predicate receives each
+ * value with its index among the values read, kept or not; a type predicate
+ * narrows the result. The source is read lazily: changes made to it before a
+ * value is pulled are visible. A nullish source returns `undefined`.
  *
- * @throws {TypeError} at call time when the source is not iterable or the predicate is not a function.
+ * @throws {TypeError} at call time when the source is not iterable or the
+ * predicate is not a function.
  */
 export function filter<Input, Output extends Input>(
   iterable: Iterable<Input>,

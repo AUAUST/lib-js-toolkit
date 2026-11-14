@@ -3,10 +3,13 @@ import { isIterable } from "#modules/iterable/guards/isIterable";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Lazily maps each value of an iterable, passing it with its index; returns a new single-use iterator and never mutates the source.
- * The source is read lazily: changes made to it before a value is pulled are visible. A nullish source returns `undefined`.
+ * Lazily maps each value of an iterable, passing it with its index; returns a new
+ * single-use iterator and never mutates the source. The source is read lazily:
+ * changes made to it before a value is pulled are visible. A nullish source
+ * returns `undefined`.
  *
- * @throws {TypeError} at call time when the source is not iterable or the mapper is not a function.
+ * @throws {TypeError} at call time when the source is not iterable or the mapper
+ * is not a function.
  */
 export function map<Input, Output>(
   iterable: Iterable<Input>,

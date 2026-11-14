@@ -2,7 +2,8 @@ import { AssertionError } from "#errors/AssertionError";
 import { isNotNumber } from "#modules/number/guards/isNotNumber";
 
 /**
- * @throws {AssertionError} when the candidate is a number; removes it from the candidate's type in place.
+ * @throws {AssertionError} when the candidate is a number; removes it from the
+ * candidate's type in place.
  */
 export function assertNotNumber<Candidate>(
   candidate: Candidate,

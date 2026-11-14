@@ -3,7 +3,8 @@ import { isMethod } from "#modules/function/guards/isMethod";
 import type { MethodName } from "#types/MethodName";
 
 /**
- * @throws {AssertionError} unless the candidate has a function-valued property under `method`; narrows it in place.
+ * @throws {AssertionError} unless the candidate has a function-valued property
+ * under `method`; narrows it in place.
  */
 export function assertMethod<Target extends object>(
   candidate: Target,
