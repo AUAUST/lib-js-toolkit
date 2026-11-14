@@ -29,4 +29,12 @@ describe("sleep", () => {
 
     expect(settled).toHaveBeenCalledExactlyOnceWith(undefined);
   });
+
+  test("throws a TypeError synchronously on a NaN delay", () => {
+    expect(() => sleep(NaN)).toThrow(TypeError);
+  });
+
+  test("throws a RangeError synchronously on a negative delay", () => {
+    expect(() => sleep(-1)).toThrow(RangeError);
+  });
 });

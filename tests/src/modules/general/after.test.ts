@@ -109,4 +109,18 @@ describe("after", () => {
 
     expect(callback).toHaveBeenCalledOnce();
   });
+
+  test("throws a TypeError synchronously on a NaN delay", () => {
+    const callback = vi.fn();
+
+    expect(() => after(callback, NaN)).toThrow(TypeError);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  test("throws a RangeError synchronously on a negative delay", () => {
+    const callback = vi.fn();
+
+    expect(() => after(callback, -1)).toThrow(RangeError);
+    expect(callback).not.toHaveBeenCalled();
+  });
 });

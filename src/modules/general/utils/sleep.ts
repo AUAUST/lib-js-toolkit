@@ -1,5 +1,12 @@
+import { after } from "#modules/general/utils/after";
+import { noop } from "#modules/general/utils/noop";
+
+/**
+ * Resolves after the delay in milliseconds.
+ *
+ * @throws {TypeError} synchronously when the delay is not a number
+ * @throws {RangeError} synchronously when the delay is negative
+ */
 export function sleep(delay: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
+  return after(noop, delay);
 }

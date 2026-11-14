@@ -1,3 +1,4 @@
+import { toDelay } from "#modules/general/internals/toDelay";
 import { apply } from "#modules/general/utils/apply";
 import type { AsyncCallee } from "#types/AsyncCallee";
 
@@ -5,6 +6,9 @@ import type { AsyncCallee } from "#types/AsyncCallee";
  * Calls the callback after the delay in milliseconds, forwarding arguments and
  * `this`. Resolves with its result or rejects with its thrown error or rejection
  * reason.
+ *
+ * @throws {TypeError} synchronously when the delay is not a number
+ * @throws {RangeError} synchronously when the delay is negative
  */
 export function after<Result, Arguments extends readonly any[], This>(
   this: This,
@@ -12,6 +16,8 @@ export function after<Result, Arguments extends readonly any[], This>(
   delay: number,
   ...args: Arguments
 ): Promise<Result> {
+  const wait = toDelay(delay, "after delay");
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {
@@ -19,6 +25,6 @@ export function after<Result, Arguments extends readonly any[], This>(
       } catch (error) {
         reject(error);
       }
-    }, delay);
+    }, wait);
   });
 }
