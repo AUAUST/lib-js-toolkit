@@ -4,6 +4,7 @@ import { isCallable } from "#modules/function/guards/isCallable";
 import { call } from "#modules/general/utils/call";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
+import { valueOf } from "#modules/general/utils/valueOf";
 import { isNaN } from "#modules/number/guards/isNaN";
 import type { Callee } from "#types/Callee";
 import type { IsLiteral } from "#types/IsLiteral";
@@ -97,9 +98,9 @@ export function compare(
         return false;
       }
 
-      // @debt Throws on objects without `valueOf`, such as null-prototype objects.
+      // @debt `String()` still throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.
       return (
-        String(a.valueOf()) === String(b.valueOf()) || (isNaN(a) && isNaN(b))
+        String(valueOf(a)) === String(valueOf(b)) || (isNaN(a) && isNaN(b))
       );
     }
 
@@ -142,8 +143,8 @@ export function compare(
     return false;
   }
 
-  a = a.valueOf();
-  b = b.valueOf();
+  a = valueOf(a);
+  b = valueOf(b);
 
   // @debt Runtime type dispatch via native `typeof` outside the guards; the type-dispatch helper (AUAUST/lib-js-toolkit#113) should own it.
   switch (typeof a) {
