@@ -1,5 +1,3 @@
-/* eslint-disable auaust/no-is-undefined */
-
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { isUndefined } from "@auaust/toolkit/guard";

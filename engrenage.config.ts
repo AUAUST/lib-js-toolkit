@@ -127,4 +127,16 @@ export default defineConfig({
     tsconfig: {},
     roles: [index(), utils(), operations()],
   },
+  docs: {
+    tags: [
+      {
+        name: "shorthand",
+        body: "inline",
+      },
+      {
+        name: "root",
+        body: "none",
+      },
+    ],
+  },
 });

@@ -1,5 +1,3 @@
-/* eslint-disable auaust/no-is-null */
-
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { isNull } from "@auaust/toolkit/guard";

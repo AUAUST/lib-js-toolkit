@@ -2,7 +2,11 @@ import { isFinite } from "#modules/number/guards/isFinite";
 import { random } from "#modules/random/utils/random";
 
 /**
- * Returns a float in [min, max), or min for equal bounds. Throws RangeError for nonfinite or reversed bounds. Draws from the host's cryptographically secure generator (`crypto.getRandomValues`), with no guarantee beyond the host's.
+ * Returns a float in [min, max), or min for equal bounds. Draws from the host's
+ * cryptographically secure generator (`crypto.getRandomValues`), with no guarantee
+ * beyond the host's.
+ *
+ * @throws {RangeError} for nonfinite or reversed bounds.
  */
 export function randomFloat(min: number, max: number): number {
   if (!isFinite(min) || !isFinite(max) || min > max) {
