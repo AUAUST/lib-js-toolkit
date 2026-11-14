@@ -1,6 +1,6 @@
-import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
-import { keyMapper } from "#modules/general/utils/keyMapper";
-import { plain } from "#modules/general/utils/plain";
+import { resolveMappedKey } from "#modules/object/internals/resolveMappedKey";
+import { keyMapper } from "#modules/object/utils/keyMapper";
+import { plain } from "#modules/object/utils/plain";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { ObjectKey } from "#types/ObjectKey";
@@ -62,11 +62,11 @@ export type FunctionMappedKey<Source, Mapper extends Callee> =
  * enumerable strings and symbols. With a mapper, visits enumerable string keys,
  * including inherited keys. Arrays produce records of indexed values.
  */
-export function mappedKeys<Source extends object>(
+export function mapKeys<Source extends object>(
   source: Source,
   map?: undefined,
 ): MappedSource<Source>;
-export function mappedKeys<
+export function mapKeys<
   Source extends object,
   Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>,
 >(
@@ -77,7 +77,7 @@ export function mappedKeys<
     Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
   ]: MappedSource<Source, false>[Key];
 };
-export function mappedKeys<
+export function mapKeys<
   Source extends object,
   Mapper extends Callee<
     PropertyKey | boolean | null | undefined,
@@ -90,13 +90,13 @@ export function mappedKeys<
   ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
   ObjectValue<Source>
 >;
-export function mappedKeys(
+export function mapKeys(
   source: Record<string, any>,
   map?:
     | Record<string, PropertyKey | false>
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
 ): Record<string, any>;
-export function mappedKeys(source: any, map?: any) {
+export function mapKeys(source: any, map?: any) {
   if (!map) {
     return plain(source);
   }

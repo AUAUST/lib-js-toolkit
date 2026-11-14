@@ -1,10 +1,10 @@
 import { resolveCallable } from "#modules/function/utils/resolveCallable";
-import { remapKeys } from "#modules/general/internals/remapKeys";
-import { keyMapper } from "#modules/general/utils/keyMapper";
-import { plain } from "#modules/general/utils/plain";
-import { transformKeys } from "#modules/general/utils/transformKeys";
-import { transformValues } from "#modules/general/utils/transformValues";
 import { isObject } from "#modules/object/guards/isObject";
+import { remapKeys } from "#modules/object/internals/remapKeys";
+import { keyMapper } from "#modules/object/utils/keyMapper";
+import { plain } from "#modules/object/utils/plain";
+import { transformKeys } from "#modules/object/utils/transformKeys";
+import { transformValues } from "#modules/object/utils/transformValues";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 

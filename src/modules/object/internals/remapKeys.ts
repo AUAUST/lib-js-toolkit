@@ -1,4 +1,4 @@
-import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
+import { resolveMappedKey } from "#modules/object/internals/resolveMappedKey";
 import { keys } from "#modules/object/utils/keys";
 
 /**

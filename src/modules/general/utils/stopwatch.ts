@@ -1,11 +1,11 @@
 import { StateError } from "#errors/StateError";
-import { plain } from "#modules/general/utils/plain";
-import { readonly } from "#modules/general/utils/readonly";
 import { isNaN } from "#modules/number/guards/isNaN";
 import { isNumber } from "#modules/number/guards/isNumber";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import { finalize } from "#modules/object/utils/finalize";
 import { freeze } from "#modules/object/utils/freeze";
+import { plain } from "#modules/object/utils/plain";
+import { readonly } from "#modules/object/utils/readonly";
 
 /**
  * A utility for measuring elapsed time across one or more running periods.

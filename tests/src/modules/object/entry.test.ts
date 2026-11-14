@@ -2,7 +2,6 @@ import { describe, expect, expectTypeOf, test } from "vitest";
 
 import {
   freeze,
-  is,
   isExtensible,
   isFrozen,
   isSealed,
@@ -14,7 +13,6 @@ describe("object", () => {
   test("exposes unmodified native operations", () => {
     expectTypeOf(freeze).toEqualTypeOf<typeof Object.freeze>();
     expect(freeze).toBe(Object.freeze);
-    expect(is).toBe(Object.is);
     expect(isExtensible).toBe(Object.isExtensible);
     expect(isFrozen).toBe(Object.isFrozen);
     expect(isSealed).toBe(Object.isSealed);

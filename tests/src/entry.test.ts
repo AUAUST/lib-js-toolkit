@@ -39,13 +39,28 @@ describe("toolkit", () => {
     "callMethod",
     "debounce",
     "defer",
+    "expose",
+    "keyMapper",
+    "mapped",
+    "mappedKeys",
+    "mappedValues",
     "memoized",
     "once",
+    "plain",
+    "readonly",
     "resolveCallable",
     "sleep",
     "spy",
     "throttle",
+    "transform",
+    "transformKeys",
+    "transformValues",
   ])("no longer exports the relocated %s at the root", (name) => {
     expect(root).not.toHaveProperty(name);
+  });
+
+  test("exports isSelf at the root and no longer object.is", () => {
+    expect(root.isSelf).toBe(Object.is);
+    expect(object).not.toHaveProperty("is");
   });
 });

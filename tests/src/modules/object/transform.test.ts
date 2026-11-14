@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { transform } from "@auaust/toolkit";
+import { transform } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocol";
 
 import { mappingCases } from "#tests/fixtures/mapping";
@@ -40,7 +40,7 @@ describe("transform", () => {
     result.a;
   });
 
-  test("passes values to mappers and original and mapped keys to transformers", () => {
+  test("passes values to mappers and original and map keys to transformers", () => {
     const mapper = vi.fn((key: string, _value: number) => {
       return key === "a" ? "renamed" : true;
     });

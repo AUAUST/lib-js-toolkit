@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { readonly } from "@auaust/toolkit";
 import { ReadonlyError } from "@auaust/toolkit/errors";
+import { readonly } from "@auaust/toolkit/object";
 
 import { createValues } from "#tests/fixtures/values";
 

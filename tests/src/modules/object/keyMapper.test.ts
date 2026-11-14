@@ -7,7 +7,7 @@ import {
   type KeyMapping,
   type NormalizedKey,
   type NormalizedKeyMapping,
-} from "@auaust/toolkit";
+} from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("keyMapper", () => {

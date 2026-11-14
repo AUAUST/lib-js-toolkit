@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { transformKeys } from "@auaust/toolkit";
+import { transformKeys } from "@auaust/toolkit/object";
 
 import { createKeyMapper, createPair } from "#tests/fixtures/objects";
 
@@ -56,7 +56,7 @@ describe("transformKeys", () => {
     });
   });
 
-  test("preserves an earlier mapped value when its source key is ignored", () => {
+  test("preserves an earlier map value when its source key is ignored", () => {
     const target = createPair();
 
     transformKeys(target, {

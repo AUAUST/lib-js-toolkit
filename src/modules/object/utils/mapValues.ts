@@ -1,9 +1,9 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { resolveCallable } from "#modules/function/utils/resolveCallable";
-import { plain } from "#modules/general/utils/plain";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
-import type { MappedSource } from "#modules/general/utils/mappedKeys";
+import { plain } from "#modules/object/utils/plain";
+import type { MappedSource } from "#modules/object/utils/mapKeys";
 import type { Callee } from "#types/Callee";
 import type { ObjectKey } from "#types/ObjectKey";
 import type { ObjectValue } from "#types/ObjectValue";
@@ -13,22 +13,19 @@ import type { ObjectValue } from "#types/ObjectValue";
  * into a null-prototype record of writable transformed values. Inherited object
  * properties are excluded. Arrays and strings produce indexed records.
  */
-export function mappedValues<Source extends readonly unknown[] | string>(
+export function mapValues<Source extends readonly unknown[] | string>(
   source: Source,
   transformer?: undefined,
 ): MappedSource<Source, false>;
-export function mappedValues<Source extends object>(
+export function mapValues<Source extends object>(
   source: Source,
   transformer?: undefined,
 ): { [Key in keyof Source]: Source[Key] };
-export function mappedValues<Source>(
+export function mapValues<Source>(
   source: Source,
   transformer?: undefined,
 ): MappedSource<Source, false>;
-export function mappedValues<
-  Source extends readonly unknown[] | string,
-  Return,
->(
+export function mapValues<Source extends readonly unknown[] | string, Return>(
   source: Source,
   transformer: Callee<
     Return,
@@ -39,21 +36,18 @@ export function mappedValues<
     ]
   >,
 ): { [Key in keyof MappedSource<Source, false>]: Return };
-export function mappedValues<Source extends object, Return>(
+export function mapValues<Source extends object, Return>(
   source: Source,
   transformer: Callee<
     Return,
     [value: Source[keyof Source], key: keyof Source, sourceKey: keyof Source]
   >,
 ): { -readonly [Key in keyof Source]: Return };
-export function mappedValues(
+export function mapValues(
   source: Record<string, any>,
   transformer?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ): Record<string, any>;
-export function mappedValues(
-  source: any,
-  transform: Callee = (value) => value,
-) {
+export function mapValues(source: any, transform: Callee = (value) => value) {
   const objectSource = isContainer(source) && !isArray(source);
 
   if (!transform && !objectSource) {

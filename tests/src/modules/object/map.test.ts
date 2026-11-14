@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { mapped } from "@auaust/toolkit";
+import { map } from "@auaust/toolkit/object";
 import { callable } from "@auaust/toolkit/protocol";
 
 import { mappingCases } from "#tests/fixtures/mapping";
@@ -11,17 +11,17 @@ import {
 } from "#tests/fixtures/objects";
 import { primitiveValues } from "#tests/fixtures/values";
 
-describe("mapped", () => {
+describe("map", () => {
   test.for(primitiveValues)("preserves non-object input %s", (input) => {
     // @ts-expect-error Non-object inputs are tolerated at runtime.
-    expect(mapped(input)).toBe(input);
+    expect(map(input)).toBe(input);
   });
 
   test.each(mappingCases)(
-    "mapped handles %s",
-    (_name, map, transformer, expected) => {
+    "map handles %s",
+    (_name, mapper, transformer, expected) => {
       const source = createTriple();
-      const result = mapped(source, map, transformer);
+      const result = map(source, mapper, transformer);
 
       expect(result).not.toBe(source);
       expect(result).toEqual(Object.fromEntries(expected));
@@ -38,12 +38,12 @@ describe("mapped", () => {
       nested,
     };
 
-    const result = mapped(source, {
+    const result = map(source, {
       a: "alpha",
       b: false,
     });
 
-    expect(mapped(source).nested).toBe(nested);
+    expect(map(source).nested).toBe(nested);
     expect(result.nested).toBe(nested);
     expect(result.alpha).toBe(1);
     expectTypeOf(result).toEqualTypeOf<{ alpha: number; nested: {} }>();
@@ -62,9 +62,9 @@ describe("mapped", () => {
   });
 
   test("copies arrays and tuples into records without array metadata", () => {
-    const copied = mapped([1, 2]);
+    const copied = map([1, 2]);
 
-    const result = mapped(
+    const result = map(
       [1, 2] as const,
       {
         0: "first",
@@ -101,9 +101,9 @@ describe("mapped", () => {
       [sourceSymbol]: "symbol value",
     };
 
-    const copied = mapped(source);
+    const copied = map(source);
 
-    const result = mapped(
+    const result = map(
       source,
       {
         entry: destinationSymbol,
@@ -139,7 +139,7 @@ describe("mapped", () => {
 
     const visited: PropertyKey[] = [];
 
-    const result = mapped(source, undefined, (value, key, sourceKey) => {
+    const result = map(source, undefined, (value, key, sourceKey) => {
       visited.push(sourceKey);
       expect(key).toBe(sourceKey);
       expectTypeOf(value).toEqualTypeOf<number>();
@@ -161,7 +161,7 @@ describe("mapped", () => {
     ) {
       const output: { [Key in keyof Source]: Source[Key] } = { ...source };
 
-      const result = mapped(source, undefined, (value, key, sourceKey) => {
+      const result = map(source, undefined, (value, key, sourceKey) => {
         output[key] = value;
         output[sourceKey] = value;
 
@@ -173,7 +173,7 @@ describe("mapped", () => {
 
     expect(generic(source, marker)).toBe("2");
 
-    const tuple = mapped([1, 2] as const, undefined, (value, key) => {
+    const tuple = map([1, 2] as const, undefined, (value, key) => {
       expectTypeOf(value).toEqualTypeOf<1 | 2>();
       expectTypeOf(key).toEqualTypeOf<`${number}`>();
 
@@ -192,7 +192,7 @@ describe("mapped", () => {
     const marker = Symbol("marker");
     const source = Object.assign(() => 1, { count: 2, [marker]: 3 });
 
-    const result = mapped(source, undefined, String);
+    const result = map(source, undefined, String);
 
     expectTypeOf(result).toEqualTypeOf<{ count: string; [marker]: string }>();
     expect(Object.getPrototypeOf(result)).toBe(null);
@@ -201,8 +201,8 @@ describe("mapped", () => {
     expect(result).toHaveProperty("length", "0");
     expect(source.count).toBe(2);
     expect(source()).toBe(1);
-    expect(mapped(source)).toBe(source);
-    expect(mapped(source, { count: "total" }, String)).toBe(source);
+    expect(map(source)).toBe(source);
+    expect(map(source, { count: "total" }, String)).toBe(source);
   });
 
   test("passes values to mappers and original and mapped keys to transformers", () => {
@@ -216,7 +216,7 @@ describe("mapped", () => {
       },
     );
 
-    const result = mapped(createTriple(), mapper, transformer);
+    const result = map(createTriple(), mapper, transformer);
 
     expect(mapper.mock.calls).toEqual([
       ["a", 1],
@@ -240,7 +240,7 @@ describe("mapped", () => {
   test("accepts callable key mappers and preserves literal keys", () => {
     const mapper = createKeyMapper();
 
-    const result = mapped(
+    const result = map(
       {
         entry: 4,
       },
@@ -257,7 +257,7 @@ describe("mapped", () => {
   test("accepts callable value transformers and preserves result types", () => {
     const transformer = createValueTransformer();
 
-    const result = mapped(
+    const result = map(
       {
         entry: 4,
       },
@@ -275,7 +275,7 @@ describe("mapped", () => {
   });
 
   test("combines callable key and value transformations", () => {
-    const result = mapped(
+    const result = map(
       {
         entry: 4,
       },

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, test } from "vitest";
 
-import { expose } from "@auaust/toolkit";
+import { expose } from "@auaust/toolkit/object";
 
 import { createObjects, primitiveValues } from "#tests/fixtures/values";
 

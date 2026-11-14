@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { transformValues } from "@auaust/toolkit";
+import { transformValues } from "@auaust/toolkit/object";
 
 import { createPair, createValueTransformer } from "#tests/fixtures/objects";
 

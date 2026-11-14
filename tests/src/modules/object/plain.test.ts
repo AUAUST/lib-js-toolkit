@@ -1,7 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { plain } from "@auaust/toolkit";
-import { assign } from "@auaust/toolkit/object";
+import { assign, plain } from "@auaust/toolkit/object";
 
 import { createObjects, primitiveValues } from "#tests/fixtures/values";
 

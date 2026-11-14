@@ -1,15 +1,16 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { isArray, mappedValues } from "@auaust/toolkit";
+import { isArray } from "@auaust/toolkit";
+import { mapValues } from "@auaust/toolkit/object";
 
 import { createPair, createValueTransformer } from "#tests/fixtures/objects";
 
-describe("mappedValues", () => {
+describe("mapValues", () => {
   test("returns a copy with transformed values", () => {
     const source = createPair();
     const calls: unknown[][] = [];
 
-    const result = mappedValues(source, (value, key, sourceKey) => {
+    const result = mapValues(source, (value, key, sourceKey) => {
       calls.push([value, key, sourceKey]);
 
       return `${key}:${value}`;
@@ -36,7 +37,7 @@ describe("mappedValues", () => {
   });
 
   test("uses Object.keys semantics for arrays", () => {
-    const result = mappedValues([1, 2, 3], (value, key, sourceKey) => {
+    const result = mapValues([1, 2, 3], (value, key, sourceKey) => {
       expectTypeOf(value).toEqualTypeOf<number>();
       expectTypeOf(key).toEqualTypeOf<`${number}`>();
       expectTypeOf(sourceKey).toEqualTypeOf<`${number}`>();
@@ -69,7 +70,7 @@ describe("mappedValues", () => {
   test("projects readonly tuples into records and preserves optional indices", () => {
     const source: readonly [number, string?] = [1];
 
-    const result = mappedValues(source, (value, key) => {
+    const result = mapValues(source, (value, key) => {
       expectTypeOf(value).toEqualTypeOf<number | string | undefined>();
       expectTypeOf(key).toEqualTypeOf<`${number}`>();
 
@@ -96,9 +97,9 @@ describe("mappedValues", () => {
     };
 
     const calls: unknown[][] = [];
-    const copied = mappedValues(source);
+    const copied = mapValues(source);
 
-    const result = mappedValues(source, (value, key, sourceKey) => {
+    const result = mapValues(source, (value, key, sourceKey) => {
       expectTypeOf(value).toEqualTypeOf<number | boolean | string>();
       expectTypeOf(key).toEqualTypeOf<"entry" | 1 | typeof marker>();
       expectTypeOf(sourceKey).toEqualTypeOf<"entry" | 1 | typeof marker>();
@@ -126,8 +127,8 @@ describe("mappedValues", () => {
 
     const symbolsOnly = { [marker]: 2 };
 
-    expect(mappedValues(symbolsOnly)).toEqual(symbolsOnly);
-    expect(mappedValues(symbolsOnly, (value) => value * 2)[marker]).toBe(4);
+    expect(mapValues(symbolsOnly)).toEqual(symbolsOnly);
+    expect(mapValues(symbolsOnly, (value) => value * 2)[marker]).toBe(4);
   });
 
   test("visits every own object key and copies fresh writable properties", () => {
@@ -169,7 +170,7 @@ describe("mappedValues", () => {
     const descriptors = Object.getOwnPropertyDescriptors(source);
     const calls: PropertyKey[] = [];
 
-    const result = mappedValues(source, (value, key, sourceKey) => {
+    const result = mapValues(source, (value, key, sourceKey) => {
       expect(key).toBe(sourceKey);
       expect(value).toBe(source[key]);
       calls.push(key);
@@ -177,7 +178,7 @@ describe("mappedValues", () => {
       return value;
     });
 
-    const copied = mappedValues(source);
+    const copied = mapValues(source);
 
     expect(calls).toEqual(Reflect.ownKeys(source));
 
@@ -208,7 +209,7 @@ describe("mappedValues", () => {
       source: Source,
       key: keyof Source,
     ) {
-      const result = mappedValues(source, (box) => {
+      const result = mapValues(source, (box) => {
         return { doubled: box.n * 2 };
       });
 
@@ -216,7 +217,7 @@ describe("mappedValues", () => {
 
       expectTypeOf(entry.doubled).toEqualTypeOf<number>();
 
-      const again = mappedValues(result, (value) => value.doubled);
+      const again = mapValues(result, (value) => value.doubled);
 
       function copyValues(
         value: Source[keyof Source],
@@ -231,7 +232,7 @@ describe("mappedValues", () => {
 
       const output: { [Key in keyof Source]: Source[Key] } = { ...source };
 
-      mappedValues(source, copyValues);
+      mapValues(source, copyValues);
 
       return again[key];
     }
@@ -239,7 +240,7 @@ describe("mappedValues", () => {
     function symbols<Source extends Record<PropertyKey, Box>>(source: Source) {
       const output: { [Key in keyof Source]: Source[Key] } = { ...source };
 
-      mappedValues(source, (box, key, sourceKey) => {
+      mapValues(source, (box, key, sourceKey) => {
         output[key] = box;
         output[sourceKey] = box;
 
@@ -273,7 +274,7 @@ describe("mappedValues", () => {
       readonly optional?: number;
     } = { required: 1 };
 
-    const result = mappedValues(source, (value) => String(value));
+    const result = mapValues(source, (value) => String(value));
 
     expectTypeOf(result).toEqualTypeOf<{
       required: string;
@@ -287,15 +288,15 @@ describe("mappedValues", () => {
   });
 
   test("types primitive inputs as their copied records", () => {
-    const characters = mappedValues("ab");
-    const empty = mappedValues(42);
+    const characters = mapValues("ab");
+    const empty = mapValues(42);
 
-    expect(mappedValues(null)).toEqual({});
-    expect(mappedValues(undefined)).toEqual({});
-    expect(mappedValues(false)).toEqual({});
-    expect(mappedValues(Symbol("primitive"))).toEqual({});
+    expect(mapValues(null)).toEqual({});
+    expect(mapValues(undefined)).toEqual({});
+    expect(mapValues(false)).toEqual({});
+    expect(mapValues(Symbol("primitive"))).toEqual({});
 
-    expect(mappedValues("ab", (value) => value.toUpperCase())).toEqual({
+    expect(mapValues("ab", (value) => value.toUpperCase())).toEqual({
       0: "A",
       1: "B",
     });
@@ -314,7 +315,7 @@ describe("mappedValues", () => {
   test("accepts callable value transformers and preserves result types", () => {
     const transformer = createValueTransformer();
 
-    const result = mappedValues(
+    const result = mapValues(
       {
         entry: 4,
       },

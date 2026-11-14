@@ -1,9 +1,9 @@
-import { remapKeys } from "#modules/general/internals/remapKeys";
-import { keyMapper } from "#modules/general/utils/keyMapper";
+import { remapKeys } from "#modules/object/internals/remapKeys";
+import { keyMapper } from "#modules/object/utils/keyMapper";
 import type {
   FunctionMappedKey,
   RecordMappedKey,
-} from "#modules/general/utils/mappedKeys";
+} from "#modules/object/utils/mapKeys";
 import type { Callee } from "#types/Callee";
 
 export function transformKeys<Target extends object>(target: Target): Target;

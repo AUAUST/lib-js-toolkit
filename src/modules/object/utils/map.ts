@@ -1,16 +1,16 @@
 import { resolveCallable } from "#modules/function/utils/resolveCallable";
-import { resolveMappedKey } from "#modules/general/internals/resolveMappedKey";
-import { keyMapper } from "#modules/general/utils/keyMapper";
+import { isContainer } from "#modules/guard/guards/isContainer";
+import { isObject } from "#modules/object/guards/isObject";
+import { resolveMappedKey } from "#modules/object/internals/resolveMappedKey";
+import { keyMapper } from "#modules/object/utils/keyMapper";
 import {
-  mappedKeys,
+  mapKeys,
   type FunctionMappedKey,
   type MappedSource,
   type RecordMappedKey,
-} from "#modules/general/utils/mappedKeys";
-import { mappedValues } from "#modules/general/utils/mappedValues";
-import { plain } from "#modules/general/utils/plain";
-import { isContainer } from "#modules/guard/guards/isContainer";
-import { isObject } from "#modules/object/guards/isObject";
+} from "#modules/object/utils/mapKeys";
+import { mapValues } from "#modules/object/utils/mapValues";
+import { plain } from "#modules/object/utils/plain";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { ObjectKey } from "#types/ObjectKey";
@@ -24,12 +24,12 @@ import type { ToRecordKey } from "#types/ToRecordKey";
  * including non-enumerables, and exclude inherited keys; arrays produce indexed
  * records. Without either mapper, copies own enumerable strings and symbols.
  */
-export function mapped<Source extends Record<string, any>>(
+export function map<Source extends Record<string, any>>(
   source: Source,
   map?: undefined,
   transformer?: undefined,
 ): MappedSource<Source>;
-export function mapped<Items extends readonly unknown[], Return>(
+export function map<Items extends readonly unknown[], Return>(
   source: Items,
   map: undefined,
   transformer: Callee<
@@ -41,7 +41,7 @@ export function mapped<Items extends readonly unknown[], Return>(
     ]
   >,
 ): { [Key in keyof MappedSource<Items, false>]: Return };
-export function mapped<Source extends object, Return>(
+export function map<Source extends object, Return>(
   source: Source,
   map: undefined,
   transformer: Callee<
@@ -49,7 +49,7 @@ export function mapped<Source extends object, Return>(
     [value: Source[keyof Source], key: keyof Source, sourceKey: keyof Source]
   >,
 ): { -readonly [Key in keyof Source]: Return };
-export function mapped<
+export function map<
   Source extends Record<string, any>,
   Map extends Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>,
 >(
@@ -61,7 +61,7 @@ export function mapped<
     Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
   ]: MappedSource<Source, false>[Key];
 };
-export function mapped<
+export function map<
   Source extends Record<string, any>,
   Mapper extends Callee<
     PropertyKey | boolean | null | undefined,
@@ -74,7 +74,7 @@ export function mapped<
   ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
   ObjectValue<Source>
 >;
-export function mapped<
+export function map<
   Source extends Record<string, any>,
   Mapper extends Callee<
     PropertyKey | boolean | null | undefined,
@@ -96,7 +96,7 @@ export function mapped<
   ToRecordKey<FunctionMappedKey<MappedSource<Source, false>, Mapper>>,
   CallReturnType<Transformer>
 >;
-export function mapped<
+export function map<
   Source extends Record<string, any>,
   Map extends
     | Partial<Record<keyof MappedSource<Source>, PropertyKey | false>>
@@ -118,14 +118,14 @@ export function mapped<
     Key in keyof MappedSource<Source, false> as RecordMappedKey<Key, Map>
   ]: CallReturnType<Transformer>;
 };
-export function mapped(
+export function map(
   source: Record<string, any>,
   mapper?:
     | Record<string, PropertyKey | false>
     | Callee<PropertyKey | boolean | undefined, [key: string, value: any]>,
   transformer?: Callee<any, [value: any, key: PropertyKey, sourceKey: string]>,
 ): Record<string, any>;
-export function mapped(
+export function map(
   source: Record<string, any>,
   map?:
     | Record<string, PropertyKey | false>
@@ -133,7 +133,7 @@ export function mapped(
   transform?: Callee,
 ) {
   if (!map && transform && isContainer(source)) {
-    return mappedValues(source, transform);
+    return mapValues(source, transform);
   }
 
   if (!isObject(source)) {
@@ -141,7 +141,7 @@ export function mapped(
   }
 
   if (!transform) {
-    return mappedKeys(source, map);
+    return mapKeys(source, map);
   }
 
   const mapper = keyMapper(map);

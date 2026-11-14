@@ -1,23 +1,23 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
+import { isArray } from "@auaust/toolkit";
 import {
-  isArray,
-  mappedKeys,
+  mapKeys,
   type FunctionMappedKey,
   type MappedSource,
   type RecordMappedKey,
-} from "@auaust/toolkit";
+} from "@auaust/toolkit/object";
 
 import { createKeyMapper } from "#tests/fixtures/objects";
 
-describe("mappedKeys", () => {
+describe("mapKeys", () => {
   test("returns a copy with unchanged values", () => {
     const source = {
       a: 1,
       b: "two",
     };
 
-    const result = mappedKeys(source, {
+    const result = mapKeys(source, {
       a: "alpha",
     });
 
@@ -31,7 +31,7 @@ describe("mappedKeys", () => {
   });
 
   test("maps, retains, and excludes keys with a function", () => {
-    const result = mappedKeys(
+    const result = mapKeys(
       {
         a: 1,
         b: 2,
@@ -53,7 +53,7 @@ describe("mappedKeys", () => {
   });
 
   test("uses Object.keys semantics for arrays", () => {
-    const result = mappedKeys([10, 20], (key, value) => {
+    const result = mapKeys([10, 20], (key, value) => {
       expectTypeOf(key).toEqualTypeOf<`${number}`>();
       expectTypeOf(value).toEqualTypeOf<number>();
 
@@ -70,9 +70,9 @@ describe("mappedKeys", () => {
 
   test("copies tuple indices into records and supports numeric mapping keys", () => {
     const source = [10, "twenty"] as const;
-    const copied = mappedKeys(source);
+    const copied = mapKeys(source);
 
-    const result = mappedKeys(source, {
+    const result = mapKeys(source, {
       0: "first",
       1: false,
     });
@@ -107,9 +107,9 @@ describe("mappedKeys", () => {
       [marker]: "symbol value",
     };
 
-    const copied = mappedKeys(source);
+    const copied = mapKeys(source);
 
-    const result = mappedKeys(source, (key, value) => {
+    const result = mapKeys(source, (key, value) => {
       expectTypeOf(key).toEqualTypeOf<"entry">();
       expectTypeOf(value).toEqualTypeOf<number>();
 
@@ -123,7 +123,7 @@ describe("mappedKeys", () => {
   });
 
   test("normalizes numeric source and destination names", () => {
-    const result = mappedKeys(
+    const result = mapKeys(
       {
         0: "zero",
       },
@@ -144,7 +144,7 @@ describe("mappedKeys", () => {
   test("accepts callable key mappers and preserves literal keys", () => {
     const mapper = createKeyMapper();
 
-    const result = mappedKeys(
+    const result = mapKeys(
       {
         entry: 4,
       },
