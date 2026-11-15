@@ -31,3 +31,8 @@ export const combiningMarkPattern = Object.freeze(/\p{M}/u);
 export const wordBoundaryPattern = Object.freeze(
   /[\s\-_.]+|(?<=\p{Ll})(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})|(?<=\p{N})(?=\P{N})|(?<=\P{N})(?=\p{N})/u,
 );
+
+/**
+ * Matches a run of characters that are neither letters nor digits.
+ */
+export const nonAlphanumericRunPattern = Object.freeze(/[^\p{L}\p{N}]+/u);

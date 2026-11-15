@@ -1,5 +1,4 @@
-import { map } from "#modules/array/utils/map";
-import { toWordCase } from "#modules/string/internals/toWordCase";
+import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
@@ -29,7 +28,5 @@ export function toSnakeCase(
 
   const words = splitWords(string, options);
 
-  return map(words, (word) => {
-    return toWordCase(word, false, options);
-  }).join("_");
+  return joinLowercaseWords(words, "_", options);
 }
