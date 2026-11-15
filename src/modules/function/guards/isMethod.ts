@@ -2,6 +2,7 @@ import { isFunction } from "#modules/function/guards/isFunction";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { get } from "#modules/object/utils/get";
 import type { MethodName } from "#types/MethodName";
+import type { UnknownFn } from "#types/UnknownFn";
 
 /**
  * Checks for an object or function with a function-valued property, own or
@@ -16,7 +17,7 @@ export function isMethod<Method extends PropertyKey>(
   candidate: unknown,
   method: Method,
 ): candidate is {
-  [key in Method]: (...args: unknown[]) => unknown;
+  [key in Method]: UnknownFn;
 };
 export function isMethod(candidate: unknown, method: PropertyKey): boolean {
   return isContainer(candidate) && isFunction(get(candidate, method));

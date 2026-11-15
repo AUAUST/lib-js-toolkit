@@ -1,6 +1,7 @@
 import { AssertionError } from "#errors/AssertionError";
 import { isMethod } from "#modules/function/guards/isMethod";
 import type { MethodName } from "#types/MethodName";
+import type { UnknownFn } from "#types/UnknownFn";
 
 /**
  * @throws {AssertionError} unless the candidate has a function-valued property
@@ -16,7 +17,7 @@ export function assertMethod<Method extends PropertyKey>(
   method: Method,
   message?: string,
 ): asserts candidate is {
-  [key in Method]: (...args: unknown[]) => unknown;
+  [key in Method]: UnknownFn;
 };
 export function assertMethod(
   candidate: unknown,

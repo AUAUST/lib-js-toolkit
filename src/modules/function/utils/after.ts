@@ -1,18 +1,18 @@
 import { toDelay } from "#modules/function/internals/toDelay";
 import { apply } from "#modules/function/utils/apply";
-import type { AsyncCallee } from "#types/AsyncCallee";
+import type { MaybeAsyncCallee } from "#types/MaybeAsyncCallee";
 
 /**
- * Calls the callback after the delay in milliseconds, forwarding arguments and
- * `this`. Resolves with its result or rejects with its thrown error or rejection
- * reason.
+ * Calls the callback after the delay in milliseconds, forwarding arguments
+ * and `this`. Resolves with its result or rejects with its thrown error
+ * or rejection reason.
  *
  * @throws {TypeError} synchronously when the delay is not a number
  * @throws {RangeError} synchronously when the delay is negative
  */
 export function after<Result, Arguments extends readonly any[], This>(
   this: This,
-  callback: AsyncCallee<Result, Arguments, This>,
+  callback: MaybeAsyncCallee<Result, Arguments, This>,
   delay: number,
   ...args: Arguments
 ): Promise<Result> {

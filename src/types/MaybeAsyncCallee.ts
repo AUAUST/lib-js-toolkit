@@ -6,7 +6,7 @@ import type { MaybePromise } from "#types/MaybePromise";
  * A value that supports being called, either because it is a function or
  * implements the `Callable` protocol, and returns its result or a promise of it.
  */
-export type AsyncCallee<
+export type MaybeAsyncCallee<
   Return = any,
   Arguments extends readonly any[] = any[],
   This = any,

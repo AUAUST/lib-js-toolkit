@@ -2,6 +2,7 @@ import { describe, expectTypeOf, test } from "vitest";
 
 import { ensureMethod } from "@auaust/toolkit";
 import { isMethod } from "@auaust/toolkit/guard";
+import type { UnknownFn } from "@auaust/toolkit/types";
 
 import { testEnsure } from "#tests/fixtures/assertions";
 
@@ -18,7 +19,7 @@ describe("ensureMethod", () => {
     const thenable: unknown = Promise.resolve();
 
     expectTypeOf(ensureMethod(thenable, "then")).toEqualTypeOf<{
-      then(...args: unknown[]): unknown;
+      then: UnknownFn;
     }>();
 
     const known = {

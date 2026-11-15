@@ -2,9 +2,9 @@ import { PipelineError } from "#errors/PipelineError";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { resolvePipeEntries } from "#modules/general/internals/resolvePipeEntries";
 import type { PipeCondition } from "#modules/general/utils/pipe";
-import type { AsyncCallee } from "#types/AsyncCallee";
+import type { MaybeAsyncCallee } from "#types/MaybeAsyncCallee";
 
-export type AsyncTransformFn<This, In, Out> = AsyncCallee<
+export type AsyncTransformFn<This, In, Out> = MaybeAsyncCallee<
   Out,
   [value: In],
   This

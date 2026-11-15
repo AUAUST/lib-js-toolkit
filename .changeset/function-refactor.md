@@ -13,3 +13,5 @@
 - Update AsyncCallable and AsyncFn to require a promise result
 - Update MaybeAsyncFn to accept only functions
 - Update UnknownFn to accept any arguments
+- Update isFunction to narrow to UnknownFn
+- Rename the AsyncCallee type to MaybeAsyncCallee

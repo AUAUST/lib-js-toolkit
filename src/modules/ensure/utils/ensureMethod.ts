@@ -1,5 +1,6 @@
 import { assertMethod } from "#modules/assert/utils/assertMethod";
 import type { MethodName } from "#types/MethodName";
+import type { UnknownFn } from "#types/UnknownFn";
 
 /**
  * Returns the candidate when it has a function-valued property under `method`;
@@ -15,7 +16,7 @@ export function ensureMethod<Candidate, Method extends PropertyKey>(
   method: Method,
   message?: string,
 ): Candidate & {
-  [key in Method]: (...args: unknown[]) => unknown;
+  [key in Method]: UnknownFn;
 };
 export function ensureMethod(
   candidate: unknown,

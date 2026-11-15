@@ -1,6 +1,7 @@
 import { assertType, describe, expect, expectTypeOf, test } from "vitest";
 
 import { isMethod } from "@auaust/toolkit/guard";
+import type { UnknownFn } from "@auaust/toolkit/types";
 
 import { primitiveValues } from "#tests/fixtures/values";
 
@@ -51,6 +52,7 @@ describe("isMethod", () => {
 
     expect(object.method(1, 2, 3)).toBe(6);
     expectTypeOf<ReturnType<typeof object.method>>().toBeUnknown();
+    expectTypeOf(object).toEqualTypeOf<{ method: UnknownFn }>();
   });
 
   test("keeps known methods", () => {

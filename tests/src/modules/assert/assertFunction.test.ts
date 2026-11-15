@@ -2,6 +2,7 @@ import { describe, expectTypeOf, test } from "vitest";
 
 import { assertFunction } from "@auaust/toolkit";
 import { isFunction } from "@auaust/toolkit/guard";
+import type { UnknownFn } from "@auaust/toolkit/types";
 
 import { testAssertion } from "#tests/fixtures/assertions";
 
@@ -13,6 +14,6 @@ describe("assertFunction", () => {
       assertFunction(candidate);
 
       return candidate;
-    }).returns.toEqualTypeOf<(...args: unknown[]) => unknown>();
+    }).returns.toEqualTypeOf<UnknownFn>();
   });
 });
