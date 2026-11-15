@@ -3,5 +3,5 @@ export function has<Target, Key extends PropertyKey>(
   key: Key,
 ): target is Target & Record<Key, unknown>;
 export function has(target: any, key: PropertyKey): boolean {
-  return !!target && key in target;
+  return target != null && key in target;
 }

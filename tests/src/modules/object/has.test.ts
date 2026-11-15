@@ -22,4 +22,8 @@ describe("has", () => {
     expect(has(null, "key")).toBe(false);
     expect(has(undefined, "key")).toBe(false);
   });
+
+  test("throws on primitive targets other than null and undefined", () => {
+    expect(() => has(0, "a")).toThrow(TypeError);
+  });
 });
