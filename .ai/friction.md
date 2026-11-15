@@ -90,3 +90,9 @@
 - worktree isolation: `cat > file <<EOF` and multi-step heredoc commands refused as unverifiable — wrote files with Write instead
 - worktree isolation (#242 worker): `cd` followed by a command and heredoc batches refused as too complex — fell back to Write
 - zsh `echo =====`: separator line in a chained Bash command — zsh expands `=word` as a command path and aborts the chain; reran with a separator not starting with `=`
+- zsh: passed a space-separated `$F` file list to eslint and `pnpm format` — zsh does not word-split, so both saw one path; used a zsh array
+- engrenage CLI: ran `engrenage planning …` as the skill writes it — not on PATH; used `pnpm exec engrenage`
+- worktree isolation guard: chained git checkout or git commands after cd/loops in one Bash call — refused as unverifiable; split into plain single commands
+- string/constants.ts frozen pattern: object.freeze in a pure constants module — import-effects forbids confined utils; native Object.freeze used with a @debt marker
+- engrenage CLI: ran `engrenage planning issue claim` as the planning skill writes it — not on PATH; used `pnpm exec engrenage`
+- worktree isolation guard: ran git inside multi-command Bash calls — refused as too complex to verify; split git into separate calls
