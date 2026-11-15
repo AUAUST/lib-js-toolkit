@@ -26,3 +26,5 @@
 - `@behavior` tag: one-line helper behaviour for agents — superseded by `@native` and `@relates` (#183)
 - label channel into `after`: `sleep` errors naming `sleep` — #119 messages name the expectation, not the caller; changes `after`'s signature
 - public delay validator in `function`: `async` validating delays itself — new public API for an error-wording need #119 already settles
+- explicit type argument for loosening (`entries<string>(object)`): opting out of precise types — no partial type-argument inference in TS (#149)
+- curried type argument for loosening (`entries.of<string>()(object)`): opting out of precise types — bundle size, complexity, readability (#149)

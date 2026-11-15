@@ -19,7 +19,13 @@ export function createPatternSchema(
           return { value };
         }
 
-        return { issues: [{ message: `Expected ${expected}.` }] };
+        return {
+          issues: [
+            {
+              message: `Expected ${expected}.`,
+            },
+          ],
+        };
       },
     },
   };

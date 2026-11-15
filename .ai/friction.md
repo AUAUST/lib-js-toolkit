@@ -83,3 +83,9 @@
 - `engrenage planning issue` manifest: closed folded ideas (#178, #181, #182) as `duplicate` — the manifest has no duplicate-of key; named the owner issue in each body instead
 - `engrenage planning issue publish`: published a segment and a task closed as not planned with their header line — fails "header line but no ancestors"; removed the header lines by hand and reran
 - `engrenage planning issue publish`: published six drafts — GitHub 500 on `issue-field-values` before any write; the retry was denied by the auto-mode classifier, so the drafts stay local for the caller to publish
+- `engrenage planning walk check`: parent Tasks with no work beyond their sub-issues flagged for missing **Steps**/**Tests** — the item contract requires both on every Task, the planning skill has no form for "no own work"; read `checkIssueReadiness.ts`, wrote "None after the sub-issues" in both
+- `tsc` on a single file: `pnpm exec tsc --noEmit <file>` for a type probe — TS5112 refuses files while tsconfig.json is present; added `--ignoreConfig`
+- commit gate: commit during a walk failed naming `.ai/discarded.md`, a file another agent was writing at the same moment — retried the same commit and it passed
+- vitest --typecheck: focused command on new `*.test.ts` files — printed "Type Errors no errors" while `pnpm typecheck` failed on them; relied on `pnpm typecheck`
+- worktree isolation: `cat > file <<EOF` and multi-step heredoc commands refused as unverifiable — wrote files with Write instead
+- worktree isolation (#242 worker): `cd` followed by a command and heredoc batches refused as too complex — fell back to Write
