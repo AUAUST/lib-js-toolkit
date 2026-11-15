@@ -2,6 +2,7 @@
 
 export { assert } from "#modules/assert/utils/assert";
 export { assertArray as isArray } from "#modules/assert/utils/assertArray";
+export { assertArrayLike as isArrayLike } from "#modules/assert/utils/assertArrayLike";
 export { assertBigInt as isBigInt } from "#modules/assert/utils/assertBigInt";
 export { assertBlankString as isBlankString } from "#modules/assert/utils/assertBlankString";
 export { assertBoolean as isBoolean } from "#modules/assert/utils/assertBoolean";
@@ -49,6 +50,7 @@ export { assertUndefined as isUndefined } from "#modules/assert/utils/assertUnde
 export { not } from "#modules/assert/utils/not";
 export type * from "#modules/assert/utils/assert";
 export type * from "#modules/assert/utils/assertArray";
+export type * from "#modules/assert/utils/assertArrayLike";
 export type * from "#modules/assert/utils/assertBigInt";
 export type * from "#modules/assert/utils/assertBlankString";
 export type * from "#modules/assert/utils/assertBoolean";

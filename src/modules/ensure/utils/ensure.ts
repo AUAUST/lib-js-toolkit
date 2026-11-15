@@ -1,5 +1,6 @@
 import { AssertionError } from "#errors/AssertionError";
 import { ensureArray } from "#modules/ensure/utils/ensureArray";
+import { ensureArrayLike } from "#modules/ensure/utils/ensureArrayLike";
 import { ensureBigInt } from "#modules/ensure/utils/ensureBigInt";
 import { ensureBlankString } from "#modules/ensure/utils/ensureBlankString";
 import { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
@@ -56,6 +57,7 @@ export interface Ensure {
   ): Candidate & Guarded;
   readonly not: typeof not;
   readonly isArray: typeof ensureArray;
+  readonly isArrayLike: typeof ensureArrayLike;
   readonly isBigInt: typeof ensureBigInt;
   readonly isBlankString: typeof ensureBlankString;
   readonly isBoolean: typeof ensureBoolean;
@@ -122,6 +124,7 @@ export const ensure: Ensure = assign(
   {
     not,
     isArray: ensureArray,
+    isArrayLike: ensureArrayLike,
     isBigInt: ensureBigInt,
     isBlankString: ensureBlankString,
     isBoolean: ensureBoolean,

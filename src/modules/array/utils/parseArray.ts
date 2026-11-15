@@ -1,6 +1,6 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { isArrayLike } from "#modules/array/guards/isArrayLike";
 import { isIterable } from "#modules/iterable/guards/isIterable";
-import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { isObject } from "#modules/object/guards/isObject";
 
 /**
@@ -26,10 +26,5 @@ export function parseArray(input: unknown): readonly unknown[] | undefined {
     return Array.from(input);
   }
 
-  // @debt Array-like detection casts instead of narrowing; replace with an array-like guard.
-  const { length } = input as { length?: unknown };
-
-  return isSafeInteger(length) && length >= 0
-    ? Array.from(input as ArrayLike<unknown>)
-    : undefined;
+  return isArrayLike(input) ? Array.from(input) : undefined;
 }

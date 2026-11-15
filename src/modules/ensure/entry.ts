@@ -3,6 +3,7 @@
 export { defined } from "#modules/ensure/utils/defined";
 export { ensure } from "#modules/ensure/utils/ensure";
 export { ensureArray as isArray } from "#modules/ensure/utils/ensureArray";
+export { ensureArrayLike as isArrayLike } from "#modules/ensure/utils/ensureArrayLike";
 export { ensureBigInt as isBigInt } from "#modules/ensure/utils/ensureBigInt";
 export { ensureBlankString as isBlankString } from "#modules/ensure/utils/ensureBlankString";
 export { ensureBoolean as isBoolean } from "#modules/ensure/utils/ensureBoolean";
@@ -51,6 +52,7 @@ export { not } from "#modules/ensure/utils/not";
 export type * from "#modules/ensure/utils/defined";
 export type * from "#modules/ensure/utils/ensure";
 export type * from "#modules/ensure/utils/ensureArray";
+export type * from "#modules/ensure/utils/ensureArrayLike";
 export type * from "#modules/ensure/utils/ensureBigInt";
 export type * from "#modules/ensure/utils/ensureBlankString";
 export type * from "#modules/ensure/utils/ensureBoolean";

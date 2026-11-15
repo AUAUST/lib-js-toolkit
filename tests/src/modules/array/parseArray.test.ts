@@ -35,6 +35,7 @@ test("returns arrays as is and reads iterables and array-likes", () => {
   ).toEqual([1]);
 
   expect(parseArray({ length: 2, 0: "a" })).toEqual(["a", undefined]);
+  expect(parseArray({ length: 1, 0: "a" })).toEqual(["a"]);
   expect(parseArray({ length: 0 })).toEqual([]);
   expect(parseArray({ length: -1 })).toBeUndefined();
   expect(parseArray({ length: 1.5 })).toBeUndefined();

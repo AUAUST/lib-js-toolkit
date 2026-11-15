@@ -101,3 +101,4 @@
 - vitest --typecheck (AGENTS.md focused-test command): relied on it for expectTypeOf assertions in `.test.ts` — wrong type assertions still passed; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
 - engrenage sync barrels: added a domain `index.ts` to expose an internal — sync then deleted the generated `entry.ts`; removed the index, restored the entry
 - zsh word splitting: passed a space-separated file list held in a variable to eslint — zsh does not split it; listed the files inline
+- worktree isolation check: chained heredoc + eslint + vitest in one Bash call — refused as too complex; split into separate calls

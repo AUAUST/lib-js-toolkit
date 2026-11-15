@@ -1,5 +1,6 @@
 import { AssertionError } from "#errors/AssertionError";
 import { assertArray } from "#modules/assert/utils/assertArray";
+import { assertArrayLike } from "#modules/assert/utils/assertArrayLike";
 import { assertBigInt } from "#modules/assert/utils/assertBigInt";
 import { assertBlankString } from "#modules/assert/utils/assertBlankString";
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
@@ -51,6 +52,7 @@ export interface Assert {
   (condition: unknown, message?: string): asserts condition;
   readonly not: typeof not;
   readonly isArray: typeof assertArray;
+  readonly isArrayLike: typeof assertArrayLike;
   readonly isBigInt: typeof assertBigInt;
   readonly isBlankString: typeof assertBlankString;
   readonly isBoolean: typeof assertBoolean;
@@ -116,6 +118,7 @@ export const assert: Assert = assign<
   {
     not,
     isArray: assertArray,
+    isArrayLike: assertArrayLike,
     isBigInt: assertBigInt,
     isBlankString: assertBlankString,
     isBoolean: assertBoolean,

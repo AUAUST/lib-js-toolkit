@@ -19,3 +19,9 @@
 - Proposal: each test file has a dedicated example suite showing illustrative usage; examples are generated from it, so they are correct by construction.
 - Outcome: decide whether examples are generated, and where they appear (JSDoc, README, skill).
 - Done when decided, or obsolete if examples are dropped for good.
+
+## 4. Assert JSDoc trips `auaust/documented`
+
+- Every `assert*` util documents only `@throws`, with no description, so `auaust/documented` warns on all 49 (seen on `assertArrayLike`, #256).
+- Outcome: either a one-line description per assert, or the rule accepts a `@throws`-only JSDoc on assertion functions (engrenage).
+- Done when `eslint src/modules/assert` reports no `auaust/documented` warning.

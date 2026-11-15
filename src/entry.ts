@@ -13,6 +13,7 @@ export const BUILD = freeze(
 export { toArray } from "#modules/array/utils/toArray";
 export { toArray as a } from "#modules/array/utils/toArray";
 export { assertArray } from "#modules/assert/utils/assertArray";
+export { assertArrayLike } from "#modules/assert/utils/assertArrayLike";
 export { assertBigInt } from "#modules/assert/utils/assertBigInt";
 export { assertBlankString } from "#modules/assert/utils/assertBlankString";
 export { assertBoolean } from "#modules/assert/utils/assertBoolean";
@@ -61,6 +62,7 @@ export { toBoolean } from "#modules/boolean/utils/toBoolean";
 export { toBoolean as b } from "#modules/boolean/utils/toBoolean";
 export { defined } from "#modules/ensure/utils/defined";
 export { ensureArray } from "#modules/ensure/utils/ensureArray";
+export { ensureArrayLike } from "#modules/ensure/utils/ensureArrayLike";
 export { ensureBigInt } from "#modules/ensure/utils/ensureBigInt";
 export { ensureBlankString } from "#modules/ensure/utils/ensureBlankString";
 export { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
