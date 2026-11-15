@@ -86,18 +86,18 @@ export interface CachedOptions<
  * Passing a key resolver directly enables primitive caching. In options,
  * `resolveKey` leaves `cachePrimitives` false by default.
  */
-export function cached<Callback extends CacheResolver, Key>(
+export function cache<Callback extends CacheResolver, Key>(
   callback: Callback,
   resolveKey: KeyResolver<Callback, Key>,
 ): Cached<Callback, Key>;
-export function cached<
+export function cache<
   Callback extends CacheResolver,
   Key = CallParameters<Callback>[0],
 >(
   callback: Callback,
   options?: CachedOptions<Callback, Key>,
 ): Cached<Callback, Key>;
-export function cached(
+export function cache(
   callback: Callee,
   options: CachedOptions | Callee = {},
 ): Cached<Callee> {
@@ -120,7 +120,7 @@ export function cached(
 
   let objectCache = new WeakMap<any, unknown>();
 
-  function accessor(this: void, ...args: unknown[]): unknown {
+  function cached(this: void, ...args: unknown[]): unknown {
     const key = keyFor(...args);
 
     if (hasKeyResolver && key === undefined) {
@@ -174,7 +174,7 @@ export function cached(
     );
   }
 
-  return assign(accessor, {
+  return assign(cached, {
     keyFor,
     clear,
     value,

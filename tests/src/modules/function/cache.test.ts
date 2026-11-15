@@ -3,7 +3,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import {
-  cached,
+  cache,
   type Cached,
   type CachedOptions,
 } from "@auaust/toolkit/function";
@@ -23,12 +23,16 @@ import {
   primitiveValues,
 } from "#tests/fixtures/values";
 
-describe("cached", () => {
+describe("cache", () => {
+  test("names the returned function cached", () => {
+    expect(cache((key: object) => key).name).toBe("cached");
+  });
+
   test.for([...createObjects(), ...createFunctions()])(
     "manages object key %s by identity",
     (key) => {
       const { freshObject: callback } = createSpies();
-      const fn = cached(callback);
+      const fn = cache(callback);
 
       expect(fn.keyFor(key)).toBe(key);
       expect(fn.has(key)).toBe(false);
@@ -56,7 +60,7 @@ describe("cached", () => {
     "caches result %s without copying or coercion",
     (result) => {
       const callback = vi.fn((_key: object) => result);
-      const fn = cached(callback);
+      const fn = cache(callback);
       const key = {};
 
       expect(fn(key)).toBe(result);
@@ -74,7 +78,7 @@ describe("cached", () => {
       for (const cachePrimitives of [false, true]) {
         const { freshObject: callback } = createSpies();
 
-        const fn = cached(callback, {
+        const fn = cache(callback, {
           cachePrimitives,
         });
 
@@ -93,7 +97,7 @@ describe("cached", () => {
   test("clears both stores and permits reuse", () => {
     const { freshObject: callback } = createSpies();
 
-    const fn = cached(callback, {
+    const fn = cache(callback, {
       cachePrimitives: true,
     });
 
@@ -132,8 +136,8 @@ describe("cached", () => {
       };
 
       const fn = optionsForm
-        ? cached(callback, options)
-        : cached(callback, resolveKey);
+        ? cache(callback, options)
+        : cache(callback, resolveKey);
 
       const input = {
         id: 1,
@@ -176,7 +180,7 @@ describe("cached", () => {
     (cachePrimitives) => {
       const { freshObject: callback } = createSpies();
 
-      const fn = cached(callback, {
+      const fn = cache(callback, {
         resolveKey: String,
         cachePrimitives,
       });
@@ -195,7 +199,7 @@ describe("cached", () => {
     "uses resolved key %s from a later argument",
     (key) => {
       const callback = vi.fn((_input: number, _key: typeof key) => {});
-      const fn = cached(callback, (_input, key) => key);
+      const fn = cache(callback, (_input, key) => key);
 
       expect(fn.keyFor(1, key)).toBe(key);
       expect(callback).not.toHaveBeenCalled();
@@ -227,11 +231,11 @@ describe("cached", () => {
       };
 
       const fn = optionsForm
-        ? cached(callback, {
+        ? cache(callback, {
             resolveKey: resolver,
             cachePrimitives: true,
           })
-        : cached(callback, resolver);
+        : cache(callback, resolver);
 
       const context = {
         factor: 99,
@@ -274,7 +278,7 @@ describe("cached", () => {
       throw failure;
     });
 
-    const fn = cached(callback, {
+    const fn = cache(callback, {
       cachePrimitives: true,
     });
 
@@ -286,7 +290,7 @@ describe("cached", () => {
 
     expect(callback).toHaveBeenCalledTimes(4);
 
-    const keyed = cached(callback, () => {
+    const keyed = cache(callback, () => {
       throw failure;
     });
 
@@ -296,12 +300,12 @@ describe("cached", () => {
   });
 
   test("preserves full signatures, generics, and overloads", () => {
-    const fn = cached(signature, {
+    const fn = cache(signature, {
       cachePrimitives: true,
     });
 
-    const generic = cached(genericIdentity);
-    const overload = cached(overloaded);
+    const generic = cache(genericIdentity);
+    const overload = cache(overloaded);
 
     expect(fn("entry", 2, "?")).toBe("!entry:2?");
 
@@ -329,7 +333,7 @@ describe("cached", () => {
       },
     };
 
-    const fn = cached(callback, {
+    const fn = cache(callback, {
       cachePrimitives: true,
     });
 
@@ -352,11 +356,11 @@ describe("cached", () => {
   });
 
   test("preserves nullary and optional argument lists", () => {
-    const nullary = cached(function () {
+    const nullary = cache(function () {
       return arguments.length;
     });
 
-    const optional = cached((key?: "entry") => key);
+    const optional = cache((key?: "entry") => key);
 
     const holder = {
       value: 5,
@@ -365,7 +369,7 @@ describe("cached", () => {
       },
     };
 
-    const bound = cached(holder);
+    const bound = cache(holder);
 
     const owner = {
       fn: bound,
@@ -408,18 +412,18 @@ describe("cached", () => {
       return;
     }
 
-    const fn = cached((key: number) => key);
+    const fn = cache((key: number) => key);
 
     const context = {
       value: 0,
     };
 
     // @ts-expect-error Function callbacks cannot require a receiver.
-    cached(contextual);
+    cache(contextual);
     // @ts-expect-error Function key resolvers cannot require a receiver.
-    cached((key: number) => key, contextual);
+    cache((key: number) => key, contextual);
 
-    cached((key: number) => key, {
+    cache((key: number) => key, {
       // @ts-expect-error Options key resolvers cannot require a receiver.
       resolveKey: contextual,
     });

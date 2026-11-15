@@ -7,7 +7,7 @@ import type {
   CachedOptions,
   CacheResolver,
   KeyResolver,
-} from "#modules/function/utils/cached";
+} from "#modules/function/utils/cache";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -67,18 +67,18 @@ export type MemoizedOptions<
  * are ignored; callable resolvers retain their holders. Both resolvers are
  * resolved once at setup.
  */
-export function memoized<Callback extends CacheResolver, Key>(
+export function memoize<Callback extends CacheResolver, Key>(
   callback: Callback,
   resolveKey: KeyResolver<Callback, Key>,
 ): Memoized<Callback, Key>;
-export function memoized<
+export function memoize<
   Callback extends CacheResolver,
   Key = CallParameters<Callback>[0],
 >(
   callback: Callback,
   options?: MemoizedOptions<Callback, Key>,
 ): Memoized<Callback, Key>;
-export function memoized(
+export function memoize(
   callback: CacheResolver,
   options: MemoizedOptions | Callee = {},
 ): Memoized {
@@ -94,7 +94,7 @@ export function memoized(
 
   const cache = new Map<unknown, unknown>();
 
-  function accessor(...args: unknown[]): unknown {
+  function memoized(...args: unknown[]): unknown {
     const key = keyFor(...args);
 
     if (hasKeyResolver && key === undefined) {
@@ -128,9 +128,9 @@ export function memoized(
     return cache.delete(key);
   }
 
-  defineGetter(accessor, "size", () => cache.size);
+  defineGetter(memoized, "size", () => cache.size);
 
-  return assign(accessor, {
+  return assign(memoized, {
     keyFor,
     clear,
     value,

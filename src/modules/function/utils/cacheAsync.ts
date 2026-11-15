@@ -1,10 +1,10 @@
 import { isCallable } from "#modules/function/guards/isCallable";
 import {
-  cached,
+  cache,
   type CachedOptions,
   type CacheResolver,
   type KeyResolver,
-} from "#modules/function/utils/cached";
+} from "#modules/function/utils/cache";
 import { toFunction } from "#modules/function/utils/toFunction";
 import { identity } from "#modules/general/utils/identity";
 import { assign } from "#modules/object/utils/assign";
@@ -76,25 +76,25 @@ interface CacheEntry {
 }
 
 /**
- * Caches asynchronous results with the key semantics and options of `cached()`.
+ * Caches asynchronous results with the key semantics and options of `cache()`.
  * Calls share one promise until fulfillment, then return the value synchronously.
- * Unlike `cached()`, primitive keys are cached by default. `value()` exposes only
+ * Unlike `cache()`, primitive keys are cached by default. `value()` exposes only
  * fulfilled values. Rejected entries are removed so calls can retry; synchronous
  * resolver errors propagate without creating an entry. Clearing or deleting
  * pending entries does not cancel or restore them.
  */
-export function cachedAsync<Callback extends CacheResolver, Key>(
+export function cacheAsync<Callback extends CacheResolver, Key>(
   callback: Callback,
   resolveKey: KeyResolver<Callback, Key>,
 ): CachedAsync<Callback, Key>;
-export function cachedAsync<
+export function cacheAsync<
   Callback extends CacheResolver,
   Key = CallParameters<Callback>[0],
 >(
   callback: Callback,
   options?: CachedOptions<Callback, Key>,
 ): CachedAsync<Callback, Key>;
-export function cachedAsync(
+export function cacheAsync(
   callback: Callee,
   options: CachedOptions | Callee = {},
 ): CachedAsync<Callee> {
@@ -113,7 +113,7 @@ export function cachedAsync(
 
   const resolveValue = toFunction(callback, callback);
 
-  const entries = cached(createEntry, {
+  const entries = cache(createEntry, {
     cachePrimitives,
   });
 
@@ -147,7 +147,7 @@ export function cachedAsync(
     return entry;
   }
 
-  function accessor(this: void, ...args: unknown[]): unknown {
+  function cached(this: void, ...args: unknown[]): unknown {
     const key = keyFor(...args);
 
     const entry = hasKeyResolver && key === undefined
@@ -177,7 +177,7 @@ export function cachedAsync(
     return entries.value(key)?.fulfilled === true;
   }
 
-  return assign(accessor, {
+  return assign(cached, {
     keyFor,
     clear: entries.clear,
     value,

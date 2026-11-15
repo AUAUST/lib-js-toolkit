@@ -3,7 +3,7 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import {
-  memoized,
+  memoize,
   type Memoized,
   type MemoizedOptions,
 } from "@auaust/toolkit/function";
@@ -22,10 +22,14 @@ import {
   primitiveValues,
 } from "#tests/fixtures/values";
 
-describe("memoized", () => {
+describe("memoize", () => {
+  test("names the returned function memoized", () => {
+    expect(memoize((key: object) => key).name).toBe("memoized");
+  });
+
   test.for(createValues())("caches result %s and manages entries", (value) => {
     const callback = vi.fn((_key: string) => value);
-    const fn = memoized(callback);
+    const fn = memoize(callback);
 
     expect(fn.size).toBe(0);
     expect(fn.has("a")).toBe(false);
@@ -52,7 +56,7 @@ describe("memoized", () => {
     "retains %s results until cleared",
     (behavior) => {
       const callback = createSpies()[behavior];
-      const fn = memoized(callback);
+      const fn = memoize(callback);
       const first = fn("a");
       const second = fn("b");
 
@@ -82,10 +86,10 @@ describe("memoized", () => {
       });
 
       const fn = optionsForm
-        ? memoized(callback, {
+        ? memoize(callback, {
             resolveKey,
           })
-        : memoized(callback, resolveKey);
+        : memoize(callback, resolveKey);
 
       const input = {
         id: 1,
@@ -135,7 +139,7 @@ describe("memoized", () => {
         resolveKey: (_value, key) => key,
       };
 
-      const fn = memoized(callback, options);
+      const fn = memoize(callback, options);
 
       expect(fn.keyFor(1, key)).toBe(key);
       expect(fn(1, key)).toBe(1);
@@ -149,7 +153,7 @@ describe("memoized", () => {
 
   test("bypasses caching for undefined resolved keys while caching undefined results", () => {
     const callback = vi.fn((_value: number, _key?: "entry") => {});
-    const fn = memoized(callback, (_value, key) => key);
+    const fn = memoize(callback, (_value, key) => key);
 
     fn(1);
 
@@ -189,10 +193,10 @@ describe("memoized", () => {
       };
 
       const fn = optionsForm
-        ? memoized(callback, {
+        ? memoize(callback, {
             resolveKey: keyResolver,
           })
-        : memoized(callback, keyResolver);
+        : memoize(callback, keyResolver);
 
       const context = {
         value: 0,
@@ -227,7 +231,7 @@ describe("memoized", () => {
     const error = new Error("key failed");
     const callback = vi.fn((value: number) => value);
 
-    const fn = memoized(callback, () => {
+    const fn = memoize(callback, () => {
       throw error;
     });
 
@@ -246,7 +250,7 @@ describe("memoized", () => {
       return key * 2;
     }
 
-    const fn = memoized(callback);
+    const fn = memoize(callback);
 
     const context = {
       multiplier: 4,
@@ -267,7 +271,7 @@ describe("memoized", () => {
       },
     };
 
-    const fn = memoized(holder);
+    const fn = memoize(holder);
 
     const context = {
       value: 99,
@@ -306,7 +310,7 @@ describe("memoized", () => {
       return this.value + key;
     }
 
-    const fn = memoized((key: number) => key);
+    const fn = memoize((key: number) => key);
 
     const holder = {
       value: 5,
@@ -315,7 +319,7 @@ describe("memoized", () => {
       },
     };
 
-    const wrapped = memoized(holder);
+    const wrapped = memoize(holder);
 
     const owner = {
       fn: wrapped,
@@ -335,7 +339,7 @@ describe("memoized", () => {
     }
 
     // @ts-expect-error Function callbacks cannot require a receiver.
-    memoized(contextual);
+    memoize(contextual);
 
     // @ts-expect-error Memoized receivers cannot be overridden.
     fn.call(context, 1);
@@ -347,7 +351,7 @@ describe("memoized", () => {
   });
 
   test("infers cache keys and the full callback signature", () => {
-    const wrapped = memoized(signature);
+    const wrapped = memoize(signature);
 
     expectTypeOf(wrapped).parameters.toEqualTypeOf<
       [key: "entry", count?: number | undefined, ...suffixes: string[]]
@@ -361,8 +365,8 @@ describe("memoized", () => {
   });
 
   test("preserves generic and overloaded cache callbacks", () => {
-    const generic = memoized(genericIdentity);
-    const overload = memoized(overloaded);
+    const generic = memoize(genericIdentity);
+    const overload = memoize(overloaded);
 
     expectTypeOf(generic("literal" as const)).toEqualTypeOf<"literal">();
     expectTypeOf(overload("entry")).toEqualTypeOf<string>();
@@ -380,7 +384,7 @@ describe("memoized", () => {
       },
     };
 
-    const wrapped = memoized(callback);
+    const wrapped = memoize(callback);
     const result = wrapped("entry", 2, "a", "b");
 
     expect(result).toEqual({
@@ -400,13 +404,13 @@ describe("memoized", () => {
   });
 
   test("preserves empty and optional argument lists", () => {
-    const nullary = memoized(function () {
+    const nullary = memoize(function () {
       return {
         argumentCount: arguments.length,
       };
     });
 
-    const optional = memoized((key?: "entry") => {
+    const optional = memoize((key?: "entry") => {
       return key;
     });
 

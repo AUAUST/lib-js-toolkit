@@ -4,22 +4,26 @@ import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
 import { defer } from "@auaust/toolkit/async";
 import {
-  cachedAsync,
-  cachedAsync as cachedAsyncSubpath,
+  cacheAsync,
+  cacheAsync as cachedAsyncSubpath,
   type CachedAsync,
 } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 import { primitiveValues } from "#tests/fixtures/values";
 
-describe("cachedAsync", () => {
+describe("cacheAsync", () => {
+  test("names the returned function cached", () => {
+    expect(cacheAsync((key: object) => key).name).toBe("cached");
+  });
+
   test("shares pending promises and returns fulfilled values synchronously", async () => {
     const work = defer<number>();
     const callback = vi.fn((_key: object): Promise<number> => work);
-    const fn = cachedAsync(callback);
+    const fn = cacheAsync(callback);
     const key = {};
 
-    expect(cachedAsyncSubpath).toBe(cachedAsync);
+    expect(cachedAsyncSubpath).toBe(cacheAsync);
     expect(fn.has(key)).toBe(false);
     expect(fn.pending(key)).toBe(false);
     expect(fn.settled(key)).toBe(false);
@@ -55,7 +59,7 @@ describe("cachedAsync", () => {
       return result;
     });
 
-    const fn = cachedAsync(callback);
+    const fn = cacheAsync(callback);
     const key = {};
 
     await fn(key);
@@ -75,7 +79,7 @@ describe("cachedAsync", () => {
         return 1;
       });
 
-      const fn = cachedAsync(callback, {
+      const fn = cacheAsync(callback, {
         cachePrimitives,
       });
 
@@ -106,7 +110,7 @@ describe("cachedAsync", () => {
 
     const resolveKey = vi.fn((id: number) => String(id));
 
-    const fn = cachedAsync(callback, resolveKey);
+    const fn = cacheAsync(callback, resolveKey);
 
     expect(fn.keyFor(1)).toBe("1");
     expect(callback).not.toHaveBeenCalled();
@@ -132,7 +136,7 @@ describe("cachedAsync", () => {
   test.each([false, true])(
     "options key resolvers respect primitive caching %s",
     async (cachePrimitives) => {
-      const fn = cachedAsync(
+      const fn = cacheAsync(
         async (id: number) => {
           await Promise.resolve();
 
@@ -151,7 +155,7 @@ describe("cachedAsync", () => {
   );
 
   test("undefined resolved keys bypass caching", async () => {
-    const fn = cachedAsync(
+    const fn = cacheAsync(
       async (_id: number) => {
         await Promise.resolve();
 
@@ -175,7 +179,7 @@ describe("cachedAsync", () => {
     const work = defer<number>();
     const error = new Error("failed");
     const callback = vi.fn((_key: object): Promise<number> => work);
-    const fn = cachedAsync(callback);
+    const fn = cacheAsync(callback);
     const key = {};
     const promise = fn(key);
 
@@ -206,7 +210,7 @@ describe("cachedAsync", () => {
       const work = defer<number>();
       const replacement = defer<number>();
       const callback = vi.fn((_key: object): Promise<number> => work);
-      const fn = cachedAsync(callback);
+      const fn = cacheAsync(callback);
       const first = fn(key);
       const rejection = expect(first).rejects.toThrow("old failure");
 
@@ -242,7 +246,7 @@ describe("cachedAsync", () => {
   test("promise returns the promise for a key without computing a missing entry", async () => {
     const work = defer<number>();
     const callback = vi.fn((_value: number) => work);
-    const fn = cachedAsync(callback);
+    const fn = cacheAsync(callback);
 
     expect(fn.promise(2)).toBeUndefined();
     expect(fn.value(2)).toBeUndefined();
@@ -263,7 +267,7 @@ describe("cachedAsync", () => {
 
   test("deleted fulfilled work does not restore its cache entry", async () => {
     const work = defer<number>();
-    const fn = cachedAsync((_key: object) => work);
+    const fn = cacheAsync((_key: object) => work);
     const key = {};
     const promise = fn(key);
 
@@ -283,7 +287,7 @@ describe("cachedAsync", () => {
       throw error;
     });
 
-    const fn = cachedAsync(callback);
+    const fn = cacheAsync(callback);
     const key = {};
 
     expect(() => fn(key)).toThrow(error);
@@ -291,7 +295,7 @@ describe("cachedAsync", () => {
     expect(fn.has(key)).toBe(false);
     expect(callback).toHaveBeenCalledTimes(2);
 
-    const keyed = cachedAsync(callback, () => {
+    const keyed = cacheAsync(callback, () => {
       throw error;
     });
 
@@ -316,7 +320,7 @@ describe("cachedAsync", () => {
       },
     };
 
-    const fn = cachedAsync(callback, resolver);
+    const fn = cacheAsync(callback, resolver);
 
     callback[callable] = async () => {
       await Promise.resolve();
@@ -332,7 +336,7 @@ describe("cachedAsync", () => {
   });
 
   test("supports nullary and synchronous resolvers", async () => {
-    const nullary = cachedAsync(async () => {
+    const nullary = cacheAsync(async () => {
       await Promise.resolve();
 
       return {
@@ -340,7 +344,7 @@ describe("cachedAsync", () => {
       };
     });
 
-    const sync = cachedAsync((_key: object) => 2 as const);
+    const sync = cacheAsync((_key: object) => 2 as const);
     const key = {};
 
     expect(nullary()).toBe(nullary());
