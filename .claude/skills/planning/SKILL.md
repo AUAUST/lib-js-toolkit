@@ -52,7 +52,7 @@ Create and edit issues as local drafts in `.ai/issues/` and publish them togethe
 | `#{new-foo}`         | Local draft `new-foo`                                                                                  |
 | `#{toolkit.new-foo}` | Local draft created in `toolkit`                                                                       |
 
-- Write types, fields, options and labels by the GitHub names of the planning sheet.
+- Write types, fields, options and labels by the GitHub names of the planning sheet, which loads with the first draft you read.
 - Start by reading `.ai/issues/`. Other sessions draft there too: resume only the drafts of your task, those the user names or those of the issues you were given.
 - Your drafts are those you created, claimed or resumed. Edit, check and publish only them, never another session's.
 - Read an issue from `.ai/issues/` when it holds a copy, and fetch it from GitHub only otherwise.
@@ -81,6 +81,7 @@ The walker runs you as its `planner` subagent: a fallback that keeps code and pl
 
 - Send what the plan does not settle back to the walker, batched with your findings and recommendations for the user.
 - Return the answer and become idle; the walker resumes you for the next question.
+- End each answer with a **Carry-over**: one line per decision, pending question and rejected deviation of the walk that the published issues do not record, replacing your previous one, so a new consultant starts from it without your history.
 - Here, the latitude of Decisions and questions covers only how issues word and split settled work: change a plan decision, a contract or the tree order only on the user's answer.
 - Never implement.
 

@@ -14,6 +14,7 @@ Paths below are relative to the project root. Before editing a file, read and fo
 | --- | --- |
 | <code>.*.ts</code> | <code>.claude/rules/project-map/tooling.md</code> |
 | <code>.ai/backlog/*.md</code> | <code>.claude/rules/backlog.md</code> |
+| <code>.ai/issues/**</code> | <code>.claude/rules/planning-sheet.md</code> |
 | <code>.changeset/**</code> | <code>.claude/rules/changesets.md</code> |
 | <code>*.config.ts</code> | <code>.claude/rules/project-map/tooling.md</code> |
 | <code>**/*.ts</code> | <code>.claude/rules/code-style.md</code> |
@@ -27,7 +28,6 @@ Paths below are relative to the project root. Before editing a file, read and fo
 | All files | <code>.claude/rules/discarded-solutions.md</code> |
 | All files | <code>.claude/rules/git.md</code> |
 | All files | <code>.claude/rules/no-attribution.md</code> |
-| All files | <code>.claude/rules/planning-sheet.md</code> |
 | All files | <code>.claude/rules/project-map.md</code> |
 
 <!-- @end -->

@@ -89,3 +89,4 @@
 - vitest --typecheck: focused command on new `*.test.ts` files — printed "Type Errors no errors" while `pnpm typecheck` failed on them; relied on `pnpm typecheck`
 - worktree isolation: `cat > file <<EOF` and multi-step heredoc commands refused as unverifiable — wrote files with Write instead
 - worktree isolation (#242 worker): `cd` followed by a command and heredoc batches refused as too complex — fell back to Write
+- zsh `echo =====`: separator line in a chained Bash command — zsh expands `=word` as a command path and aborts the chain; reran with a separator not starting with `=`

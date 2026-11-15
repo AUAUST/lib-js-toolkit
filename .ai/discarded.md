@@ -28,3 +28,4 @@
 - public delay validator in `function`: `async` validating delays itself — new public API for an error-wording need #119 already settles
 - explicit type argument for loosening (`entries<string>(object)`): opting out of precise types — no partial type-argument inference in TS (#149)
 - curried type argument for loosening (`entries.of<string>()(object)`): opting out of precise types — bundle size, complexity, readability (#149)
+- subagent 5-minute prompt cache TTL: cheaper writes for never-resumed walk agents — resumes past five minutes rewrite whole contexts; ~4.5% gross saving, likely net loss (AUAUST/lib-js-engrenage#522)

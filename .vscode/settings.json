@@ -122,11 +122,11 @@
   "json.schemas": [
     {
       "fileMatch": ["**/.namespace.json"],
-      "url": "./node_modules/.pnpm/@auaust+engrenage@0.12.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__2faf167e09ac3d66251f02485556cd86/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.13.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__be671c62c6f941d3ecfdaba2731ecf80/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
     },
     {
       "fileMatch": ["**/.domain.json"],
-      "url": "./node_modules/.pnpm/@auaust+engrenage@0.12.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__2faf167e09ac3d66251f02485556cd86/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.13.0_@changesets+cli@3.0.3_@typescript-eslint+eslint-plugin@8.72.2__be671c62c6f941d3ecfdaba2731ecf80/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
     }
   ]
 }

@@ -90,8 +90,8 @@ A worker commits at each `Checkpoint:` line of its issue; your final commit clos
 ## Resumed agents
 
 - Resume the consultant and the integration merger through the client's messaging or resume tool instead of starting new ones.
-- Start a new one instead when a segment closes, when the current one has been idle longer than the prompt-cache lifetime, or once its reported context exceeds twice what it started with: past that, every resumed turn re-reads more history than a fresh start costs.
-- Brief a new consultant with the plan number and the decisions taken so far, a new integration merger as the first, with the previous one's carry-over.
+- Start a new one instead when a segment closes, when the current one has been idle longer than the prompt-cache lifetime, or, under Codex, once its reported context exceeds twice what it started with: past that, every resumed turn re-reads more history than a fresh start costs.
+- Brief a new consultant with the plan number and the previous one's last carry-over, a new integration merger as the first, with the previous one's carry-over.
 
 ## Report
 
