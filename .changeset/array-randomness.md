@@ -3,3 +3,4 @@
 ---
 
 - Add array.shuffle and array.toShuffled
+- Add array.random
