@@ -3,8 +3,8 @@ import { random } from "#modules/random/utils/random";
 
 /**
  * Returns a float in [min, max), or min for equal bounds. Draws from the host's
- * cryptographically secure generator (`crypto.getRandomValues`), with no guarantee
- * beyond the host's.
+ * cryptographically secure generator (`crypto.getRandomValues`), with no
+ * guarantee beyond the host's.
  *
  * @throws {RangeError} for nonfinite or reversed bounds.
  */

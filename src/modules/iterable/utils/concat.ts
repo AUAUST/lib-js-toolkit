@@ -4,9 +4,9 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Lazily yields the values of an iterable, then those of each other iterable
  * in turn; returns a new single-use iterator and never mutates the sources.
- * Each source is read lazily, once the previous one is exhausted: changes made
- * to it before a value is pulled are visible. A nullish first source returns
- * `undefined`.
+ * Each source is read lazily, once the previous one is exhausted: changes
+ * made to it before a value is pulled are visible. A nullish first source
+ * returns `undefined`.
  *
  * @throws {TypeError} at call time when a source is not iterable.
  */

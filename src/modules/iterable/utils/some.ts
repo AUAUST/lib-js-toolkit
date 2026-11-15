@@ -8,11 +8,10 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Tells whether the predicate accepts a value of an iterable, reading no further
- * and closing the source once one is accepted. The predicate receives each
- * value with its index. A property name instead accepts a value whose member
- * is truthy, calling it when it is a method; a union value type accepts only a
- * name every member has. An empty source gives `false`; a nullish source returns
- * `undefined`.
+ * and closing the source once one is accepted. The predicate receives each value
+ * with its index. A property name instead accepts a value whose member is truthy,
+ * calling it when it is a method; a union value type accepts only a name every
+ * member has. An empty source gives `false`; a nullish source returns `undefined`.
  *
  * @throws {TypeError} when the source is not iterable or the predicate is neither
  * a function nor a property key.

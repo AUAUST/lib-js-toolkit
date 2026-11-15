@@ -2,8 +2,8 @@ import { pipeCompare } from "#modules/general/utils/pipeCompare";
 import type { Callee } from "#types/Callee";
 
 /**
- * Returns `pipeCompare` bound to `transform`, so one pre-processing serves every
- * comparison.
+ * Returns `pipeCompare` bound to `transform`, so one pre-processing serves
+ * every comparison.
  */
 export function pipeComparator<T>(
   transform: Callee<unknown, [value: T]>,

@@ -28,8 +28,8 @@ export type ToArrayResult<Input> =
       : never);
 
 /**
- * Converts input to an array without mutation; an array input is returned as is,
- * not copied.
+ * Converts input to an array without mutation; an array input is returned
+ * as is, not copied.
  *
  * @shorthand a
  */

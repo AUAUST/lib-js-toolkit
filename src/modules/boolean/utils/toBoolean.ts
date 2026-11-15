@@ -1,6 +1,6 @@
 /**
- * Converts any value to a boolean by truthiness, as `!!value`; never mutates its
- * input.
+ * Converts any value to a boolean by truthiness, as `!!value`; never
+ * mutates its input.
  *
  * @shorthand b
  */

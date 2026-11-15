@@ -13,8 +13,7 @@ type MemberHoldsMethod<
 
 /**
  * Returns the names of all methods of the given type, primitives and arrays
- * included. A union counts a name only when every member holds a method under
- * it.
+ * included. A union counts a name only when every member holds a method under it.
  */
 export type MethodName<Target> = keyof Target extends infer Name
   ? Name extends keyof Target

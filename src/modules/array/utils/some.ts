@@ -13,8 +13,7 @@ import type { Maybe } from "#types/Maybe";
  * accepts only a name every member has. An empty array gives `false`; a nullish
  * array returns `undefined`.
  *
- * @throws {TypeError} when the predicate is neither a function nor a property
- * key.
+ * @throws {TypeError} when the predicate is neither a function nor a property key.
  * @native equal Array.prototype.some
  */
 export function some<Items extends readonly unknown[]>(

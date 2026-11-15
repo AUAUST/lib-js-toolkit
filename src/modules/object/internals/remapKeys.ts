@@ -3,8 +3,8 @@ import { keys } from "#modules/object/utils/keys";
 
 /**
  * Remaps `target`'s keys in place from the `originals` snapshot, optionally
- * transforming values. A dropped or renamed key is deleted unless an earlier key
- * was remapped onto it.
+ * transforming values. A dropped or renamed key is deleted unless an earlier
+ * key was remapped onto it.
  */
 export function remapKeys(
   target: Record<PropertyKey, any>,

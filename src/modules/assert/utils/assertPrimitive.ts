@@ -3,8 +3,8 @@ import { isPrimitive } from "#modules/guard/guards/isPrimitive";
 import type { Primitive } from "#types/Primitive";
 
 /**
- * @throws {AssertionError} unless the candidate is a primitive; narrows it in
- * place.
+ * @throws {AssertionError} unless the candidate is a primitive; narrows
+ * it in place.
  */
 export function assertPrimitive(
   candidate: unknown,

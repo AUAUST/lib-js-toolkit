@@ -15,8 +15,8 @@ import type { Maybe } from "#types/Maybe";
  * lazily: changes made to it before a value is pulled are visible. A nullish
  * source returns `undefined`.
  *
- * @throws {TypeError} at call time when the source is not iterable or the property
- * is not a property key.
+ * @throws {TypeError} at call time when the source is not iterable or the
+ * property is not a property key.
  */
 export function pluck<Input, const Name extends keyof Input>(
   iterable: Iterable<Input>,
