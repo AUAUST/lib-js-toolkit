@@ -5,3 +5,4 @@
 - Add definePropertyIfUnset
 - Add hasKeys
 - Add pick and omit
+- Add object.pull
