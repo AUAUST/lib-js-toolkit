@@ -8,3 +8,4 @@
 - Add afterFirst, afterLast and afterNth
 - Add beforeFirst, beforeLast and beforeNth
 - Add removePrefix and removeSuffix
+- Add between
