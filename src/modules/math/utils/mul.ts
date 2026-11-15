@@ -1,4 +1,6 @@
-export function mul(value: number, ...factors: number[]): number {
+export function mul(...factors: number[]): number {
+  let value = 1;
+
   for (const factor of factors) {
     value *= factor;
   }
