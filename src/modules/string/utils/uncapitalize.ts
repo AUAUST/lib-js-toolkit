@@ -1,3 +1,4 @@
+import { toLowerCase } from "#modules/string/utils/toLowerCase";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -18,5 +19,5 @@ export function uncapitalize(string: Maybe<string>): Maybe<string> {
 
   const [first = ""] = string;
 
-  return first.toLowerCase() + string.slice(first.length);
+  return toLowerCase(first) + string.slice(first.length);
 }
