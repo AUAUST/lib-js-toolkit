@@ -107,6 +107,7 @@ export { ensureScalar } from "#modules/ensure/utils/ensureScalar";
 export { ensureString } from "#modules/ensure/utils/ensureString";
 export { ensureSymbol } from "#modules/ensure/utils/ensureSymbol";
 export { ensureUndefined } from "#modules/ensure/utils/ensureUndefined";
+export { toFunction } from "#modules/function/utils/toFunction";
 export { toNumber } from "#modules/number/utils/toNumber";
 export { toNumber as n } from "#modules/number/utils/toNumber";
 export { toString } from "#modules/string/utils/toString";

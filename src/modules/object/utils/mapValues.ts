@@ -1,5 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
 import { plain } from "#modules/object/utils/plain";
@@ -56,7 +56,7 @@ export function mapValues(source: any, transform: Callee = (value) => value) {
 
   const result = plain<Record<PropertyKey, any>>();
 
-  const transformer = resolveCallable(transform || ((value) => value));
+  const transformer = toFunction(transform || ((value) => value));
 
   if (objectSource) {
     for (const key of ownKeys(source)) {

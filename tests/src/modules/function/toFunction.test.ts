@@ -1,22 +1,22 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { resolveCallable } from "@auaust/toolkit/function";
+import { toFunction } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
-describe("resolveCallable", () => {
+describe("toFunction", () => {
   test("returns a function as is", () => {
     const fn = (a: string, b: number): a is `${typeof b}` => {
       return String(b) === a;
     };
 
-    const resolved = resolveCallable(fn);
+    const resolved = toFunction(fn);
 
     expect(resolved).toBeTypeOf("function");
     expect(resolved).toBe(fn);
-    expect(resolveCallable(fn)).toBe(fn);
-    expectTypeOf(resolveCallable(fn)).toEqualTypeOf<typeof fn>();
+    expect(toFunction(fn)).toBe(fn);
+    expectTypeOf(toFunction(fn)).toEqualTypeOf<typeof fn>();
 
-    expectTypeOf(resolveCallable(fn)).toEqualTypeOf<
+    expectTypeOf(toFunction(fn)).toEqualTypeOf<
       (a: string, b: number) => a is `${typeof b}`
     >();
   });
@@ -32,7 +32,7 @@ describe("resolveCallable", () => {
       },
     };
 
-    const resolved = resolveCallable(object);
+    const resolved = toFunction(object);
 
     expect(resolved()).toBe(42);
   });
@@ -49,7 +49,7 @@ describe("resolveCallable", () => {
       return this.value;
     }
 
-    const unboundObject = resolveCallable(object);
+    const unboundObject = toFunction(object);
 
     expectTypeOf<
       ThisParameterType<typeof unboundObject>
@@ -58,7 +58,7 @@ describe("resolveCallable", () => {
     expect(unboundObject()).toBe(42);
     expectTypeOf(unboundObject()).toBeNumber();
 
-    const unboundFn = resolveCallable(fn);
+    const unboundFn = toFunction(fn);
 
     expectTypeOf<ThisParameterType<typeof unboundFn>>().toEqualTypeOf<{
       value: number;
@@ -73,7 +73,7 @@ describe("resolveCallable", () => {
       }),
     ).toBe(30);
 
-    const boundObject = resolveCallable(object, {
+    const boundObject = toFunction(object, {
       value: 100,
     });
 
@@ -84,7 +84,7 @@ describe("resolveCallable", () => {
     expect(boundObject()).toBe(100);
     expectTypeOf(boundObject()).toBeNumber();
 
-    const boundFun = resolveCallable(fn, {
+    const boundFun = toFunction(fn, {
       value: 100,
     });
 
@@ -97,5 +97,10 @@ describe("resolveCallable", () => {
         value: 2,
       }),
     ).toBe(100); // Function is bound to 100
+  });
+
+  test("throws a TypeError on a non-callable value", () => {
+    // @ts-expect-error Not callable
+    expect(() => toFunction({})).toThrow(TypeError);
   });
 });

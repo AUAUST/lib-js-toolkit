@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 
@@ -34,7 +34,7 @@ export function transformValues(
     return target;
   }
 
-  const transformer = resolveCallable(transform);
+  const transformer = toFunction(transform);
 
   for (const key in target) {
     target[key] = transformer(target[key], key, key);

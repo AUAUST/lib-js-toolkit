@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { isObject } from "#modules/object/guards/isObject";
 import { remapKeys } from "#modules/object/internals/remapKeys";
 import { keyMapper } from "#modules/object/utils/keyMapper";
@@ -111,7 +111,7 @@ export function transform(
 
   const mapper = keyMapper(map);
 
-  const transformer = resolveCallable(transform);
+  const transformer = toFunction(transform);
 
   return remapKeys(target, originals, mapper, transformer);
 }

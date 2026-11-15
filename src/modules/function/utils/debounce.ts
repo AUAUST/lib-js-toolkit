@@ -1,5 +1,5 @@
 import { toDelay } from "#modules/function/internals/toDelay";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
@@ -43,7 +43,7 @@ export function debounce<Callback extends Callee>(
   delay: number,
 ): Debounced<Callback> {
   const wait = toDelay(delay);
-  const execute = resolveCallable(callback);
+  const execute = toFunction(callback);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 

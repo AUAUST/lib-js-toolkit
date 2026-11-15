@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { identity } from "#modules/general/utils/identity";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { assign } from "#modules/object/utils/assign";
@@ -113,10 +113,10 @@ export function cached(
   const hasKeyResolver = isCallable(resolveKey);
 
   const keyFor = hasKeyResolver
-    ? resolveCallable(resolveKey, resolveKey)
+    ? toFunction(resolveKey, resolveKey)
     : identity.bind(undefined);
 
-  const resolveValue = resolveCallable(callback, callback);
+  const resolveValue = toFunction(callback, callback);
 
   let objectCache = new WeakMap<any, unknown>();
 

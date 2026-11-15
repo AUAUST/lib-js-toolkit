@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { constant } from "#modules/general/utils/constant";
 import { isNumber } from "#modules/number/guards/isNumber";
 import { hasOwn } from "#modules/object/utils/hasOwn";
@@ -57,7 +57,7 @@ export function keyMapper(
   }
 
   if (isCallable(mapper)) {
-    const resolve = resolveCallable(mapper);
+    const resolve = toFunction(mapper);
 
     return function (...args: [any, any]) {
       const result = resolve(...args);

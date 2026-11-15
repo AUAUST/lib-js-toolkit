@@ -5,7 +5,7 @@ import {
   type CacheResolver,
   type KeyResolver,
 } from "#modules/function/utils/cached";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { identity } from "#modules/general/utils/identity";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
@@ -108,10 +108,10 @@ export function cachedAsync(
   const hasKeyResolver = isCallable(resolveKey);
 
   const keyFor = hasKeyResolver
-    ? resolveCallable(resolveKey, resolveKey)
+    ? toFunction(resolveKey, resolveKey)
     : identity.bind(undefined);
 
-  const resolveValue = resolveCallable(callback, callback);
+  const resolveValue = toFunction(callback, callback);
 
   const entries = cached(createEntry, {
     cachePrimitives,

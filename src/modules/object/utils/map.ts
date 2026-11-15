@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { isObject } from "#modules/object/guards/isObject";
 import { resolveMappedKey } from "#modules/object/internals/resolveMappedKey";
@@ -146,7 +146,7 @@ export function map(
 
   const mapper = keyMapper(map);
 
-  const transformer = resolveCallable(transform);
+  const transformer = toFunction(transform);
 
   const mapped = plain<Record<PropertyKey, any>>();
 

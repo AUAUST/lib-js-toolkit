@@ -6,18 +6,18 @@ import type { Callee } from "#types/Callee";
 import type { CallSignature } from "#types/CallSignature";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export function resolveCallable<Target extends Callable>(
+export function toFunction<Target extends Callable>(
   value: Target,
   thisArg?: CallThisParameterType<Target>,
 ): OmitThisParameter<CallSignature<Target>>;
-export function resolveCallable<Target extends Callee>(
+export function toFunction<Target extends Callee>(
   value: Target,
   thisArg: CallThisParameterType<Target>,
 ): OmitThisParameter<CallSignature<Target>>;
-export function resolveCallable<Target extends Callee>(
+export function toFunction<Target extends Callee>(
   value: Target,
 ): CallSignature<Target>;
-export function resolveCallable(
+export function toFunction(
   value: Callee,
   thisArg?: any,
 ): (...args: any[]) => any {

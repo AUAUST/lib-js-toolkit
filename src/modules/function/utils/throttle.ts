@@ -1,5 +1,5 @@
 import { toDelay } from "#modules/function/internals/toDelay";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { max } from "#modules/math/utils/max";
 import { assign } from "#modules/object/utils/assign";
 import type { Callee } from "#types/Callee";
@@ -25,8 +25,8 @@ export type Throttled<Callback extends Callee> = ((
   ): void;
 
   /**
-   * Returns the amount of milliseconds remaining until the function can be called
-   * again.
+   * Returns the amount of milliseconds remaining until the function can
+   * be called again.
    */
   remaining(): number;
 };
@@ -41,7 +41,7 @@ export function throttle<Callback extends Callee>(
 ): Throttled<Callback> {
   const interval = toDelay(delay);
 
-  const execute = resolveCallable(callback);
+  const execute = toFunction(callback);
 
   let throttledUntil = 0;
 

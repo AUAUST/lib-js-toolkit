@@ -1,4 +1,4 @@
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import { assign } from "#modules/object/utils/assign";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import type { Callee } from "#types/Callee";
@@ -7,8 +7,8 @@ import type { CallThisParameterType } from "#types/CallThisParameterType";
 
 export type OnceFn<Return> = (() => Return) & {
   /**
-   * Clears the cached return value of the function and make the next call trigger
-   * the function again.
+   * Clears the cached return value of the function and make the next call
+   * trigger the function again.
    */
   reset(): void;
 } & (
@@ -38,7 +38,7 @@ export function once<Callback extends Callee<any, readonly []>>(
   let value: Return | undefined;
   let called = false;
 
-  const resolve = resolveCallable(callback, this);
+  const resolve = toFunction(callback, this);
 
   function accessor() {
     if (called) {

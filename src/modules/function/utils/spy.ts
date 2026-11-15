@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { toFunction } from "#modules/function/utils/toFunction";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -53,9 +53,9 @@ export function spy(
   before?: any,
   after?: any,
 ): (...args: any[]) => any {
-  callback = isCallable(callback) ? resolveCallable(callback) : undefined;
-  before = isCallable(before) ? resolveCallable(before) : undefined;
-  after = isCallable(after) ? resolveCallable(after) : undefined;
+  callback = isCallable(callback) ? toFunction(callback) : undefined;
+  before = isCallable(before) ? toFunction(before) : undefined;
+  after = isCallable(after) ? toFunction(after) : undefined;
 
   return function spy(this: any, ...args: any[]): any {
     before?.apply(this, args);

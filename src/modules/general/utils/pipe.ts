@@ -1,8 +1,6 @@
 import { PipelineError } from "#errors/PipelineError";
-import { isArray } from "#modules/array/guards/isArray";
-import { map } from "#modules/array/utils/map";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
-import { resolveCallable } from "#modules/function/utils/resolveCallable";
+import { resolvePipeEntries } from "#modules/general/internals/resolvePipeEntries";
 import type { Callee } from "#types/Callee";
 
 export type TransformFn<This, In, Out> = Callee<Out, [value: In], This>;
@@ -72,25 +70,7 @@ export function pipe<This>(
   ...fns: PipeEntry<This, any, any>[]
 ): (this: This, value: any) => any;
 export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
-  const resolved = map(callbacks, (entry) => {
-    if (isArray(entry)) {
-      const [condition, callback] = entry;
-
-      return {
-        condition: isBoolean(condition)
-          ? condition
-          : resolveCallable(condition),
-        callback: resolveCallable(callback),
-        original: callback,
-      };
-    }
-
-    return {
-      condition: true,
-      callback: resolveCallable(entry),
-      original: entry,
-    };
-  });
+  const resolved = resolvePipeEntries(callbacks);
 
   return function pipe(this: any, initialValue: unknown) {
     return resolved.reduce((carry, entry, step) => {
