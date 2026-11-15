@@ -1,3 +1,4 @@
+import { map } from "#modules/array/utils/map";
 import {
   methodForwarder,
   type MethodForwarder,
@@ -49,7 +50,7 @@ export function methodForwarders(
   source: object,
   ...methods: MaybeArray<MethodForwardingInput<PropertyKey, PropertyKey>>[]
 ): MethodForwarder<any, any>[] {
-  return methods.flat().map((method) => {
+  return map(methods.flat(), (method) => {
     return methodForwarder(source, method as any);
   });
 }

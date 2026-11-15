@@ -1,4 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { map } from "#modules/array/utils/map";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 import { isNaN } from "#modules/number/guards/isNaN";
@@ -35,13 +36,11 @@ function parse(input: unknown, seen: Set<unknown>): string | undefined {
 
     seen.add(input);
 
-    const elements = input
-      .map((element) => {
-        return parse(element, seen);
-      })
-      .filter((element) => {
-        return element !== undefined;
-      });
+    const elements = map(input, (element) => {
+      return parse(element, seen);
+    }).filter((element) => {
+      return element !== undefined;
+    });
 
     seen.delete(input);
 

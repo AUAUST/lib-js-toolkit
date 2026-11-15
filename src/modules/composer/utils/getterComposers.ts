@@ -1,3 +1,4 @@
+import { map } from "#modules/array/utils/map";
 import { getterComposer } from "#modules/composer/utils/getterComposer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
 import type { PropertyComposers } from "#modules/composer/utils/propertyComposers";
@@ -12,7 +13,7 @@ export function getterComposers<
   },
   { readonly [Key in keyof Getters]: ReturnType<Getters[Key]> }
 > {
-  return ownKeys(getters).map((key) => {
+  return map(ownKeys(getters), (key) => {
     return getterComposer(key, getters[key]);
   });
 }

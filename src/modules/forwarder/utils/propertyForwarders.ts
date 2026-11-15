@@ -1,3 +1,4 @@
+import { map } from "#modules/array/utils/map";
 import {
   propertyForwarder,
   type PropertyForwarder,
@@ -50,7 +51,7 @@ export function propertyForwarders(
   source: any,
   ...properties: MaybeArray<PropertyForwardingInput<PropertyKey, PropertyKey>>[]
 ): PropertyForwarder<any, any, any, any>[] {
-  return properties.flat().map((property) => {
+  return map(properties.flat(), (property) => {
     return propertyForwarder(source, property);
   });
 }

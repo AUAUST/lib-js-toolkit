@@ -1,5 +1,6 @@
 import { PipelineError } from "#errors/PipelineError";
 import { isArray } from "#modules/array/guards/isArray";
+import { map } from "#modules/array/utils/map";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { PipeCondition } from "#modules/general/utils/pipe";
@@ -75,7 +76,7 @@ export function pipeAsync(
   this: any,
   ...callbacks: AsyncPipeEntry<any, any, any>[]
 ) {
-  const resolved = callbacks.map((entry) => {
+  const resolved = map(callbacks, (entry) => {
     if (isArray(entry)) {
       const [condition, callback] = entry;
 

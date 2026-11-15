@@ -1,5 +1,6 @@
 import { PipelineError } from "#errors/PipelineError";
 import { isArray } from "#modules/array/guards/isArray";
+import { map } from "#modules/array/utils/map";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { resolveCallable } from "#modules/function/utils/resolveCallable";
 import type { Callee } from "#types/Callee";
@@ -71,7 +72,7 @@ export function pipe<This>(
   ...fns: PipeEntry<This, any, any>[]
 ): (this: This, value: any) => any;
 export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
-  const resolved = callbacks.map((entry) => {
+  const resolved = map(callbacks, (entry) => {
     if (isArray(entry)) {
       const [condition, callback] = entry;
 

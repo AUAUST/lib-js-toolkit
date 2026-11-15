@@ -1,4 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { map } from "#modules/array/utils/map";
 import { isString } from "#modules/string/guards/isString";
 
 /**
@@ -32,7 +33,7 @@ function convert(input: unknown, seen: Set<unknown>): string {
 
   seen.add(input);
 
-  const result = input.map((element) => convert(element, seen)).join(",");
+  const result = map(input, (element) => convert(element, seen)).join(",");
 
   seen.delete(input);
 

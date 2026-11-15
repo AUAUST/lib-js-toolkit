@@ -1,3 +1,4 @@
+import { map } from "#modules/array/utils/map";
 import {
   propertyComposer,
   type PropertyComposer,
@@ -31,7 +32,7 @@ export type ComposedProperties<Head> = typeof descriptors extends keyof Head
 export function propertyComposers<
   const Descriptors extends Record<PropertyKey, PropertyCompositionDescriptor>,
 >(descriptors: Descriptors): PropertyComposers<Descriptors> {
-  return ownKeys(descriptors).map((key) => {
+  return map(ownKeys(descriptors), (key) => {
     return propertyComposer(key, descriptors[key]);
   });
 }

@@ -28,7 +28,7 @@ describe("map", () => {
   });
 
   test("throws eagerly on invalid arguments", () => {
-    expect(() => map([1], 42 as never)).toThrow(TypeError);
+    expect(() => map([1], true as never)).toThrow(TypeError);
     expect(() => map(42 as never, String)).toThrow(TypeError);
   });
 
@@ -107,5 +107,26 @@ describe("map", () => {
     expectTypeOf(
       Array.from(map(new Set(["a"]), (string) => string.length)),
     ).toEqualTypeOf<number[]>();
+  });
+
+  test("calls a method by name on each value", () => {
+    const result = map(["a", "b"], "toUpperCase");
+
+    expect([...result]).toEqual(["A", "B"]);
+    expectTypeOf(result).toEqualTypeOf<IteratorObject<string, undefined>>();
+    expect([...map(["a", "bc"], "padStart", 3, "-")]).toEqual(["--a", "-bc"]);
+  });
+
+  test("accepts only a method name every union member has", () => {
+    const items: (
+      { name(): string } | { name(): number; size(): number }
+    )[] = [];
+
+    expectTypeOf(map(items, "name")).toEqualTypeOf<
+      IteratorObject<string | number, undefined>
+    >();
+
+    // @ts-expect-error `size` is missing from one member of the union
+    map(items, "size");
   });
 });
