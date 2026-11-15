@@ -1,11 +1,6 @@
-import { max } from "#modules/math/utils/max";
-import { min } from "#modules/math/utils/min";
+import { max as maxOf } from "#modules/math/utils/max";
+import { min as minOf } from "#modules/math/utils/min";
 
-export function clamp(value: number, min: number, max: number): number;
-export function clamp(
-  value: number,
-  minValue: number,
-  maxValue: number,
-): number {
-  return min(max(value, minValue), maxValue);
+export function clamp(value: number, min: number, max: number): number {
+  return minOf(maxOf(value, min), max);
 }
