@@ -49,7 +49,7 @@ export function throttle<Callback extends Callee>(
     throttledUntil = 0;
   }
 
-  function throttle(
+  function throttled(
     this: CallThisParameterType<Callback>,
     ...args: CallParameters<Callback>
   ): boolean {
@@ -79,7 +79,7 @@ export function throttle<Callback extends Callee>(
     return max(throttledUntil - now, 0);
   }
 
-  return assign(throttle, {
+  return assign(throttled, {
     reset,
     immediate,
     remaining,

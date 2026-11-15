@@ -54,7 +54,7 @@ export function debounce<Callback extends Callee>(
       }
     | undefined;
 
-  function debounce(
+  function debounced(
     this: CallThisParameterType<Callback>,
     ...args: CallParameters<Callback>
   ): boolean {
@@ -104,7 +104,7 @@ export function debounce<Callback extends Callee>(
     Reflect.apply(execute, this, args);
   }
 
-  return assign(debounce, {
+  return assign(debounced, {
     cancel,
     flush,
     immediate,

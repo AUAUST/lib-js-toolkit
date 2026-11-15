@@ -4,6 +4,10 @@ import { spy } from "@auaust/toolkit/function";
 import { callable } from "@auaust/toolkit/protocol";
 
 describe("spy", () => {
+  test("names the returned function spied", () => {
+    expect(spy(() => 1).name).toBe("spied");
+  });
+
   test("calls the before listener before the closure", () => {
     const closure = vi.fn((x: number) => x * 2);
     const before = vi.fn();

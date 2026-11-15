@@ -18,6 +18,10 @@ describe("throttle", () => {
 
   afterEach(() => vi.useRealTimers());
 
+  test("names the returned function throttled", () => {
+    expect(throttle(() => 1, 10).name).toBe("throttled");
+  });
+
   test("uses the first arguments during each cooldown", () => {
     const callback = vi.fn();
     const fn = throttle(callback, 10);

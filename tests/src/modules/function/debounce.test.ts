@@ -18,6 +18,10 @@ describe("debounce", () => {
 
   afterEach(() => vi.useRealTimers());
 
+  test("names the returned function debounced", () => {
+    expect(debounce(() => 1, 10).name).toBe("debounced");
+  });
+
   test("runs a call made from inside the callback with its own arguments", () => {
     const calls: unknown[] = [];
 

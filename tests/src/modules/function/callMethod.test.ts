@@ -1,10 +1,26 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { callMethod } from "@auaust/toolkit/function";
+import { callable } from "@auaust/toolkit/protocol";
 
 import { createKeyedCollections } from "#tests/fixtures/values";
 
 describe("callMethod", () => {
+  test("calls a callable object with the target as receiver", () => {
+    const target = { factor: 3 };
+
+    const method = {
+      [callable](this: { factor: number }, value: number) {
+        return this.factor * value;
+      },
+    };
+
+    const result = callMethod(target, method, 2);
+
+    expect(result).toBe(6);
+    expectTypeOf(result).toEqualTypeOf<number>();
+  });
+
   test.for(createKeyedCollections())("accepts native target %s", (target) => {
     const result = callMethod(target, "get", "key");
 

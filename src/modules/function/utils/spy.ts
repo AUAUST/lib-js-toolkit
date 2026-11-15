@@ -57,7 +57,7 @@ export function spy(
   before = isCallable(before) ? toFunction(before) : undefined;
   after = isCallable(after) ? toFunction(after) : undefined;
 
-  return function spy(this: any, ...args: any[]): any {
+  return function spied(this: any, ...args: any[]): any {
     before?.apply(this, args);
 
     const result = callback?.apply(this, args);
