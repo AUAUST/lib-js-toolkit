@@ -38,7 +38,6 @@ describe("getOrCreate", () => {
     ).toEqualTypeOf<undefined>();
 
     expect(getOrCreate(present, "value", Date)).toBeUndefined();
-    expect(getOrCreate({}, "toString", Date)).toBe(Object.prototype.toString);
 
     if (!false) {
       return;
@@ -51,5 +50,12 @@ describe("getOrCreate", () => {
 
     // @ts-expect-error The constructor is called without arguments.
     getOrCreate({}, "value", RequiresArgument);
+  });
+
+  test("creates values under inherited names", () => {
+    const target = {};
+
+    expect(getOrCreate(target, "toString", Map)).toBeInstanceOf(Map);
+    expect(Object.hasOwn(target, "toString")).toBe(true);
   });
 });

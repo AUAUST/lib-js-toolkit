@@ -1,3 +1,5 @@
+import { hasOwn } from "#modules/object/utils/hasOwn";
+import { set } from "#modules/object/utils/set";
 import type { Constructor } from "#types/Constructor";
 import type { InitializedProperty } from "#types/InitializedProperty";
 
@@ -15,9 +17,13 @@ export function getOrCreate(
   key: PropertyKey,
   Constructor: Constructor<unknown, []>,
 ): unknown {
-  if (!(key in target)) {
-    target[key] = new Constructor();
+  if (hasOwn(target, key)) {
+    return target[key];
   }
 
-  return target[key];
+  const created = new Constructor();
+
+  set(target, key, created);
+
+  return created;
 }

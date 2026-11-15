@@ -36,7 +36,7 @@ describe("getOrSet", () => {
     ).toEqualTypeOf<"fallback">();
   });
 
-  test("retains present undefined, null, falsy, and inherited values", () => {
+  test("retains present undefined, null, and falsy values", () => {
     const target = {
       missing: undefined,
       empty: null,
@@ -55,11 +55,14 @@ describe("getOrSet", () => {
     expect(getOrSet(target, "zero", fallback)).toBe(0);
     expect(getOrSet(target, "no", fallback)).toBe(false);
 
-    expect(getOrSet(target, "toString", fallback)).toBe(
-      Object.prototype.toString,
-    );
-
     expect(fallback).not.toHaveBeenCalled();
+  });
+
+  test("stores values under inherited names as own properties", () => {
+    const target = {};
+
+    expect(getOrSet(target, "toString", 1)).toBe(1);
+    expect(Object.hasOwn(target, "toString")).toBe(true);
   });
 
   test("resolves callable fallbacks and includes optional property types", () => {

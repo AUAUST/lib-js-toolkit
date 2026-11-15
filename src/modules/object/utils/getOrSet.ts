@@ -3,6 +3,8 @@ import {
   type ResolvedValue,
   type ValueInput,
 } from "#modules/general/utils/value";
+import { hasOwn } from "#modules/object/utils/hasOwn";
+import { set } from "#modules/object/utils/set";
 import type { InitializedProperty } from "#types/InitializedProperty";
 
 export function getOrSet<Target extends object, Key extends PropertyKey, Value>(
@@ -24,9 +26,13 @@ export function getOrSet(
   key: PropertyKey,
   fallback: unknown,
 ) {
-  if (!(key in target)) {
-    target[key] = value(fallback, key);
+  if (hasOwn(target, key)) {
+    return target[key];
   }
 
-  return target[key];
+  const resolved = value(fallback, key);
+
+  set(target, key, resolved);
+
+  return resolved;
 }
