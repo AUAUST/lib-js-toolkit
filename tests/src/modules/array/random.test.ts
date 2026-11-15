@@ -14,4 +14,8 @@ describe("random", () => {
   test("throws a RangeError on an empty array", () => {
     expect(() => random([])).toThrow(RangeError);
   });
+
+  test("passes nullish through", () => {
+    expect(random(undefined)).toBeUndefined();
+  });
 });

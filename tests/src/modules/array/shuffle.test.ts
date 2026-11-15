@@ -14,4 +14,8 @@ describe("shuffle", () => {
   test("gives an empty array for an empty array", () => {
     expect(shuffle([])).toEqual([]);
   });
+
+  test("passes nullish through", () => {
+    expect(shuffle(null)).toBeUndefined();
+  });
 });
