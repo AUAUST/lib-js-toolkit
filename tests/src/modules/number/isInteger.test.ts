@@ -7,3 +7,7 @@ describe("isInteger", () => {
     expect(isInteger).toBe(Number.isInteger);
   });
 });
+
+test.for(["5", true, 5n])("rejects the non-number %s", (value) => {
+  expect(isInteger(value)).toBe(false);
+});

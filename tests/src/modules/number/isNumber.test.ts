@@ -20,3 +20,7 @@ describe("isNumber", () => {
     },
   );
 });
+
+test("classifies NaN as a number", () => {
+  expect(isNumber(NaN)).toBe(true);
+});
