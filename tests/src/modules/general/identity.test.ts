@@ -14,6 +14,6 @@ describe("identity", () => {
 
   test("supports omitted arguments and literals", () => {
     expect(identity()).toBeUndefined();
-    expectTypeOf(identity("literal" as const)).toEqualTypeOf<"literal">();
+    expectTypeOf(identity("a")).toEqualTypeOf<"a">();
   });
 });

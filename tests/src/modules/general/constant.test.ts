@@ -14,6 +14,6 @@ describe("constant", () => {
 
   test("supports omitted arguments and literals", () => {
     expect(constant()()).toBeUndefined();
-    expectTypeOf(constant("literal" as const)()).toEqualTypeOf<"literal">();
+    expectTypeOf(constant("literal")()).toEqualTypeOf<"literal">();
   });
 });
