@@ -102,3 +102,5 @@
 - engrenage sync barrels: added a domain `index.ts` to expose an internal — sync then deleted the generated `entry.ts`; removed the index, restored the entry
 - zsh word splitting: passed a space-separated file list held in a variable to eslint — zsh does not split it; listed the files inline
 - worktree isolation check: chained heredoc + eslint + vitest in one Bash call — refused as too complex; split into separate calls
+- worktree git guard: ran git with redirects, pipes or alongside other commands — refused as too complex; split into bare git calls
+- pre-commit hook output: commit output buried failures under ~60 agent-config lines — had to filter for jscpd and sync lines to find the cause

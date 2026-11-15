@@ -3,6 +3,7 @@ import { describe, expect, expectTypeOf, test, vi } from "vitest";
 import { overload } from "@auaust/toolkit/function";
 import { otherObjectsLeaf, typeParents } from "@auaust/toolkit/guard/constants";
 import { keys } from "@auaust/toolkit/object";
+import type { UnknownFn } from "@auaust/toolkit/types";
 
 import { createTypeLeafValues } from "#tests/fixtures/values";
 import { typeChainOf } from "#tests/testutils/typeChainOf";
@@ -214,7 +215,7 @@ describe("overload", () => {
       },
       default: (value) => {
         expectTypeOf(value).toEqualTypeOf<
-          object | readonly unknown[] | ((...args: unknown[]) => unknown)
+          object | readonly unknown[] | UnknownFn
         >();
       },
     });

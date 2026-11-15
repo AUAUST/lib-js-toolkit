@@ -7,8 +7,15 @@ interface Window {
 }
 
 describe("UnknownFn", () => {
-  test("accepts functions declaring a this type", () => {
+  test("accepts every function", () => {
+    expectTypeOf<(value: string) => string>().toExtend<UnknownFn>();
     expectTypeOf<(this: Window) => void>().toExtend<UnknownFn>();
     expectTypeOf<string>().not.toExtend<UnknownFn>();
+  });
+
+  test("accepts any arguments and returns unknown", () => {
+    const fn: UnknownFn = () => 1;
+
+    expectTypeOf(fn(1, "a")).toBeUnknown();
   });
 });
