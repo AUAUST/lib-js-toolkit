@@ -1,4 +1,4 @@
-import { escapeRegExp } from "#modules/string/utils/escapeRegExp";
+import { charRunPattern } from "#modules/string/internals/charRunPattern";
 import type { TrimOptions } from "#modules/string/types/TrimOptions";
 import type { Maybe } from "#types/Maybe";
 
@@ -29,7 +29,7 @@ export function trimStart(
     return string.trimStart();
   }
 
-  const charRun = `[${escapeRegExp(options.chars)}]+`;
+  const charRun = charRunPattern(options.chars);
 
   return string.replace(new RegExp(`^${charRun}`, "gu"), "");
 }

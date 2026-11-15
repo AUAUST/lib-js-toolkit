@@ -1,4 +1,5 @@
 import { isString } from "#modules/string/guards/isString";
+import { toGlobalRegExp } from "#modules/string/internals/toGlobalRegExp";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -24,9 +25,8 @@ export function remove(
     return string;
   }
 
-  if (isString(pattern) || pattern.global) {
-    return string.replaceAll(pattern, "");
-  }
-
-  return string.replaceAll(new RegExp(pattern, `${pattern.flags}g`), "");
+  return string.replaceAll(
+    isString(pattern) ? pattern : toGlobalRegExp(pattern),
+    "",
+  );
 }

@@ -8,3 +8,6 @@
 - Add truncateStart and truncateEnd
 - Add remove
 - Add retain
+- Add replaceEach
+- Update retain to keep substring matches of a string pattern instead of treating it as a character set
+- Update replaceEach to insert replacements literally, without $ patterns

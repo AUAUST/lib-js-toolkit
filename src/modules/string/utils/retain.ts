@@ -1,4 +1,5 @@
 import { isString } from "#modules/string/guards/isString";
+import { toGlobalRegExp } from "#modules/string/internals/toGlobalRegExp";
 import { escapeRegExp } from "#modules/string/utils/escapeRegExp";
 import type { Maybe } from "#types/Maybe";
 
@@ -24,9 +25,9 @@ export function retain(
     return string;
   }
 
-  const regex = isString(pattern)
-    ? new RegExp(escapeRegExp(pattern), "gu")
-    : new RegExp(pattern, pattern.global ? pattern.flags : `${pattern.flags}g`);
+  const regex = toGlobalRegExp(
+    isString(pattern) ? new RegExp(escapeRegExp(pattern), "u") : pattern,
+  );
 
   return string.match(regex)?.join("") ?? "";
 }
