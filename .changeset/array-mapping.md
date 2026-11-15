@@ -8,3 +8,4 @@
 - Add the property-name predicate to iterable.filter
 - Add iterable.filterMap and array.filterMap
 - Add iterable.flatMap and array.flatMap
+- Add iterable.pluck and array.pluck
