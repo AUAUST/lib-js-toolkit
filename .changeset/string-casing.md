@@ -3,3 +3,4 @@
 ---
 
 - Add toLowerCase and toUpperCase
+- Add toLocaleLowerCase and toLocaleUpperCase
