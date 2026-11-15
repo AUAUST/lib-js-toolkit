@@ -5,6 +5,7 @@ import { isNumber } from "#modules/number/guards/isNumber";
 import { toNumber } from "#modules/number/utils/toNumber";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
+import { remove } from "#modules/string/utils/remove";
 import { trim } from "#modules/string/utils/trim";
 
 const invalidSeparatorPattern = /(?<!\d)_|_(?!\d)/;
@@ -44,7 +45,7 @@ function parseNumericString(input: string): number | undefined {
     return;
   }
 
-  const number = toNumber(trimmed.replaceAll("_", ""));
+  const number = toNumber(remove(trimmed, "_"));
 
   return isNaN(number) ? undefined : number;
 }
