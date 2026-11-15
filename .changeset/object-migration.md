@@ -3,3 +3,4 @@
 ---
 
 - Add definePropertyIfUnset
+- Add hasKeys
