@@ -191,7 +191,7 @@ environment          src, bin, scripts, tests, data, tooling: own directories an
 
 ## Toolkit implementation
 
-- The guards and the `object` module implement what the shared lint restrictions point to, so only they use native `typeof` checks and `Object.*`. Everywhere else in `src/`, use them.
+- The guards, `typeLeafOf` and the `object` module implement what the shared lint restrictions point to, so only they use native `typeof` checks and `Object.*`. Everywhere else in `src/`, use them.
 - Once toolkit provides a helper for an operation, use it everywhere else instead of the native or ad hoc form.
 - Preserve distinctions between missing values, `undefined`, `null` and other falsy values where the API distinguishes them.
 - Prefer `unknown` for data that must be narrowed. Use `any` only where a generic constraint or another supported type contract needs it; never replace it where that changes assignability or inference.

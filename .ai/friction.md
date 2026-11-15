@@ -97,3 +97,4 @@
 - engrenage CLI: ran `engrenage planning issue claim` as the planning skill writes it — not on PATH; used `pnpm exec engrenage`
 - worktree isolation guard: ran git inside multi-command Bash calls — refused as too complex to verify; split git into separate calls
 - gh api graphql (issue project fields): queried an issue's field values — token lacks `read:project`; read fields from claimed drafts instead
+- auto mode classifier: edited AGENTS.md with the wording #255 records as consented — refused as undermining oversight; left the edit for the user to confirm

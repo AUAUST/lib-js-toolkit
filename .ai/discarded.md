@@ -29,3 +29,4 @@
 - explicit type argument for loosening (`entries<string>(object)`): opting out of precise types — no partial type-argument inference in TS (#149)
 - curried type argument for loosening (`entries.of<string>()(object)`): opting out of precise types — bundle size, complexity, readability (#149)
 - subagent 5-minute prompt cache TTL: cheaper writes for never-resumed walk agents — resumes past five minutes rewrite whole contexts; ~4.5% gross saving, likely net loss (AUAUST/lib-js-engrenage#522)
+- Set of type names in `is()`: early `unknown` return, deduplicated checks — building the Set per call is ~6x slower than a switch loop (benchmark, 1–3 names)

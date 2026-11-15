@@ -1,3 +1,4 @@
+import { isArray } from "#modules/array/guards/isArray";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isBigInt } from "#modules/guard/guards/isBigInt";
@@ -30,6 +31,19 @@ const guards: {
   string: isString,
   symbol: isSymbol,
   undefined: isUndefined,
+  array: (candidate) => isArray(candidate),
+  numeric: (candidate) => {
+    return isNumber(candidate) || isBigInt(candidate);
+  },
+  scalar: (candidate) => {
+    return (
+      isString(candidate) ||
+      isBoolean(candidate) ||
+      isNumber(candidate) ||
+      isBigInt(candidate)
+    );
+  },
+  unknown: (unusedCandidate): unusedCandidate is unknown => true,
 };
 
 /**

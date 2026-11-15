@@ -15,6 +15,7 @@
       "@auaust/toolkit/function": ["./src/modules/function/entry.ts"],
       "@auaust/toolkit/general": ["./src/modules/general/entry.ts"],
       "@auaust/toolkit/guard": ["./src/modules/guard/entry.ts"],
+      "@auaust/toolkit/guard/constants": ["./src/modules/guard/constants.ts"],
       "@auaust/toolkit/iterable": ["./src/modules/iterable/entry.ts"],
       "@auaust/toolkit/maplike": ["./src/modules/maplike/entry.ts"],
       "@auaust/toolkit/math": ["./src/modules/math/entry.ts"],
