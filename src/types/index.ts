@@ -25,6 +25,7 @@ export type * from "#types/FilledContainer";
 export type * from "#types/FilledMember";
 export type * from "#types/FilledValue";
 export type * from "#types/FlatEntries";
+export type * from "#types/Flattened";
 export type * from "#types/Fn";
 export type * from "#types/IfAny";
 export type * from "#types/IfNever";

@@ -13,6 +13,7 @@ export { definePropertyIfUnset } from "#modules/object/utils/definePropertyIfUns
 export { entries } from "#modules/object/utils/entries";
 export { expose } from "#modules/object/utils/expose";
 export { finalize } from "#modules/object/utils/finalize";
+export { flatten } from "#modules/object/utils/flatten";
 export { freeze } from "#modules/object/utils/freeze";
 export { get } from "#modules/object/utils/get";
 export { getOrCreate } from "#modules/object/utils/getOrCreate";
@@ -61,6 +62,7 @@ export type * from "#modules/object/utils/definePropertyIfUnset";
 export type * from "#modules/object/utils/entries";
 export type * from "#modules/object/utils/expose";
 export type * from "#modules/object/utils/finalize";
+export type * from "#modules/object/utils/flatten";
 export type * from "#modules/object/utils/freeze";
 export type * from "#modules/object/utils/get";
 export type * from "#modules/object/utils/getOrCreate";
