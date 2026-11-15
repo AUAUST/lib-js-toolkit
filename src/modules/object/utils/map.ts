@@ -10,7 +10,7 @@ import {
   type RecordMappedKey,
 } from "#modules/object/utils/mapKeys";
 import { mapValues } from "#modules/object/utils/mapValues";
-import { plain } from "#modules/object/utils/plain";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { ObjectKey } from "#types/ObjectKey";
@@ -148,7 +148,7 @@ export function map(
 
   const transformer = toFunction(transform);
 
-  const mapped = plain<Record<PropertyKey, any>>();
+  const mapped = toNullPrototype<Record<PropertyKey, any>>();
 
   for (const key in source) {
     const actualKey = resolveMappedKey(mapper(key, source[key]), key);

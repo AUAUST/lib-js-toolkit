@@ -2,7 +2,7 @@ import { isArray } from "#modules/array/guards/isArray";
 import { toFunction } from "#modules/function/utils/toFunction";
 import { isContainer } from "#modules/guard/guards/isContainer";
 import { ownKeys } from "#modules/object/utils/ownKeys";
-import { plain } from "#modules/object/utils/plain";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 import type { MappedSource } from "#modules/object/utils/mapKeys";
 import type { Callee } from "#types/Callee";
 import type { ObjectKey } from "#types/ObjectKey";
@@ -51,10 +51,10 @@ export function mapValues(source: any, transform: Callee = (value) => value) {
   const objectSource = isContainer(source) && !isArray(source);
 
   if (!transform && !objectSource) {
-    return plain(source);
+    return toNullPrototype(source);
   }
 
-  const result = plain<Record<PropertyKey, any>>();
+  const result = toNullPrototype<Record<PropertyKey, any>>();
 
   const transformer = toFunction(transform || ((value) => value));
 

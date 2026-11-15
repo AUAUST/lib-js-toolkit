@@ -4,8 +4,8 @@ import { isNumber } from "#modules/number/guards/isNumber";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import { finalize } from "#modules/object/utils/finalize";
 import { freeze } from "#modules/object/utils/freeze";
-import { plain } from "#modules/object/utils/plain";
 import { readonly } from "#modules/object/utils/readonly";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 
 /**
  * A utility for measuring elapsed time across one or more running periods.
@@ -44,8 +44,8 @@ export interface Stopwatch<Identifier = unknown> {
    */
   pause(): void;
   /**
-   * Resumes a paused or stopped timer. Calling this on a running timer has no
-   * effect.
+   * Resumes a paused or stopped timer. Calling this on a running timer
+   * has no effect.
    */
   resume(): void;
   /**
@@ -87,8 +87,8 @@ export interface Period {
    */
   readonly start: number;
   /**
-   * The timestamp when this running period ended, or `undefined` while it is
-   * active.
+   * The timestamp when this running period ended, or `undefined` while
+   * it is active.
    */
   readonly end: number | undefined;
   /**
@@ -100,14 +100,14 @@ export interface Period {
 export interface StopwatchOptions {
   /**
    * Whether to use `performance.now()` instead of `Date.now()` for measuring
-   * time. Defaults to `true`, except when `start` is a `Date` and this option is
-   * omitted.
+   * time. Defaults to `true`, except when `start` is a `Date` and this
+   * option is omitted.
    */
   usePerformance?: boolean | undefined;
 
   /**
-   * The timestamp to use as the start time for the stopwatch, if different than
-   * the current time.
+   * The timestamp to use as the start time for the stopwatch, if different
+   * than the current time.
    */
   startAt?: Date | number | undefined;
 }
@@ -180,7 +180,7 @@ export function stopwatch<Identifier>(
       end: undefined,
     };
 
-    const period = plain<Period>({
+    const period = toNullPrototype<Period>({
       index: periods.length,
       start: state.start,
     });
@@ -272,7 +272,7 @@ export function stopwatch<Identifier>(
 
     laps.push(
       freeze(
-        plain<Lap<Identifier>>({
+        toNullPrototype<Lap<Identifier>>({
           index: laps.length,
           name: key,
           duration,

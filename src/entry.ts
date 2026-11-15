@@ -1,8 +1,8 @@
 import { freeze } from "#modules/object/utils/freeze";
-import { plain } from "#modules/object/utils/plain";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 
 export const BUILD = freeze(
-  plain({
+  toNullPrototype({
     name: __NAME__,
     version: __VERSION__,
     license: __LICENSE__,

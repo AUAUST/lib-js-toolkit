@@ -2,7 +2,7 @@ import { toFunction } from "#modules/function/utils/toFunction";
 import { isObject } from "#modules/object/guards/isObject";
 import { remapKeys } from "#modules/object/internals/remapKeys";
 import { keyMapper } from "#modules/object/utils/keyMapper";
-import { plain } from "#modules/object/utils/plain";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 import { transformKeys } from "#modules/object/utils/transformKeys";
 import { transformValues } from "#modules/object/utils/transformValues";
 import type { Callee } from "#types/Callee";
@@ -107,7 +107,7 @@ export function transform(
     return transformValues(target, transform);
   }
 
-  const originals = plain(target);
+  const originals = toNullPrototype(target);
 
   const mapper = keyMapper(map);
 

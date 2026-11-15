@@ -1,6 +1,6 @@
 import { resolveMappedKey } from "#modules/object/internals/resolveMappedKey";
 import { keyMapper } from "#modules/object/utils/keyMapper";
-import { plain } from "#modules/object/utils/plain";
+import { toNullPrototype } from "#modules/object/utils/toNullPrototype";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { ObjectKey } from "#types/ObjectKey";
@@ -98,10 +98,10 @@ export function mapKeys(
 ): Record<string, any>;
 export function mapKeys(source: any, map?: any) {
   if (!map) {
-    return plain(source);
+    return toNullPrototype(source);
   }
 
-  const result = plain<Record<PropertyKey, any>>();
+  const result = toNullPrototype<Record<PropertyKey, any>>();
 
   const mapper = keyMapper(map);
 

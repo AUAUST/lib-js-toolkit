@@ -106,3 +106,4 @@
 - pre-commit hook output: commit output buried failures under ~60 agent-config lines — had to filter for jscpd and sync lines to find the cause
 - eslint --fix: ran on a new helper with `catch { return undefined; }` and `return await` — autofix removed both, leaving an empty catch and wrong semantics; rewrote on attempt/attemptAsync
 - worktree git guard: compound commands naming git refused — split git calls into separate plain commands
+- worktree git guard: compound commands mixing git with other steps (heredocs, loops, cat) — refused as unverifiable; split git into standalone calls
