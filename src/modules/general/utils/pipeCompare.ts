@@ -1,6 +1,7 @@
 import { call } from "#modules/function/utils/call";
 import type { Callee } from "#types/Callee";
 
+// @debt Compares with `===` while `deepEquals` uses `sameValueZero`, so transforms yielding `NaN` never match.
 /**
  * Returns whether every value is `===` to the others once passed through
  * `transform`, each value transformed once. Fewer than two values compare as
