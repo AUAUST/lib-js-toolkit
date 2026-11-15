@@ -34,6 +34,7 @@ describe("flatten", () => {
     });
 
     expect(dotted.date).toBe(date);
+
     expectTypeOf(
       flatten(
         {
@@ -42,6 +43,7 @@ describe("flatten", () => {
         "/",
       ),
     ).toEqualTypeOf<{ "a/b": 1 }>();
+
     expect(flatten({})).toEqual({});
   });
 

@@ -107,3 +107,5 @@
 - eslint --fix: ran on a new helper with `catch { return undefined; }` and `return await` — autofix removed both, leaving an empty catch and wrong semantics; rewrote on attempt/attemptAsync
 - worktree git guard: compound commands naming git refused — split git calls into separate plain commands
 - worktree git guard: compound commands mixing git with other steps (heredocs, loops, cat) — refused as unverifiable; split git into standalone calls
+- git apply --index after cherry-pick: applied a leaf patch right after cherry-picking — failed with 'does not match index'; git update-index --refresh then retry
+- worktree removal after a failed closing commit: chained commit and worktree removal with ';' — removed the worktree though the gate failed; chain with && and keep worktrees until the commit lands
