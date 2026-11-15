@@ -30,6 +30,7 @@ export { ensureNullish as isNullish } from "#modules/ensure/utils/ensureNullish"
 export { ensureNumber as isNumber } from "#modules/ensure/utils/ensureNumber";
 export { ensureObject as isObject } from "#modules/ensure/utils/ensureObject";
 export { ensurePlainObject as isPlainObject } from "#modules/ensure/utils/ensurePlainObject";
+export { ensurePrimitive as isPrimitive } from "#modules/ensure/utils/ensurePrimitive";
 export { ensurePromise as isPromise } from "#modules/ensure/utils/ensurePromise";
 export { ensurePromiseLike as isPromiseLike } from "#modules/ensure/utils/ensurePromiseLike";
 export { ensurePropertyComposer as isPropertyComposer } from "#modules/ensure/utils/ensurePropertyComposer";
@@ -70,6 +71,7 @@ export type * from "#modules/ensure/utils/ensureNullish";
 export type * from "#modules/ensure/utils/ensureNumber";
 export type * from "#modules/ensure/utils/ensureObject";
 export type * from "#modules/ensure/utils/ensurePlainObject";
+export type * from "#modules/ensure/utils/ensurePrimitive";
 export type * from "#modules/ensure/utils/ensurePromise";
 export type * from "#modules/ensure/utils/ensurePromiseLike";
 export type * from "#modules/ensure/utils/ensurePropertyComposer";

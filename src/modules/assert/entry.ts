@@ -29,6 +29,7 @@ export { assertNullish as isNullish } from "#modules/assert/utils/assertNullish"
 export { assertNumber as isNumber } from "#modules/assert/utils/assertNumber";
 export { assertObject as isObject } from "#modules/assert/utils/assertObject";
 export { assertPlainObject as isPlainObject } from "#modules/assert/utils/assertPlainObject";
+export { assertPrimitive as isPrimitive } from "#modules/assert/utils/assertPrimitive";
 export { assertPromise as isPromise } from "#modules/assert/utils/assertPromise";
 export { assertPromiseLike as isPromiseLike } from "#modules/assert/utils/assertPromiseLike";
 export { assertPropertyComposer as isPropertyComposer } from "#modules/assert/utils/assertPropertyComposer";
@@ -68,6 +69,7 @@ export type * from "#modules/assert/utils/assertNullish";
 export type * from "#modules/assert/utils/assertNumber";
 export type * from "#modules/assert/utils/assertObject";
 export type * from "#modules/assert/utils/assertPlainObject";
+export type * from "#modules/assert/utils/assertPrimitive";
 export type * from "#modules/assert/utils/assertPromise";
 export type * from "#modules/assert/utils/assertPromiseLike";
 export type * from "#modules/assert/utils/assertPropertyComposer";

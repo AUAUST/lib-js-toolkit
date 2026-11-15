@@ -27,6 +27,7 @@ import { assertNullish } from "#modules/assert/utils/assertNullish";
 import { assertNumber } from "#modules/assert/utils/assertNumber";
 import { assertObject } from "#modules/assert/utils/assertObject";
 import { assertPlainObject } from "#modules/assert/utils/assertPlainObject";
+import { assertPrimitive } from "#modules/assert/utils/assertPrimitive";
 import { assertPromise } from "#modules/assert/utils/assertPromise";
 import { assertPromiseLike } from "#modules/assert/utils/assertPromiseLike";
 import { assertPropertyComposer } from "#modules/assert/utils/assertPropertyComposer";
@@ -70,6 +71,7 @@ export interface Assert {
   readonly isNumber: typeof assertNumber;
   readonly isObject: typeof assertObject;
   readonly isPlainObject: typeof assertPlainObject;
+  readonly isPrimitive: typeof assertPrimitive;
   readonly isPromise: typeof assertPromise;
   readonly isPromiseLike: typeof assertPromiseLike;
   readonly isPropertyComposer: typeof assertPropertyComposer;
@@ -127,6 +129,7 @@ export const assert: Assert = assign<
     isNumber: assertNumber,
     isObject: assertObject,
     isPlainObject: assertPlainObject,
+    isPrimitive: assertPrimitive,
     isPromise: assertPromise,
     isPromiseLike: assertPromiseLike,
     isPropertyComposer: assertPropertyComposer,

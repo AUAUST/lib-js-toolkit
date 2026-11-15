@@ -22,4 +22,8 @@ describe("isNullish", () => {
       }
     },
   );
+
+  test("rejects NaN", () => {
+    expect(isNullish(Number.NaN)).toBe(false);
+  });
 });

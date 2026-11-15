@@ -27,6 +27,7 @@ import { ensureNullish } from "#modules/ensure/utils/ensureNullish";
 import { ensureNumber } from "#modules/ensure/utils/ensureNumber";
 import { ensureObject } from "#modules/ensure/utils/ensureObject";
 import { ensurePlainObject } from "#modules/ensure/utils/ensurePlainObject";
+import { ensurePrimitive } from "#modules/ensure/utils/ensurePrimitive";
 import { ensurePromise } from "#modules/ensure/utils/ensurePromise";
 import { ensurePromiseLike } from "#modules/ensure/utils/ensurePromiseLike";
 import { ensurePropertyComposer } from "#modules/ensure/utils/ensurePropertyComposer";
@@ -75,6 +76,7 @@ export interface Ensure {
   readonly isNumber: typeof ensureNumber;
   readonly isObject: typeof ensureObject;
   readonly isPlainObject: typeof ensurePlainObject;
+  readonly isPrimitive: typeof ensurePrimitive;
   readonly isPromise: typeof ensurePromise;
   readonly isPromiseLike: typeof ensurePromiseLike;
   readonly isPropertyComposer: typeof ensurePropertyComposer;
@@ -133,6 +135,7 @@ export const ensure: Ensure = assign(
     isNumber: ensureNumber,
     isObject: ensureObject,
     isPlainObject: ensurePlainObject,
+    isPrimitive: ensurePrimitive,
     isPromise: ensurePromise,
     isPromiseLike: ensurePromiseLike,
     isPropertyComposer: ensurePropertyComposer,
