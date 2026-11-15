@@ -6,6 +6,7 @@ import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 import { assertCallable } from "#modules/assert/utils/assertCallable";
 import { assertCallableMember } from "#modules/assert/utils/assertCallableMember";
 import { assertContainer } from "#modules/assert/utils/assertContainer";
+import { assertEmptyArray } from "#modules/assert/utils/assertEmptyArray";
 import { assertEmptyString } from "#modules/assert/utils/assertEmptyString";
 import { assertFinite } from "#modules/assert/utils/assertFinite";
 import { assertFunction } from "#modules/assert/utils/assertFunction";
@@ -13,6 +14,7 @@ import { assertInteger } from "#modules/assert/utils/assertInteger";
 import { assertIterable } from "#modules/assert/utils/assertIterable";
 import { assertMethod } from "#modules/assert/utils/assertMethod";
 import { assertNaN } from "#modules/assert/utils/assertNaN";
+import { assertNonEmptyArray } from "#modules/assert/utils/assertNonEmptyArray";
 import { assertNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
 import { assertNotArray } from "#modules/assert/utils/assertNotArray";
 import { assertNotBigInt } from "#modules/assert/utils/assertNotBigInt";
@@ -53,6 +55,7 @@ export interface Assert {
   readonly isCallable: typeof assertCallable;
   readonly isCallableMember: typeof assertCallableMember;
   readonly isContainer: typeof assertContainer;
+  readonly isEmptyArray: typeof assertEmptyArray;
   readonly isEmptyString: typeof assertEmptyString;
   readonly isFinite: typeof assertFinite;
   readonly isFunction: typeof assertFunction;
@@ -60,6 +63,7 @@ export interface Assert {
   readonly isIterable: typeof assertIterable;
   readonly isMethod: typeof assertMethod;
   readonly isNaN: typeof assertNaN;
+  readonly isNonEmptyArray: typeof assertNonEmptyArray;
   readonly isNonEmptyString: typeof assertNonEmptyString;
   readonly isNotArray: typeof assertNotArray;
   readonly isNotBigInt: typeof assertNotBigInt;
@@ -114,6 +118,7 @@ export const assert: Assert = assign<
     isCallable: assertCallable,
     isCallableMember: assertCallableMember,
     isContainer: assertContainer,
+    isEmptyArray: assertEmptyArray,
     isEmptyString: assertEmptyString,
     isFinite: assertFinite,
     isFunction: assertFunction,
@@ -121,6 +126,7 @@ export const assert: Assert = assign<
     isIterable: assertIterable,
     isMethod: assertMethod,
     isNaN: assertNaN,
+    isNonEmptyArray: assertNonEmptyArray,
     isNonEmptyString: assertNonEmptyString,
     isNotArray: assertNotArray,
     isNotBigInt: assertNotBigInt,

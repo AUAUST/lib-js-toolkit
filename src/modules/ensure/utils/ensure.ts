@@ -6,6 +6,7 @@ import { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
 import { ensureCallable } from "#modules/ensure/utils/ensureCallable";
 import { ensureCallableMember } from "#modules/ensure/utils/ensureCallableMember";
 import { ensureContainer } from "#modules/ensure/utils/ensureContainer";
+import { ensureEmptyArray } from "#modules/ensure/utils/ensureEmptyArray";
 import { ensureEmptyString } from "#modules/ensure/utils/ensureEmptyString";
 import { ensureFinite } from "#modules/ensure/utils/ensureFinite";
 import { ensureFunction } from "#modules/ensure/utils/ensureFunction";
@@ -13,6 +14,7 @@ import { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 import { ensureIterable } from "#modules/ensure/utils/ensureIterable";
 import { ensureMethod } from "#modules/ensure/utils/ensureMethod";
 import { ensureNaN } from "#modules/ensure/utils/ensureNaN";
+import { ensureNonEmptyArray } from "#modules/ensure/utils/ensureNonEmptyArray";
 import { ensureNonEmptyString } from "#modules/ensure/utils/ensureNonEmptyString";
 import { ensureNotArray } from "#modules/ensure/utils/ensureNotArray";
 import { ensureNotBigInt } from "#modules/ensure/utils/ensureNotBigInt";
@@ -58,6 +60,7 @@ export interface Ensure {
   readonly isCallable: typeof ensureCallable;
   readonly isCallableMember: typeof ensureCallableMember;
   readonly isContainer: typeof ensureContainer;
+  readonly isEmptyArray: typeof ensureEmptyArray;
   readonly isEmptyString: typeof ensureEmptyString;
   readonly isFinite: typeof ensureFinite;
   readonly isFunction: typeof ensureFunction;
@@ -65,6 +68,7 @@ export interface Ensure {
   readonly isIterable: typeof ensureIterable;
   readonly isMethod: typeof ensureMethod;
   readonly isNaN: typeof ensureNaN;
+  readonly isNonEmptyArray: typeof ensureNonEmptyArray;
   readonly isNonEmptyString: typeof ensureNonEmptyString;
   readonly isNotArray: typeof ensureNotArray;
   readonly isNotBigInt: typeof ensureNotBigInt;
@@ -96,8 +100,8 @@ export interface Ensure {
 
 /**
  * Returns the candidate when the guard passes; otherwise throws an
- * `AssertionError`. Every `ensure` helper is attached; importing it bundles them
- * all.
+ * `AssertionError`. Every `ensure` helper is attached; importing it
+ * bundles them all.
  */
 export const ensure: Ensure = assign(
   function ensure<Candidate, Guarded>(
@@ -120,6 +124,7 @@ export const ensure: Ensure = assign(
     isCallable: ensureCallable,
     isCallableMember: ensureCallableMember,
     isContainer: ensureContainer,
+    isEmptyArray: ensureEmptyArray,
     isEmptyString: ensureEmptyString,
     isFinite: ensureFinite,
     isFunction: ensureFunction,
@@ -127,6 +132,7 @@ export const ensure: Ensure = assign(
     isIterable: ensureIterable,
     isMethod: ensureMethod,
     isNaN: ensureNaN,
+    isNonEmptyArray: ensureNonEmptyArray,
     isNonEmptyString: ensureNonEmptyString,
     isNotArray: ensureNotArray,
     isNotBigInt: ensureNotBigInt,
