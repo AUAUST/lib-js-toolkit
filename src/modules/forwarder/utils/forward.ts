@@ -1,4 +1,5 @@
 import { StateError } from "#errors/StateError";
+import { flat } from "#modules/array/utils/flat";
 import { forwardAs } from "#modules/forwarder/utils/forwardAs";
 import {
   methodForwarder,
@@ -49,7 +50,7 @@ function doForward(
 ) {
   const descriptors: Record<PropertyKey, PropertyDescriptor> = {};
 
-  for (const forward of forwards.flat()) {
+  for (const forward of flat(forwards)) {
     const { name } = forward;
 
     if (hasOwn(target, name)) {

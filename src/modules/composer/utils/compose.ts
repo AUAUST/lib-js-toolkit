@@ -1,4 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { flat } from "#modules/array/utils/flat";
 import { isPropertyComposer } from "#modules/composer/guards/isPropertyComposer";
 import { getterComposer } from "#modules/composer/utils/getterComposer";
 import { getterComposers } from "#modules/composer/utils/getterComposers";
@@ -137,7 +138,7 @@ function doCompose(...inputs: readonly object[]): object {
 
   const target = hasBase ? first : create(null);
 
-  const entries = (hasBase ? rest : inputs).flat() as PropertyComposer[];
+  const entries = flat(hasBase ? rest : inputs) as PropertyComposer[];
 
   for (const entry of entries) {
     const { name, ...descriptor } = entry;
