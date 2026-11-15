@@ -30,6 +30,7 @@ import { assertNotUndefined } from "#modules/assert/utils/assertNotUndefined";
 import { assertNull } from "#modules/assert/utils/assertNull";
 import { assertNullish } from "#modules/assert/utils/assertNullish";
 import { assertNumber } from "#modules/assert/utils/assertNumber";
+import { assertNumeric } from "#modules/assert/utils/assertNumeric";
 import { assertObject } from "#modules/assert/utils/assertObject";
 import { assertPlainObject } from "#modules/assert/utils/assertPlainObject";
 import { assertPrimitive } from "#modules/assert/utils/assertPrimitive";
@@ -39,6 +40,7 @@ import { assertPropertyComposer } from "#modules/assert/utils/assertPropertyComp
 import { assertPropertyKey } from "#modules/assert/utils/assertPropertyKey";
 import { assertRegisteredSymbol } from "#modules/assert/utils/assertRegisteredSymbol";
 import { assertSafeInteger } from "#modules/assert/utils/assertSafeInteger";
+import { assertScalar } from "#modules/assert/utils/assertScalar";
 import { assertString } from "#modules/assert/utils/assertString";
 import { assertSymbol } from "#modules/assert/utils/assertSymbol";
 import { assertUndefined } from "#modules/assert/utils/assertUndefined";
@@ -79,6 +81,7 @@ export interface Assert {
   readonly isNull: typeof assertNull;
   readonly isNullish: typeof assertNullish;
   readonly isNumber: typeof assertNumber;
+  readonly isNumeric: typeof assertNumeric;
   readonly isObject: typeof assertObject;
   readonly isPlainObject: typeof assertPlainObject;
   readonly isPrimitive: typeof assertPrimitive;
@@ -88,6 +91,7 @@ export interface Assert {
   readonly isPropertyKey: typeof assertPropertyKey;
   readonly isRegisteredSymbol: typeof assertRegisteredSymbol;
   readonly isSafeInteger: typeof assertSafeInteger;
+  readonly isScalar: typeof assertScalar;
   readonly isString: typeof assertString;
   readonly isSymbol: typeof assertSymbol;
   readonly isUndefined: typeof assertUndefined;
@@ -142,6 +146,7 @@ export const assert: Assert = assign<
     isNull: assertNull,
     isNullish: assertNullish,
     isNumber: assertNumber,
+    isNumeric: assertNumeric,
     isObject: assertObject,
     isPlainObject: assertPlainObject,
     isPrimitive: assertPrimitive,
@@ -151,6 +156,7 @@ export const assert: Assert = assign<
     isPropertyKey: assertPropertyKey,
     isRegisteredSymbol: assertRegisteredSymbol,
     isSafeInteger: assertSafeInteger,
+    isScalar: assertScalar,
     isString: assertString,
     isSymbol: assertSymbol,
     isUndefined: assertUndefined,

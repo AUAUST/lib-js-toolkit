@@ -30,6 +30,7 @@ import { ensureNotUndefined } from "#modules/ensure/utils/ensureNotUndefined";
 import { ensureNull } from "#modules/ensure/utils/ensureNull";
 import { ensureNullish } from "#modules/ensure/utils/ensureNullish";
 import { ensureNumber } from "#modules/ensure/utils/ensureNumber";
+import { ensureNumeric } from "#modules/ensure/utils/ensureNumeric";
 import { ensureObject } from "#modules/ensure/utils/ensureObject";
 import { ensurePlainObject } from "#modules/ensure/utils/ensurePlainObject";
 import { ensurePrimitive } from "#modules/ensure/utils/ensurePrimitive";
@@ -39,6 +40,7 @@ import { ensurePropertyComposer } from "#modules/ensure/utils/ensurePropertyComp
 import { ensurePropertyKey } from "#modules/ensure/utils/ensurePropertyKey";
 import { ensureRegisteredSymbol } from "#modules/ensure/utils/ensureRegisteredSymbol";
 import { ensureSafeInteger } from "#modules/ensure/utils/ensureSafeInteger";
+import { ensureScalar } from "#modules/ensure/utils/ensureScalar";
 import { ensureString } from "#modules/ensure/utils/ensureString";
 import { ensureSymbol } from "#modules/ensure/utils/ensureSymbol";
 import { ensureUndefined } from "#modules/ensure/utils/ensureUndefined";
@@ -84,6 +86,7 @@ export interface Ensure {
   readonly isNull: typeof ensureNull;
   readonly isNullish: typeof ensureNullish;
   readonly isNumber: typeof ensureNumber;
+  readonly isNumeric: typeof ensureNumeric;
   readonly isObject: typeof ensureObject;
   readonly isPlainObject: typeof ensurePlainObject;
   readonly isPrimitive: typeof ensurePrimitive;
@@ -93,6 +96,7 @@ export interface Ensure {
   readonly isPropertyKey: typeof ensurePropertyKey;
   readonly isRegisteredSymbol: typeof ensureRegisteredSymbol;
   readonly isSafeInteger: typeof ensureSafeInteger;
+  readonly isScalar: typeof ensureScalar;
   readonly isString: typeof ensureString;
   readonly isSymbol: typeof ensureSymbol;
   readonly isUndefined: typeof ensureUndefined;
@@ -148,6 +152,7 @@ export const ensure: Ensure = assign(
     isNull: ensureNull,
     isNullish: ensureNullish,
     isNumber: ensureNumber,
+    isNumeric: ensureNumeric,
     isObject: ensureObject,
     isPlainObject: ensurePlainObject,
     isPrimitive: ensurePrimitive,
@@ -157,6 +162,7 @@ export const ensure: Ensure = assign(
     isPropertyKey: ensurePropertyKey,
     isRegisteredSymbol: ensureRegisteredSymbol,
     isSafeInteger: ensureSafeInteger,
+    isScalar: ensureScalar,
     isString: ensureString,
     isSymbol: ensureSymbol,
     isUndefined: ensureUndefined,
