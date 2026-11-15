@@ -2,18 +2,24 @@
 
 export { isIterable } from "#modules/iterable/guards/isIterable";
 export { concat } from "#modules/iterable/utils/concat";
+export { every } from "#modules/iterable/utils/every";
 export { filter } from "#modules/iterable/utils/filter";
 export { filterMap } from "#modules/iterable/utils/filterMap";
+export { find } from "#modules/iterable/utils/find";
 export { flatMap } from "#modules/iterable/utils/flatMap";
 export { map } from "#modules/iterable/utils/map";
 export { memoize } from "#modules/iterable/utils/memoize";
 export { pluck } from "#modules/iterable/utils/pluck";
+export { some } from "#modules/iterable/utils/some";
 export type * from "#modules/iterable/guards/isIterable";
 export type * from "#modules/iterable/types/MemoizedIterable";
 export type * from "#modules/iterable/utils/concat";
+export type * from "#modules/iterable/utils/every";
 export type * from "#modules/iterable/utils/filter";
 export type * from "#modules/iterable/utils/filterMap";
+export type * from "#modules/iterable/utils/find";
 export type * from "#modules/iterable/utils/flatMap";
 export type * from "#modules/iterable/utils/map";
 export type * from "#modules/iterable/utils/memoize";
 export type * from "#modules/iterable/utils/pluck";
+export type * from "#modules/iterable/utils/some";
