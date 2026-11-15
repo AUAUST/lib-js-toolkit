@@ -1,10 +1,11 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
 import { isString } from "#modules/string/guards/isString";
 
 /**
- * Converts input to a string without mutation; objects without conversion hooks
- * throw natively.
+ * Converts input to a string without mutation; objects without conversion
+ * hooks throw natively.
  *
  * @shorthand s
  */
@@ -33,7 +34,9 @@ function convert(input: unknown, seen: Set<unknown>): string {
 
   seen.add(input);
 
-  const result = map(input, (element) => convert(element, seen)).join(",");
+  const converted = map(input, (element) => convert(element, seen));
+
+  const result = join(converted, ",");
 
   seen.delete(input);
 
