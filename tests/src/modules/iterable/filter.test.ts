@@ -20,7 +20,7 @@ describe("filter", () => {
   });
 
   test("throws eagerly on invalid arguments and passes nullish through", () => {
-    expect(() => filter([1], 42 as never)).toThrow(TypeError);
+    expect(() => filter([1], true as never)).toThrow(TypeError);
     expect(() => filter(42 as never, Boolean)).toThrow(TypeError);
     expect(filter(null, Boolean)).toBeUndefined();
   });
@@ -34,5 +34,34 @@ describe("filter", () => {
     expectTypeOf(filter([1, 2], Boolean)).toEqualTypeOf<
       IteratorObject<number, undefined>
     >();
+  });
+
+  test("keeps values whose named member is truthy", () => {
+    const items = [
+      { active: true, id: 1 },
+      { active: false, id: 2 },
+      { active: 1, id: 3 },
+    ];
+
+    const result = filter(items, "active");
+
+    expect([...result]).toEqual([items[0], items[2]]);
+
+    expectTypeOf(result).toEqualTypeOf<
+      IteratorObject<(typeof items)[number], undefined>
+    >();
+
+    const methods = [{ isOn: () => true }, { isOn: () => 0 }];
+
+    expect([...filter(methods, "isOn")]).toEqual([methods[0]]);
+  });
+
+  test("accepts only a property name every union member has", () => {
+    const items: ({ id: number } | { id: number; active: boolean })[] = [];
+
+    filter(items, "id");
+
+    // @ts-expect-error `active` is missing from one member of the union
+    filter(items, "active");
   });
 });

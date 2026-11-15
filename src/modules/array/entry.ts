@@ -2,12 +2,14 @@
 
 export { isArray } from "#modules/array/guards/isArray";
 export { isNotArray } from "#modules/array/guards/isNotArray";
+export { filter } from "#modules/array/utils/filter";
 export { map } from "#modules/array/utils/map";
 export { parseArray } from "#modules/array/utils/parseArray";
 export { toArray } from "#modules/array/utils/toArray";
 export { toArray as a } from "#modules/array/utils/toArray";
 export type * from "#modules/array/guards/isArray";
 export type * from "#modules/array/guards/isNotArray";
+export type * from "#modules/array/utils/filter";
 export type * from "#modules/array/utils/map";
 export type * from "#modules/array/utils/parseArray";
 export type * from "#modules/array/utils/toArray";
