@@ -3,3 +3,4 @@
 ---
 
 - Update constant and identity to infer literal types
+- Add deepEquals
