@@ -9,8 +9,6 @@ import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types values as records so `memberValue` accepts any property key; the overloads hold the real contract.
 
-// @debt `MemberValue` rejects primitives, so each overload reads members through `Pick<Value, keyof Value>`.
-
 // @debt A type predicate guarding a type wider than a literal value union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
@@ -34,10 +32,7 @@ export function filterMap<Input, Output>(
 export function filterMap<Input, const Name extends keyof Input>(
   iterable: Iterable<Input>,
   property: Name,
-): IteratorObject<
-  Exclude<MemberValue<Pick<Input, keyof Input>, Name>, undefined>,
-  undefined
->;
+): IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>;
 export function filterMap<Input, Kept extends Input, Output>(
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => value is Kept,
@@ -51,10 +46,7 @@ export function filterMap<
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => value is Kept,
   property: Name,
-): IteratorObject<
-  Exclude<MemberValue<Pick<Kept, keyof Kept>, Name>, undefined>,
-  undefined
->;
+): IteratorObject<Exclude<MemberValue<Kept, Name>, undefined>, undefined>;
 export function filterMap<Input, Output>(
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => unknown,
@@ -64,10 +56,7 @@ export function filterMap<Input, const Name extends keyof Input>(
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => unknown,
   property: Name,
-): IteratorObject<
-  Exclude<MemberValue<Pick<Input, keyof Input>, Name>, undefined>,
-  undefined
->;
+): IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>;
 export function filterMap<Input, Output>(
   iterable: Maybe<Iterable<Input>>,
   mapper: (value: Input, index: number) => Output,
@@ -76,10 +65,7 @@ export function filterMap<Input, const Name extends keyof Input>(
   iterable: Maybe<Iterable<Input>>,
   property: Name,
 ):
-  | IteratorObject<
-      Exclude<MemberValue<Pick<Input, keyof Input>, Name>, undefined>,
-      undefined
-    >
+  | IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>
   | undefined;
 export function filterMap<Input, Kept extends Input, Output>(
   iterable: Maybe<Iterable<Input>>,
@@ -95,10 +81,7 @@ export function filterMap<
   predicate: (value: Input, index: number) => value is Kept,
   property: Name,
 ):
-  | IteratorObject<
-      Exclude<MemberValue<Pick<Kept, keyof Kept>, Name>, undefined>,
-      undefined
-    >
+  | IteratorObject<Exclude<MemberValue<Kept, Name>, undefined>, undefined>
   | undefined;
 export function filterMap<Input, Output>(
   iterable: Maybe<Iterable<Input>>,
@@ -110,10 +93,7 @@ export function filterMap<Input, const Name extends keyof Input>(
   predicate: (value: Input, index: number) => unknown,
   property: Name,
 ):
-  | IteratorObject<
-      Exclude<MemberValue<Pick<Input, keyof Input>, Name>, undefined>,
-      undefined
-    >
+  | IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>
   | undefined;
 export function filterMap(
   iterable: Maybe<Iterable<Record<PropertyKey, unknown>>>,

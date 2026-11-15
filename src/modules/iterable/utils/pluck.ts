@@ -8,8 +8,6 @@ import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types values as records so `memberValue` accepts any property key; the overloads hold the real contract.
 
-// @debt `MemberValue` rejects primitives, so each overload reads members through `Pick<Input, keyof Input>`.
-
 /**
  * Lazily reads the named member of each value of an iterable, calling it when it
  * is a method; returns a new single-use iterator and never mutates the source.
@@ -23,13 +21,11 @@ import type { Maybe } from "#types/Maybe";
 export function pluck<Input, const Name extends keyof Input>(
   iterable: Iterable<Input>,
   property: Name,
-): IteratorObject<MemberValue<Pick<Input, keyof Input>, Name>, undefined>;
+): IteratorObject<MemberValue<Input, Name>, undefined>;
 export function pluck<Input, const Name extends keyof Input>(
   iterable: Maybe<Iterable<Input>>,
   property: Name,
-):
-  | IteratorObject<MemberValue<Pick<Input, keyof Input>, Name>, undefined>
-  | undefined;
+): IteratorObject<MemberValue<Input, Name>, undefined> | undefined;
 export function pluck(
   iterable: Maybe<Iterable<Record<PropertyKey, unknown>>>,
   property: PropertyKey,

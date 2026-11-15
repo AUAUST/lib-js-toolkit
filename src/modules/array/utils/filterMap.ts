@@ -6,8 +6,6 @@ import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records and branches on each argument's kind only to select an overload of `iterable.filterMap`.
 
-// @debt `MemberValue` rejects primitives, so each overload reads members through `Pick<Item, keyof Item>`.
-
 // @debt A type predicate guarding a type wider than a literal item union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
@@ -32,10 +30,7 @@ export function filterMap<
 >(
   array: Items,
   property: Name,
-): Exclude<
-  MemberValue<Pick<Items[number], keyof Items[number]>, Name>,
-  undefined
->[];
+): Exclude<MemberValue<Items[number], Name>, undefined>[];
 export function filterMap<
   Items extends readonly unknown[],
   Kept extends Items[number],
@@ -53,7 +48,7 @@ export function filterMap<
   array: Items,
   predicate: (value: Items[number], index: number) => value is Kept,
   property: Name,
-): Exclude<MemberValue<Pick<Kept, keyof Kept>, Name>, undefined>[];
+): Exclude<MemberValue<Kept, Name>, undefined>[];
 export function filterMap<Items extends readonly unknown[], Output>(
   array: Items,
   predicate: (value: Items[number], index: number) => unknown,
@@ -66,10 +61,7 @@ export function filterMap<
   array: Items,
   predicate: (value: Items[number], index: number) => unknown,
   property: Name,
-): Exclude<
-  MemberValue<Pick<Items[number], keyof Items[number]>, Name>,
-  undefined
->[];
+): Exclude<MemberValue<Items[number], Name>, undefined>[];
 export function filterMap<Items extends readonly unknown[], Output>(
   array: Maybe<Items>,
   mapper: (value: Items[number], index: number) => Output,
@@ -80,12 +72,7 @@ export function filterMap<
 >(
   array: Maybe<Items>,
   property: Name,
-):
-  | Exclude<
-      MemberValue<Pick<Items[number], keyof Items[number]>, Name>,
-      undefined
-    >[]
-  | undefined;
+): Exclude<MemberValue<Items[number], Name>, undefined>[] | undefined;
 export function filterMap<
   Items extends readonly unknown[],
   Kept extends Items[number],
@@ -103,7 +90,7 @@ export function filterMap<
   array: Maybe<Items>,
   predicate: (value: Items[number], index: number) => value is Kept,
   property: Name,
-): Exclude<MemberValue<Pick<Kept, keyof Kept>, Name>, undefined>[] | undefined;
+): Exclude<MemberValue<Kept, Name>, undefined>[] | undefined;
 export function filterMap<Items extends readonly unknown[], Output>(
   array: Maybe<Items>,
   predicate: (value: Items[number], index: number) => unknown,
@@ -116,12 +103,7 @@ export function filterMap<
   array: Maybe<Items>,
   predicate: (value: Items[number], index: number) => unknown,
   property: Name,
-):
-  | Exclude<
-      MemberValue<Pick<Items[number], keyof Items[number]>, Name>,
-      undefined
-    >[]
-  | undefined;
+): Exclude<MemberValue<Items[number], Name>, undefined>[] | undefined;
 export function filterMap(
   array: Maybe<readonly Record<PropertyKey, unknown>[]>,
   first: ((value: unknown, index: number) => unknown) | PropertyKey,

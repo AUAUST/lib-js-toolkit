@@ -12,8 +12,6 @@ type MethodHolder = Record<
   (...args: readonly unknown[]) => unknown
 >;
 
-// @debt `MethodName` rejects primitives and misses array methods, so each overload reads the item's methods through `Pick<Items[number], keyof Items[number]>`.
-
 /**
  * Maps each item of an array into a new array of the same length, passing it
  * with its index; holes stay holes, as with `Array.prototype.map`. A method name
@@ -28,16 +26,13 @@ export function map<Items extends readonly unknown[], Output>(
 ): { -readonly [Index in keyof Items]: Output };
 export function map<
   Items extends readonly unknown[],
-  const Name extends MethodName<Pick<Items[number], keyof Items[number]>>,
+  const Name extends MethodName<Items[number]>,
 >(
   array: Items,
   method: Name,
-  ...args: MethodParameters<Pick<Items[number], keyof Items[number]>, Name>
+  ...args: MethodParameters<Items[number], Name>
 ): {
-  -readonly [Index in keyof Items]: MethodReturnType<
-    Pick<Items[number], keyof Items[number]>,
-    Name
-  >;
+  -readonly [Index in keyof Items]: MethodReturnType<Items[number], Name>;
 };
 export function map<Items extends readonly unknown[], Output>(
   array: Maybe<Items>,
@@ -45,17 +40,14 @@ export function map<Items extends readonly unknown[], Output>(
 ): { -readonly [Index in keyof Items]: Output } | undefined;
 export function map<
   Items extends readonly unknown[],
-  const Name extends MethodName<Pick<Items[number], keyof Items[number]>>,
+  const Name extends MethodName<Items[number]>,
 >(
   array: Maybe<Items>,
   method: Name,
-  ...args: MethodParameters<Pick<Items[number], keyof Items[number]>, Name>
+  ...args: MethodParameters<Items[number], Name>
 ):
   | {
-      -readonly [Index in keyof Items]: MethodReturnType<
-        Pick<Items[number], keyof Items[number]>,
-        Name
-      >;
+      -readonly [Index in keyof Items]: MethodReturnType<Items[number], Name>;
     }
   | undefined;
 export function map(

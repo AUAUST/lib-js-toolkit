@@ -38,6 +38,13 @@ describe("map", () => {
     expect(map(["a", "bc"], "padStart", 3, "-")).toEqual(["--a", "-bc"]);
   });
 
+  test("calls array methods by name on array items", () => {
+    const result = map([[1], [2, 3]], "at", -1);
+
+    expect(result).toEqual([1, 3]);
+    expectTypeOf(result).toEqualTypeOf<(number | undefined)[]>();
+  });
+
   test("accepts only a method name every union member has", () => {
     const items: (
       { name(): string } | { name(): number; size(): number }
@@ -47,6 +54,11 @@ describe("map", () => {
 
     // @ts-expect-error `size` is missing from one member of the union
     map(items, "size");
+
+    const mixed: ({ x: 1 } | { x(): 1 })[] = [];
+
+    // @ts-expect-error `x` is not a method on every member of the union
+    map(mixed, "x");
   });
 
   test("passes nullish through and rejects invalid mappers", () => {

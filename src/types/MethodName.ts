@@ -1,9 +1,25 @@
-// @debt Mapping over an array type yields an array, so `MethodName<number[]>` misses array methods such as `"at"`; overloads keyed on it fall through for arrays.
-// @debt A union target counts a name as a method when any member holds a callable under it, since `R` distributes: `"x"` passes for `{ x: 1 } | { x(): 1 }`.
-export type MethodName<Target extends object> = {
-  [K in keyof Target]: Target[K] extends infer R
-    ? R extends (...args: any[]) => any
-      ? K
+import type { Callee } from "#types/Callee";
+
+type MemberHoldsMethod<
+  Target,
+  Name extends keyof Target,
+> = Target extends unknown
+  ? [Exclude<Target[Name], undefined>] extends [never]
+    ? false
+    : [Exclude<Target[Name], undefined>] extends [Callee]
+      ? true
+      : false
+  : never;
+
+/**
+ * Returns the names of all methods of the given type, primitives and arrays
+ * included. A union counts a name only when every member holds a method under
+ * it.
+ */
+export type MethodName<Target> = keyof Target extends infer Name
+  ? Name extends keyof Target
+    ? [MemberHoldsMethod<Target, Name>] extends [true]
+      ? Name
       : never
-    : never;
-}[keyof Target];
+    : never
+  : never;

@@ -7,18 +7,12 @@ import type { MethodName } from "#types/MethodName";
 import type { MethodParameters } from "#types/MethodParameters";
 import type { MethodReturnType } from "#types/MethodReturnType";
 
-export function callMethod<
-  Target extends object,
-  const Key extends MethodName<Target>,
->(
+export function callMethod<Target, const Key extends MethodName<Target>>(
   target: Target,
   method: Key,
   ...args: MethodParameters<Target, Key>
 ): MethodReturnType<Target, Key>;
-export function callMethod<
-  Target extends object,
-  Method extends Callee<any, any, Target>,
->(
+export function callMethod<Target, Method extends Callee<any, any, Target>>(
   target: Target,
   callback: Method,
   ...args: CallParameters<Method>

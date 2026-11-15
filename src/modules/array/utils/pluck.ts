@@ -2,8 +2,6 @@ import { pluck as pluckIterable } from "#modules/iterable/utils/pluck";
 import type { MemberValue } from "#modules/general/utils/memberValue";
 import type { Maybe } from "#types/Maybe";
 
-// @debt `MemberValue` rejects primitives, so each overload reads members through `Pick<Items[number], keyof Items[number]>`.
-
 /**
  * Reads the named member of each item of an array into a new array of the same
  * length, calling it when it is a method; holes read as `undefined`. A union item
@@ -18,10 +16,7 @@ export function pluck<
   array: Items,
   property: Name,
 ): {
-  -readonly [Index in keyof Items]: MemberValue<
-    Pick<Items[number], keyof Items[number]>,
-    Name
-  >;
+  -readonly [Index in keyof Items]: MemberValue<Items[number], Name>;
 };
 export function pluck<
   Items extends readonly unknown[],
@@ -31,10 +26,7 @@ export function pluck<
   property: Name,
 ):
   | {
-      -readonly [Index in keyof Items]: MemberValue<
-        Pick<Items[number], keyof Items[number]>,
-        Name
-      >;
+      -readonly [Index in keyof Items]: MemberValue<Items[number], Name>;
     }
   | undefined;
 export function pluck(

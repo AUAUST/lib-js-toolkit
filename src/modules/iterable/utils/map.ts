@@ -13,8 +13,6 @@ type MethodHolder = Record<
   (...args: readonly unknown[]) => unknown
 >;
 
-// @debt `MethodName` rejects primitives and misses array methods, so each overload reads the item's methods through `Pick<Input, keyof Input>`.
-
 /**
  * Lazily maps each value of an iterable, passing it with its index; returns a new
  * single-use iterator and never mutates the source. A method name instead calls
@@ -30,28 +28,20 @@ export function map<Input, Output>(
   iterable: Iterable<Input>,
   mapper: (value: Input, index: number) => Output,
 ): IteratorObject<Output, undefined>;
-export function map<
-  Input,
-  const Name extends MethodName<Pick<Input, keyof Input>>,
->(
+export function map<Input, const Name extends MethodName<Input>>(
   iterable: Iterable<Input>,
   method: Name,
-  ...args: MethodParameters<Pick<Input, keyof Input>, Name>
-): IteratorObject<MethodReturnType<Pick<Input, keyof Input>, Name>, undefined>;
+  ...args: MethodParameters<Input, Name>
+): IteratorObject<MethodReturnType<Input, Name>, undefined>;
 export function map<Input, Output>(
   iterable: Maybe<Iterable<Input>>,
   mapper: (value: Input, index: number) => Output,
 ): IteratorObject<Output, undefined> | undefined;
-export function map<
-  Input,
-  const Name extends MethodName<Pick<Input, keyof Input>>,
->(
+export function map<Input, const Name extends MethodName<Input>>(
   iterable: Maybe<Iterable<Input>>,
   method: Name,
-  ...args: MethodParameters<Pick<Input, keyof Input>, Name>
-):
-  | IteratorObject<MethodReturnType<Pick<Input, keyof Input>, Name>, undefined>
-  | undefined;
+  ...args: MethodParameters<Input, Name>
+): IteratorObject<MethodReturnType<Input, Name>, undefined> | undefined;
 export function map(
   iterable: Maybe<Iterable<MethodHolder>>,
   mapper: ((value: unknown, index: number) => unknown) | PropertyKey,

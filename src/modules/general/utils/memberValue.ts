@@ -7,22 +7,16 @@ import type { MethodParameters } from "#types/MethodParameters";
 import type { MethodReturnType } from "#types/MethodReturnType";
 
 export type MemberValue<
-  Target extends object,
+  Target,
   Name extends keyof Target,
 > = Target[Name] extends infer M ? (M extends Callee<infer R> ? R : M) : never;
 
-export function memberValue<
-  Target extends object,
-  const Name extends keyof Target,
->(
+export function memberValue<Target, const Name extends keyof Target>(
   target: Target,
   property: Name,
   ...args: IfNever<MethodParameters<Target, Name>, []>
 ): MemberValue<Target, Name>;
-export function memberValue<
-  Target extends object,
-  const Name extends MethodName<Target>,
->(
+export function memberValue<Target, const Name extends MethodName<Target>>(
   target: Target,
   method: Name,
   ...name: MethodParameters<Target, Name>
