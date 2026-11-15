@@ -98,3 +98,6 @@
 - worktree isolation guard: ran git inside multi-command Bash calls — refused as too complex to verify; split git into separate calls
 - gh api graphql (issue project fields): queried an issue's field values — token lacks `read:project`; read fields from claimed drafts instead
 - auto mode classifier: edited AGENTS.md with the wording #255 records as consented — refused as undermining oversight; left the edit for the user to confirm
+- vitest --typecheck (AGENTS.md focused-test command): relied on it for expectTypeOf assertions in `.test.ts` — wrong type assertions still passed; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
+- engrenage sync barrels: added a domain `index.ts` to expose an internal — sync then deleted the generated `entry.ts`; removed the index, restored the entry
+- zsh word splitting: passed a space-separated file list held in a variable to eslint — zsh does not split it; listed the files inline

@@ -10,8 +10,11 @@ import {
   isPrimitive,
   isScalar,
 } from "@auaust/toolkit/guard";
+import { otherObjectsLeaf, typeParents } from "@auaust/toolkit/guard/constants";
+import { keys } from "@auaust/toolkit/object";
 
 import { createTypeLeafValues, createValues } from "#tests/fixtures/values";
+import { typeChainOf } from "#tests/testutils/typeChainOf";
 
 describe("is", () => {
   test("matches any of the given type names", () => {
@@ -91,4 +94,17 @@ describe("is", () => {
     // @ts-expect-error `default` is a dispatch alias, never a type name.
     expectTypeOf(is).toBeCallableWith(candidate, "default");
   });
+
+  test.for(createTypeLeafValues())(
+    "matches the ancestor chain of case %# (%s)",
+    (value) => {
+      const chain = typeChainOf(value);
+
+      for (const name of keys(typeParents)) {
+        if (name !== otherObjectsLeaf) {
+          expect(is(value, name), name).toBe(chain.includes(name));
+        }
+      }
+    },
+  );
 });
