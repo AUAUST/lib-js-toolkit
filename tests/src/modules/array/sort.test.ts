@@ -13,6 +13,18 @@ describe("sort", () => {
     expect(sort(array, (left, right) => left - right)).toEqual([1, 9, 10]);
   });
 
+  test("never passes undefined to the comparator", () => {
+    const array = [2, undefined, 1];
+
+    expect(
+      sort(array, (left, right) => {
+        expectTypeOf(left).toEqualTypeOf<number>();
+
+        return left - right;
+      }),
+    ).toEqual([1, 2, undefined]);
+  });
+
   test("passes nullish through", () => {
     expect(sort(null)).toBeUndefined();
   });

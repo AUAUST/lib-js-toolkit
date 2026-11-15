@@ -1,3 +1,4 @@
+import type { Comparator } from "#modules/array/types/Comparator";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -9,15 +10,15 @@ import type { Maybe } from "#types/Maybe";
  */
 export function sort<Item>(
   array: Item[],
-  comparator?: (left: Item, right: Item) => number,
+  comparator?: Comparator<Item>,
 ): Item[];
 export function sort<Item>(
   array: Maybe<Item[]>,
-  comparator?: (left: Item, right: Item) => number,
+  comparator?: Comparator<Item>,
 ): Item[] | undefined;
 export function sort(
   array: Maybe<unknown[]>,
-  comparator?: (left: unknown, right: unknown) => number,
+  comparator?: Comparator<unknown>,
 ): unknown[] | undefined {
   return array?.sort(comparator);
 }
