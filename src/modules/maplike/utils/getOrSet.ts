@@ -1,4 +1,4 @@
-import { value, type ResolvableValue } from "#modules/general/utils/value";
+import { value, type ValueInput } from "#modules/general/utils/value";
 import type { MapLike } from "#modules/maplike/types/MapLike";
 
 /**
@@ -9,11 +9,20 @@ import type { MapLike } from "#modules/maplike/types/MapLike";
 export function getOrSet<Key, Value>(
   map: MapLike<Key, Value>,
   key: Key,
-  fallback: ResolvableValue<Value, [key: Key]>,
-): Value {
+  fallback: (key: Key) => Value,
+): Value;
+export function getOrSet<Key, Value, Fallback extends Value>(
+  map: MapLike<Key, Value>,
+  key: Key,
+  fallback: ValueInput<Fallback, [Key], undefined>,
+): Value;
+export function getOrSet(
+  map: MapLike<unknown, unknown>,
+  key: unknown,
+  fallback: unknown,
+) {
   if (map.has(key)) {
-    // @debt The cast trusts that `has(key)` implies `get(key)` returns a stored `Value`; `ReadonlyMapLike` cannot express that link.
-    return map.get(key) as Value;
+    return map.get(key);
   }
 
   const resolved = value(fallback, key);
