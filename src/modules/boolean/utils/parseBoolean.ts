@@ -2,6 +2,7 @@ import { toBoolean } from "#modules/boolean/utils/toBoolean";
 import { filled } from "#modules/general/utils/filled";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
+import { toLowerCase } from "#modules/string/utils/toLowerCase";
 
 /**
  * Interprets a value as a boolean: `"false"`, `"0"`, blank strings, zero and
@@ -13,7 +14,7 @@ export function parseBoolean(input: unknown): boolean {
   }
 
   if (isString(input)) {
-    const normalized = input.trim().toLowerCase();
+    const normalized = toLowerCase(input.trim());
 
     return normalized !== "" && normalized !== "false" && normalized !== "0";
   }
