@@ -1,8 +1,8 @@
 import { defineExtension } from "@auaust/engrenage/extensions";
 
 /**
- * Creates the extension contributing the barrel export names the structure cannot
- * state.
+ * Creates the extension contributing the barrel export names the structure
+ * cannot state.
  */
 export function createBarrelsExtension() {
   return defineExtension({
@@ -11,42 +11,26 @@ export function createBarrelsExtension() {
       "barrels.exports": [
         {
           name: "shorthands",
-          async load() {
-            const {
-              exportShorthands,
-            } = await import("#tooling/barrels/operations/exportShorthands");
-
-            return exportShorthands;
+          load() {
+            return import("#tooling/barrels/operations/exportShorthands");
           },
         },
         {
           name: "parsers",
-          async load() {
-            const {
-              exportParsers,
-            } = await import("#tooling/barrels/operations/exportParsers");
-
-            return exportParsers;
+          load() {
+            return import("#tooling/barrels/operations/exportParsers");
           },
         },
         {
           name: "guard variants",
-          async load() {
-            const {
-              exportGuardVariants,
-            } = await import("#tooling/barrels/operations/exportGuardVariants");
-
-            return exportGuardVariants;
+          load() {
+            return import("#tooling/barrels/operations/exportGuardVariants");
           },
         },
         {
           name: "root names",
-          async load() {
-            const {
-              exportRootNames,
-            } = await import("#tooling/barrels/operations/exportRootNames");
-
-            return exportRootNames;
+          load() {
+            return import("#tooling/barrels/operations/exportRootNames");
           },
         },
       ],
