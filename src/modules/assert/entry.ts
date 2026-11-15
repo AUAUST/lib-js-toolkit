@@ -3,6 +3,7 @@
 export { assert } from "#modules/assert/utils/assert";
 export { assertArray as isArray } from "#modules/assert/utils/assertArray";
 export { assertBigInt as isBigInt } from "#modules/assert/utils/assertBigInt";
+export { assertBlankString as isBlankString } from "#modules/assert/utils/assertBlankString";
 export { assertBoolean as isBoolean } from "#modules/assert/utils/assertBoolean";
 export { assertCallable as isCallable } from "#modules/assert/utils/assertCallable";
 export { assertCallableMember as isCallableMember } from "#modules/assert/utils/assertCallableMember";
@@ -45,6 +46,7 @@ export { not } from "#modules/assert/utils/not";
 export type * from "#modules/assert/utils/assert";
 export type * from "#modules/assert/utils/assertArray";
 export type * from "#modules/assert/utils/assertBigInt";
+export type * from "#modules/assert/utils/assertBlankString";
 export type * from "#modules/assert/utils/assertBoolean";
 export type * from "#modules/assert/utils/assertCallable";
 export type * from "#modules/assert/utils/assertCallableMember";

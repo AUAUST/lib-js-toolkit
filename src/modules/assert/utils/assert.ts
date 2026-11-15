@@ -1,6 +1,7 @@
 import { AssertionError } from "#errors/AssertionError";
 import { assertArray } from "#modules/assert/utils/assertArray";
 import { assertBigInt } from "#modules/assert/utils/assertBigInt";
+import { assertBlankString } from "#modules/assert/utils/assertBlankString";
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 import { assertCallable } from "#modules/assert/utils/assertCallable";
 import { assertCallableMember } from "#modules/assert/utils/assertCallableMember";
@@ -47,6 +48,7 @@ export interface Assert {
   readonly not: typeof not;
   readonly isArray: typeof assertArray;
   readonly isBigInt: typeof assertBigInt;
+  readonly isBlankString: typeof assertBlankString;
   readonly isBoolean: typeof assertBoolean;
   readonly isCallable: typeof assertCallable;
   readonly isCallableMember: typeof assertCallableMember;
@@ -107,6 +109,7 @@ export const assert: Assert = assign<
     not,
     isArray: assertArray,
     isBigInt: assertBigInt,
+    isBlankString: assertBlankString,
     isBoolean: assertBoolean,
     isCallable: assertCallable,
     isCallableMember: assertCallableMember,
