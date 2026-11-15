@@ -14,5 +14,6 @@ describe("beforeNth", () => {
 
   test("throws a RangeError for a non-integer position", () => {
     expect(() => beforeNth("a.b.c", ".", 0.5)).toThrow(RangeError);
+    expect(() => beforeNth(null, ".", 0.5)).toThrow(RangeError);
   });
 });

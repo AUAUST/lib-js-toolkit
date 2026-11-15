@@ -1,4 +1,4 @@
-import { isInteger } from "#modules/number/guards/isInteger";
+import { assertOccurrencePosition } from "#modules/string/internals/assertOccurrencePosition";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -29,9 +29,7 @@ export function nthIndexOf(
   needle: string,
   position: number,
 ): Maybe<number> {
-  if (!isInteger(position)) {
-    throw new RangeError("An occurrence position must be an integer.");
-  }
+  assertOccurrencePosition(position);
 
   if (string == null) {
     return string;

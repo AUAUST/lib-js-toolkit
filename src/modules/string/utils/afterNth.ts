@@ -1,3 +1,4 @@
+import { assertOccurrencePosition } from "#modules/string/internals/assertOccurrencePosition";
 import { nthIndexOf } from "#modules/string/utils/nthIndexOf";
 import type { Maybe } from "#types/Maybe";
 
@@ -28,6 +29,8 @@ export function afterNth(
   needle: string,
   position: number,
 ): Maybe<string> {
+  assertOccurrencePosition(position);
+
   if (string == null) {
     return string;
   }
