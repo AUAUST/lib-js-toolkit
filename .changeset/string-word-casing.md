@@ -3,3 +3,4 @@
 ---
 
 - Add unaccent
+- Add splitWords

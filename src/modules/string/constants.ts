@@ -22,3 +22,12 @@ export const unaccentLigatures: Readonly<
  * Matches a combining mark.
  */
 export const combiningMarkPattern = Object.freeze(/\p{M}/u);
+
+/**
+ * Matches a word boundary: a run of whitespace, `-`, `_` or `.`, a lowercase to
+ * uppercase change, the end of an uppercase run before a capitalized word, and
+ * either side of a digit run.
+ */
+export const wordBoundaryPattern = Object.freeze(
+  /[\s\-_.]+|(?<=\p{Ll})(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})|(?<=\p{N})(?=\P{N})|(?<=\P{N})(?=\p{N})/u,
+);
