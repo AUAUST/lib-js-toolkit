@@ -7,3 +7,4 @@
 - Add pick and omit
 - Add object.pull
 - Add flatten
+- Add clone
