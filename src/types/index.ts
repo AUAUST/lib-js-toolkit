@@ -3,6 +3,7 @@
 export type * from "#types/Assigned";
 export type * from "#types/AsyncCallee";
 export type * from "#types/AsyncFn";
+export type * from "#types/BivariantTypeGuard";
 export type * from "#types/Callee";
 export type * from "#types/CallParameters";
 export type * from "#types/CallReturnType";

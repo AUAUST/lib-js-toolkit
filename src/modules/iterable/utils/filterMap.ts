@@ -5,11 +5,10 @@ import {
 } from "#modules/general/utils/memberValue";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { isIterable } from "#modules/iterable/guards/isIterable";
+import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types values as records so `memberValue` accepts any property key; the overloads hold the real contract.
-
-// @debt A type predicate guarding a type wider than a literal value union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
  * Lazily maps each value of an iterable and keeps the results that are not
@@ -35,8 +34,13 @@ export function filterMap<Input, const Name extends keyof Input>(
 ): IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>;
 export function filterMap<Input, Kept extends Input, Output>(
   iterable: Iterable<Input>,
-  predicate: (value: Input, index: number) => value is Kept,
+  predicate: (value: NoInfer<Input>, index: number) => value is Kept,
   mapper: (value: Kept, index: number) => Output,
+): IteratorObject<Exclude<Output, undefined>, undefined>;
+export function filterMap<Input, Guarded, Output>(
+  iterable: Iterable<Input>,
+  predicate: BivariantTypeGuard<Guarded>,
+  mapper: (value: Extract<Input, Guarded>, index: number) => Output,
 ): IteratorObject<Exclude<Output, undefined>, undefined>;
 export function filterMap<
   Input,
@@ -44,9 +48,21 @@ export function filterMap<
   const Name extends keyof Kept,
 >(
   iterable: Iterable<Input>,
-  predicate: (value: Input, index: number) => value is Kept,
+  predicate: (value: NoInfer<Input>, index: number) => value is Kept,
   property: Name,
 ): IteratorObject<Exclude<MemberValue<Kept, Name>, undefined>, undefined>;
+export function filterMap<
+  Input,
+  Guarded,
+  const Name extends keyof Extract<Input, Guarded>,
+>(
+  iterable: Iterable<Input>,
+  predicate: BivariantTypeGuard<Guarded>,
+  property: Name,
+): IteratorObject<
+  Exclude<MemberValue<Extract<Input, Guarded>, Name>, undefined>,
+  undefined
+>;
 export function filterMap<Input, Output>(
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => unknown,
@@ -69,8 +85,13 @@ export function filterMap<Input, const Name extends keyof Input>(
   | undefined;
 export function filterMap<Input, Kept extends Input, Output>(
   iterable: Maybe<Iterable<Input>>,
-  predicate: (value: Input, index: number) => value is Kept,
+  predicate: (value: NoInfer<Input>, index: number) => value is Kept,
   mapper: (value: Kept, index: number) => Output,
+): IteratorObject<Exclude<Output, undefined>, undefined> | undefined;
+export function filterMap<Input, Guarded, Output>(
+  iterable: Maybe<Iterable<Input>>,
+  predicate: BivariantTypeGuard<Guarded>,
+  mapper: (value: Extract<Input, Guarded>, index: number) => Output,
 ): IteratorObject<Exclude<Output, undefined>, undefined> | undefined;
 export function filterMap<
   Input,
@@ -78,10 +99,24 @@ export function filterMap<
   const Name extends keyof Kept,
 >(
   iterable: Maybe<Iterable<Input>>,
-  predicate: (value: Input, index: number) => value is Kept,
+  predicate: (value: NoInfer<Input>, index: number) => value is Kept,
   property: Name,
 ):
   | IteratorObject<Exclude<MemberValue<Kept, Name>, undefined>, undefined>
+  | undefined;
+export function filterMap<
+  Input,
+  Guarded,
+  const Name extends keyof Extract<Input, Guarded>,
+>(
+  iterable: Maybe<Iterable<Input>>,
+  predicate: BivariantTypeGuard<Guarded>,
+  property: Name,
+):
+  | IteratorObject<
+      Exclude<MemberValue<Extract<Input, Guarded>, Name>, undefined>,
+      undefined
+    >
   | undefined;
 export function filterMap<Input, Output>(
   iterable: Maybe<Iterable<Input>>,

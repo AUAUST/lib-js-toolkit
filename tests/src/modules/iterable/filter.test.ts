@@ -36,6 +36,14 @@ describe("filter", () => {
     >();
   });
 
+  test("narrows with a guard wider than the value type", () => {
+    const values = ["a", 1] as ("a" | 1)[];
+
+    expectTypeOf(filter(values, isString)).toEqualTypeOf<
+      IteratorObject<"a", undefined>
+    >();
+  });
+
   test("keeps values whose named member is truthy", () => {
     const items = [
       { active: true, id: 1 },

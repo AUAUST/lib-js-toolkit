@@ -23,6 +23,18 @@ describe("filter", () => {
     expectTypeOf(filter([1, 2] as const, Boolean)).toEqualTypeOf<(1 | 2)[]>();
   });
 
+  test("narrows with a guard wider than the item type", () => {
+    const items = [1, "a"] as (1 | "a")[];
+
+    expectTypeOf(filter(items, isString)).toEqualTypeOf<"a"[]>();
+
+    filter(items, (value): value is 1 => {
+      expectTypeOf(value).toEqualTypeOf<1 | "a">();
+
+      return value === 1;
+    });
+  });
+
   test("keeps items whose named member is truthy", () => {
     const items = [
       { active: true, id: 1 },

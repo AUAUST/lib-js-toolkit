@@ -2,11 +2,10 @@ import { isFunction } from "#modules/function/guards/isFunction";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { filterMap as filterMapIterable } from "#modules/iterable/utils/filterMap";
 import type { MemberValue } from "#modules/general/utils/memberValue";
+import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records and branches on each argument's kind only to select an overload of `iterable.filterMap`.
-
-// @debt A type predicate guarding a type wider than a literal item union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
  * Maps each item of an array into a new array, keeping the results that are
@@ -37,8 +36,13 @@ export function filterMap<
   Output,
 >(
   array: Items,
-  predicate: (value: Items[number], index: number) => value is Kept,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Kept,
   mapper: (value: Kept, index: number) => Output,
+): Exclude<Output, undefined>[];
+export function filterMap<Items extends readonly unknown[], Guarded, Output>(
+  array: Items,
+  predicate: BivariantTypeGuard<Guarded>,
+  mapper: (value: Extract<Items[number], Guarded>, index: number) => Output,
 ): Exclude<Output, undefined>[];
 export function filterMap<
   Items extends readonly unknown[],
@@ -46,9 +50,18 @@ export function filterMap<
   const Name extends keyof Kept,
 >(
   array: Items,
-  predicate: (value: Items[number], index: number) => value is Kept,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Kept,
   property: Name,
 ): Exclude<MemberValue<Kept, Name>, undefined>[];
+export function filterMap<
+  Items extends readonly unknown[],
+  Guarded,
+  const Name extends keyof Extract<Items[number], Guarded>,
+>(
+  array: Items,
+  predicate: BivariantTypeGuard<Guarded>,
+  property: Name,
+): Exclude<MemberValue<Extract<Items[number], Guarded>, Name>, undefined>[];
 export function filterMap<Items extends readonly unknown[], Output>(
   array: Items,
   predicate: (value: Items[number], index: number) => unknown,
@@ -79,8 +92,13 @@ export function filterMap<
   Output,
 >(
   array: Maybe<Items>,
-  predicate: (value: Items[number], index: number) => value is Kept,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Kept,
   mapper: (value: Kept, index: number) => Output,
+): Exclude<Output, undefined>[] | undefined;
+export function filterMap<Items extends readonly unknown[], Guarded, Output>(
+  array: Maybe<Items>,
+  predicate: BivariantTypeGuard<Guarded>,
+  mapper: (value: Extract<Items[number], Guarded>, index: number) => Output,
 ): Exclude<Output, undefined>[] | undefined;
 export function filterMap<
   Items extends readonly unknown[],
@@ -88,9 +106,20 @@ export function filterMap<
   const Name extends keyof Kept,
 >(
   array: Maybe<Items>,
-  predicate: (value: Items[number], index: number) => value is Kept,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Kept,
   property: Name,
 ): Exclude<MemberValue<Kept, Name>, undefined>[] | undefined;
+export function filterMap<
+  Items extends readonly unknown[],
+  Guarded,
+  const Name extends keyof Extract<Items[number], Guarded>,
+>(
+  array: Maybe<Items>,
+  predicate: BivariantTypeGuard<Guarded>,
+  property: Name,
+):
+  | Exclude<MemberValue<Extract<Items[number], Guarded>, Name>, undefined>[]
+  | undefined;
 export function filterMap<Items extends readonly unknown[], Output>(
   array: Maybe<Items>,
   predicate: (value: Items[number], index: number) => unknown,

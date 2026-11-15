@@ -37,6 +37,18 @@ describe("filterMap", () => {
     ).toEqual(["a"]);
   });
 
+  test("narrows with a guard wider than the item type", () => {
+    const values = ["a", 1] as ("a" | 1)[];
+
+    expectTypeOf(filterMap(values, isString, "length")).toEqualTypeOf<
+      number[]
+    >();
+
+    expectTypeOf(filterMap(values, isString, (value) => value)).toEqualTypeOf<
+      "a"[]
+    >();
+  });
+
   test("narrows with a type predicate before mapping", () => {
     const values = ["a", 1, "bc", null];
     const lengths = filterMap(values, isString, (value) => value.length);

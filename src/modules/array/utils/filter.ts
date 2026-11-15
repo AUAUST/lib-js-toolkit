@@ -1,11 +1,10 @@
 import { isFunction } from "#modules/function/guards/isFunction";
 import { memberValue } from "#modules/general/utils/memberValue";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
+import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records so `memberValue` accepts any property key; the overloads hold the real contract.
-
-// @debt A type predicate guarding a type wider than a literal item union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
  * Keeps the items of an array the predicate accepts, in a new array; the predicate
@@ -14,8 +13,7 @@ import type { Maybe } from "#types/Maybe";
  * when it is a method; a union item type accepts only a name every member has.
  * A nullish array returns `undefined`.
  *
- * @throws {TypeError} when the predicate is neither a function nor a property
- * key.
+ * @throws {TypeError} when the predicate is neither a function nor a property key.
  * @native equal Array.prototype.filter
  */
 export function filter<
@@ -23,8 +21,12 @@ export function filter<
   Output extends Items[number],
 >(
   array: Items,
-  predicate: (value: Items[number], index: number) => value is Output,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Output,
 ): Output[];
+export function filter<Items extends readonly unknown[], Guarded>(
+  array: Items,
+  predicate: BivariantTypeGuard<Guarded>,
+): Extract<Items[number], Guarded>[];
 export function filter<Items extends readonly unknown[]>(
   array: Items,
   predicate:
@@ -35,8 +37,12 @@ export function filter<
   Output extends Items[number],
 >(
   array: Maybe<Items>,
-  predicate: (value: Items[number], index: number) => value is Output,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Output,
 ): Output[] | undefined;
+export function filter<Items extends readonly unknown[], Guarded>(
+  array: Maybe<Items>,
+  predicate: BivariantTypeGuard<Guarded>,
+): Extract<Items[number], Guarded>[] | undefined;
 export function filter<Items extends readonly unknown[]>(
   array: Maybe<Items>,
   predicate:

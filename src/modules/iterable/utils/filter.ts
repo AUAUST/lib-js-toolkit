@@ -2,11 +2,10 @@ import { isFunction } from "#modules/function/guards/isFunction";
 import { memberValue } from "#modules/general/utils/memberValue";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { isIterable } from "#modules/iterable/guards/isIterable";
+import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records so `memberValue` accepts any property key; the overloads hold the real contract.
-
-// @debt A type predicate guarding a type wider than a literal value union, such as `isString` over `1 | "a"`, fails inference instead of narrowing to the matching members.
 
 /**
  * Lazily keeps the values of an iterable the predicate accepts; returns a new
@@ -22,16 +21,24 @@ import type { Maybe } from "#types/Maybe";
  */
 export function filter<Input, Output extends Input>(
   iterable: Iterable<Input>,
-  predicate: (value: Input, index: number) => value is Output,
+  predicate: (value: NoInfer<Input>, index: number) => value is Output,
 ): IteratorObject<Output, undefined>;
+export function filter<Input, Guarded>(
+  iterable: Iterable<Input>,
+  predicate: BivariantTypeGuard<Guarded>,
+): IteratorObject<Extract<Input, Guarded>, undefined>;
 export function filter<Input>(
   iterable: Iterable<Input>,
   predicate: ((value: Input, index: number) => unknown) | keyof Input,
 ): IteratorObject<Input, undefined>;
 export function filter<Input, Output extends Input>(
   iterable: Maybe<Iterable<Input>>,
-  predicate: (value: Input, index: number) => value is Output,
+  predicate: (value: NoInfer<Input>, index: number) => value is Output,
 ): IteratorObject<Output, undefined> | undefined;
+export function filter<Input, Guarded>(
+  iterable: Maybe<Iterable<Input>>,
+  predicate: BivariantTypeGuard<Guarded>,
+): IteratorObject<Extract<Input, Guarded>, undefined> | undefined;
 export function filter<Input>(
   iterable: Maybe<Iterable<Input>>,
   predicate: ((value: Input, index: number) => unknown) | keyof Input,
