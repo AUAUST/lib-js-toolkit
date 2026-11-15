@@ -104,3 +104,5 @@
 - worktree isolation check: chained heredoc + eslint + vitest in one Bash call — refused as too complex; split into separate calls
 - worktree git guard: ran git with redirects, pipes or alongside other commands — refused as too complex; split into bare git calls
 - pre-commit hook output: commit output buried failures under ~60 agent-config lines — had to filter for jscpd and sync lines to find the cause
+- eslint --fix: ran on a new helper with `catch { return undefined; }` and `return await` — autofix removed both, leaving an empty catch and wrong semantics; rewrote on attempt/attemptAsync
+- worktree git guard: compound commands naming git refused — split git calls into separate plain commands
