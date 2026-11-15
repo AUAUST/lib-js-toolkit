@@ -19,4 +19,8 @@ describe("isObject", () => {
       }
     },
   );
+
+  test("accepts arrays", () => {
+    expect(isObject([])).toBe(true);
+  });
 });

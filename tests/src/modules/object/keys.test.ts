@@ -35,4 +35,11 @@ describe("keys", () => {
     expect(keys(tuple)).toEqual(["0", "1"]);
     expect(keys("ab")).toEqual(["0", "1"]);
   });
+
+  test("throws on nullish targets", () => {
+    expect(() => {
+      // @ts-expect-error Nullish targets are rejected.
+      return keys(null);
+    }).toThrow(TypeError);
+  });
 });
