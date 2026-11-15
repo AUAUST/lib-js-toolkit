@@ -11,6 +11,7 @@ export { ensureBlankString as isBlankString } from "#modules/ensure/utils/ensure
 export { ensureBoolean as isBoolean } from "#modules/ensure/utils/ensureBoolean";
 export { ensureCallable as isCallable } from "#modules/ensure/utils/ensureCallable";
 export { ensureCallableMember as isCallableMember } from "#modules/ensure/utils/ensureCallableMember";
+export { ensureConstructible as isConstructible } from "#modules/ensure/utils/ensureConstructible";
 export { ensureContainer as isContainer } from "#modules/ensure/utils/ensureContainer";
 export { ensureEmptyArray as isEmptyArray } from "#modules/ensure/utils/ensureEmptyArray";
 export { ensureEmptyString as isEmptyString } from "#modules/ensure/utils/ensureEmptyString";
@@ -63,6 +64,7 @@ export type * from "#modules/ensure/utils/ensureBlankString";
 export type * from "#modules/ensure/utils/ensureBoolean";
 export type * from "#modules/ensure/utils/ensureCallable";
 export type * from "#modules/ensure/utils/ensureCallableMember";
+export type * from "#modules/ensure/utils/ensureConstructible";
 export type * from "#modules/ensure/utils/ensureContainer";
 export type * from "#modules/ensure/utils/ensureEmptyArray";
 export type * from "#modules/ensure/utils/ensureEmptyString";

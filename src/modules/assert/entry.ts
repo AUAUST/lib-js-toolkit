@@ -10,6 +10,7 @@ export { assertBlankString as isBlankString } from "#modules/assert/utils/assert
 export { assertBoolean as isBoolean } from "#modules/assert/utils/assertBoolean";
 export { assertCallable as isCallable } from "#modules/assert/utils/assertCallable";
 export { assertCallableMember as isCallableMember } from "#modules/assert/utils/assertCallableMember";
+export { assertConstructible as isConstructible } from "#modules/assert/utils/assertConstructible";
 export { assertContainer as isContainer } from "#modules/assert/utils/assertContainer";
 export { assertEmptyArray as isEmptyArray } from "#modules/assert/utils/assertEmptyArray";
 export { assertEmptyString as isEmptyString } from "#modules/assert/utils/assertEmptyString";
@@ -61,6 +62,7 @@ export type * from "#modules/assert/utils/assertBlankString";
 export type * from "#modules/assert/utils/assertBoolean";
 export type * from "#modules/assert/utils/assertCallable";
 export type * from "#modules/assert/utils/assertCallableMember";
+export type * from "#modules/assert/utils/assertConstructible";
 export type * from "#modules/assert/utils/assertContainer";
 export type * from "#modules/assert/utils/assertEmptyArray";
 export type * from "#modules/assert/utils/assertEmptyString";

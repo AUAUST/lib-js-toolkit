@@ -8,6 +8,7 @@ import { assertBlankString } from "#modules/assert/utils/assertBlankString";
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 import { assertCallable } from "#modules/assert/utils/assertCallable";
 import { assertCallableMember } from "#modules/assert/utils/assertCallableMember";
+import { assertConstructible } from "#modules/assert/utils/assertConstructible";
 import { assertContainer } from "#modules/assert/utils/assertContainer";
 import { assertEmptyArray } from "#modules/assert/utils/assertEmptyArray";
 import { assertEmptyString } from "#modules/assert/utils/assertEmptyString";
@@ -61,6 +62,7 @@ export interface Assert {
   readonly isBoolean: typeof assertBoolean;
   readonly isCallable: typeof assertCallable;
   readonly isCallableMember: typeof assertCallableMember;
+  readonly isConstructible: typeof assertConstructible;
   readonly isAsyncGeneratorFunction: typeof assertAsyncGeneratorFunction;
   readonly isGeneratorFunction: typeof assertGeneratorFunction;
   readonly isAsyncFunction: typeof assertAsyncFunction;
@@ -130,6 +132,7 @@ export const assert: Assert = assign<
     isBoolean: assertBoolean,
     isCallable: assertCallable,
     isCallableMember: assertCallableMember,
+    isConstructible: assertConstructible,
     isAsyncGeneratorFunction: assertAsyncGeneratorFunction,
     isGeneratorFunction: assertGeneratorFunction,
     isAsyncFunction: assertAsyncFunction,

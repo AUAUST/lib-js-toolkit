@@ -3,3 +3,4 @@
 ---
 
 - Add isAsyncFunction, isGeneratorFunction and isAsyncGeneratorFunction
+- Add isConstructible

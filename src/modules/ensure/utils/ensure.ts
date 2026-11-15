@@ -8,6 +8,7 @@ import { ensureBlankString } from "#modules/ensure/utils/ensureBlankString";
 import { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
 import { ensureCallable } from "#modules/ensure/utils/ensureCallable";
 import { ensureCallableMember } from "#modules/ensure/utils/ensureCallableMember";
+import { ensureConstructible } from "#modules/ensure/utils/ensureConstructible";
 import { ensureContainer } from "#modules/ensure/utils/ensureContainer";
 import { ensureEmptyArray } from "#modules/ensure/utils/ensureEmptyArray";
 import { ensureEmptyString } from "#modules/ensure/utils/ensureEmptyString";
@@ -66,6 +67,7 @@ export interface Ensure {
   readonly isBoolean: typeof ensureBoolean;
   readonly isCallable: typeof ensureCallable;
   readonly isCallableMember: typeof ensureCallableMember;
+  readonly isConstructible: typeof ensureConstructible;
   readonly isAsyncGeneratorFunction: typeof ensureAsyncGeneratorFunction;
   readonly isGeneratorFunction: typeof ensureGeneratorFunction;
   readonly isAsyncFunction: typeof ensureAsyncFunction;
@@ -136,6 +138,7 @@ export const ensure: Ensure = assign(
     isBoolean: ensureBoolean,
     isCallable: ensureCallable,
     isCallableMember: ensureCallableMember,
+    isConstructible: ensureConstructible,
     isAsyncGeneratorFunction: ensureAsyncGeneratorFunction,
     isGeneratorFunction: ensureGeneratorFunction,
     isAsyncFunction: ensureAsyncFunction,
