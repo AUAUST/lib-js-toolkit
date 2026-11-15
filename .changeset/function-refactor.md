@@ -9,3 +9,4 @@
 - Rename the function returned by debounce to debounced
 - Rename the function returned by spy to spied
 - Rename the function returned by throttle to throttled
+- Update AsyncCallable and AsyncFn to require a promise result

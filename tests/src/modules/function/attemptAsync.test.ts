@@ -44,4 +44,11 @@ describe("attemptAsync", () => {
     expectTypeOf(result).toEqualTypeOf<Promise<AttemptResult<"entry">>>();
     expect((await result).result).toBe("entry");
   });
+
+  test("accepts a sync callback", async () => {
+    const result = await attemptAsync((value: number) => value * 2, 2);
+
+    expect(result.result).toBe(4);
+    expectTypeOf(result).toEqualTypeOf<AttemptResult<number>>();
+  });
 });

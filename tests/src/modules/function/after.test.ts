@@ -123,4 +123,10 @@ describe("after", () => {
     expect(() => after(callback, -1)).toThrow(RangeError);
     expect(callback).not.toHaveBeenCalled();
   });
+
+  test("accepts a sync callback", () => {
+    expectTypeOf(after((value: number) => value * 2, 0, 2)).toEqualTypeOf<
+      Promise<number>
+    >();
+  });
 });

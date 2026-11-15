@@ -1,9 +1,8 @@
-import type { AsyncFn } from "#types/AsyncFn";
+import type { Fn } from "#types/Fn";
+import type { MaybePromise } from "#types/MaybePromise";
 
 export type MaybeAsyncFn<
   Return = any,
   Arguments extends readonly any[] = any[],
   This = any,
-> =
-  | Return
-  | AsyncFn<Return, Arguments, This>;
+> = Fn<MaybePromise<Return>, Arguments, This>;
