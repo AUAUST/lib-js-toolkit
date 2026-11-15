@@ -11,5 +11,6 @@ export function roundTo(value: number, step: number): number {
     throw new RangeError("Step must be positive and finite.");
   }
 
+  // @debt Floating-point artifacts leak into the result: roundTo(0.3, 0.1) is 0.30000000000000004.
   return round(value / step) * step;
 }
