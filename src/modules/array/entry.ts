@@ -3,6 +3,7 @@
 export { isArray } from "#modules/array/guards/isArray";
 export { isNotArray } from "#modules/array/guards/isNotArray";
 export { concat } from "#modules/array/utils/concat";
+export { equals } from "#modules/array/utils/equals";
 export { every } from "#modules/array/utils/every";
 export { filter } from "#modules/array/utils/filter";
 export { filterMap } from "#modules/array/utils/filterMap";
@@ -24,6 +25,7 @@ export { toArray as a } from "#modules/array/utils/toArray";
 export type * from "#modules/array/guards/isArray";
 export type * from "#modules/array/guards/isNotArray";
 export type * from "#modules/array/utils/concat";
+export type * from "#modules/array/utils/equals";
 export type * from "#modules/array/utils/every";
 export type * from "#modules/array/utils/filter";
 export type * from "#modules/array/utils/filterMap";

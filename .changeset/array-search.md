@@ -6,3 +6,4 @@
 - Add iterable.includes and array.includes
 - Add array.findIndex, array.findLast and array.findLastIndex
 - Add array.indexOf and array.lastIndexOf
+- Add array.equals
