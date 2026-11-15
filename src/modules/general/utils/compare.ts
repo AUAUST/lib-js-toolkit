@@ -1,10 +1,10 @@
 import { isCallable } from "#modules/function/guards/isCallable";
 import { call } from "#modules/function/utils/call";
-import { isComparablePrimitive } from "#modules/general/internals/isComparablePrimitive";
 import { resolveCustomOperator } from "#modules/general/internals/resolveCustomOperator";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
 import { valueOf } from "#modules/general/utils/valueOf";
+import { isScalar } from "#modules/guard/guards/isScalar";
 import type { Callee } from "#types/Callee";
 import type { IsLiteral } from "#types/IsLiteral";
 import type { KeyAsString } from "#types/KeyAsString";
@@ -124,7 +124,7 @@ export function compare(
   a = valueOf(a);
   b = valueOf(b);
 
-  if (!isComparablePrimitive(a) || !isComparablePrimitive(b)) {
+  if (!isScalar(a) || !isScalar(b)) {
     return false;
   }
 

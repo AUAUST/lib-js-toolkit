@@ -5,12 +5,10 @@ import type { TypeNames } from "#types/TypeNames";
  * with value semantics.
  */
 export function isScalar(candidate: unknown): candidate is TypeNames["scalar"] {
-  const type = typeof candidate;
-
   return (
-    type === "string" ||
-    type === "number" ||
-    type === "boolean" ||
-    type === "bigint"
+    typeof candidate === "string" ||
+    typeof candidate === "number" ||
+    typeof candidate === "boolean" ||
+    typeof candidate === "bigint"
   );
 }
