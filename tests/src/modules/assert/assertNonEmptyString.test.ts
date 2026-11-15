@@ -2,7 +2,7 @@ import { describe, expectTypeOf, test } from "vitest";
 
 import { assertNonEmptyString } from "@auaust/toolkit";
 import { isNonEmptyString } from "@auaust/toolkit/guard";
-import type { FilledString } from "@auaust/toolkit/types";
+import type { NonEmptyString } from "@auaust/toolkit/types";
 
 import { testAssertion } from "#tests/fixtures/assertions";
 
@@ -18,6 +18,6 @@ describe("assertNonEmptyString", () => {
       assertNonEmptyString(candidate);
 
       return candidate;
-    }).returns.toEqualTypeOf<FilledString>();
+    }).returns.toEqualTypeOf<NonEmptyString>();
   });
 });

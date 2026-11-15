@@ -1,5 +1,5 @@
 import { assertNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
-import type { FilledString } from "#types/FilledString";
+import type { NonEmptyString } from "#types/NonEmptyString";
 
 /**
  * Returns the candidate when it is a string other than `""`; otherwise throws an
@@ -8,7 +8,7 @@ import type { FilledString } from "#types/FilledString";
 export function ensureNonEmptyString<Candidate>(
   candidate: Candidate,
   message?: string,
-): Candidate & FilledString {
+): Candidate & NonEmptyString<Candidate & string> {
   assertNonEmptyString(candidate, message);
 
   return candidate;

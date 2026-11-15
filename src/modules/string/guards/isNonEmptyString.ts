@@ -1,8 +1,7 @@
-import type { FilledString } from "#types/FilledString";
+import type { NonEmptyString } from "#types/NonEmptyString";
 
-// @debt `FilledString` excludes whitespace-only literals, while this guard accepts them: `isNonEmptyString(" ")` narrows a `" "` literal to `never`.
-export function isNonEmptyString(
-  candidate: unknown,
-): candidate is FilledString {
+export function isNonEmptyString<Candidate>(
+  candidate: Candidate,
+): candidate is Candidate & NonEmptyString<Candidate & string> {
   return typeof candidate === "string" && candidate !== "";
 }

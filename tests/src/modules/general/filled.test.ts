@@ -10,7 +10,7 @@ import {
 import type {
   FilledContainer,
   FilledMember,
-  FilledString,
+  NonBlankString,
 } from "@auaust/toolkit/types";
 
 import {
@@ -56,13 +56,13 @@ describe("filled", () => {
     check(undefined);
 
     expectTypeOf<
-      FilledString<"" | " " | " hello ">
+      NonBlankString<"" | " " | " hello ">
     >().toEqualTypeOf<" hello ">();
 
-    expectTypeOf<FilledString<"\u00a0\ufeff">>().toBeNever();
-    expectTypeOf<FilledString<"\u200b">>().toEqualTypeOf<"\u200b">();
-    expectTypeOf<FilledString<` ${string}`>>().toEqualTypeOf<` ${string}`>();
-    expectTypeOf<FilledString>().toEqualTypeOf<string>();
+    expectTypeOf<NonBlankString<"\u00a0\ufeff">>().toBeNever();
+    expectTypeOf<NonBlankString<"\u200b">>().toEqualTypeOf<"\u200b">();
+    expectTypeOf<NonBlankString<` ${string}`>>().toEqualTypeOf<` ${string}`>();
+    expectTypeOf<NonBlankString>().toEqualTypeOf<string>();
   });
 
   test("preserves primitives and narrows unknown values to non-nullish values", () => {
