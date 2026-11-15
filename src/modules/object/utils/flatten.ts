@@ -21,12 +21,13 @@ export function flatten<
   const Target extends object,
   const Separator extends string = ".",
 >(target: Target, separator?: Separator): Flattened<Target, Separator>;
-export function flatten<Target extends object, Key extends PropertyKey>(
-  target: Target,
+// @debt The keyer overload types its target `Record<string, any>` instead of `object`, because `object` reportedly infers `never`; `any` loosens the contract.
+export function flatten<Key extends PropertyKey>(
+  target: Record<string, any>,
   keyer: PathKeyer<Key>,
 ): Partial<Record<Key, unknown>>;
 export function flatten(
-  target: Record<string, unknown>,
+  target: Record<string, any>,
   separator: string | PathKeyer<PropertyKey> = ".",
 ): Record<PropertyKey, unknown> {
   const flattened: Record<PropertyKey, unknown> = {};

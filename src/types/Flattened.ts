@@ -21,6 +21,10 @@ type FlattenedEntries<
         : { [Path in `${Prefix}${Key}`]: Target[Key] };
     }[keyof Target & (string | number)];
 
+/**
+ * The object `flatten` returns for a string separator: the leaves of nested
+ * object types at the root, keyed by their joined path.
+ */
 export type Flattened<Target, Separator extends string> = IfNever<
   keyof Target,
   {},

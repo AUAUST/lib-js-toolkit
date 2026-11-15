@@ -118,6 +118,7 @@ export { ensureUndefined } from "#modules/ensure/utils/ensureUndefined";
 export { toFunction } from "#modules/function/utils/toFunction";
 export { toNumber } from "#modules/number/utils/toNumber";
 export { toNumber as n } from "#modules/number/utils/toNumber";
+export { toObject } from "#modules/object/utils/toObject";
 export { toString } from "#modules/string/utils/toString";
 export { toString as s } from "#modules/string/utils/toString";
 export * from "#errors";

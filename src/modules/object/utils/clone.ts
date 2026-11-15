@@ -2,6 +2,9 @@ import { isArray } from "#modules/array/guards/isArray";
 import { isPlainObject } from "#modules/object/guards/isPlainObject";
 import { entries } from "#modules/object/utils/entries";
 
+/**
+ * Options of `clone`.
+ */
 export interface CloneOptions {
   /**
    * Copies arrays recursively instead of keeping them by reference.

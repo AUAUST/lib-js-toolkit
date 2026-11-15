@@ -9,3 +9,4 @@
 - Add flatten
 - Add clone
 - Add getPath
+- Add toObject

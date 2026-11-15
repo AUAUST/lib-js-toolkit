@@ -72,6 +72,7 @@ export type * from "#types/Signature";
 export type * from "#types/Simplify";
 export type * from "#types/StringToNumber";
 export type * from "#types/ToArrayKey";
+export type * from "#types/ToObject";
 export type * from "#types/ToRecordKey";
 export type * from "#types/TypeChain";
 export type * from "#types/TypeLeaf";
