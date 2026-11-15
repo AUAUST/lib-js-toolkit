@@ -2,6 +2,7 @@
 
 export { isArray } from "#modules/array/guards/isArray";
 export { isNotArray } from "#modules/array/guards/isNotArray";
+export { concat } from "#modules/array/utils/concat";
 export { filter } from "#modules/array/utils/filter";
 export { filterMap } from "#modules/array/utils/filterMap";
 export { flatMap } from "#modules/array/utils/flatMap";
@@ -12,6 +13,7 @@ export { toArray } from "#modules/array/utils/toArray";
 export { toArray as a } from "#modules/array/utils/toArray";
 export type * from "#modules/array/guards/isArray";
 export type * from "#modules/array/guards/isNotArray";
+export type * from "#modules/array/utils/concat";
 export type * from "#modules/array/utils/filter";
 export type * from "#modules/array/utils/filterMap";
 export type * from "#modules/array/utils/flatMap";

@@ -9,3 +9,4 @@
 - Add iterable.filterMap and array.filterMap
 - Add iterable.flatMap and array.flatMap
 - Add iterable.pluck and array.pluck
+- Add iterable.concat and array.concat
