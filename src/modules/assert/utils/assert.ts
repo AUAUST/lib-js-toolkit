@@ -1,6 +1,8 @@
 import { AssertionError } from "#errors/AssertionError";
 import { assertArray } from "#modules/assert/utils/assertArray";
 import { assertArrayLike } from "#modules/assert/utils/assertArrayLike";
+import { assertAsyncFunction } from "#modules/assert/utils/assertAsyncFunction";
+import { assertAsyncGeneratorFunction } from "#modules/assert/utils/assertAsyncGeneratorFunction";
 import { assertBigInt } from "#modules/assert/utils/assertBigInt";
 import { assertBlankString } from "#modules/assert/utils/assertBlankString";
 import { assertBoolean } from "#modules/assert/utils/assertBoolean";
@@ -11,6 +13,7 @@ import { assertEmptyArray } from "#modules/assert/utils/assertEmptyArray";
 import { assertEmptyString } from "#modules/assert/utils/assertEmptyString";
 import { assertFinite } from "#modules/assert/utils/assertFinite";
 import { assertFunction } from "#modules/assert/utils/assertFunction";
+import { assertGeneratorFunction } from "#modules/assert/utils/assertGeneratorFunction";
 import { assertInteger } from "#modules/assert/utils/assertInteger";
 import { assertIterable } from "#modules/assert/utils/assertIterable";
 import { assertMethod } from "#modules/assert/utils/assertMethod";
@@ -58,6 +61,9 @@ export interface Assert {
   readonly isBoolean: typeof assertBoolean;
   readonly isCallable: typeof assertCallable;
   readonly isCallableMember: typeof assertCallableMember;
+  readonly isAsyncGeneratorFunction: typeof assertAsyncGeneratorFunction;
+  readonly isGeneratorFunction: typeof assertGeneratorFunction;
+  readonly isAsyncFunction: typeof assertAsyncFunction;
   readonly isContainer: typeof assertContainer;
   readonly isEmptyArray: typeof assertEmptyArray;
   readonly isEmptyString: typeof assertEmptyString;
@@ -124,6 +130,9 @@ export const assert: Assert = assign<
     isBoolean: assertBoolean,
     isCallable: assertCallable,
     isCallableMember: assertCallableMember,
+    isAsyncGeneratorFunction: assertAsyncGeneratorFunction,
+    isGeneratorFunction: assertGeneratorFunction,
+    isAsyncFunction: assertAsyncFunction,
     isContainer: assertContainer,
     isEmptyArray: assertEmptyArray,
     isEmptyString: assertEmptyString,

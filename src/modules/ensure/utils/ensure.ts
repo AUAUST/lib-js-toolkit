@@ -1,6 +1,8 @@
 import { AssertionError } from "#errors/AssertionError";
 import { ensureArray } from "#modules/ensure/utils/ensureArray";
 import { ensureArrayLike } from "#modules/ensure/utils/ensureArrayLike";
+import { ensureAsyncFunction } from "#modules/ensure/utils/ensureAsyncFunction";
+import { ensureAsyncGeneratorFunction } from "#modules/ensure/utils/ensureAsyncGeneratorFunction";
 import { ensureBigInt } from "#modules/ensure/utils/ensureBigInt";
 import { ensureBlankString } from "#modules/ensure/utils/ensureBlankString";
 import { ensureBoolean } from "#modules/ensure/utils/ensureBoolean";
@@ -11,6 +13,7 @@ import { ensureEmptyArray } from "#modules/ensure/utils/ensureEmptyArray";
 import { ensureEmptyString } from "#modules/ensure/utils/ensureEmptyString";
 import { ensureFinite } from "#modules/ensure/utils/ensureFinite";
 import { ensureFunction } from "#modules/ensure/utils/ensureFunction";
+import { ensureGeneratorFunction } from "#modules/ensure/utils/ensureGeneratorFunction";
 import { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 import { ensureIterable } from "#modules/ensure/utils/ensureIterable";
 import { ensureMethod } from "#modules/ensure/utils/ensureMethod";
@@ -63,6 +66,9 @@ export interface Ensure {
   readonly isBoolean: typeof ensureBoolean;
   readonly isCallable: typeof ensureCallable;
   readonly isCallableMember: typeof ensureCallableMember;
+  readonly isAsyncGeneratorFunction: typeof ensureAsyncGeneratorFunction;
+  readonly isGeneratorFunction: typeof ensureGeneratorFunction;
+  readonly isAsyncFunction: typeof ensureAsyncFunction;
   readonly isContainer: typeof ensureContainer;
   readonly isEmptyArray: typeof ensureEmptyArray;
   readonly isEmptyString: typeof ensureEmptyString;
@@ -130,6 +136,9 @@ export const ensure: Ensure = assign(
     isBoolean: ensureBoolean,
     isCallable: ensureCallable,
     isCallableMember: ensureCallableMember,
+    isAsyncGeneratorFunction: ensureAsyncGeneratorFunction,
+    isGeneratorFunction: ensureGeneratorFunction,
+    isAsyncFunction: ensureAsyncFunction,
     isContainer: ensureContainer,
     isEmptyArray: ensureEmptyArray,
     isEmptyString: ensureEmptyString,
