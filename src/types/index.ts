@@ -70,6 +70,8 @@ export type * from "#types/Simplify";
 export type * from "#types/StringToNumber";
 export type * from "#types/ToArrayKey";
 export type * from "#types/ToRecordKey";
+export type * from "#types/TypeName";
+export type * from "#types/TypeNames";
 export type * from "#types/UnionToIntersection";
 export type * from "#types/UnknownFn";
 export type * from "#types/Whitespace";
