@@ -5,12 +5,14 @@ import { assertBoolean } from "#modules/assert/utils/assertBoolean";
 import { assertCallable } from "#modules/assert/utils/assertCallable";
 import { assertCallableMember } from "#modules/assert/utils/assertCallableMember";
 import { assertContainer } from "#modules/assert/utils/assertContainer";
+import { assertEmptyString } from "#modules/assert/utils/assertEmptyString";
 import { assertFinite } from "#modules/assert/utils/assertFinite";
 import { assertFunction } from "#modules/assert/utils/assertFunction";
 import { assertInteger } from "#modules/assert/utils/assertInteger";
 import { assertIterable } from "#modules/assert/utils/assertIterable";
 import { assertMethod } from "#modules/assert/utils/assertMethod";
 import { assertNaN } from "#modules/assert/utils/assertNaN";
+import { assertNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
 import { assertNotArray } from "#modules/assert/utils/assertNotArray";
 import { assertNotBigInt } from "#modules/assert/utils/assertNotBigInt";
 import { assertNotBoolean } from "#modules/assert/utils/assertNotBoolean";
@@ -49,12 +51,14 @@ export interface Assert {
   readonly isCallable: typeof assertCallable;
   readonly isCallableMember: typeof assertCallableMember;
   readonly isContainer: typeof assertContainer;
+  readonly isEmptyString: typeof assertEmptyString;
   readonly isFinite: typeof assertFinite;
   readonly isFunction: typeof assertFunction;
   readonly isInteger: typeof assertInteger;
   readonly isIterable: typeof assertIterable;
   readonly isMethod: typeof assertMethod;
   readonly isNaN: typeof assertNaN;
+  readonly isNonEmptyString: typeof assertNonEmptyString;
   readonly isNotArray: typeof assertNotArray;
   readonly isNotBigInt: typeof assertNotBigInt;
   readonly isNotBoolean: typeof assertNotBoolean;
@@ -107,12 +111,14 @@ export const assert: Assert = assign<
     isCallable: assertCallable,
     isCallableMember: assertCallableMember,
     isContainer: assertContainer,
+    isEmptyString: assertEmptyString,
     isFinite: assertFinite,
     isFunction: assertFunction,
     isInteger: assertInteger,
     isIterable: assertIterable,
     isMethod: assertMethod,
     isNaN: assertNaN,
+    isNonEmptyString: assertNonEmptyString,
     isNotArray: assertNotArray,
     isNotBigInt: assertNotBigInt,
     isNotBoolean: assertNotBoolean,
