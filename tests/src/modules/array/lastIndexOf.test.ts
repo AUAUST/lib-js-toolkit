@@ -12,6 +12,7 @@ describe("lastIndexOf", () => {
     expect(lastIndexOf([1, 2, 1], 1)).toBe(2);
     expect(lastIndexOf([1, 2, 1], 1, -2)).toBe(0);
     expect(lastIndexOf([1, 2, 1], 1, -9)).toBe(-1);
+    expect(lastIndexOf([1, 2, 1], 1, undefined)).toBe(0);
   });
 
   test("passes nullish through", () => {

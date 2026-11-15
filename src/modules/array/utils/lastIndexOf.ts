@@ -7,9 +7,9 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Returns the last index of the value in an array, or `-1` when absent, compared
  * by SameValueZero so `NaN` matches `NaN`, unlike `Array.prototype.lastIndexOf`.
- * The search runs backwards from `fromIndex`, the last index by default,
- * a negative one counted from the end; holes are skipped. A nullish array
- * returns `undefined`.
+ * The search runs backwards from `fromIndex`: the last index when omitted, `0`
+ * when `undefined` or `NaN`, a negative one counted from the end; holes are
+ * skipped. A nullish array returns `undefined`.
  *
  * @native variant Array.prototype.lastIndexOf
  */
@@ -26,21 +26,21 @@ export function lastIndexOf<Items extends readonly unknown[]>(
 export function lastIndexOf(
   array: Maybe<readonly unknown[]>,
   value: unknown,
-  fromIndex?: number,
+  ...position: [fromIndex?: number]
 ): number | undefined {
   if (array == null) {
     return;
   }
 
-  const position = fromIndex === undefined
+  const [fromIndex] = position;
+
+  const from = position.length === 0
     ? array.length - 1
-    : isNaN(fromIndex)
+    : fromIndex === undefined || isNaN(fromIndex)
       ? 0
       : trunc(fromIndex);
 
-  const start = position < 0
-    ? array.length + position
-    : min(position, array.length - 1);
+  const start = from < 0 ? array.length + from : min(from, array.length - 1);
 
   for (let index = start; index >= 0; index--) {
     if (index in array && sameValueZero(array[index], value)) {
