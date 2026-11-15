@@ -8,3 +8,4 @@
 - Add object.pull
 - Add flatten
 - Add clone
+- Add getPath
