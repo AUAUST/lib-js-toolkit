@@ -5,7 +5,6 @@ import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records so `memberValue` accepts any property key; the overloads hold the real contract.
-
 // @debt A nullish-accepting array loses the type-predicate overload, since a type predicate cannot return `undefined`.
 
 /**

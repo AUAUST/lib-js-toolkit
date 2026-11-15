@@ -89,8 +89,13 @@ export default defineConfig({
     roles: [
       entry(),
       index(),
-      constants(),
-      utils({ public: true, collected: true }),
+      constants({
+        effects: "confined",
+      }),
+      utils({
+        public: true,
+        collected: true,
+      }),
       types({
         public: true,
         collected: true,

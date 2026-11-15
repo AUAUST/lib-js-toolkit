@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
@@ -30,5 +31,5 @@ export function toDelimitedCase(
     return string;
   }
 
-  return splitWords(string, options).join(delimiter);
+  return join(splitWords(string, options), delimiter);
 }

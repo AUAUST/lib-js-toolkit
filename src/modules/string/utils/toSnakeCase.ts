@@ -26,7 +26,5 @@ export function toSnakeCase(
     return string;
   }
 
-  const words = splitWords(string, options);
-
-  return joinLowercaseWords(words, "_", options);
+  return joinLowercaseWords(splitWords(string, options), "_", options);
 }
