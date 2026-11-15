@@ -4,6 +4,7 @@ import { isNumber } from "#modules/number/guards/isNumber";
 import { emptiable } from "#modules/protocol/symbols";
 import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
 import { isString } from "#modules/string/guards/isString";
+import { trim } from "#modules/string/utils/trim";
 import type { EmptyValueOf } from "#types/EmptyValueOf";
 
 /**
@@ -19,7 +20,7 @@ export function empty<Value>(input: Value): input is EmptyValueOf<Value> {
   }
 
   if (isString(input)) {
-    return input.trim() === "";
+    return trim(input) === "";
   }
 
   if (implementsProtocol(emptiable, input)) {

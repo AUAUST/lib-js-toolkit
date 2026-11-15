@@ -5,6 +5,7 @@ import { isNumber } from "#modules/number/guards/isNumber";
 import { toNumber } from "#modules/number/utils/toNumber";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
+import { trim } from "#modules/string/utils/trim";
 
 const invalidSeparatorPattern = /(?<!\d)_|_(?!\d)/;
 
@@ -37,7 +38,7 @@ export function parseNumber(input: unknown): number | undefined {
 }
 
 function parseNumericString(input: string): number | undefined {
-  const trimmed = input.trim();
+  const trimmed = trim(input);
 
   if (!trimmed || invalidSeparatorPattern.test(trimmed)) {
     return;
