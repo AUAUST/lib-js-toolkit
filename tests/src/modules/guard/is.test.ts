@@ -27,6 +27,16 @@ describe("is", () => {
     expect(is("a")).toBe(false);
   });
 
+  test("throws on an unknown type name once reached", () => {
+    const names: string[] = ["string", "promise"];
+
+    expect(() => Reflect.apply(is, undefined, [1, ...names])).toThrow(
+      new TypeError("Unknown type name: promise."),
+    );
+
+    expect(Reflect.apply(is, undefined, ["a", ...names])).toBe(true);
+  });
+
   test.for(createValues())("matches case %# (%s) as unknown", (value) => {
     expect(is(value, "unknown")).toBe(true);
   });
