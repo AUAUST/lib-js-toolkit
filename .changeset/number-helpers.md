@@ -3,3 +3,4 @@
 ---
 
 - Add isEven and isOdd
+- Add isMultipleOf
