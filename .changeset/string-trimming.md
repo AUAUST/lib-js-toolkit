@@ -7,3 +7,4 @@
 - Add padStart, padEnd and repeat
 - Add truncateStart and truncateEnd
 - Add remove
+- Add retain
