@@ -144,3 +144,20 @@ export function createKeyedCollections() {
     }),
   ] as const;
 }
+
+export function createTypeLeafValues() {
+  return [
+    undefined,
+    null,
+    "value",
+    true,
+    1,
+    1n,
+    Symbol("value"),
+    () => {},
+    [],
+    {},
+    new Number(1),
+    new Proxy([], {}),
+  ] as const;
+}

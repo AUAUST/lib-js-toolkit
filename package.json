@@ -57,6 +57,7 @@
     "./function": "./dist/function.mjs",
     "./general": "./dist/general.mjs",
     "./guard": "./dist/guard.mjs",
+    "./guard/constants": "./dist/guard/constants.mjs",
     "./iterable": "./dist/iterable.mjs",
     "./maplike": "./dist/maplike.mjs",
     "./math": "./dist/math.mjs",
