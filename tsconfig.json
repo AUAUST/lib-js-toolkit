@@ -28,7 +28,8 @@
       "@auaust/toolkit/setlike": ["./src/modules/setlike/entry.ts"],
       "@auaust/toolkit/string": ["./src/modules/string/entry.ts"],
       "@auaust/toolkit/string/constants": ["./src/modules/string/constants.ts"],
-      "@auaust/toolkit/time": ["./src/modules/time/entry.ts"]
+      "@auaust/toolkit/time": ["./src/modules/time/entry.ts"],
+      "@auaust/toolkit/when": ["./src/modules/when/entry.ts"]
     }
   },
   "files": [],

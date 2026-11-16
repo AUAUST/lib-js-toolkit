@@ -1,5 +1,10 @@
 import { value, type ResolvableValue } from "#modules/general/utils/value";
 
+/**
+ * Resolves `callback` when `condition` resolves truthy, otherwise `fallback`,
+ * each with `args` and the caller's `this`. Unlike the `createWhen` conditionals,
+ * it never narrows.
+ */
 export function when<
   IfTrue = void,
   IfFalse = undefined,

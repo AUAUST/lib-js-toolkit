@@ -9,8 +9,9 @@ import { isOwnUtilsExport } from "#tooling/barrels/utils/isOwnUtilsExport";
 import { splitPrefix } from "#tooling/barrels/utils/splitPrefix";
 
 /**
- * Renames each `utils/assert<Type>.ts` and `utils/ensure<Type>.ts` to `is<Type>`
- * in the `assert` and `ensure` entries.
+ * Renames each `utils/assert<Type>.ts`, `utils/ensure<Type>.ts` and
+ * `utils/when<Type>.ts` to `is<Type>` in the `assert`, `ensure` and
+ * `when` entries.
  */
 export async function exportGuardVariants(
   node: StructureNode,
@@ -21,7 +22,9 @@ export async function exportGuardVariants(
 
   if (
     module == null ||
-    (module.name !== "assert" && module.name !== "ensure")
+    (module.name !== "assert" &&
+      module.name !== "ensure" &&
+      module.name !== "when")
   ) {
     return exports;
   }

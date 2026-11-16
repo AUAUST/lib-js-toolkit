@@ -71,7 +71,8 @@
     "./string": "./dist/string.mjs",
     "./string/constants": "./dist/string/constants.mjs",
     "./time": "./dist/time.mjs",
-    "./types": "./dist/types.mjs"
+    "./types": "./dist/types.mjs",
+    "./when": "./dist/when.mjs"
   },
   "files": [
     "dist",

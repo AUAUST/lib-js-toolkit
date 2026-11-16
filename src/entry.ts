@@ -147,5 +147,6 @@ export * as random from "#modules/random/entry";
 export * as setlike from "#modules/setlike/entry";
 export * as string from "#modules/string/entry";
 export * as time from "#modules/time/entry";
+export * as when from "#modules/when/entry";
 export type * from "#types";
 // @end

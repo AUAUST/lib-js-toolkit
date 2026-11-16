@@ -29,5 +29,6 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ random*  Secure numeric randomness and an explicit insecure generator.
    ├─ setlike*  Helpers over sets and set-like collections.
    ├─ string*  Helpers over strings.
-   └─ time*  Helpers measuring and reading time.
+   ├─ time*  Helpers measuring and reading time.
+   └─ when*  Conditionals resolving a branch by a condition or a guard.
 ```

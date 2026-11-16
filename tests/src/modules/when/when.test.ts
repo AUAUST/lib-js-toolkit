@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { when } from "@auaust/toolkit";
+import { when } from "@auaust/toolkit/when";
 
 describe("when", () => {
   test.each([true, false])(
