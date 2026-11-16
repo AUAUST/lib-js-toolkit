@@ -6,3 +6,4 @@
 - Add object.filter
 - Add object.retain
 - Add object.invert
+- Add object.fromKeys
