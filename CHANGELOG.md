@@ -1,5 +1,30 @@
 # @auaust/toolkit
 
+## 0.7.0
+
+### Minor Changes
+
+- 439d717: - async.awaitAll resolves any non-array iterable to an array of its settled values; breaking: a `Map` now resolves to an array of its entries instead of `{}`
+- 3b60182: - Break words on every run of characters that are neither letters, marks nor digits in splitWords and the case converters, dropping those characters
+  - Remove apostrophes without breaking words in splitWords and the case converters
+- 3269ff9: - Yield bare values returned by the iterable.flatMap mapper instead of throwing, strings included
+  - Add iterable.flat to flatten an iterable lazily
+- 388ad1d: - guard.isNotNullish, assert.assertNotNullish and ensure.ensureNotNullish narrow to `NonNullable<Candidate>`; breaking: `unknown` now narrows to `{}` instead of staying `unknown`
+- 36e6cc3: - The root entry exports toCamelCase, toPascalCase, toKebabCase, toSnakeCase, toTitleCase, toDelimitedCase, toSlug with their shorthands camel, pascal, kebab, snake, title and slug, plus once, debounce, throttle, sleep and freeze
+  - isSelf moves from general to object; breaking: `@auaust/toolkit/general` no longer exports isSelf, import it from `@auaust/toolkit/object` or the root
+
+### Patch Changes
+
+- e36a1fd: - Add array.asArray, reading any non-string iterable as an array
+- adaf909: - array.map, array.flatMap, array.filter, array.filterMap, array.flat, array.pluck, array.difference, array.intersection, array.concat and array.sample accept any iterable but a string, copying it once
+- 0f0636e: - array.from exposes Array.from
+- ffdf0a9: - array.transform maps an array in place
+- 40b1215: - Accept a property name as the leading filter of array.filterMap and iterable.filterMap
+- 516369e: - object.getTag and object.hasTag read the `Object.prototype.toString` tag
+- 3375cf6: - string.toSlug keeps combining marks with `unaccent: false` and normalizes slugs to NFC, so NFC and NFD input give the same slug
+- 9755d69: - string.split wraps String.prototype.split, typing literal parts as a tuple
+- f1fbcfa: - Add the ValueOrMaybeAsyncFn type: a value, or a function returning the value or a promise of it
+
 ## 0.6.0
 
 ### Minor Changes
