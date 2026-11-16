@@ -3,3 +3,5 @@
 ---
 
 - Add object.insert
+- Add object.filter
+- Add object.retain
