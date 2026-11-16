@@ -1,4 +1,3 @@
-import { isNullish } from "#modules/guard/guards/isNullish";
 import { isPrimitive } from "#modules/guard/guards/isPrimitive";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 import { defineProperty } from "#modules/object/utils/defineProperty";
@@ -34,7 +33,7 @@ export function invert(
   for (const key of keys(target)) {
     const value = target[key];
 
-    if (isNullish(value)) {
+    if (value == null) {
       continue;
     }
 

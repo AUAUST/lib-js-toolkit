@@ -1,6 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
 import { receivedMessage } from "#modules/assert/internals/receivedMessage";
-import { isNotNullish } from "#modules/guard/guards/isNotNullish";
 
 /**
  * @throws {AssertionError} when the candidate is null or undefined; removes it
@@ -9,8 +8,8 @@ import { isNotNullish } from "#modules/guard/guards/isNotNullish";
 export function assertNotNullish<Candidate>(
   candidate: Candidate,
   message?: string,
-): asserts candidate is Exclude<Candidate, null | undefined> {
-  if (!isNotNullish(candidate)) {
+): asserts candidate is NonNullable<Candidate> {
+  if (candidate == null) {
     throw new AssertionError(
       message ??
         receivedMessage(

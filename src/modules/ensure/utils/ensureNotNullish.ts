@@ -8,7 +8,7 @@ import { assertNotNullish } from "#modules/assert/utils/assertNotNullish";
 export function ensureNotNullish<Candidate>(
   candidate: Candidate,
   message?: string,
-): Exclude<Candidate, null | undefined> {
+): NonNullable<Candidate> {
   assertNotNullish(candidate, message);
 
   return candidate;

@@ -1,7 +1,6 @@
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isBigInt } from "#modules/guard/guards/isBigInt";
-import { isNullish } from "#modules/guard/guards/isNullish";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 import { isNumber } from "#modules/number/guards/isNumber";
 import { isString } from "#modules/string/guards/isString";
@@ -15,7 +14,7 @@ export function inspectPrimitive(
   value: unknown,
   maxStringLength: number,
 ): string | undefined {
-  if (isNullish(value) || isBoolean(value) || isNumber(value)) {
+  if (value == null || isBoolean(value) || isNumber(value)) {
     return value === 0 && 1 / value < 0 ? "-0" : String(value);
   }
 

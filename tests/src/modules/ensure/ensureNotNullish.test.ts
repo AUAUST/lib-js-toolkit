@@ -17,4 +17,10 @@ describe("ensureNotNullish", () => {
       ensureNotNullish<"a" | null | undefined>,
     ).returns.toEqualTypeOf<"a">();
   });
+
+  test("returns a non-nullable type", () => {
+    const value = "a" as string | undefined;
+
+    expectTypeOf(ensureNotNullish(value)).toEqualTypeOf<string>();
+  });
 });

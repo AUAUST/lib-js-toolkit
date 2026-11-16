@@ -10,6 +10,5 @@ export function defined<Value>(
   value: Value,
   message = "Expected a value that is not null or undefined.",
 ): NonNullable<Value> {
-  // @debt TypeScript does not relate `Exclude<Value, null | undefined>` to `NonNullable<Value>` for a generic `Value`, hence the cast.
-  return ensureNotNullish(value, message) as NonNullable<Value>;
+  return ensureNotNullish(value, message);
 }

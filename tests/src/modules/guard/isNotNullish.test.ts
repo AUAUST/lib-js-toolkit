@@ -21,11 +21,16 @@ describe("isNotNullish", () => {
     }
   });
 
-  test("keeps unknown unchanged in the true branch", () => {
+  test("narrows to NonNullable", () => {
+    const nullable = null as string | null;
     const candidate: unknown = null;
 
+    if (isNotNullish(nullable)) {
+      expectTypeOf(nullable).toEqualTypeOf<string>();
+    }
+
     if (isNotNullish(candidate)) {
-      expectTypeOf(candidate).toBeUnknown();
+      expectTypeOf(candidate).toEqualTypeOf<{}>();
     }
   });
 });
