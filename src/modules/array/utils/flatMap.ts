@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -36,7 +35,7 @@ export function flatMap(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   return array.flatMap(mapper);
 }

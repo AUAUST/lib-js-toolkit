@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { memberValue } from "#modules/general/utils/memberValue";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
@@ -84,7 +83,7 @@ export function filter(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   if (isFunction(predicate)) {
     return array.filter(predicate);

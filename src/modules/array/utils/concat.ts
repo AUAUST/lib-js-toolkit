@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import type { Maybe } from "#types/Maybe";
 
 type Spread<Values extends readonly unknown[]> = Values extends readonly [
@@ -51,7 +50,7 @@ export function concat(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   return array.concat(...values);
 }

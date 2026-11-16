@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { filterMap as filterMapIterable } from "#modules/iterable/utils/filterMap";
@@ -303,10 +302,7 @@ export function filterMap(
     return;
   }
 
-  const array: readonly Record<
-    PropertyKey,
-    unknown
-  >[] = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array: readonly Record<PropertyKey, unknown>[] = readIterable(iterable);
 
   if (second === undefined) {
     return Array.from(

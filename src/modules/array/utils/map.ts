@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { callMethod } from "#modules/function/utils/callMethod";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
@@ -81,7 +80,7 @@ export function map(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   if (isFunction(mapper)) {
     return array.map(mapper);

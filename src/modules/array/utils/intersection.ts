@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import { intersection as intersectionIterable } from "#modules/iterable/utils/intersection";
 import type { Maybe } from "#types/Maybe";
 
@@ -41,7 +40,7 @@ export function intersection(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   return Array.from(intersectionIterable(array, other));
 }

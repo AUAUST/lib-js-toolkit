@@ -1,5 +1,4 @@
-import { isArray } from "#modules/array/guards/isArray";
-import { copyIterable } from "#modules/array/internals/copyIterable";
+import { readIterable } from "#modules/array/internals/readIterable";
 import { pluck as pluckIterable } from "#modules/iterable/utils/pluck";
 import type { MemberValue } from "#modules/general/utils/memberValue";
 import type { Maybe } from "#types/Maybe";
@@ -49,7 +48,7 @@ export function pluck(
     return;
   }
 
-  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+  const array = readIterable(iterable);
 
   return Array.from(pluckIterable(array, property));
 }
