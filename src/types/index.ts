@@ -86,6 +86,7 @@ export type * from "#types/TypeName";
 export type * from "#types/TypeNames";
 export type * from "#types/UnionToIntersection";
 export type * from "#types/UnknownFn";
+export type * from "#types/ValueOrMaybeAsyncFn";
 export type * from "#types/Whitespace";
 export type * from "#types/WithParameters";
 export type * from "#types/WithReturnType";
