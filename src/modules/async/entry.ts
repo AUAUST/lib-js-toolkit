@@ -2,12 +2,15 @@
 
 export { isPromise } from "#modules/async/guards/isPromise";
 export { isPromiseLike } from "#modules/async/guards/isPromiseLike";
+export { awaitAll } from "#modules/async/utils/awaitAll";
+export { awaitAll as concurrent } from "#modules/async/utils/awaitAll";
 export { defer } from "#modules/async/utils/defer";
 export { sleep } from "#modules/async/utils/sleep";
 export { toPromise } from "#modules/async/utils/toPromise";
 export { toPromise as awaitable } from "#modules/async/utils/toPromise";
 export type * from "#modules/async/guards/isPromise";
 export type * from "#modules/async/guards/isPromiseLike";
+export type * from "#modules/async/utils/awaitAll";
 export type * from "#modules/async/utils/defer";
 export type * from "#modules/async/utils/sleep";
 export type * from "#modules/async/utils/toPromise";
