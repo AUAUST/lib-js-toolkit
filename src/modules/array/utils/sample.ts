@@ -1,3 +1,4 @@
+import { min } from "#modules/math/utils/min";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { randomInteger } from "#modules/random/utils/randomInteger";
 import type { Maybe } from "#types/Maybe";
@@ -30,7 +31,7 @@ export function sample(
   }
 
   const positions = Array.from(array.keys());
-  const size = Math.min(count, positions.length);
+  const size = min(count, positions.length);
   const result: unknown[] = [];
 
   for (let index = 0; index < size; index++) {

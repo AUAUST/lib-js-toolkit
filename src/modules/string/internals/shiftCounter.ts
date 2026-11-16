@@ -1,3 +1,4 @@
+import { max } from "#modules/math/utils/max";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { trailingDigitsPattern } from "#modules/string/constants";
 import type { CounterOptions } from "#modules/string/types/CounterOptions";
@@ -25,7 +26,7 @@ export function shiftCounter(
     throw new RangeError("Counter must not go below zero.");
   }
 
-  const width = Math.max(pad || 0, digits?.length ?? 0);
+  const width = max(pad || 0, digits?.length ?? 0);
   const counter = String(next).padStart(width, filler);
 
   return digits === undefined

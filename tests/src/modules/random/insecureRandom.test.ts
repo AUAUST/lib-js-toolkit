@@ -7,8 +7,6 @@ afterEach(() => {
 });
 
 test("calls Math.random", () => {
-  const spy = vi.spyOn(Math, "random").mockReturnValue(0.25);
-
-  expect(insecureRandom()).toBe(0.25);
-  expect(spy).toHaveBeenCalledOnce();
+  expect(insecureRandom()).toBeTypeOf("number");
+  expect(insecureRandom).toBe(Math.random);
 });
