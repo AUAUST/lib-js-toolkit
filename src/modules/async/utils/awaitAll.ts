@@ -59,6 +59,10 @@ export function awaitAll(values: Maybe<object>): Promise<unknown> {
   const pairs: [string, unknown][] = entries(values);
 
   return Promise.all(pairs.map(([, value]) => value)).then((settled) => {
-    return record(pairs.map(([key], index) => [key, settled[index]]));
+    return record(
+      pairs.map(([key], index) => {
+        return [key, settled[index]];
+      }),
+    );
   });
 }

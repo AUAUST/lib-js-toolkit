@@ -123,3 +123,7 @@
 - worktree Bash isolation: heredoc python edits and chained git add+commit — refused as too complex to verify; split into separate plain commands and Write/Edit tools
 - eslint --fix: linted tsdown.config.ts after pnpm format — rewrote a ternary return into a layout Prettier then rejected; rewrote it by hand
 - auto-mode classifier: `git checkout -- <file>` to drop an uncommitted workaround — denied as destructive; rewrote the file with Write instead
+- zsh variable expansion: passed issue refs through `$R` to `engrenage planning issue check` — zsh does not word-split unquoted variables, so all refs became one name; spelled them out
+- sed (BSD): word-boundary \b rename — unsupported on macOS sed, redid with perl -pi
+- git commit -m: one -m per Closes line separates them with blank lines — commit-msg hook rejects; used -F with consecutive lines
+- `tsc` on a single file: type probe of a copied `Split` type — TS5112 refuses files beside tsconfig.json; reran with `--ignoreConfig` from the scratchpad

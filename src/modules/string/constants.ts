@@ -36,11 +36,6 @@ export const wordBoundaryPattern = freeze(
 export const apostrophePattern = freeze(/['’]/u);
 
 /**
- * Matches a run of characters that are neither letters nor digits.
- */
-export const nonAlphanumericRunPattern = freeze(/[^\p{L}\p{N}]+/u);
-
-/**
  * Matches the run of ASCII digits ending a string.
  */
 export const trailingDigitsPattern = freeze(/\d+$/u);
