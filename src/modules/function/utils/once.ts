@@ -29,6 +29,12 @@ export type OnceFn<Return> = (() => Return) & {
       }
   );
 
+/**
+ * Wraps `callback` so it runs on the first call only; later calls return the
+ * first call's result.
+ *
+ * @root
+ */
 export function once<Callback extends Callee<any, readonly []>>(
   this: CallThisParameterType<Callback>,
   callback: Callback,

@@ -10,6 +10,7 @@ import type { Maybe } from "#types/Maybe";
  * following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand camel
+ * @root
  */
 export function toCamelCase(string: string, options?: CasingOptions): string;
 export function toCamelCase(

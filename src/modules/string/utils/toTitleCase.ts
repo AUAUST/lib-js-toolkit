@@ -11,6 +11,7 @@ import type { Maybe } from "#types/Maybe";
  * returns `undefined`.
  *
  * @shorthand title
+ * @root
  */
 export function toTitleCase(string: string, options?: CasingOptions): string;
 export function toTitleCase(

@@ -29,11 +29,15 @@ async function listModuleRootExports(
 
       const tags = await readJsdocTags(config, file, binding);
 
-      if (!converter && !variant && !tags.has("root")) {
+      const root = tags.has("root");
+
+      if (!converter && !variant && !root) {
         return [];
       }
 
-      const shorthands = converter ? parseShorthands(tags, file, binding) : [];
+      const shorthands = converter || root
+        ? parseShorthands(tags, file, binding)
+        : [];
 
       return [
         { file, binding },
@@ -53,8 +57,8 @@ async function listModuleRootExports(
 
 /**
  * Adds to the root `domains` block each converter with its shorthands, each
- * `assert<Type>`, `ensure<Type>` and `when<Type>`, and each helper tagged
- * `@root`, under their own names.
+ * `assert<Type>`, `ensure<Type>` and `when<Type>`, and each helper tagged `@root`
+ * with its shorthands, under their own names.
  */
 export async function exportRootNames(
   node: StructureNode,

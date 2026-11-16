@@ -2,7 +2,10 @@ import { describe, expect, test } from "vitest";
 
 import * as root from "@auaust/toolkit";
 import { BUILD, object as rootObject } from "@auaust/toolkit";
+import * as asyncModule from "@auaust/toolkit/async";
+import * as functionModule from "@auaust/toolkit/function";
 import * as object from "@auaust/toolkit/object";
+import * as string from "@auaust/toolkit/string";
 
 import packageJson from "#package.json" with { type: "json" };
 
@@ -38,7 +41,6 @@ describe("toolkit", () => {
     "cachedAsync",
     "call",
     "callMethod",
-    "debounce",
     "defer",
     "expose",
     "keyMapper",
@@ -50,14 +52,11 @@ describe("toolkit", () => {
     "measureAsync",
     "memoized",
     "now",
-    "once",
     "plain",
     "readonly",
     "resolveCallable",
-    "sleep",
     "spy",
     "stopwatch",
-    "throttle",
     "transform",
     "transformKeys",
     "transformValues",
@@ -67,6 +66,17 @@ describe("toolkit", () => {
 
   test("exports isSelf at the root and no longer object.is", () => {
     expect(root.isSelf).toBe(Object.is);
+    expect(root.isSelf).toBe(object.isSelf);
     expect(object).not.toHaveProperty("is");
+  });
+
+  test("exports unambiguous helpers at the root", () => {
+    expect(root.toCamelCase).toBe(string.toCamelCase);
+    expect(root.pascal).toBe(string.toPascalCase);
+    expect(root.once).toBe(functionModule.once);
+    expect(root.debounce).toBe(functionModule.debounce);
+    expect(root.throttle).toBe(functionModule.throttle);
+    expect(root.sleep).toBe(asyncModule.sleep);
+    expect(root.freeze).toBe(object.freeze);
   });
 });

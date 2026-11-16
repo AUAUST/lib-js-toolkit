@@ -37,6 +37,8 @@ export type Debounced<Callback extends Callee> = ((
  * execution of the callback until after the specified delay has passed only if it
  * has not been called again during that delay. It returns a `boolean` indicating
  * whether the call replaced a pending execution.
+ *
+ * @root
  */
 export function debounce<Callback extends Callee>(
   callback: Callback,

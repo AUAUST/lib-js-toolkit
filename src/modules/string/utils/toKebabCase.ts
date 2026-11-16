@@ -9,6 +9,7 @@ import type { Maybe } from "#types/Maybe";
  * following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand kebab
+ * @root
  */
 export function toKebabCase(string: string, options?: CasingOptions): string;
 export function toKebabCase(

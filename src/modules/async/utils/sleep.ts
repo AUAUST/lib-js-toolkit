@@ -6,6 +6,7 @@ import { noop } from "#modules/general/utils/noop";
  *
  * @throws {TypeError} synchronously when the delay is not a number
  * @throws {RangeError} synchronously when the delay is negative
+ * @root
  */
 export function sleep(delay: number): Promise<void> {
   return after(noop, delay);

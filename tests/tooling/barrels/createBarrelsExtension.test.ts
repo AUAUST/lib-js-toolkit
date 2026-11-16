@@ -40,6 +40,7 @@ const baseFiles: Record<string, string> = {
   "src/modules/string/utils/parseString.ts": "export function parseString(value: unknown): string {\n  return String(value);\n}\n",
   "src/modules/assert/utils/assertString.ts": "export function assertString(value: unknown): asserts value is string {}\n",
   "src/modules/assert/utils/assert.ts": "export function assert(value: unknown): asserts value {}\n",
+  "src/modules/string/utils/toUpperCase.ts": "/**\n * @root\n * @shorthand upper\n */\nexport function toUpperCase(value: string): string {\n  return value.toUpperCase();\n}\n",
   "src/modules/ensure/utils/defined.ts": "/** @root */\nexport function defined<T>(value: T): T {\n  return value;\n}\n",
 };
 
@@ -126,6 +127,8 @@ describe("createBarrelsExtension", () => {
       expect(rootEntry).toContain("export { toString as s }");
       expect(rootEntry).toContain("export { assertString }");
       expect(rootEntry).toContain("export { defined }");
+      expect(rootEntry).toContain("export { toUpperCase }");
+      expect(rootEntry).toContain("export { toUpperCase as upper }");
       expect(rootEntry).not.toContain("export { assert }");
     },
   );

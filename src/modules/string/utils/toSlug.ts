@@ -12,6 +12,7 @@ import type { Maybe } from "#types/Maybe";
  * with `-`. `unaccent` defaults to `true`. A nullish string returns `undefined`.
  *
  * @shorthand slug
+ * @root
  */
 export function toSlug(string: string, options?: CasingOptions): string;
 export function toSlug(

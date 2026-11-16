@@ -34,6 +34,8 @@ export type Throttled<Callback extends Callee> = ((
 /**
  * Returns the throttled function. Calling the returned function returns `true`
  * if the call actually happened, `false` if it was throttled.
+ *
+ * @root
  */
 export function throttle<Callback extends Callee>(
   callback: Callback,

@@ -10,6 +10,7 @@ import type { Maybe } from "#types/Maybe";
  * following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand pascal
+ * @root
  */
 export function toPascalCase(string: string, options?: CasingOptions): string;
 export function toPascalCase(
