@@ -54,6 +54,7 @@ export type * from "#types/MethodName";
 export type * from "#types/MethodParameters";
 export type * from "#types/MethodReturnType";
 export type * from "#types/Methods";
+export type * from "#types/MinLengthTuple";
 export type * from "#types/NonBlankString";
 export type * from "#types/NonEmptyString";
 export type * from "#types/NullaryFn";

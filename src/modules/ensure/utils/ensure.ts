@@ -18,6 +18,7 @@ import { ensureGeneratorFunction } from "#modules/ensure/utils/ensureGeneratorFu
 import { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 import { ensureIterable } from "#modules/ensure/utils/ensureIterable";
 import { ensureMethod } from "#modules/ensure/utils/ensureMethod";
+import { ensureMinLength } from "#modules/ensure/utils/ensureMinLength";
 import { ensureNaN } from "#modules/ensure/utils/ensureNaN";
 import { ensureNonEmptyArray } from "#modules/ensure/utils/ensureNonEmptyArray";
 import { ensureNonEmptyString } from "#modules/ensure/utils/ensureNonEmptyString";
@@ -79,6 +80,7 @@ export interface Ensure {
   readonly isInteger: typeof ensureInteger;
   readonly isIterable: typeof ensureIterable;
   readonly isMethod: typeof ensureMethod;
+  readonly isMinLength: typeof ensureMinLength;
   readonly isNaN: typeof ensureNaN;
   readonly isNonEmptyArray: typeof ensureNonEmptyArray;
   readonly isNonEmptyString: typeof ensureNonEmptyString;
@@ -150,6 +152,7 @@ export const ensure: Ensure = assign(
     isInteger: ensureInteger,
     isIterable: ensureIterable,
     isMethod: ensureMethod,
+    isMinLength: ensureMinLength,
     isNaN: ensureNaN,
     isNonEmptyArray: ensureNonEmptyArray,
     isNonEmptyString: ensureNonEmptyString,

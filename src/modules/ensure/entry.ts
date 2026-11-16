@@ -21,6 +21,7 @@ export { ensureGeneratorFunction as isGeneratorFunction } from "#modules/ensure/
 export { ensureInteger as isInteger } from "#modules/ensure/utils/ensureInteger";
 export { ensureIterable as isIterable } from "#modules/ensure/utils/ensureIterable";
 export { ensureMethod as isMethod } from "#modules/ensure/utils/ensureMethod";
+export { ensureMinLength as isMinLength } from "#modules/ensure/utils/ensureMinLength";
 export { ensureNaN as isNaN } from "#modules/ensure/utils/ensureNaN";
 export { ensureNonEmptyArray as isNonEmptyArray } from "#modules/ensure/utils/ensureNonEmptyArray";
 export { ensureNonEmptyString as isNonEmptyString } from "#modules/ensure/utils/ensureNonEmptyString";
@@ -74,6 +75,7 @@ export type * from "#modules/ensure/utils/ensureGeneratorFunction";
 export type * from "#modules/ensure/utils/ensureInteger";
 export type * from "#modules/ensure/utils/ensureIterable";
 export type * from "#modules/ensure/utils/ensureMethod";
+export type * from "#modules/ensure/utils/ensureMinLength";
 export type * from "#modules/ensure/utils/ensureNaN";
 export type * from "#modules/ensure/utils/ensureNonEmptyArray";
 export type * from "#modules/ensure/utils/ensureNonEmptyString";

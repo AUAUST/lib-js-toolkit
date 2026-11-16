@@ -19,6 +19,7 @@ import { assertGeneratorFunction } from "#modules/assert/utils/assertGeneratorFu
 import { assertInteger } from "#modules/assert/utils/assertInteger";
 import { assertIterable } from "#modules/assert/utils/assertIterable";
 import { assertMethod } from "#modules/assert/utils/assertMethod";
+import { assertMinLength } from "#modules/assert/utils/assertMinLength";
 import { assertNaN } from "#modules/assert/utils/assertNaN";
 import { assertNonEmptyArray } from "#modules/assert/utils/assertNonEmptyArray";
 import { assertNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
@@ -75,6 +76,7 @@ export interface Assert {
   readonly isInteger: typeof assertInteger;
   readonly isIterable: typeof assertIterable;
   readonly isMethod: typeof assertMethod;
+  readonly isMinLength: typeof assertMinLength;
   readonly isNaN: typeof assertNaN;
   readonly isNonEmptyArray: typeof assertNonEmptyArray;
   readonly isNonEmptyString: typeof assertNonEmptyString;
@@ -144,6 +146,7 @@ export const assert: Assert = assign<
     isInteger: assertInteger,
     isIterable: assertIterable,
     isMethod: assertMethod,
+    isMinLength: assertMinLength,
     isNaN: assertNaN,
     isNonEmptyArray: assertNonEmptyArray,
     isNonEmptyString: assertNonEmptyString,

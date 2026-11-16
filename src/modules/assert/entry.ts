@@ -20,6 +20,7 @@ export { assertGeneratorFunction as isGeneratorFunction } from "#modules/assert/
 export { assertInteger as isInteger } from "#modules/assert/utils/assertInteger";
 export { assertIterable as isIterable } from "#modules/assert/utils/assertIterable";
 export { assertMethod as isMethod } from "#modules/assert/utils/assertMethod";
+export { assertMinLength as isMinLength } from "#modules/assert/utils/assertMinLength";
 export { assertNaN as isNaN } from "#modules/assert/utils/assertNaN";
 export { assertNonEmptyArray as isNonEmptyArray } from "#modules/assert/utils/assertNonEmptyArray";
 export { assertNonEmptyString as isNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
@@ -72,6 +73,7 @@ export type * from "#modules/assert/utils/assertGeneratorFunction";
 export type * from "#modules/assert/utils/assertInteger";
 export type * from "#modules/assert/utils/assertIterable";
 export type * from "#modules/assert/utils/assertMethod";
+export type * from "#modules/assert/utils/assertMinLength";
 export type * from "#modules/assert/utils/assertNaN";
 export type * from "#modules/assert/utils/assertNonEmptyArray";
 export type * from "#modules/assert/utils/assertNonEmptyString";

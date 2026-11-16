@@ -31,6 +31,7 @@ export { assertGeneratorFunction } from "#modules/assert/utils/assertGeneratorFu
 export { assertInteger } from "#modules/assert/utils/assertInteger";
 export { assertIterable } from "#modules/assert/utils/assertIterable";
 export { assertMethod } from "#modules/assert/utils/assertMethod";
+export { assertMinLength } from "#modules/assert/utils/assertMinLength";
 export { assertNaN } from "#modules/assert/utils/assertNaN";
 export { assertNonEmptyArray } from "#modules/assert/utils/assertNonEmptyArray";
 export { assertNonEmptyString } from "#modules/assert/utils/assertNonEmptyString";
@@ -84,6 +85,7 @@ export { ensureGeneratorFunction } from "#modules/ensure/utils/ensureGeneratorFu
 export { ensureInteger } from "#modules/ensure/utils/ensureInteger";
 export { ensureIterable } from "#modules/ensure/utils/ensureIterable";
 export { ensureMethod } from "#modules/ensure/utils/ensureMethod";
+export { ensureMinLength } from "#modules/ensure/utils/ensureMinLength";
 export { ensureNaN } from "#modules/ensure/utils/ensureNaN";
 export { ensureNonEmptyArray } from "#modules/ensure/utils/ensureNonEmptyArray";
 export { ensureNonEmptyString } from "#modules/ensure/utils/ensureNonEmptyString";

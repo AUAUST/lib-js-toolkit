@@ -4,3 +4,4 @@
 
 - Add object.loosenKeys
 - Add array.loosen
+- Add assertMinLength and ensureMinLength
