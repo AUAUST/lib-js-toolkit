@@ -4,3 +4,5 @@
 
 - Add the predicate module
 - Add negate
+- Add affirm
+- Add oneOf
