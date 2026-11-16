@@ -1,17 +1,7 @@
+import { compareStringForms } from "#modules/array/internals/compareStringForms";
 import { isFunction } from "#modules/function/guards/isFunction";
 import type { Comparator } from "#modules/array/types/Comparator";
 import type { SortOptions } from "#modules/array/types/SortOptions";
-
-function reverseStringOrder(left: unknown, right: unknown): number {
-  const leftString = String(left);
-  const rightString = String(right);
-
-  if (leftString < rightString) {
-    return 1;
-  }
-
-  return leftString > rightString ? -1 : 0;
-}
 
 /**
  * Resolves the `(comparator?, options?)` or `(options)` arguments of the ordering
@@ -34,11 +24,9 @@ export function resolveComparator<Item>(
     return comparator;
   }
 
-  if (comparator == null) {
-    return reverseStringOrder;
-  }
+  const ordered = comparator ?? compareStringForms;
 
   return (left, right) => {
-    return -comparator(left, right) || 0;
+    return -ordered(left, right) || 0;
   };
 }
