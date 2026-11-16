@@ -6,3 +6,4 @@
 - Add createWhen
 - Add whenBigInt, whenContainer, whenNull, whenNullish, whenNumeric, whenPrimitive, whenPropertyKey, whenRegisteredSymbol, whenScalar, whenSymbol and whenUndefined
 - Add whenString, whenEmptyString, whenNonEmptyString, whenBlankString and whenBoolean
+- Add whenNumber, whenFinite, whenInteger, whenNaN and whenSafeInteger
