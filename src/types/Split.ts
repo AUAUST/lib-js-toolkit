@@ -1,3 +1,5 @@
+import type { IsStringLiteral } from "#types/IsStringLiteral";
+
 type IsUnion<Type, Whole = Type> = Type extends unknown
   ? [Whole] extends [Type]
     ? false
@@ -19,18 +21,17 @@ type SplitParts<
 
 /**
  * The parts a literal string splits into around a literal separator, as
- * `String.prototype.split` without a limit; a wide string or a wide or union
- * separator widens the result to `string[]`.
+ * `String.prototype.split` without a limit; a wide or template literal string, or
+ * a wide, template literal or union separator, widens the result to `string[]`.
  */
-export type Split<
-  Input extends string,
-  Separator extends string,
-> = string extends Input
-  ? string[]
-  : string extends Separator
-    ? string[]
-    : true extends IsUnion<Separator>
+export type Split<Input extends string, Separator extends string> = [
+  IsStringLiteral<Input>,
+] extends [true]
+  ? [IsStringLiteral<Separator>] extends [true]
+    ? true extends IsUnion<Separator>
       ? string[]
       : Separator extends ""
         ? SplitChars<Input>
-        : SplitParts<Input, Separator>;
+        : SplitParts<Input, Separator>
+    : string[]
+  : string[];
