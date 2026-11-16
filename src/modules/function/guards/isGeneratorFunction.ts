@@ -1,3 +1,4 @@
+import { hasTag } from "#modules/object/utils/hasTag";
 import type { Fn } from "#types/Fn";
 
 /**
@@ -7,7 +8,5 @@ import type { Fn } from "#types/Fn";
 export function isGeneratorFunction(
   candidate: unknown,
 ): candidate is Fn<Generator> {
-  return (
-    Object.prototype.toString.call(candidate) === "[object GeneratorFunction]"
-  );
+  return hasTag(candidate, "GeneratorFunction");
 }

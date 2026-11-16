@@ -1,3 +1,4 @@
+import { hasTag } from "#modules/object/utils/hasTag";
 import type { Fn } from "#types/Fn";
 
 /**
@@ -7,8 +8,5 @@ import type { Fn } from "#types/Fn";
 export function isAsyncGeneratorFunction(
   candidate: unknown,
 ): candidate is Fn<AsyncGenerator> {
-  return (
-    Object.prototype.toString.call(candidate) ===
-    "[object AsyncGeneratorFunction]"
-  );
+  return hasTag(candidate, "AsyncGeneratorFunction");
 }
