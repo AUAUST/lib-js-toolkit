@@ -24,6 +24,8 @@ function isNegativeZero(value: number | bigint): boolean {
  * numbers but `NaN` and bigints together, `-0` before `0`; then `NaN`, invalid
  * dates included; then anything else, numeric strings and booleans included.
  * Values past the first rank tie with their rank. Returns `-1`, `0` or `1`.
+ *
+ * @throws What an operand's `valueOf` throws.
  */
 export function numeric(left: unknown, right: unknown): -1 | 0 | 1 {
   const leftValue = valueOf(left);

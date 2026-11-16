@@ -6,6 +6,8 @@ import { memberValue } from "#modules/general/utils/memberValue";
  * Compares the values `key` resolves from each side with `diamond`: a
  * property name reads that member, calling it when it is a method; a callback
  * receives each value.
+ *
+ * @throws What `key`, a called member or a resolved value's `valueOf` throws.
  */
 export function diamondBy<Value>(
   left: Value,
