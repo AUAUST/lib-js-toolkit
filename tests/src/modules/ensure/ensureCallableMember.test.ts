@@ -11,7 +11,7 @@ describe("ensureCallableMember", () => {
       return ensureCallableMember(candidate, Symbol.iterator, message);
     },
     (candidate: unknown) => isCallableMember(candidate, Symbol.iterator),
-    "Expected a callable member.",
+    "Expected a callable member",
   );
 
   test("types unknown as holding the callable and keeps known targets", () => {

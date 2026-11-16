@@ -9,7 +9,7 @@ describe("ensureNotBoolean", () => {
   testEnsure(
     ensureNotBoolean,
     isNotBoolean,
-    "Expected a value that is not a boolean.",
+    "Expected a value that is not a boolean",
   );
 
   test("attaches to the callable", () => {

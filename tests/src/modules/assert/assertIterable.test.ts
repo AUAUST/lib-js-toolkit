@@ -6,7 +6,7 @@ import { isIterable } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertIterable", () => {
-  testAssertion(assertIterable, isIterable, "Expected an iterable.");
+  testAssertion(assertIterable, isIterable, "Expected an iterable");
 
   test("is attached to assert", () => {
     expect(assert.isIterable).toBe(assertIterable);

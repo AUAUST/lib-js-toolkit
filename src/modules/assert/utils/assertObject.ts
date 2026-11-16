@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isObject } from "#modules/object/guards/isObject";
 
 /**
@@ -6,9 +7,11 @@ import { isObject } from "#modules/object/guards/isObject";
  */
 export function assertObject(
   candidate: unknown,
-  message = "Expected an object.",
+  message?: string,
 ): asserts candidate is object {
   if (!isObject(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected an object", candidate),
+    );
   }
 }

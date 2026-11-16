@@ -6,7 +6,7 @@ import { isScalar } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertScalar", () => {
-  testAssertion(assertScalar, isScalar, "Expected a scalar.");
+  testAssertion(assertScalar, isScalar, "Expected a scalar");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

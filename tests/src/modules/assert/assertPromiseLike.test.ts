@@ -9,7 +9,7 @@ describe("assertPromiseLike", () => {
   testAssertion(
     assertPromiseLike,
     isPromiseLike,
-    "Expected a promise-like value.",
+    "Expected a promise-like value",
   );
 
   test("narrows unknown", () => {

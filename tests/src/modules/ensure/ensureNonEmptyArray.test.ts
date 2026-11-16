@@ -9,7 +9,7 @@ describe("ensureNonEmptyArray", () => {
   testEnsure(
     ensureNonEmptyArray,
     isNonEmptyArray,
-    "Expected a non-empty array.",
+    "Expected a non-empty array",
   );
 
   test("types a mutable array as a mutable tuple", () => {

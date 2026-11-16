@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isMethod } from "#modules/function/guards/isMethod";
 import type { MethodName } from "#types/MethodName";
 import type { UnknownFn } from "#types/UnknownFn";
@@ -22,9 +23,11 @@ export function assertMethod<Method extends PropertyKey>(
 export function assertMethod(
   candidate: unknown,
   method: PropertyKey,
-  message = "Expected a method.",
+  message?: string,
 ): void {
   if (!isMethod(candidate, method)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a method", candidate),
+    );
   }
 }

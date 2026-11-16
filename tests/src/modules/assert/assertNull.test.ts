@@ -6,7 +6,7 @@ import { isNull } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNull", () => {
-  testAssertion(assertNull, isNull, "Expected null.");
+  testAssertion(assertNull, isNull, "Expected null");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

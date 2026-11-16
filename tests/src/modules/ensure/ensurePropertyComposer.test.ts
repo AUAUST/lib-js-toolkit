@@ -10,7 +10,7 @@ describe("ensurePropertyComposer", () => {
   testEnsure(
     ensurePropertyComposer,
     isPropertyComposer,
-    "Expected a property composer.",
+    "Expected a property composer",
   );
 
   test("types unknown as the guarded type", () => {

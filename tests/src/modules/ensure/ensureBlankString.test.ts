@@ -7,7 +7,7 @@ import type { BlankString } from "@auaust/toolkit/types";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensureBlankString", () => {
-  testEnsure(ensureBlankString, isBlankString, "Expected a blank string.");
+  testEnsure(ensureBlankString, isBlankString, "Expected a blank string");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(

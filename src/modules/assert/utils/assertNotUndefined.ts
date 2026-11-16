@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotUndefined } from "#modules/guard/guards/isNotUndefined";
 
 /**
@@ -7,9 +8,12 @@ import { isNotUndefined } from "#modules/guard/guards/isNotUndefined";
  */
 export function assertNotUndefined<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not undefined.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, undefined> {
   if (!isNotUndefined(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not undefined", candidate),
+    );
   }
 }

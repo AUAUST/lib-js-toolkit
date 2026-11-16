@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotNumber } from "#modules/number/guards/isNotNumber";
 
 /**
@@ -7,9 +8,12 @@ import { isNotNumber } from "#modules/number/guards/isNotNumber";
  */
 export function assertNotNumber<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a number.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, number> {
   if (!isNotNumber(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a number", candidate),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isCallableMember } from "#modules/function/guards/isCallableMember";
 import type { Callee } from "#types/Callee";
 import type { MethodName } from "#types/MethodName";
@@ -22,9 +23,11 @@ export function assertCallableMember<Member extends PropertyKey>(
 export function assertCallableMember(
   candidate: unknown,
   member: PropertyKey,
-  message = "Expected a callable member.",
+  message?: string,
 ): void {
   if (!isCallableMember(candidate, member)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a callable member", candidate),
+    );
   }
 }

@@ -9,7 +9,7 @@ describe("ensureNotUndefined", () => {
   testEnsure(
     ensureNotUndefined,
     isNotUndefined,
-    "Expected a value that is not undefined.",
+    "Expected a value that is not undefined",
   );
 
   test("removes the excluded members of a union", () => {

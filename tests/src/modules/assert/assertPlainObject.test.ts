@@ -6,7 +6,7 @@ import { isPlainObject } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertPlainObject", () => {
-  testAssertion(assertPlainObject, isPlainObject, "Expected a plain object.");
+  testAssertion(assertPlainObject, isPlainObject, "Expected a plain object");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

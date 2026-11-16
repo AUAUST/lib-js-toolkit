@@ -9,7 +9,7 @@ describe("ensureAsyncFunction", () => {
   testEnsure(
     ensureAsyncFunction,
     isAsyncFunction,
-    "Expected an async function.",
+    "Expected an async function",
   );
 
   test("types unknown as the guarded type", () => {

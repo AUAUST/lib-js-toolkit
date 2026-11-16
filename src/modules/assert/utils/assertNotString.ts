@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotString } from "#modules/string/guards/isNotString";
 
 /**
@@ -7,9 +8,12 @@ import { isNotString } from "#modules/string/guards/isNotString";
  */
 export function assertNotString<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a string.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, string> {
   if (!isNotString(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a string", candidate),
+    );
   }
 }

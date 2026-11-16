@@ -1,4 +1,4 @@
-import { describe, expectTypeOf, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { assertString } from "@auaust/toolkit";
 import { isString } from "@auaust/toolkit/guard";
@@ -6,7 +6,12 @@ import { isString } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertString", () => {
-  testAssertion(assertString, isString, "Expected a string.");
+  testAssertion(assertString, isString, "Expected a string");
+
+  test("appends the received value to the default message only", () => {
+    expect(() => assertString(42)).toThrow("Expected a string, received 42.");
+    expect(() => assertString(42, "Custom")).toThrow(/^Custom$/);
+  });
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

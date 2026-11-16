@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isBigInt } from "#modules/guard/guards/isBigInt";
 
 /**
@@ -6,9 +7,11 @@ import { isBigInt } from "#modules/guard/guards/isBigInt";
  */
 export function assertBigInt(
   candidate: unknown,
-  message = "Expected a bigint.",
+  message?: string,
 ): asserts candidate is bigint {
   if (!isBigInt(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a bigint", candidate),
+    );
   }
 }

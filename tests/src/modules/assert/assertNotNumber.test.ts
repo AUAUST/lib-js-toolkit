@@ -9,7 +9,7 @@ describe("assertNotNumber", () => {
   testAssertion(
     assertNotNumber,
     isNotNumber,
-    "Expected a value that is not a number.",
+    "Expected a value that is not a number",
   );
 
   test("attaches to the callable", () => {

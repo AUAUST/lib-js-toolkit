@@ -6,7 +6,7 @@ import { isNull } from "@auaust/toolkit/guard";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensureNull", () => {
-  testEnsure(ensureNull, isNull, "Expected null.");
+  testEnsure(ensureNull, isNull, "Expected null");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(ensureNull<unknown>).returns.toEqualTypeOf<null>();

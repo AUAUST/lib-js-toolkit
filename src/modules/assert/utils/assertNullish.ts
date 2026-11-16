@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNullish } from "#modules/guard/guards/isNullish";
 
 /**
@@ -7,9 +8,11 @@ import { isNullish } from "#modules/guard/guards/isNullish";
  */
 export function assertNullish(
   candidate: unknown,
-  message = "Expected null or undefined.",
+  message?: string,
 ): asserts candidate is null | undefined {
   if (!isNullish(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected null or undefined", candidate),
+    );
   }
 }

@@ -7,7 +7,7 @@ import type { UnknownFn } from "@auaust/toolkit/types";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensureFunction", () => {
-  testEnsure(ensureFunction, isFunction, "Expected a function.");
+  testEnsure(ensureFunction, isFunction, "Expected a function");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(ensureFunction<unknown>).returns.toEqualTypeOf<UnknownFn>();

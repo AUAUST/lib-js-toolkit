@@ -6,7 +6,7 @@ import { isBoolean } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertBoolean", () => {
-  testAssertion(assertBoolean, isBoolean, "Expected a boolean.");
+  testAssertion(assertBoolean, isBoolean, "Expected a boolean");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

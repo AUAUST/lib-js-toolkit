@@ -6,7 +6,7 @@ import { isNullish } from "@auaust/toolkit/guard";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensureNullish", () => {
-  testEnsure(ensureNullish, isNullish, "Expected null or undefined.");
+  testEnsure(ensureNullish, isNullish, "Expected null or undefined");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(ensureNullish<unknown>).returns.toEqualTypeOf<

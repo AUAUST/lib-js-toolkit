@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 
 /**
@@ -6,9 +7,11 @@ import { isIterable } from "#modules/iterable/guards/isIterable";
  */
 export function assertIterable(
   candidate: unknown,
-  message = "Expected an iterable.",
+  message?: string,
 ): asserts candidate is Iterable<unknown> {
   if (!isIterable(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected an iterable", candidate),
+    );
   }
 }

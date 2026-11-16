@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isBlankString } from "#modules/string/guards/isBlankString";
 import type { BlankString } from "#types/BlankString";
 
@@ -8,9 +9,11 @@ import type { BlankString } from "#types/BlankString";
  */
 export function assertBlankString(
   candidate: unknown,
-  message = "Expected a blank string.",
+  message?: string,
 ): asserts candidate is BlankString {
   if (!isBlankString(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a blank string", candidate),
+    );
   }
 }

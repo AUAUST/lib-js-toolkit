@@ -6,7 +6,7 @@ import { isNumber } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNumber", () => {
-  testAssertion(assertNumber, isNumber, "Expected a number.");
+  testAssertion(assertNumber, isNumber, "Expected a number");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

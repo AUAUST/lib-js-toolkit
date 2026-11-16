@@ -7,7 +7,7 @@ import type { EmptyString } from "@auaust/toolkit/types";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertEmptyString", () => {
-  testAssertion(assertEmptyString, isEmptyString, "Expected an empty string.");
+  testAssertion(assertEmptyString, isEmptyString, "Expected an empty string");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

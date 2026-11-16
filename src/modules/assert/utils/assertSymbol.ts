@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 
 /**
@@ -6,9 +7,11 @@ import { isSymbol } from "#modules/guard/guards/isSymbol";
  */
 export function assertSymbol(
   candidate: unknown,
-  message = "Expected a symbol.",
+  message?: string,
 ): asserts candidate is symbol {
   if (!isSymbol(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a symbol", candidate),
+    );
   }
 }

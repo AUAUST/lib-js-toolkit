@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isContainer } from "#modules/guard/guards/isContainer";
 
 /**
@@ -7,9 +8,11 @@ import { isContainer } from "#modules/guard/guards/isContainer";
  */
 export function assertContainer(
   candidate: unknown,
-  message = "Expected an object or a function.",
+  message?: string,
 ): asserts candidate is object {
   if (!isContainer(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected an object or a function", candidate),
+    );
   }
 }

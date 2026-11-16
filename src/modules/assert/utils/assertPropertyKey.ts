@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 
 /**
@@ -7,9 +8,11 @@ import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
  */
 export function assertPropertyKey(
   candidate: unknown,
-  message = "Expected a property key.",
+  message?: string,
 ): asserts candidate is PropertyKey {
   if (!isPropertyKey(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a property key", candidate),
+    );
   }
 }

@@ -10,7 +10,7 @@ describe("ensureNotArray", () => {
   testEnsure(
     ensureNotArray,
     isNotArray,
-    "Expected a value that is not an array.",
+    "Expected a value that is not an array",
   );
 
   test("attaches the helper", () => {

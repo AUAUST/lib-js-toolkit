@@ -10,7 +10,7 @@ describe("assertPropertyComposer", () => {
   testAssertion(
     assertPropertyComposer,
     isPropertyComposer,
-    "Expected a property composer.",
+    "Expected a property composer",
   );
 
   test("narrows unknown", () => {

@@ -6,7 +6,7 @@ import { isNullish } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNullish", () => {
-  testAssertion(assertNullish, isNullish, "Expected null or undefined.");
+  testAssertion(assertNullish, isNullish, "Expected null or undefined");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

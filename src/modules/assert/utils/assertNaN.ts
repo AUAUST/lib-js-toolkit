@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNaN } from "#modules/number/guards/isNaN";
 
 /**
@@ -6,9 +7,11 @@ import { isNaN } from "#modules/number/guards/isNaN";
  */
 export function assertNaN(
   candidate: unknown,
-  message = "Expected NaN.",
+  message?: string,
 ): asserts candidate is number {
   if (!isNaN(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected NaN", candidate),
+    );
   }
 }

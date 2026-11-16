@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotObject } from "#modules/object/guards/isNotObject";
 
 /**
@@ -7,9 +8,12 @@ import { isNotObject } from "#modules/object/guards/isNotObject";
  */
 export function assertNotObject<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not an object.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, object> {
   if (!isNotObject(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not an object", candidate),
+    );
   }
 }

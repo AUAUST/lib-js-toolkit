@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 
 /**
@@ -7,9 +8,11 @@ import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
  */
 export function assertSafeInteger(
   candidate: unknown,
-  message = "Expected a safe integer.",
+  message?: string,
 ): asserts candidate is number {
   if (!isSafeInteger(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a safe integer", candidate),
+    );
   }
 }

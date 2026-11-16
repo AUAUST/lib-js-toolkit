@@ -9,7 +9,7 @@ describe("ensureNotFunction", () => {
   testEnsure(
     ensureNotFunction,
     isNotFunction,
-    "Expected a value that is not a function.",
+    "Expected a value that is not a function",
   );
 
   test("removes the excluded members of a union", () => {

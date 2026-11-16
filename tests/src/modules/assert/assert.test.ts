@@ -7,7 +7,7 @@ import { assert } from "@auaust/toolkit/assert";
 describe("assert", () => {
   test("throws on a falsy condition only", () => {
     expect(() => assert(0)).toThrow(toolkit.AssertionError);
-    expect(() => assert(0)).toThrow("Assertion failed.");
+    expect(() => assert(0)).toThrow("Assertion failed, received 0.");
     expect(() => assert(1)).not.toThrow();
   });
 

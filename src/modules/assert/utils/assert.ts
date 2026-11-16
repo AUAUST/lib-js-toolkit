@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { assertArray } from "#modules/assert/utils/assertArray";
 import { assertArrayLike } from "#modules/assert/utils/assertArrayLike";
 import { assertAsyncFunction } from "#modules/assert/utils/assertAsyncFunction";
@@ -115,12 +116,11 @@ export const assert: Assert = assign<
   (condition: unknown, message?: string) => asserts condition,
   [Omit<Assert, never>]
 >(
-  function assert(
-    condition: unknown,
-    message = "Assertion failed.",
-  ): asserts condition {
+  function assert(condition: unknown, message?: string): asserts condition {
     if (!condition) {
-      throw new AssertionError(message);
+      throw new AssertionError(
+        message ?? receivedMessage("Assertion failed", condition),
+      );
     }
   },
   {

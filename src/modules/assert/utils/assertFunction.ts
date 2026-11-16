@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isFunction } from "#modules/function/guards/isFunction";
 import type { UnknownFn } from "#types/UnknownFn";
 
@@ -8,9 +9,11 @@ import type { UnknownFn } from "#types/UnknownFn";
  */
 export function assertFunction(
   candidate: unknown,
-  message = "Expected a function.",
+  message?: string,
 ): asserts candidate is UnknownFn {
   if (!isFunction(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a function", candidate),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotBoolean } from "#modules/boolean/guards/isNotBoolean";
 
 /**
@@ -7,9 +8,12 @@ import { isNotBoolean } from "#modules/boolean/guards/isNotBoolean";
  */
 export function assertNotBoolean<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a boolean.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, boolean> {
   if (!isNotBoolean(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a boolean", candidate),
+    );
   }
 }

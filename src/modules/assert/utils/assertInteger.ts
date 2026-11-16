@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isInteger } from "#modules/number/guards/isInteger";
 
 /**
@@ -7,9 +8,11 @@ import { isInteger } from "#modules/number/guards/isInteger";
  */
 export function assertInteger(
   candidate: unknown,
-  message = "Expected an integer.",
+  message?: string,
 ): asserts candidate is number {
   if (!isInteger(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected an integer", candidate),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isPlainObject } from "#modules/object/guards/isPlainObject";
 
 /**
@@ -7,9 +8,11 @@ import { isPlainObject } from "#modules/object/guards/isPlainObject";
  */
 export function assertPlainObject(
   candidate: unknown,
-  message = "Expected a plain object.",
+  message?: string,
 ): asserts candidate is Record<string, unknown> {
   if (!isPlainObject(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a plain object", candidate),
+    );
   }
 }

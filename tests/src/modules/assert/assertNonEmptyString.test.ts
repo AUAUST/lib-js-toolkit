@@ -10,7 +10,7 @@ describe("assertNonEmptyString", () => {
   testAssertion(
     assertNonEmptyString,
     isNonEmptyString,
-    "Expected a non-empty string.",
+    "Expected a non-empty string",
   );
 
   test("narrows unknown", () => {

@@ -9,7 +9,7 @@ describe("assertContainer", () => {
   testAssertion(
     assertContainer,
     isContainer,
-    "Expected an object or a function.",
+    "Expected an object or a function",
   );
 
   test("narrows unknown", () => {

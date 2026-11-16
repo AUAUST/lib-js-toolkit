@@ -6,7 +6,7 @@ import { isPropertyKey } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertPropertyKey", () => {
-  testAssertion(assertPropertyKey, isPropertyKey, "Expected a property key.");
+  testAssertion(assertPropertyKey, isPropertyKey, "Expected a property key");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

@@ -6,7 +6,7 @@ import { not } from "@auaust/toolkit/assert";
 describe("not", () => {
   test("throws on a truthy condition only", () => {
     expect(() => not(1)).toThrow(AssertionError);
-    expect(() => not(1)).toThrow("Expected a falsy value.");
+    expect(() => not(1)).toThrow("Expected a falsy value, received 1.");
     expect(() => not(0)).not.toThrow();
   });
 

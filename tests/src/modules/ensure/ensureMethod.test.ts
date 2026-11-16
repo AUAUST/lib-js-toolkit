@@ -12,7 +12,7 @@ describe("ensureMethod", () => {
       return ensureMethod(candidate, Symbol.iterator, message);
     },
     (candidate: unknown) => isMethod(candidate, Symbol.iterator),
-    "Expected a method.",
+    "Expected a method",
   );
 
   test("types unknown as holding the method and keeps known targets", () => {

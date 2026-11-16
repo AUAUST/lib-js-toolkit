@@ -9,7 +9,7 @@ describe("assertRegisteredSymbol", () => {
   testAssertion(
     assertRegisteredSymbol,
     isRegisteredSymbol,
-    "Expected a registered symbol.",
+    "Expected a registered symbol",
   );
 
   test("narrows unknown", () => {

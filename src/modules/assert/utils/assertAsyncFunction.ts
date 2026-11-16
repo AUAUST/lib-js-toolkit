@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isAsyncFunction } from "#modules/function/guards/isAsyncFunction";
 import type { AsyncFn } from "#types/AsyncFn";
 
@@ -8,9 +9,11 @@ import type { AsyncFn } from "#types/AsyncFn";
  */
 export function assertAsyncFunction(
   candidate: unknown,
-  message = "Expected an async function.",
+  message?: string,
 ): asserts candidate is AsyncFn {
   if (!isAsyncFunction(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected an async function", candidate),
+    );
   }
 }

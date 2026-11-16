@@ -11,7 +11,7 @@ describe("assertCallableMember", () => {
       assertCallableMember(candidate, Symbol.iterator, message);
     },
     (candidate: unknown) => isCallableMember(candidate, Symbol.iterator),
-    "Expected a callable member.",
+    "Expected a callable member",
   );
 
   test("narrows unknown", () => {

@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isString } from "#modules/string/guards/isString";
 
 /**
@@ -6,9 +7,11 @@ import { isString } from "#modules/string/guards/isString";
  */
 export function assertString(
   candidate: unknown,
-  message = "Expected a string.",
+  message?: string,
 ): asserts candidate is string {
   if (!isString(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a string", candidate),
+    );
   }
 }

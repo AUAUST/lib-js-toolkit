@@ -10,7 +10,7 @@ describe("ensureNotString", () => {
   testEnsure(
     ensureNotString,
     isNotString,
-    "Expected a value that is not a string.",
+    "Expected a value that is not a string",
   );
 
   test("attaches the helper", () => {

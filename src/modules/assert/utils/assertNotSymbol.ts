@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotSymbol } from "#modules/guard/guards/isNotSymbol";
 
 /**
@@ -7,9 +8,12 @@ import { isNotSymbol } from "#modules/guard/guards/isNotSymbol";
  */
 export function assertNotSymbol<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a symbol.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, symbol> {
   if (!isNotSymbol(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a symbol", candidate),
+    );
   }
 }

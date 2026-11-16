@@ -9,7 +9,7 @@ describe("ensureRegisteredSymbol", () => {
   testEnsure(
     ensureRegisteredSymbol,
     isRegisteredSymbol,
-    "Expected a registered symbol.",
+    "Expected a registered symbol",
   );
 
   test("types unknown as the guarded type", () => {

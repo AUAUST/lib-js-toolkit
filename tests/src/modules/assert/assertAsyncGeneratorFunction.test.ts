@@ -9,7 +9,7 @@ describe("assertAsyncGeneratorFunction", () => {
   testAssertion(
     assertAsyncGeneratorFunction,
     isAsyncGeneratorFunction,
-    "Expected an async generator function.",
+    "Expected an async generator function",
   );
 
   test("narrows unknown", () => {

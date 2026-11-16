@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isFinite } from "#modules/number/guards/isFinite";
 
 /**
@@ -7,9 +8,11 @@ import { isFinite } from "#modules/number/guards/isFinite";
  */
 export function assertFinite(
   candidate: unknown,
-  message = "Expected a finite number.",
+  message?: string,
 ): asserts candidate is number {
   if (!isFinite(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a finite number", candidate),
+    );
   }
 }

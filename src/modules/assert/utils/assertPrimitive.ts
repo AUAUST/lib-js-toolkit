@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isPrimitive } from "#modules/guard/guards/isPrimitive";
 import type { Primitive } from "#types/Primitive";
 
@@ -8,9 +9,11 @@ import type { Primitive } from "#types/Primitive";
  */
 export function assertPrimitive(
   candidate: unknown,
-  message = "Expected a primitive.",
+  message?: string,
 ): asserts candidate is Primitive {
   if (!isPrimitive(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a primitive", candidate),
+    );
   }
 }

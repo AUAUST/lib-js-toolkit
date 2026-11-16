@@ -6,7 +6,7 @@ import { isBigInt } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertBigInt", () => {
-  testAssertion(assertBigInt, isBigInt, "Expected a bigint.");
+  testAssertion(assertBigInt, isBigInt, "Expected a bigint");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

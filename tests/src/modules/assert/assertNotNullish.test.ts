@@ -9,7 +9,7 @@ describe("assertNotNullish", () => {
   testAssertion(
     assertNotNullish,
     isNotNullish,
-    "Expected a value that is not null or undefined.",
+    "Expected a value that is not null or undefined",
   );
 
   test("removes the excluded members of a union", () => {

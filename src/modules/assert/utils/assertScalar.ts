@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isScalar } from "#modules/guard/guards/isScalar";
 import type { TypeNames } from "#types/TypeNames";
 
@@ -7,9 +8,11 @@ import type { TypeNames } from "#types/TypeNames";
  */
 export function assertScalar(
   candidate: unknown,
-  message = "Expected a scalar.",
+  message?: string,
 ): asserts candidate is TypeNames["scalar"] {
   if (!isScalar(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a scalar", candidate),
+    );
   }
 }

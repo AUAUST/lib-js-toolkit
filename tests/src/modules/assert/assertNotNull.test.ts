@@ -6,7 +6,7 @@ import { isNotNull } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNotNull", () => {
-  testAssertion(assertNotNull, isNotNull, "Expected a value that is not null.");
+  testAssertion(assertNotNull, isNotNull, "Expected a value that is not null");
 
   test("removes the excluded members of a union", () => {
     expectTypeOf((candidate: "a" | null) => {

@@ -9,7 +9,7 @@ describe("ensureNotObject", () => {
   testEnsure(
     ensureNotObject,
     isNotObject,
-    "Expected a value that is not an object.",
+    "Expected a value that is not an object",
   );
 
   test("removes the excluded members of a union", () => {

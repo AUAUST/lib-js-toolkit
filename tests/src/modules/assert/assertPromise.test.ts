@@ -6,7 +6,7 @@ import { isPromise } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertPromise", () => {
-  testAssertion(assertPromise, isPromise, "Expected a promise.");
+  testAssertion(assertPromise, isPromise, "Expected a promise");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

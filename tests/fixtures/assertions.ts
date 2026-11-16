@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 
 import { AssertionError } from "@auaust/toolkit";
+import { inspect } from "@auaust/toolkit/string";
 
 import { createValues } from "#tests/fixtures/values";
 
@@ -24,16 +25,24 @@ function expectAssertionError(run: () => unknown, message: string): void {
   expect.unreachable("Expected an AssertionError.");
 }
 
+function receivedMessage(expectation: string, value: unknown): string {
+  return `${expectation}, received ${inspect(value)}.`;
+}
+
 export function testAssertion(
   assertion: Assertion,
   guard: Guard,
-  message: string,
+  expectation: string,
 ): void {
   test.for(createValues())("matches its guard on case %# (%s)", (value) => {
     if (guard(value)) {
       expect(() => assertion(value)).not.toThrow();
     } else {
-      expectAssertionError(() => assertion(value), message);
+      expectAssertionError(
+        () => assertion(value),
+        receivedMessage(expectation, value),
+      );
+
       expectAssertionError(() => assertion(value, "custom"), "custom");
     }
   });
@@ -42,13 +51,17 @@ export function testAssertion(
 export function testEnsure(
   ensurer: Ensurer,
   guard: Guard,
-  message: string,
+  expectation: string,
 ): void {
   test.for(createValues())("matches its guard on case %# (%s)", (value) => {
     if (guard(value)) {
       expect(ensurer(value)).toBe(value);
     } else {
-      expectAssertionError(() => ensurer(value), message);
+      expectAssertionError(
+        () => ensurer(value),
+        receivedMessage(expectation, value),
+      );
+
       expectAssertionError(() => ensurer(value, "custom"), "custom");
     }
   });

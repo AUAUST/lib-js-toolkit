@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotFunction } from "#modules/function/guards/isNotFunction";
 import type { UnknownFn } from "#types/UnknownFn";
 
@@ -8,9 +9,12 @@ import type { UnknownFn } from "#types/UnknownFn";
  */
 export function assertNotFunction<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a function.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, UnknownFn> {
   if (!isNotFunction(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a function", candidate),
+    );
   }
 }

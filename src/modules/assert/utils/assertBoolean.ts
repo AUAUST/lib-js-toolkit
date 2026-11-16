@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isBoolean } from "#modules/boolean/guards/isBoolean";
 
 /**
@@ -6,9 +7,11 @@ import { isBoolean } from "#modules/boolean/guards/isBoolean";
  */
 export function assertBoolean(
   candidate: unknown,
-  message = "Expected a boolean.",
+  message?: string,
 ): asserts candidate is boolean {
   if (!isBoolean(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a boolean", candidate),
+    );
   }
 }

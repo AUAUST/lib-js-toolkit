@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isPropertyComposer } from "#modules/composer/guards/isPropertyComposer";
 import type { PropertyComposer } from "#modules/composer/utils/propertyComposer";
 
@@ -8,9 +9,11 @@ import type { PropertyComposer } from "#modules/composer/utils/propertyComposer"
  */
 export function assertPropertyComposer(
   candidate: unknown,
-  message = "Expected a property composer.",
+  message?: string,
 ): asserts candidate is PropertyComposer {
   if (!isPropertyComposer(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a property composer", candidate),
+    );
   }
 }

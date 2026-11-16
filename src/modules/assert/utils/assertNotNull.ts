@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotNull } from "#modules/guard/guards/isNotNull";
 
 /**
@@ -7,9 +8,12 @@ import { isNotNull } from "#modules/guard/guards/isNotNull";
  */
 export function assertNotNull<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not null.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, null> {
   if (!isNotNull(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not null", candidate),
+    );
   }
 }

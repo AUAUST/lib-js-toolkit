@@ -7,7 +7,7 @@ import type { UnknownFn } from "@auaust/toolkit/types";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertFunction", () => {
-  testAssertion(assertFunction, isFunction, "Expected a function.");
+  testAssertion(assertFunction, isFunction, "Expected a function");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

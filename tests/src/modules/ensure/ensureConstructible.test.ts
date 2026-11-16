@@ -6,7 +6,7 @@ import { isConstructible } from "@auaust/toolkit/guard";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensureConstructible", () => {
-  testEnsure(ensureConstructible, isConstructible, "Expected a constructor.");
+  testEnsure(ensureConstructible, isConstructible, "Expected a constructor");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(

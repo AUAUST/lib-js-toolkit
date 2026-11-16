@@ -2,6 +2,7 @@ import { isArray } from "#modules/array/guards/isArray";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
 import { isNumber } from "#modules/number/guards/isNumber";
+import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
 import { inspectCollection } from "#modules/string/internals/inspectCollection";
 import { inspectLeaf } from "#modules/string/internals/inspectLeaf";
@@ -15,10 +16,11 @@ const identifierPattern = /^[A-Za-z_$][\w$]*$/;
 
 /**
  * Returns a one-line technical representation of any value for error messages.
- * Never throws and never runs user code: getters, conversion hooks and `toJSON`
- * are never invoked; accessors show as `[Getter]`/`[Setter]`, cycles as
+ * Never throws, and runs no user code other than the traps of live proxies,
+ * which cannot be detected and are read through: getters, conversion hooks and
+ * `toJSON` are never invoked; accessors show as `[Getter]`/`[Setter]`, cycles as
  * `[Circular]`, revoked proxies as `Proxy (revoked)` and values whose inspection
- * throws as `[Uninspectable]`. Live proxies are read through their traps.
+ * throws, a throwing trap included, as `[Uninspectable]`.
  */
 export function inspect(value: unknown, options: InspectOptions = {}): string {
   const context: InspectContext = {
@@ -34,9 +36,13 @@ export function inspect(value: unknown, options: InspectOptions = {}): string {
 
 function render(value: unknown, level: number, context: InspectContext) {
   try {
+    if (isObject(value)) {
+      return renderObject(value, level, context);
+    }
+
+    // @debt inspectPrimitive returns undefined only for objects, which its type does not carry, so this fallback is unreachable.
     return (
-      inspectPrimitive(value, context.maxStringLength) ??
-      renderObject(value as object, level, context)
+      inspectPrimitive(value, context.maxStringLength) ?? "[Uninspectable]"
     );
   } catch {
     return "[Uninspectable]";

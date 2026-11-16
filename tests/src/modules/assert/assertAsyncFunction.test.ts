@@ -9,7 +9,7 @@ describe("assertAsyncFunction", () => {
   testAssertion(
     assertAsyncFunction,
     isAsyncFunction,
-    "Expected an async function.",
+    "Expected an async function",
   );
 
   test("narrows unknown", () => {

@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import type { Falsy } from "#types/Falsy";
 
 /**
@@ -6,9 +7,11 @@ import type { Falsy } from "#types/Falsy";
  */
 export function not(
   condition: unknown,
-  message = "Expected a falsy value.",
+  message?: string,
 ): asserts condition is Falsy {
   if (condition) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a falsy value", condition),
+    );
   }
 }

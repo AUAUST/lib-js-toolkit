@@ -6,7 +6,7 @@ import { isEmptyArray } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertEmptyArray", () => {
-  testAssertion(assertEmptyArray, isEmptyArray, "Expected an empty array.");
+  testAssertion(assertEmptyArray, isEmptyArray, "Expected an empty array");
 
   test("narrows a readonly array", () => {
     expectTypeOf((candidate: readonly string[]) => {

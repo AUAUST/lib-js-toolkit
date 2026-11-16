@@ -10,7 +10,7 @@ describe("ensureNonEmptyString", () => {
   testEnsure(
     ensureNonEmptyString,
     isNonEmptyString,
-    "Expected a non-empty string.",
+    "Expected a non-empty string",
   );
 
   test("types unknown as the guarded type", () => {

@@ -6,7 +6,7 @@ import { isNumeric } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNumeric", () => {
-  testAssertion(assertNumeric, isNumeric, "Expected a number or bigint.");
+  testAssertion(assertNumeric, isNumeric, "Expected a number or bigint");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

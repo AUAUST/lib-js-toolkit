@@ -6,7 +6,7 @@ import { isNaN } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertNaN", () => {
-  testAssertion(assertNaN, isNaN, "Expected NaN.");
+  testAssertion(assertNaN, isNaN, "Expected NaN");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

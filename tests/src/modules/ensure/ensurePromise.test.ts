@@ -6,7 +6,7 @@ import { isPromise } from "@auaust/toolkit/guard";
 import { testEnsure } from "#tests/fixtures/assertions";
 
 describe("ensurePromise", () => {
-  testEnsure(ensurePromise, isPromise, "Expected a promise.");
+  testEnsure(ensurePromise, isPromise, "Expected a promise");
 
   test("types unknown as the guarded type", () => {
     expectTypeOf(ensurePromise<unknown>).returns.toEqualTypeOf<

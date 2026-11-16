@@ -9,7 +9,7 @@ describe("assertNotBigInt", () => {
   testAssertion(
     assertNotBigInt,
     isNotBigInt,
-    "Expected a value that is not a bigint.",
+    "Expected a value that is not a bigint",
   );
 
   test("removes the excluded members of a union", () => {

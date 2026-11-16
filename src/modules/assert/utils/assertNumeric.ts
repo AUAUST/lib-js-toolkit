@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNumeric } from "#modules/guard/guards/isNumeric";
 import type { TypeNames } from "#types/TypeNames";
 
@@ -8,9 +9,11 @@ import type { TypeNames } from "#types/TypeNames";
  */
 export function assertNumeric(
   candidate: unknown,
-  message = "Expected a number or bigint.",
+  message?: string,
 ): asserts candidate is TypeNames["numeric"] {
   if (!isNumeric(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a number or bigint", candidate),
+    );
   }
 }

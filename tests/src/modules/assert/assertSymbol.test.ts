@@ -6,7 +6,7 @@ import { isSymbol } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertSymbol", () => {
-  testAssertion(assertSymbol, isSymbol, "Expected a symbol.");
+  testAssertion(assertSymbol, isSymbol, "Expected a symbol");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

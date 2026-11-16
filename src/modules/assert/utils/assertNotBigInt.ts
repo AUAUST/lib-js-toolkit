@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isNotBigInt } from "#modules/guard/guards/isNotBigInt";
 
 /**
@@ -7,9 +8,12 @@ import { isNotBigInt } from "#modules/guard/guards/isNotBigInt";
  */
 export function assertNotBigInt<Candidate>(
   candidate: Candidate,
-  message = "Expected a value that is not a bigint.",
+  message?: string,
 ): asserts candidate is Exclude<Candidate, bigint> {
   if (!isNotBigInt(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ??
+        receivedMessage("Expected a value that is not a bigint", candidate),
+    );
   }
 }

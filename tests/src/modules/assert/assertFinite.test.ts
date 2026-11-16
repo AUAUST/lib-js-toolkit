@@ -6,7 +6,7 @@ import { isFinite } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertFinite", () => {
-  testAssertion(assertFinite, isFinite, "Expected a finite number.");
+  testAssertion(assertFinite, isFinite, "Expected a finite number");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

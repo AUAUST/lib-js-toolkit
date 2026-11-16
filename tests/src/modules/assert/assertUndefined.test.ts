@@ -6,7 +6,7 @@ import { isUndefined } from "@auaust/toolkit/guard";
 import { testAssertion } from "#tests/fixtures/assertions";
 
 describe("assertUndefined", () => {
-  testAssertion(assertUndefined, isUndefined, "Expected undefined.");
+  testAssertion(assertUndefined, isUndefined, "Expected undefined");
 
   test("narrows unknown", () => {
     expectTypeOf((candidate: unknown) => {

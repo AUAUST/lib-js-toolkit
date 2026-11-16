@@ -1,5 +1,6 @@
 import { AssertionError } from "#errors/AssertionError";
 import { isNonEmptyArray } from "#modules/array/guards/isNonEmptyArray";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 
 /**
  * @throws {AssertionError} unless the candidate is an array holding at least one
@@ -19,9 +20,11 @@ export function assertNonEmptyArray(
 ): asserts candidate is readonly [unknown, ...unknown[]];
 export function assertNonEmptyArray(
   candidate: unknown,
-  message = "Expected a non-empty array.",
+  message?: string,
 ): void {
   if (!isNonEmptyArray(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a non-empty array", candidate),
+    );
   }
 }

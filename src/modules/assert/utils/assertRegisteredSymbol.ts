@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isRegisteredSymbol } from "#modules/guard/guards/isRegisteredSymbol";
 
 /**
@@ -7,9 +8,11 @@ import { isRegisteredSymbol } from "#modules/guard/guards/isRegisteredSymbol";
  */
 export function assertRegisteredSymbol(
   candidate: unknown,
-  message = "Expected a registered symbol.",
+  message?: string,
 ): asserts candidate is symbol {
   if (!isRegisteredSymbol(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a registered symbol", candidate),
+    );
   }
 }

@@ -12,7 +12,7 @@ describe("assertMethod", () => {
       assertMethod(candidate, Symbol.iterator, message);
     },
     (candidate: unknown) => isMethod(candidate, Symbol.iterator),
-    "Expected a method.",
+    "Expected a method",
   );
 
   test("narrows unknown", () => {

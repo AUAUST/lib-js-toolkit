@@ -9,7 +9,7 @@ describe("assertNonEmptyArray", () => {
   testAssertion(
     assertNonEmptyArray,
     isNonEmptyArray,
-    "Expected a non-empty array.",
+    "Expected a non-empty array",
   );
 
   test("narrows a readonly array", () => {

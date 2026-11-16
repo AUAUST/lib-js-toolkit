@@ -1,4 +1,5 @@
 import { AssertionError } from "#errors/AssertionError";
+import { receivedMessage } from "#modules/assert/internals/receivedMessage";
 import { isGeneratorFunction } from "#modules/function/guards/isGeneratorFunction";
 import type { Fn } from "#types/Fn";
 
@@ -8,9 +9,11 @@ import type { Fn } from "#types/Fn";
  */
 export function assertGeneratorFunction(
   candidate: unknown,
-  message = "Expected a generator function.",
+  message?: string,
 ): asserts candidate is Fn<Generator> {
   if (!isGeneratorFunction(candidate)) {
-    throw new AssertionError(message);
+    throw new AssertionError(
+      message ?? receivedMessage("Expected a generator function", candidate),
+    );
   }
 }
