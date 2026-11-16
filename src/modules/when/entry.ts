@@ -2,5 +2,27 @@
 
 export { createWhen } from "#modules/when/utils/createWhen";
 export { when } from "#modules/when/utils/when";
+export { whenBigInt as isBigInt } from "#modules/when/utils/whenBigInt";
+export { whenContainer as isContainer } from "#modules/when/utils/whenContainer";
+export { whenNull as isNull } from "#modules/when/utils/whenNull";
+export { whenNullish as isNullish } from "#modules/when/utils/whenNullish";
+export { whenNumeric as isNumeric } from "#modules/when/utils/whenNumeric";
+export { whenPrimitive as isPrimitive } from "#modules/when/utils/whenPrimitive";
+export { whenPropertyKey as isPropertyKey } from "#modules/when/utils/whenPropertyKey";
+export { whenRegisteredSymbol as isRegisteredSymbol } from "#modules/when/utils/whenRegisteredSymbol";
+export { whenScalar as isScalar } from "#modules/when/utils/whenScalar";
+export { whenSymbol as isSymbol } from "#modules/when/utils/whenSymbol";
+export { whenUndefined as isUndefined } from "#modules/when/utils/whenUndefined";
 export type * from "#modules/when/utils/createWhen";
 export type * from "#modules/when/utils/when";
+export type * from "#modules/when/utils/whenBigInt";
+export type * from "#modules/when/utils/whenContainer";
+export type * from "#modules/when/utils/whenNull";
+export type * from "#modules/when/utils/whenNullish";
+export type * from "#modules/when/utils/whenNumeric";
+export type * from "#modules/when/utils/whenPrimitive";
+export type * from "#modules/when/utils/whenPropertyKey";
+export type * from "#modules/when/utils/whenRegisteredSymbol";
+export type * from "#modules/when/utils/whenScalar";
+export type * from "#modules/when/utils/whenSymbol";
+export type * from "#modules/when/utils/whenUndefined";

@@ -19,7 +19,7 @@ async function listModuleRootExports(
 
   const exported = await Promise.all(
     helpers.map(async ({ file, binding }) => {
-      const split = splitPrefix(binding, ["to", "assert", "ensure"]);
+      const split = splitPrefix(binding, ["to", "assert", "ensure", "when"]);
 
       const converter = (
         split?.prefix === "to" && lowerFirst(split.type) === module.name
@@ -52,9 +52,9 @@ async function listModuleRootExports(
 }
 
 /**
- * Adds to the root `domains` block each converter with its shorthands,
- * each `assert<Type>` and `ensure<Type>`, and each helper tagged `@root`,
- * under their own names.
+ * Adds to the root `domains` block each converter with its shorthands, each
+ * `assert<Type>`, `ensure<Type>` and `when<Type>`, and each helper tagged
+ * `@root`, under their own names.
  */
 export async function exportRootNames(
   node: StructureNode,
