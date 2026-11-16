@@ -6,6 +6,7 @@ import type { BivariantTypeGuard } from "#types/BivariantTypeGuard";
 import type { Maybe } from "#types/Maybe";
 
 // @debt The implementation signature types items as records so `memberValue` accepts any property key; the overloads hold the real contract.
+// @debt Unlike `clear`, `retain` does not reject a non-array at runtime and would shrink any object with a `length`.
 
 /**
  * Keeps in place the items of an array the predicate accepts, in order, and
