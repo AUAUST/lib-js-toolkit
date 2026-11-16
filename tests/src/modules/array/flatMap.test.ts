@@ -33,4 +33,12 @@ describe("flatMap", () => {
       }),
     ).toEqualTypeOf<string[] | undefined>();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = flatMap(new Set([1, 2]), (value) => [value, value]);
+
+    expect(result).toEqual([1, 1, 2, 2]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(() => flatMap({} as never, () => [])).toThrow(TypeError);
+  });
 });

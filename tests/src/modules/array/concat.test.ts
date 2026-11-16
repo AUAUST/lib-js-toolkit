@@ -34,4 +34,12 @@ describe("concat", () => {
       [...number[], number] | undefined
     >();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = concat(new Set([1, 2]), 3, "a");
+
+    expect(result).toEqual([1, 2, 3, "a"]);
+    expectTypeOf(result).toEqualTypeOf<[...number[], number, string]>();
+    expect(() => concat({} as never, 1)).toThrow(TypeError);
+  });
 });

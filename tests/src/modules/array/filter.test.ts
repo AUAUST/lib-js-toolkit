@@ -57,4 +57,18 @@ describe("filter", () => {
       number[] | undefined
     >();
   });
+
+  test("copies any iterable but a string, passing each index", () => {
+    function* generate() {
+      yield* [1, 2, 3, 4];
+    }
+
+    const predicate = vi.fn((value: number) => value % 2 === 0);
+    const result = filter(generate(), predicate);
+
+    expect(result).toEqual([2, 4]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(predicate).toHaveBeenNthCalledWith(3, 3, 2, [1, 2, 3, 4]);
+    expect(() => filter({} as never, Boolean)).toThrow(TypeError);
+  });
 });

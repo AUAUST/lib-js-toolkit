@@ -67,4 +67,12 @@ describe("filterMap", () => {
       string[] | undefined
     >();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = filterMap(new Set(items), "label");
+
+    expect(result).toEqual(["a", null]);
+    expectTypeOf(result).toEqualTypeOf<(string | null)[]>();
+    expect(() => filterMap({} as never, String)).toThrow(TypeError);
+  });
 });

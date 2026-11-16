@@ -13,4 +13,12 @@ describe("intersection", () => {
   test("passes nullish through", () => {
     expect(intersection(null, [])).toBeUndefined();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = intersection(new Set([1, 2, 3]), [2]);
+
+    expect(result).toEqual([2]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(() => intersection({} as never, [])).toThrow(TypeError);
+  });
 });

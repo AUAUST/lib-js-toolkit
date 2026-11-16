@@ -39,4 +39,12 @@ describe("pluck", () => {
       pluck([{ id: 1 }] as Maybe<{ id: number }[]>, "id"),
     ).toEqualTypeOf<number[] | undefined>();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = pluck(new Set([{ id: 1 }, { id: 2 }]), "id");
+
+    expect(result).toEqual([1, 2]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(() => pluck({} as never, "id")).toThrow(TypeError);
+  });
 });

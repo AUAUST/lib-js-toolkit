@@ -1,3 +1,5 @@
+import { isArray } from "#modules/array/guards/isArray";
+import { copyIterable } from "#modules/array/internals/copyIterable";
 import type { Maybe } from "#types/Maybe";
 
 type Spread<Values extends readonly unknown[]> = Values extends readonly [
@@ -15,25 +17,41 @@ type Spread<Values extends readonly unknown[]> = Values extends readonly [
 
 /**
  * Returns a new array holding the items of an array followed by each value, an
- * array value contributing its items instead; tuples keep their slots. A nullish
- * array returns `undefined`.
+ * array value contributing its items instead; tuples keep their slots. Any other
+ * iterable but a string is copied once first; only array values are spread. A
+ * nullish iterable returns `undefined`.
  *
+ * @throws {TypeError} when the iterable is a string or is not iterable.
  * @native equal Array.prototype.concat
  */
 export function concat<
   Items extends readonly unknown[],
   Values extends readonly unknown[],
->(array: Items, ...values: Values): [...Items, ...Spread<Values>];
+>(iterable: Items, ...values: Values): [...Items, ...Spread<Values>];
+export function concat<Item, Values extends readonly unknown[]>(
+  iterable: Iterable<Item> & object,
+  ...values: Values
+): [...Item[], ...Spread<Values>];
 export function concat<
   Items extends readonly unknown[],
   Values extends readonly unknown[],
 >(
-  array: Maybe<Items>,
+  iterable: Maybe<Items>,
   ...values: Values
 ): [...Items, ...Spread<Values>] | undefined;
+export function concat<Item, Values extends readonly unknown[]>(
+  iterable: Maybe<Iterable<Item> & object>,
+  ...values: Values
+): [...Item[], ...Spread<Values>] | undefined;
 export function concat(
-  array: Maybe<readonly unknown[]>,
+  iterable: Maybe<Iterable<unknown> & object>,
   ...values: readonly unknown[]
 ): unknown[] | undefined {
-  return array?.concat(...values);
+  if (iterable == null) {
+    return;
+  }
+
+  const array = isArray(iterable) ? iterable : copyIterable(iterable);
+
+  return array.concat(...values);
 }

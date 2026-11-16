@@ -69,4 +69,24 @@ describe("map", () => {
       string[] | undefined
     >();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = map(new Set([1, 2]), (value) => value * 2);
+
+    expect(result).toEqual([2, 4]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(map(new Set(["a"]), "toUpperCase")).toEqual(["A"]);
+
+    const sparse = [1];
+
+    sparse[2] = 3;
+
+    expect(1 in map(sparse, String)).toBe(false);
+  });
+
+  test("throws on a string or a non-iterable", () => {
+    // @ts-expect-error a string is rejected
+    expect(() => map("ab", String)).toThrow(TypeError);
+    expect(() => map({} as never, String)).toThrow(TypeError);
+  });
 });

@@ -15,4 +15,12 @@ describe("flat", () => {
     expect(flat([1, [2]], -1)).toEqual([1, [2]]);
     expect(flat(null)).toBeUndefined();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = flat(new Set([[1], [2]]));
+
+    expect(result).toEqual([1, 2]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(() => flat({} as never)).toThrow(TypeError);
+  });
 });

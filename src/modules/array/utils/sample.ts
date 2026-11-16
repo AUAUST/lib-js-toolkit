@@ -1,3 +1,5 @@
+import { isArray } from "#modules/array/guards/isArray";
+import { copyIterable } from "#modules/array/internals/copyIterable";
 import { min } from "#modules/math/utils/min";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { randomInteger } from "#modules/random/utils/randomInteger";
@@ -6,23 +8,33 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Returns the items at `count` distinct random positions, in draw order, drawing
  * from `random.randomInteger`. A `count` past the array's length returns every
- * item. A nullish array returns `undefined` before `count` is checked.
+ * item. Any other iterable but a string is copied once first. A nullish iterable
+ * returns `undefined` before `count` is checked.
  *
+ * @throws {TypeError} when the iterable is a string or is not iterable.
  * @throws {RangeError} when `count` is negative or not an integer.
  */
 export function sample<Items extends readonly unknown[]>(
-  array: Items,
+  iterable: Items,
   count: number,
 ): Items[number][];
+export function sample<Item>(
+  iterable: Iterable<Item> & object,
+  count: number,
+): Item[];
 export function sample<Items extends readonly unknown[]>(
-  array: Maybe<Items>,
+  iterable: Maybe<Items>,
   count: number,
 ): Items[number][] | undefined;
+export function sample<Item>(
+  iterable: Maybe<Iterable<Item> & object>,
+  count: number,
+): Item[] | undefined;
 export function sample(
-  array: Maybe<readonly unknown[]>,
+  iterable: Maybe<Iterable<unknown> & object>,
   count: number,
 ): unknown[] | undefined {
-  if (array == null) {
+  if (iterable == null) {
     return;
   }
 
@@ -30,6 +42,7 @@ export function sample(
     throw new RangeError("Count must be a non-negative safe integer.");
   }
 
+  const array = isArray(iterable) ? iterable : copyIterable(iterable);
   const positions = Array.from(array.keys());
   const size = min(count, positions.length);
   const result: unknown[] = [];

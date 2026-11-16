@@ -24,4 +24,12 @@ describe("sample", () => {
     expect(() => sample([1, 2, 3], 2.5)).toThrow(RangeError);
     expect(() => sample([1, 2, 3], -1)).toThrow(RangeError);
   });
+
+  test("copies any iterable but a string", () => {
+    const result = sample(new Set([1, 2, 3]), 3);
+
+    expect(result.toSorted()).toEqual([1, 2, 3]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+    expect(() => sample({} as never, 1)).toThrow(TypeError);
+  });
 });
