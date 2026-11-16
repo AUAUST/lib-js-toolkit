@@ -111,12 +111,12 @@ The project's decision protocol applies with more latitude to your own questions
 
 ## The tree
 
-| Issue     | What it is                                                             | Its sub-issues                                     |
-| --------- | ---------------------------------------------------------------------- | -------------------------------------------------- |
-| `plan`    | A standalone tree's root: goal, design and decisions                   | Its steps, in order                                |
-| `segment` | A wrapper with no work of its own, grouping items that share a context | Its members, in any order                          |
-| `task`    | Item: positive work, one feature taken from nothing to finished        | When split, its inner steps in order, at any depth |
-| `problem` | Item: negative work, something wrong to fix                            | When split, its inner steps in order, at any depth |
+| Issue     | What it is                                                             | Its sub-issues                                                                             |
+| --------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `plan`    | A standalone tree's root: goal, design and decisions                   | Its steps, in order                                                                        |
+| `segment` | A wrapper with no work of its own, grouping items that share a context | Its members, in any order, never another segment                                           |
+| `task`    | Item: positive work, one feature taken from nothing to finished        | When split, its inner steps in order, at any depth; segments group unrelated prerequisites |
+| `problem` | Item: negative work, something wrong to fix                            | When split, its inner steps in order, at any depth; segments group unrelated prerequisites |
 
 The issue type says what an issue is: titles carry no prefix, in sentence case without trailing punctuation. A `task` or `problem` title states its result.
 

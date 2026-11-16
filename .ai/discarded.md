@@ -31,3 +31,4 @@
 - subagent 5-minute prompt cache TTL: cheaper writes for never-resumed walk agents — resumes past five minutes rewrite whole contexts; ~4.5% gross saving, likely net loss (AUAUST/lib-js-engrenage#522)
 - Set of type names in `is()`: early `unknown` return, deduplicated checks — building the Set per call is ~6x slower than a switch loop (benchmark, 1–3 names)
 - shared in-place compaction for `array.retain` and `array.pullBy`: one write-pointer loop — hole policies and return values differ by decision (#145)
+- rolldown output keepNames: keep Function.name in minified CI builds — injects a __name runtime helper that declaration chunks import, failing the dist typecheck

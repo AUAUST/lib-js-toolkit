@@ -121,3 +121,4 @@
 - zsh word splitting: passed a $F file list to eslint and git — zsh keeps it one word; used an array
 - worktree isolation guard: python heredocs, sed+perl chains and `git` in compound commands — refused as unverifiable; wrote scripts to the scratchpad or used Edit, ran git alone
 - worktree Bash isolation: heredoc python edits and chained git add+commit — refused as too complex to verify; split into separate plain commands and Write/Edit tools
+- eslint --fix: linted tsdown.config.ts after pnpm format — rewrote a ternary return into a layout Prettier then rejected; rewrote it by hand
