@@ -1,5 +1,6 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { isNullish } from "#modules/guard/guards/isNullish";
+import { isIterable } from "#modules/iterable/guards/isIterable";
 import { entries } from "#modules/object/utils/entries";
 import { record } from "#modules/object/utils/record";
 import type { Maybe } from "#types/Maybe";
@@ -7,9 +8,10 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Resolves once every value has settled, with `Promise.all` semantics: non-promise
  * values count as resolved, functions are never called and the first rejection
- * rejects. An array resolves to a tuple of settled values; any other object
- * resolves to a record of its own enumerable string keys. A nullish input
- * resolves to `undefined`.
+ * rejects. An array resolves to a tuple of settled values; any other iterable
+ * resolves to an array of its settled values, so a `Map` resolves to its entries;
+ * any other object resolves to a record of its own enumerable string keys. A
+ * nullish input resolves to `undefined`.
  *
  * @shorthand concurrent
  * @native variant Promise.all
@@ -22,6 +24,12 @@ export function awaitAll<const Values extends readonly unknown[] | []>(
 ): Promise<
   { -readonly [Index in keyof Values]: Awaited<Values[Index]> } | undefined
 >;
+export function awaitAll<Value>(
+  values: Iterable<Value> & object,
+): Promise<Awaited<Value>[]>;
+export function awaitAll<Value>(
+  values: Maybe<Iterable<Value> & object>,
+): Promise<Awaited<Value>[] | undefined>;
 export function awaitAll<Values extends object>(
   values: Values,
 ): Promise<{
@@ -45,6 +53,10 @@ export function awaitAll(values: Maybe<object>): Promise<unknown> {
   }
 
   if (isArray(values)) {
+    return Promise.all(values);
+  }
+
+  if (isIterable(values)) {
     return Promise.all(values);
   }
 

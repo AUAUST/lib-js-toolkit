@@ -33,6 +33,24 @@ describe("awaitAll", () => {
     await expect(result).resolves.toStrictEqual([1, "a"]);
   });
 
+  test("resolves any other iterable to an array", async () => {
+    const result = awaitAll(new Set([Promise.resolve(1), 2]));
+
+    expectTypeOf(result).toEqualTypeOf<Promise<number[]>>();
+
+    await expect(result).resolves.toStrictEqual([1, 2]);
+  });
+
+  test("resolves a generator of promises in order", async () => {
+    function* generate() {
+      yield Promise.resolve("a");
+
+      yield Promise.resolve("b");
+    }
+
+    await expect(awaitAll(generate())).resolves.toStrictEqual(["a", "b"]);
+  });
+
   test("rejects with the reason of a rejecting member", async () => {
     const reason = new Error("rejected");
 
