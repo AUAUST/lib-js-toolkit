@@ -135,3 +135,6 @@
 - engrenage gate jscpd: worktree gate reported map/transform and difference/intersection duplicates after a rename-only edit — rerun on the unchanged tree passed
 - worktree isolation: compound Bash commands containing git — refused as unverifiable; split git into lone `git -C <worktree>` calls
 - zsh `echo ====`: separator between gh outputs in a loop — `=word` expansion failed the call after the first issue; quote separators
+- engrenage planning issue create: tried type `report` — types are plan/segment/task/problem/resource/idea; a report is `resource` with Material `report`
+- jscpd: ran `pnpm exec jscpd src` directly — `engrenage jscpd` holds the project config; found via `engrenage --help`
+- engrenage planning issue claim: cross-repo refs `owner/repo#1, #2` — bare `#2` resolves to the current repo; write each as `#{repo.n}`

@@ -6,32 +6,8 @@
 - Outcome: an engrenage `github` command that syncs labels, issue types and bug levels from a library-owned definition, with a check mode, adopted in every AUAUST repository.
 - Done when toolkit's labels and issue types come from the sync.
 
-## 2. Lint rules assume per-helper toolkit subpaths
-
-- AUAUST/lib-js-toolkit#104 drops toolkit's per-helper subpaths for one entry per module plus the root. Engrenage's `auaust/no-toolkit-root` rule requires `@auaust/toolkit/<helper>` subpaths instead of the root, and its `Math.*`, `Object.*` and `Array.isArray` restriction messages point to `@auaust/toolkit/math`, `/object` and `isArray`. Engrenage's own source also imports about a dozen per-helper subpaths.
-- Outcome: the rules and messages follow the module entries (whether the root becomes allowed is part of it), in the batch of upstream updates at the end of the merge (`agent-instructions.1`), and engrenage's imports migrated.
-- Done when engrenage's rules and source match toolkit's entry points.
-
-## 3. Ignored files make an environment active
-
-- Engrenage treats an environment as active when its directory holds only ignored files: a stray `scripts/make/.DS_Store` revived the removed scripts environment, and `sync --check` failed in the main checkout.
-- Outcome: environment activity counts only tracked or non-ignored files.
-- Done when an environment directory holding only ignored files leaves the environment inactive.
-
-## 4. Dist tests reject tooling's source imports
+## 2. Dist tests reject tooling's source imports
 
 - The matrix lets `*.test.ts` import `tooling` and `tooling` import internal aliases, but the dist source guard rejects transitive resolutions into `src/`, so `tests/tooling/tags/tags.test.src.ts` stays source-only.
 - Outcome: tooling tests run in source mode only, or lint forbids the chain.
 - Done when such a `*.test.ts` passes both runs or fails lint.
-
-## 5. No CI test on the minimum Node
-
-- CI runs the development Node (`devEngines.runtime`, 24) only, so passing it does not prove the advertised `engines.node` minimum (22). The generated workflows offer no Node version matrix (only test shards), and local edits are overwritten on sync. Moved from AUAUST/lib-js-toolkit#150.
-- Outcome: the generated library workflows run `pnpm test` against `dist/` on the `engines.node` minimum too; until then, run it by hand before each release changing runtime code.
-- Done when toolkit's CI tests `dist/` on Node 22.
-
-## 6. Pushed `Closes` commits keep reopened issues closed
-
-- `listIssueCommits` reads `Closes #n` from all of `HEAD`, and `checkIssueReadiness` reports any issue it names as "closed by local commit", ancestors included, with no override. Pushed commit 36e6cc3 wrongly carried `Closes #275`; GitHub closed and the user reopened #275, yet the worker dispatch guard refuses every task under it (AUAUST/lib-js-toolkit#288).
-- Outcome: a closing commit counts only until GitHub has applied it: either only commits absent from remote-tracking refs (`HEAD --not --remotes`), or ignoring a commit once the issue's timeline records its closure by that commit.
-- Done when a reopened issue whose closing commit is pushed reads as open in `walk check` and the dispatch guard.

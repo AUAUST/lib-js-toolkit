@@ -9,7 +9,7 @@
 
 ## 2. Native alias exports leave statements in bundles
 
-- Bundling `import * as object from "@auaust/toolkit/object"` with only `object.keys` used (rolldown, current `dist/`) keeps a stray `Object.hasOwn;` statement, from `export const hasOwn = Object.hasOwn as HasOwn` in `src/modules/object/hasOwn.ts`. Other `Object.*` aliases are removed. The cause is unverified.
+- Bundling `import * as object from "@auaust/toolkit/object"` with only `object.keys` used (rolldown, current `dist/`) keeps a stray `Object.hasOwn;` statement, from `export const hasOwn = Object.hasOwn as HasOwn` in `src/modules/object/utils/hasOwn.ts`. Other `Object.*` aliases are removed. The cause is unverified.
 - Outcome: find why the alias survives and make native alias exports fully removable.
 - Done when an unused alias leaves no code in a bundle.
 
@@ -54,9 +54,3 @@
 - `array.clear` rejects a non-array with a `TypeError` (user decision, AUAUST/lib-js-toolkit#145); `retain`, `pullBy`, `filter`, `some` accept any object and `overlaps` any iterable, so mutating helpers can shrink an array-like.
 - Expected: one policy for non-array subjects across `array` helpers, at least the mutating ones.
 - Done when decided and applied, or the divergence is accepted.
-
-## 10. Member-or-callback resolution
-
-- "Property name or callback" resolves in four places: `iterable/internals/toKeyer`, `array/internals/sortItemsBy`, `general/utils/diamondBy`, and inline in `retain`, `filter`, `find`, `every`, `some` (`array` and `iterable`), plus `toPredicate` and `toMapper` in `iterable/utils/filterMap`. Method-name dispatch (`MethodHolder` plus `callMethod`) repeats in `array.map`, `array.transform` and `iterable.map`. Validation diverges: the predicates and `toKeyer` throw a `TypeError` on neither, `sortBy`, `toSortedBy` and `diamondBy` never throw (#153, #267).
-- Expected: one helper in the lowest domain holding `memberValue`, with one stated validation policy per helper family.
-- Done when extracted and adopted, or the duplication is accepted.

@@ -1,6 +1,6 @@
 # Merge
 
-Questions to settle before migration agents batch-import primitive-kit (AUAUST/lib-js-toolkit#103). The order of work and the issues in discussion are tracked in the plan (#120). Entries are ordered so earlier answers unblock later ones. An answer is recorded in the "Settled" section of the issue owning the question (process decisions in #103), then its entry is removed. Linked backlog entries are removed with it when the answer resolves them.
+Questions to settle before migration agents batch-import primitive-kit (AUAUST/lib-js-toolkit#103). #103, #112 and the plan #120 are closed (#103 and #112 as not planned) without settling these questions, so they have no owning issue left. Entries are ordered so earlier answers unblock later ones; remove an entry once answered.
 
 ## 1. Documentation: migration guide for primitive-kit users
 
@@ -14,5 +14,5 @@ Questions to settle before migration agents batch-import primitive-kit (AUAUST/l
 
 ## 3. Dependents: migration timing
 
-- #112 question 2: migrate each dependent as its modules land, or all at the end. Engrenage is affected twice: it imports primitive-kit and toolkit's dropped per-helper subpaths (`engrenage` › "Lint rules assume per-helper toolkit subpaths"). The compatible release order is recorded in #112.
+- #112 question 2: migrate each dependent as its modules land, or all at the end. Engrenage is affected twice: it imports primitive-kit and toolkit's dropped per-helper subpaths (AUAUST/lib-js-engrenage#46). The compatible release order is recorded in #112.
 - Done when decided.
