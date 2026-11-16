@@ -65,6 +65,7 @@
     "./number": "./dist/number.mjs",
     "./object": "./dist/object.mjs",
     "./parse": "./dist/parse.mjs",
+    "./predicate": "./dist/predicate.mjs",
     "./protocol": "./dist/protocol.mjs",
     "./random": "./dist/random.mjs",
     "./setlike": "./dist/setlike.mjs",

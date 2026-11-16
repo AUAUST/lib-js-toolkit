@@ -1,11 +1,11 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { not } from "@auaust/toolkit/function";
 import { isString } from "@auaust/toolkit/guard";
+import { negate, not } from "@auaust/toolkit/predicate";
 
-describe("not", () => {
+describe("negate", () => {
   test("negates the result of a predicate", () => {
-    const isNotString = not(isString);
+    const isNotString = negate(isString);
 
     expect(isNotString(1)).toBe(true);
     expect(isNotString("a")).toBe(false);
@@ -20,7 +20,11 @@ describe("not", () => {
       return value > this.limit;
     }
 
-    expect(not(exceeds).call(context, 1)).toBe(true);
-    expect(not(exceeds).call(context, 3)).toBe(false);
+    expect(negate(exceeds).call(context, 1)).toBe(true);
+    expect(negate(exceeds).call(context, 3)).toBe(false);
+  });
+
+  test("is aliased not", () => {
+    expect(not).toBe(negate);
   });
 });

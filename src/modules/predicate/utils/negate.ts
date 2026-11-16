@@ -7,14 +7,16 @@ import type { CallThisParameterType } from "#types/CallThisParameterType";
  * Wraps `closure` as `function negated`, forwarding `this` and arguments
  * and returning the opposite boolean of its result. A callable `closure` is
  * resolved once, here.
+ *
+ * @shorthand not
  */
-export function not<Callback extends Callee>(
+export function negate<Callback extends Callee>(
   closure: Callback,
 ): (
   this: CallThisParameterType<Callback>,
   ...args: CallParameters<Callback>
 ) => boolean;
-export function not(closure: Callee): (...args: unknown[]) => boolean {
+export function negate(closure: Callee): (...args: unknown[]) => boolean {
   const resolve = toFunction(closure);
 
   return function negated(this: unknown, ...args: unknown[]): boolean {

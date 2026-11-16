@@ -25,6 +25,7 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ number*  Helpers over numbers.
    ├─ object*  Object helpers and native Object statics.
    ├─ parse*[collects: utils]  Parsers converting unknown input to a type.
+   ├─ predicate*  Factories building predicates from arguments.
    ├─ protocol*  Protocol symbols, their types and detection.
    ├─ random*  Secure numeric randomness and an explicit insecure generator.
    ├─ setlike*  Helpers over sets and set-like collections.
