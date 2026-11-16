@@ -1,5 +1,7 @@
+import { isFunction } from "#modules/function/guards/isFunction";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { ownDescriptor } from "#modules/object/utils/ownDescriptor";
+import { toObject } from "#modules/object/utils/toObject";
 import type { ForwardAs } from "#modules/forwarder/utils/forwardAs";
 import type { MethodName } from "#types/MethodName";
 
@@ -208,15 +210,30 @@ function keyMethodForwarder(
   };
 }
 
-function methodGetter(resolve: (receiver: object) => any, method: PropertyKey) {
+function methodGetter(
+  resolve: (receiver: object) => unknown,
+  method: PropertyKey,
+) {
   const forwarders = new WeakMap<object, (...args: unknown[]) => unknown>();
 
   function createForwarder(receiver: object) {
     return function forwarder(this: unknown, ...args: unknown[]) {
       const resolved = resolve(receiver);
 
+      if (resolved == null) {
+        throw new TypeError(
+          `Cannot forward ${String(method)} from a nullish source.`,
+        );
+      }
+
+      const callee: unknown = Reflect.get(toObject(resolved), method, resolved);
+
+      if (!isFunction(callee)) {
+        throw new TypeError(`Forwarded ${String(method)} is not callable.`);
+      }
+
       return Reflect.apply(
-        resolved[method],
+        callee,
         this == null || this === receiver ? resolved : this,
         args,
       );

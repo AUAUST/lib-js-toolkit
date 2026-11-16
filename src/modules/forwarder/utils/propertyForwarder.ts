@@ -267,6 +267,7 @@ function keyPropertyForwarder(
     sourceKey,
     property,
     get: function get() {
+      // @debt Indexes the `any` that `Reflect.get` returns, so the nullish-source TypeError is the engine's implicit one; `methodGetter` in `methodForwarder` checks the source explicitly and boxes primitives through `toObject`.
       return Reflect.get(this, sourceKey)[property];
     },
     set: readonly

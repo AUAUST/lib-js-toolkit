@@ -162,4 +162,15 @@ describe("forwardMethods", () => {
 
     expect(forwarded.greet("World")).toBe("Hello, World!");
   });
+
+  test("forwards from a primitive held by a property of the target", () => {
+    const target = { label: "abc" };
+    const forwarded = forwardMethods(target, "label", "toUpperCase");
+
+    expect(forwarded.toUpperCase()).toBe("ABC");
+
+    target.label = "xyz";
+
+    expect(forwarded.toUpperCase()).toBe("XYZ");
+  });
 });
