@@ -4,6 +4,7 @@ import {
   type CustomOperators,
 } from "#modules/general/utils/compare";
 
+// @debt Named `comparator` while `array`'s `Comparator` type and `numeric` use the word for a sort comparator; this returns a boolean `compare` bound to custom operators.
 export function comparator<Operators extends CustomOperators>(
   operators: Operators,
 ): (

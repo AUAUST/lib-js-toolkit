@@ -55,6 +55,7 @@ export function toSortedBy(
   options?: SortOptions,
 ): unknown[] | undefined {
   if (iterable != null) {
+    // @debt `copyIterable` copies the iterable only to validate it before `sortItemsBy` copies it again into keyed entries; validating without copying would save a pass.
     return sortItemsBy(
       copyIterable(iterable),
       key,

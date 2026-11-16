@@ -54,3 +54,9 @@
 - `array.clear` rejects a non-array with a `TypeError` (user decision, AUAUST/lib-js-toolkit#145); `retain`, `pullBy`, `filter`, `some` accept any object and `overlaps` any iterable, so mutating helpers can shrink an array-like.
 - Expected: one policy for non-array subjects across `array` helpers, at least the mutating ones.
 - Done when decided and applied, or the divergence is accepted.
+
+## 10. Member-or-callback resolution
+
+- "Property name or callback" resolves in four places: `iterable/internals/toKeyer`, `array/internals/sortItemsBy`, `general/utils/diamondBy`, and inline in `retain`, `filter`, `find`, `every`, `some` (`array` and `iterable`). Validation diverges: the predicates and `toKeyer` throw a `TypeError` on neither, `sortBy`, `toSortedBy` and `diamondBy` never throw (#153, #267).
+- Expected: one helper in the lowest domain holding `memberValue`, with one stated validation policy per helper family.
+- Done when extracted and adopted, or the duplication is accepted.

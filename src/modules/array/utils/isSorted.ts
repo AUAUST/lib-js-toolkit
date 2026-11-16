@@ -1,3 +1,4 @@
+import { compareStringForms } from "#modules/array/internals/compareStringForms";
 import { resolveComparator } from "#modules/array/internals/resolveComparator";
 import { isNotUndefined } from "#modules/guard/guards/isNotUndefined";
 import { isNaN } from "#modules/number/guards/isNaN";
@@ -8,7 +9,7 @@ import type { Maybe } from "#types/Maybe";
 function isOrdered<Item>(
   left: Item,
   right: Item,
-  comparator: Comparator<Item> | undefined,
+  comparator: Comparator<Item>,
 ): boolean {
   if (!isNotUndefined(right)) {
     return true;
@@ -16,10 +17,6 @@ function isOrdered<Item>(
 
   if (!isNotUndefined(left)) {
     return false;
-  }
-
-  if (comparator == null) {
-    return String(left) <= String(right);
   }
 
   const order = comparator(left, right);
@@ -39,8 +36,8 @@ export function isSorted<Item>(
   comparator?: Comparator<Item>,
   options?: SortOptions,
 ): boolean;
-export function isSorted<Item>(
-  array: readonly Item[],
+export function isSorted(
+  array: readonly unknown[],
   options: SortOptions,
 ): boolean;
 export function isSorted<Item>(
@@ -48,8 +45,8 @@ export function isSorted<Item>(
   comparator?: Comparator<Item>,
   options?: SortOptions,
 ): boolean | undefined;
-export function isSorted<Item>(
-  array: Maybe<readonly Item[]>,
+export function isSorted(
+  array: Maybe<readonly unknown[]>,
   options: SortOptions,
 ): boolean | undefined;
 export function isSorted<Item>(
@@ -61,7 +58,9 @@ export function isSorted<Item>(
     return;
   }
 
-  const comparator = resolveComparator(comparatorOrOptions, options);
+  const comparator = (
+    resolveComparator(comparatorOrOptions, options) ?? compareStringForms
+  );
 
   for (let index = 1; index < array.length; index++) {
     if (!isOrdered(array[index - 1], array[index], comparator)) {
