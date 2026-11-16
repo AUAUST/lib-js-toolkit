@@ -11,7 +11,8 @@ import type { Maybe } from "#types/Maybe";
  * reads that member, calling it when it is a method; a callback receives each
  * item. Keys sort in ascending order of their string forms unless a comparator is
  * given; `reverse` negates the order in the same pass. Items with an `undefined`
- * or `null` key go last in source order and their keys never reach the comparator.
+ * or `null` key follow in source order and their keys never reach the comparator;
+ * `undefined` items and holes go last, as with `sort`, without reaching `key`.
  * Returns the same array. A nullish array returns `undefined`.
  */
 export function sortBy<Item, const Name extends keyof Item>(
@@ -49,7 +50,7 @@ export function sortBy<Item, Key>(
   options?: SortOptions,
 ): Item[] | undefined;
 export function sortBy(
-  array: Maybe<Record<PropertyKey, unknown>[]>,
+  array: Maybe<(Record<PropertyKey, unknown> | undefined)[]>,
   key: PropertyKey | ((value: Record<PropertyKey, unknown>) => unknown),
   comparatorOrOptions?: Comparator<unknown> | SortOptions,
   options?: SortOptions,
@@ -62,6 +63,10 @@ export function sortBy(
 
   for (const [index, item] of sorted.entries()) {
     array[index] = item;
+  }
+
+  for (let index = sorted.length; index < array.length; index++) {
+    Reflect.deleteProperty(array, index);
   }
 
   return array;

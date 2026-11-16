@@ -14,6 +14,21 @@ describe("toSortedBy", () => {
     expectTypeOf(result).toEqualTypeOf<{ age: number }[]>();
   });
 
+  test("puts undefined items and holes last as undefined", () => {
+    const items: (
+      { n: number } | undefined
+    )[] = [{ n: 2 }, undefined, { n: 1 }, undefined];
+
+    Reflect.deleteProperty(items, 1);
+
+    const result = toSortedBy(items, (item) => {
+      return item === undefined ? 0 : item.n;
+    });
+
+    expect(result).toEqual([{ n: 1 }, { n: 2 }, undefined, undefined]);
+    expect(3 in result).toBe(true);
+  });
+
   test("throws on a string", () => {
     // @ts-expect-error a string is rejected
     expect(() => toSortedBy("ab", "length")).toThrow(TypeError);

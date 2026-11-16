@@ -62,6 +62,27 @@ describe("sortBy", () => {
     expect(namesOf(result)).toEqual(["a", "b", "d", "e", "c"]);
   });
 
+  test("puts undefined items, then holes, last without resolving their keys", () => {
+    const keys: unknown[] = [];
+
+    const items: (
+      { n: number } | undefined
+    )[] = [{ n: 2 }, undefined, { n: 1 }, undefined];
+
+    Reflect.deleteProperty(items, 1);
+
+    const result = sortBy(items, (item) => {
+      keys.push(item);
+
+      return item?.n;
+    });
+
+    expect(keys).toEqual([{ n: 2 }, { n: 1 }]);
+    expect(result).toHaveLength(4);
+    expect(result.slice(0, 3)).toEqual([{ n: 1 }, { n: 2 }, undefined]);
+    expect(3 in result).toBe(false);
+  });
+
   test("passes nullish through", () => {
     expect(sortBy(null, String)).toBeUndefined();
   });
