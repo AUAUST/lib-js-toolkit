@@ -42,6 +42,7 @@ export type * from "#types/IsSymbolLiteral";
 export type * from "#types/IsUnknown";
 export type * from "#types/Joined";
 export type * from "#types/KeyAsString";
+export type * from "#types/LooseRecord";
 export type * from "#types/Maybe";
 export type * from "#types/MaybeArray";
 export type * from "#types/MaybeArrayElement";
