@@ -284,4 +284,60 @@ describe("forward", () => {
       forward(target, forward.property(handler, "value"));
     }).toThrow("Existing property value cannot be forwarded on target.");
   });
+
+  describe("from a property of the target", () => {
+    function createClient(value: number) {
+      return {
+        value,
+        doStuff(n: number) {
+          return this.value + n;
+        },
+      };
+    }
+
+    test("resolves the method's source on every call", () => {
+      const target = { client: createClient(1) };
+
+      const forwarded = forward(target, forward.method("client", "doStuff"));
+
+      expectTypeOf(forwarded.doStuff).toEqualTypeOf<
+        (typeof target)["client"]["doStuff"]
+      >();
+
+      expect(forwarded.doStuff(10)).toBe(11);
+
+      const other = createClient(5);
+
+      target.client = other;
+
+      expect(forwarded.doStuff(10)).toBe(15);
+    });
+
+    test("reads and writes a property through the current source", () => {
+      const target = { client: createClient(1) };
+
+      const forwarded = forward(target, forward.property("client", "value"));
+
+      expectTypeOf(forwarded.value).toEqualTypeOf<number>();
+
+      expect(forwarded.value).toBe(1);
+
+      const other = createClient(5);
+
+      target.client = other;
+
+      expect(forwarded.value).toBe(5);
+
+      forwarded.value = 7;
+
+      expect(other.value).toBe(7);
+    });
+
+    test("rejects a key that is not a key of the target", () => {
+      const target = { client: createClient(1) };
+
+      // @ts-expect-error -- `missing` is not a key of the target.
+      forward(target, forward.method("missing", "doStuff"));
+    });
+  });
 });

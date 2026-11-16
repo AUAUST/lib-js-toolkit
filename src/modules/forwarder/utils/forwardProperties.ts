@@ -1,12 +1,19 @@
 import { forward, type Forwarded } from "#modules/forwarder/utils/forward";
 import {
   propertyForwarders,
+  type KeyPropertyForwarderFor,
   type PropertyForwarderFor,
 } from "#modules/forwarder/utils/propertyForwarders";
 import type { PropertyForwardingInput } from "#modules/forwarder/utils/propertyForwarder";
 import type { MaybeArray } from "#types/MaybeArray";
 import type { MaybeArrayElement } from "#types/MaybeArrayElement";
 
+/**
+ * Forwards each property onto `target`, from an object `source` or from the
+ * `source` property of `target`, resolved on every access.
+ *
+ * @throws {StateError} When `target` already owns a forwarded name.
+ */
 export function forwardProperties<
   Target extends object,
   const Source extends object,
@@ -26,6 +33,31 @@ export function forwardProperties<
       PropertyForwardingInput<keyof Source, PropertyKey>
     >
   >[]
-> {
+>;
+export function forwardProperties<
+  Target extends object,
+  const SourceKey extends keyof Target,
+  const Properties extends MaybeArray<
+    PropertyForwardingInput<keyof Target[SourceKey], PropertyKey>
+  >[],
+>(
+  target: Target,
+  source: SourceKey,
+  ...properties: Properties
+): Forwarded<
+  Target,
+  KeyPropertyForwarderFor<
+    SourceKey,
+    MaybeArrayElement<
+      Properties[number],
+      PropertyForwardingInput<keyof Target[SourceKey], PropertyKey>
+    >
+  >[]
+>;
+export function forwardProperties(
+  target: object,
+  source: any,
+  ...properties: any[]
+): object {
   return forward(target, propertyForwarders(source, ...properties));
 }

@@ -12,7 +12,9 @@ export type PropertyForwardingInput<
   | PropertyForwardingOptions<Property, Alias, Readonly>
   | ForwardAs<Property, PropertyKey>;
 
-export type AnyPropertyForwarder = PropertyForwarder<any, any, PropertyKey>;
+export type AnyPropertyForwarder =
+  | PropertyForwarder<any, any, PropertyKey>
+  | KeyPropertyForwarder<PropertyKey, PropertyKey, PropertyKey>;
 
 export interface PropertyForwarder<
   Source extends object = any,
@@ -24,6 +26,26 @@ export interface PropertyForwarder<
   name: Name;
   get(): Source[Property];
   set?: Readonly extends true ? undefined : (v: Source[Property]) => void;
+  configurable?: boolean;
+  enumerable?: boolean;
+}
+
+/**
+ * A property forwarder whose source is the `sourceKey` property of the object it
+ * is defined on, resolved on every access.
+ */
+export interface KeyPropertyForwarder<
+  SourceKey extends PropertyKey = PropertyKey,
+  Property extends PropertyKey = PropertyKey,
+  Name extends PropertyKey = Property,
+  Readonly extends boolean = boolean,
+> {
+  kind: "property";
+  name: Name;
+  sourceKey: SourceKey;
+  property: Property;
+  get(this: object): unknown;
+  set?: Readonly extends true ? undefined : (this: object, v: unknown) => void;
   configurable?: boolean;
   enumerable?: boolean;
 }
@@ -42,17 +64,44 @@ export interface PropertyForwardingOptions<
 
 export type ForwardedProperty<
   Forward extends AnyPropertyForwarder,
-> = Forward extends PropertyForwarder<
-  infer Source,
+  Target extends object = object,
+> = Forward extends KeyPropertyForwarder<
+  infer SourceKey,
   infer Property,
   infer Name,
   infer Readonly
 >
-  ? Readonly extends true
-    ? { readonly [K in Name]: Source[Property] }
-    : { [K in Name]: Source[Property] }
-  : never;
+  ? SourceKey extends keyof Target
+    ? Property extends keyof Target[SourceKey]
+      ? Readonly extends true
+        ? { readonly [K in Name]: Target[SourceKey][Property] }
+        : { [K in Name]: Target[SourceKey][Property] }
+      : never
+    : never
+  : Forward extends PropertyForwarder<
+        infer Source,
+        infer Property,
+        infer Name,
+        infer Readonly
+      >
+    ? Readonly extends true
+      ? { readonly [K in Name]: Source[Property] }
+      : { [K in Name]: Source[Property] }
+    : never;
 
+/**
+ * Creates a descriptor forwarding reads, and writes unless `readonly`, of a
+ * property of `source` under `as` or the property's own name. A property key
+ * `source` names a property of the object the forwarder is defined on: it is
+ * read on every access, so replacing it swaps the source.
+ *
+ * Defaults `configurable` and `enumerable` to those of an object source's
+ * own member, otherwise to `true`; a key source's property is writable
+ * unless `readonly`.
+ *
+ * @throws {TypeError} When a key source resolves to `null` or `undefined`
+ * at access time.
+ */
 export function propertyForwarder<
   const Source extends object,
   const Property extends keyof Source,
@@ -98,11 +147,56 @@ export function propertyForwarder<
   IsNever<Alias, Property, Alias>,
   Readonly
 >;
+export function propertyForwarder<
+  const SourceKey extends PropertyKey,
+  const Property extends PropertyKey,
+  const Alias extends PropertyKey = never,
+  const Readonly extends boolean = boolean,
+>(
+  source: SourceKey,
+  property: Property | PropertyForwardingOptions<Property, Alias, Readonly>,
+): KeyPropertyForwarder<
+  SourceKey,
+  Property,
+  [Alias] extends [never] ? Property : Alias,
+  Readonly
+>;
+export function propertyForwarder<
+  const SourceKey extends PropertyKey,
+  const Property extends PropertyKey,
+  const Alias extends PropertyKey,
+  const Readonly extends boolean = boolean,
+>(
+  source: SourceKey,
+  property: ForwardAs<Property, Alias>,
+  options?: Omit<
+    PropertyForwardingOptions<Property, never, Readonly>,
+    "property" | "as"
+  >,
+): KeyPropertyForwarder<SourceKey, Property, Alias, Readonly>;
+export function propertyForwarder<
+  const SourceKey extends PropertyKey,
+  const Property extends PropertyKey,
+  const Alias extends PropertyKey = never,
+  const Readonly extends boolean = boolean,
+>(
+  source: SourceKey,
+  property: Property,
+  options?: Omit<
+    PropertyForwardingOptions<Property, Alias, Readonly>,
+    "property"
+  >,
+): KeyPropertyForwarder<
+  SourceKey,
+  Property,
+  IsNever<Alias, Property, Alias>,
+  Readonly
+>;
 export function propertyForwarder(
   source: any,
   property: PropertyForwardingInput<PropertyKey>,
   options?: Record<PropertyKey, any>,
-): PropertyForwarder<any, any, any, any> {
+): AnyPropertyForwarder {
   let targetProperty: PropertyKey;
 
   if (!isPropertyKey(property)) {
@@ -120,6 +214,15 @@ export function propertyForwarder(
   }
 
   const sourceProperty = property as PropertyKey;
+
+  if (isPropertyKey(source)) {
+    return keyPropertyForwarder(
+      source,
+      sourceProperty,
+      targetProperty,
+      options,
+    );
+  }
 
   const descriptor = ownDescriptor(source, sourceProperty);
 
@@ -140,10 +243,37 @@ export function propertyForwarder(
       return Reflect.get(source, sourceProperty);
     },
     set: writable
-      ? function set(v) {
+      ? function set(v: unknown) {
           return Reflect.set(source, sourceProperty, v);
         }
       : undefined,
+    configurable,
+    enumerable,
+  };
+}
+
+function keyPropertyForwarder(
+  sourceKey: PropertyKey,
+  property: PropertyKey,
+  name: PropertyKey,
+  options?: Record<PropertyKey, any>,
+): KeyPropertyForwarder {
+  const { configurable = true, enumerable = true, readonly } = options ?? {};
+
+  return {
+    kind: "property",
+    name,
+    sourceKey,
+    property,
+    get: function get() {
+      return Reflect.get(this, sourceKey)[property];
+    },
+    set: readonly
+      ? undefined
+      : function set(v: unknown) {
+          // @debt A failed write is discarded silently, like the object-source setter; no contract says whether it should throw.
+          Reflect.set(Reflect.get(this, sourceKey), property, v);
+        },
     configurable,
     enumerable,
   };

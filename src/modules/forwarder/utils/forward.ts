@@ -5,12 +5,14 @@ import {
   methodForwarder,
   type AnyMethodForwarder,
   type ForwardedMethod,
+  type KeyMethodForwarder,
 } from "#modules/forwarder/utils/methodForwarder";
 import { methodForwarders } from "#modules/forwarder/utils/methodForwarders";
 import {
   propertyForwarder,
   type AnyPropertyForwarder,
   type ForwardedProperty,
+  type KeyPropertyForwarder,
 } from "#modules/forwarder/utils/propertyForwarder";
 import { propertyForwarders } from "#modules/forwarder/utils/propertyForwarders";
 import { defineProperties } from "#modules/object/utils/defineProperties";
@@ -18,6 +20,7 @@ import { finalize } from "#modules/object/utils/finalize";
 import { hasOwn } from "#modules/object/utils/hasOwn";
 import type { FlatEntries } from "#types/FlatEntries";
 import type { MaybeArray } from "#types/MaybeArray";
+import type { MethodName } from "#types/MethodName";
 import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 import type { Simplify } from "#types/Simplify";
 import type { UnionToIntersection } from "#types/UnionToIntersection";
@@ -25,24 +28,55 @@ import type { UnionToIntersection } from "#types/UnionToIntersection";
 export type Forwarded<
   Target extends object,
   Forwards extends (AnyMethodForwarder | AnyPropertyForwarder)[],
-> = Simplify<Target & UnionToIntersection<ForwardedEntry<Forwards[number]>>>;
+> = Simplify<
+  Target & UnionToIntersection<ForwardedEntry<Target, Forwards[number]>>
+>;
 
 export type ForwardedEntry<
+  Target extends object,
   Forward extends AnyMethodForwarder | AnyPropertyForwarder,
 > = Forward extends infer Entry
   ? Entry extends AnyMethodForwarder
-    ? ForwardedMethod<Entry>
+    ? ForwardedMethod<Entry, Target>
     : Entry extends AnyPropertyForwarder
-      ? ForwardedProperty<Entry>
+      ? ForwardedProperty<Entry, Target>
       : never
   : never;
+
+/**
+ * Maps a forwarder to `never` when its source key is not a key of `Target`, or
+ * its member not a member (a method name for a method) of `Target[SourceKey]`.
+ */
+export type CheckedForward<
+  Target extends object,
+  Forward,
+> = Forward extends readonly unknown[]
+  ? { [Index in keyof Forward]: CheckedForward<Target, Forward[Index]> }
+  : Forward extends KeyMethodForwarder<infer SourceKey, infer Method, any>
+    ? SourceKey extends keyof Target
+      ? Method extends MethodName<Target[SourceKey]>
+        ? Forward
+        : never
+      : never
+    : Forward extends KeyPropertyForwarder<
+          infer SourceKey,
+          infer Property,
+          any,
+          any
+        >
+      ? SourceKey extends keyof Target
+        ? Property extends keyof Target[SourceKey]
+          ? Forward
+          : never
+        : never
+      : Forward;
 
 function doForward<
   Target extends object,
   Forwards extends MaybeArray<AnyMethodForwarder | AnyPropertyForwarder>[],
 >(
   target: Target,
-  ...forwards: Forwards
+  ...forwards: Forwards & CheckedForward<Target, Forwards>
 ): Forwarded<Target, FlatEntries<Forwards>>;
 function doForward(
   target: object,
@@ -67,6 +101,13 @@ function doForward(
   return target;
 }
 
+/**
+ * Defines each forwarder on `target` and returns it. A forwarder built from a
+ * property key resolves its source from that property of `target` on every call
+ * or access; its key and member must exist on `target`'s type.
+ *
+ * @throws {StateError} When `target` already owns a forwarded name.
+ */
 export const forward = finalize(doForward, {
   properties: propertyForwarders,
   property: propertyForwarder,
