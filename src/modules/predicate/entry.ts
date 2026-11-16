@@ -2,9 +2,16 @@
 
 export { affirm } from "#modules/predicate/utils/affirm";
 export { affirm as notnot } from "#modules/predicate/utils/affirm";
+export { allOf } from "#modules/predicate/utils/allOf";
+export { anyOf } from "#modules/predicate/utils/anyOf";
 export { negate } from "#modules/predicate/utils/negate";
 export { negate as not } from "#modules/predicate/utils/negate";
+export { noneOf } from "#modules/predicate/utils/noneOf";
 export { oneOf } from "#modules/predicate/utils/oneOf";
+export type * from "#modules/predicate/types/Guarded";
 export type * from "#modules/predicate/utils/affirm";
+export type * from "#modules/predicate/utils/allOf";
+export type * from "#modules/predicate/utils/anyOf";
 export type * from "#modules/predicate/utils/negate";
+export type * from "#modules/predicate/utils/noneOf";
 export type * from "#modules/predicate/utils/oneOf";
