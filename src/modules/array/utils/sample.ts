@@ -1,4 +1,4 @@
-import { readIterable } from "#modules/array/internals/readIterable";
+import { asArray } from "#modules/array/utils/asArray";
 import { min } from "#modules/math/utils/min";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { randomInteger } from "#modules/random/utils/randomInteger";
@@ -41,7 +41,7 @@ export function sample(
     throw new RangeError("Count must be a non-negative safe integer.");
   }
 
-  const array = readIterable(iterable);
+  const array = asArray(iterable);
   const positions = Array.from(array.keys());
   const size = min(count, positions.length);
   const result: unknown[] = [];

@@ -10,6 +10,7 @@ export const BUILD = freeze(
 );
 
 // @barrel domains
+export { asArray } from "#modules/array/utils/asArray";
 export { toArray } from "#modules/array/utils/toArray";
 export { toArray as a } from "#modules/array/utils/toArray";
 export { assertArray } from "#modules/assert/utils/assertArray";

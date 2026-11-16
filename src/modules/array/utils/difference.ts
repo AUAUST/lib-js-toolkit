@@ -1,4 +1,4 @@
-import { readIterable } from "#modules/array/internals/readIterable";
+import { asArray } from "#modules/array/utils/asArray";
 import { difference as differenceIterable } from "#modules/iterable/utils/difference";
 import type { Maybe } from "#types/Maybe";
 
@@ -40,7 +40,7 @@ export function difference(
     return;
   }
 
-  const array = readIterable(iterable);
+  const array = asArray(iterable);
 
   return Array.from(differenceIterable(array, other));
 }

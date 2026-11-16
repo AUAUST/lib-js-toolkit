@@ -1,4 +1,4 @@
-import { readIterable } from "#modules/array/internals/readIterable";
+import { asArray } from "#modules/array/utils/asArray";
 import { pluck as pluckIterable } from "#modules/iterable/utils/pluck";
 import type { MemberValue } from "#modules/general/utils/memberValue";
 import type { Maybe } from "#types/Maybe";
@@ -48,7 +48,7 @@ export function pluck(
     return;
   }
 
-  const array = readIterable(iterable);
+  const array = asArray(iterable);
 
   return Array.from(pluckIterable(array, property));
 }

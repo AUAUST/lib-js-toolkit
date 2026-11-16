@@ -1,4 +1,4 @@
-import { readIterable } from "#modules/array/internals/readIterable";
+import { asArray } from "#modules/array/utils/asArray";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { memberValue } from "#modules/general/utils/memberValue";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
@@ -83,7 +83,7 @@ export function filter(
     return;
   }
 
-  const array = readIterable(iterable);
+  const array = asArray(iterable);
 
   if (isFunction(predicate)) {
     return array.filter(predicate);

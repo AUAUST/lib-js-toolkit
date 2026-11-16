@@ -1,4 +1,4 @@
-import { readIterable } from "#modules/array/internals/readIterable";
+import { asArray } from "#modules/array/utils/asArray";
 import type { Maybe } from "#types/Maybe";
 
 type Spread<Values extends readonly unknown[]> = Values extends readonly [
@@ -50,7 +50,7 @@ export function concat(
     return;
   }
 
-  const array = readIterable(iterable);
+  const array = asArray(iterable);
 
   return array.concat(...values);
 }
