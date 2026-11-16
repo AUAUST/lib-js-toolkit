@@ -1,4 +1,3 @@
-import { isArray } from "#modules/array/guards/isArray";
 import { isNullish } from "#modules/guard/guards/isNullish";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { entries } from "#modules/object/utils/entries";
@@ -50,10 +49,6 @@ export function awaitAll<Values extends object>(
 export function awaitAll(values: Maybe<object>): Promise<unknown> {
   if (isNullish(values)) {
     return Promise.resolve(undefined);
-  }
-
-  if (isArray(values)) {
-    return Promise.all(values);
   }
 
   if (isIterable(values)) {
