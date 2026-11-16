@@ -75,6 +75,7 @@ export type * from "#types/RecordFromEntries";
 export type * from "#types/ResolvedCallable";
 export type * from "#types/Signature";
 export type * from "#types/Simplify";
+export type * from "#types/Split";
 export type * from "#types/StringToNumber";
 export type * from "#types/ToArrayKey";
 export type * from "#types/ToObject";
