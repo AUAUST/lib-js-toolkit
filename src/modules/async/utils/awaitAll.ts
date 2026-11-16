@@ -1,3 +1,4 @@
+import { toPromise } from "#modules/async/utils/toPromise";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { entries } from "#modules/object/utils/entries";
 import { record } from "#modules/object/utils/record";
@@ -47,7 +48,7 @@ export function awaitAll<Values extends object>(
 >;
 export function awaitAll(values: Maybe<object>): Promise<unknown> {
   if (values == null) {
-    return Promise.resolve(undefined);
+    return toPromise(undefined);
   }
 
   if (isIterable(values)) {

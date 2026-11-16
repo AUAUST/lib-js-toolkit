@@ -1,3 +1,4 @@
+import { toPromise } from "#modules/async/utils/toPromise";
 import { apply } from "#modules/function/utils/apply";
 import type { MeasureResult } from "#modules/time/utils/measure";
 import type { Callee } from "#types/Callee";
@@ -12,7 +13,7 @@ export async function measureAsync<Callback extends Callee>(
 ): Promise<MeasureResult<Awaited<CallReturnType<Callback>>>> {
   const start = performance.now();
 
-  const result = await Promise.resolve(apply.call(this, callback, args));
+  const result = await toPromise(apply.call(this, callback, args));
 
   const end = performance.now();
 

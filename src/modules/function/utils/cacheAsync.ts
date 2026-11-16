@@ -1,3 +1,4 @@
+import { toPromise } from "#modules/async/utils/toPromise";
 import { isCallable } from "#modules/function/guards/isCallable";
 import {
   cache,
@@ -124,7 +125,7 @@ export function cacheAsync(
   ): CacheEntry {
     const result = resolveValue(...args);
 
-    const promise = Promise.resolve(result)
+    const promise = toPromise(result)
       .then((value) => {
         entry.result = value;
         entry.fulfilled = true;
