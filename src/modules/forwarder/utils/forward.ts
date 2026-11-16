@@ -44,7 +44,8 @@ export type ForwardedEntry<
 /**
  * Maps a forwarder to `never` when `ForwardedEntry` rejects it on `Target`: a
  * key-source forwarder whose key is not a key of `Target`, or whose member is
- * not a member (a method name for a method) of `Target[SourceKey]`.
+ * not a member (a method name for a method) of `Target[SourceKey]` once `null`
+ * and `undefined` are removed.
  */
 export type CheckedForward<
   Target extends object,

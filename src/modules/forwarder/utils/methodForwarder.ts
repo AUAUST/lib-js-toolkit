@@ -64,8 +64,8 @@ export type ForwardedMethod<
   infer Name
 >
   ? SourceKey extends keyof Target
-    ? Method extends MethodName<Target[SourceKey]>
-      ? { [K in Name]: Target[SourceKey][Method] }
+    ? Method extends MethodName<NonNullable<Target[SourceKey]>>
+      ? { [K in Name]: NonNullable<Target[SourceKey]>[Method] }
       : never
     : never
   : Forward extends MethodForwarder<infer Source, infer Method, infer Name>

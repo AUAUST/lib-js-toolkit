@@ -114,4 +114,18 @@ describe("forwardProperties", () => {
       `Existing property ${String(property)} cannot be forwarded on target.`,
     );
   });
+
+  test("forwards from a nullable property of the target", () => {
+    const target: { client?: { value: number } | null } = { client: null };
+
+    const forwarded = forwardProperties(target, "client", "value");
+
+    expectTypeOf(forwarded).toHaveProperty("value").toEqualTypeOf<number>();
+
+    expect(() => forwarded.value).toThrow(TypeError);
+
+    target.client = { value: 1 };
+
+    expect(forwarded.value).toBe(1);
+  });
 });

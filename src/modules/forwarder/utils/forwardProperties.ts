@@ -38,7 +38,7 @@ export function forwardProperties<
   Target extends object,
   const SourceKey extends keyof Target,
   const Properties extends MaybeArray<
-    PropertyForwardingInput<keyof Target[SourceKey], PropertyKey>
+    PropertyForwardingInput<keyof NonNullable<Target[SourceKey]>, PropertyKey>
   >[],
 >(
   target: Target,
@@ -50,7 +50,7 @@ export function forwardProperties<
     SourceKey,
     MaybeArrayElement<
       Properties[number],
-      PropertyForwardingInput<keyof Target[SourceKey], PropertyKey>
+      PropertyForwardingInput<keyof NonNullable<Target[SourceKey]>, PropertyKey>
     >
   >[]
 >;

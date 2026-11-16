@@ -144,4 +144,22 @@ describe("forwardMethods", () => {
     expect(forwarded[alias]("World")).toBe("Hello, World!");
     expect(forwarded[1]()).toBe(true);
   });
+
+  test("forwards from a nullable property of the target", () => {
+    interface Client {
+      greet(name: string): string;
+    }
+
+    const target: { client?: Client } = {};
+
+    const forwarded = forwardMethods(target, "client", "greet");
+
+    expectTypeOf(forwarded.greet).toEqualTypeOf<Client["greet"]>();
+
+    expect(() => forwarded.greet("World")).toThrow(TypeError);
+
+    target.client = { greet: (name) => `Hello, ${name}!` };
+
+    expect(forwarded.greet("World")).toBe("Hello, World!");
+  });
 });

@@ -340,6 +340,32 @@ describe("forward", () => {
       forward(target, forward.method("missing", "doStuff"));
     });
 
+    test("accepts a nullable source and throws while it is nullish", () => {
+      type Client = ReturnType<typeof createClient>;
+
+      const target: { client?: Client | null } = {};
+
+      const forwarded = forward(
+        target,
+        forward.method("client", "doStuff"),
+        forward.property("client", "value"),
+      );
+
+      expectTypeOf(forwarded.doStuff).toEqualTypeOf<Client["doStuff"]>();
+
+      expectTypeOf(forwarded).toHaveProperty("value").toEqualTypeOf<number>();
+
+      expect(() => forwarded.doStuff(1)).toThrow(TypeError);
+
+      expect(() => forwarded.value).toThrow(TypeError);
+
+      target.client = createClient(2);
+
+      expect(forwarded.doStuff(1)).toBe(3);
+
+      expect(forwarded.value).toBe(2);
+    });
+
     test("rejects a member the source does not hold", () => {
       const target = { client: createClient(1) };
 

@@ -72,10 +72,10 @@ export type ForwardedProperty<
   infer Readonly
 >
   ? SourceKey extends keyof Target
-    ? Property extends keyof Target[SourceKey]
+    ? Property extends keyof NonNullable<Target[SourceKey]>
       ? Readonly extends true
-        ? { readonly [K in Name]: Target[SourceKey][Property] }
-        : { [K in Name]: Target[SourceKey][Property] }
+        ? { readonly [K in Name]: NonNullable<Target[SourceKey]>[Property] }
+        : { [K in Name]: NonNullable<Target[SourceKey]>[Property] }
       : never
     : never
   : Forward extends PropertyForwarder<
