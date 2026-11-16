@@ -1,3 +1,4 @@
+import { from } from "#modules/array/utils/from";
 import { isString } from "#modules/string/guards/isString";
 
 /*
@@ -75,7 +76,7 @@ function encodeCodePoint(x: number): string {
 }
 
 function rstr2binl(input: string): number[] {
-  const output = Array.from<number>({
+  const output = from<number>({
     length: input.length >> 2,
   });
 

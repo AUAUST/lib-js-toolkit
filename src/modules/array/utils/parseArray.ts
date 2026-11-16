@@ -1,5 +1,6 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { isArrayLike } from "#modules/array/guards/isArrayLike";
+import { from } from "#modules/array/utils/from";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { isObject } from "#modules/object/guards/isObject";
 
@@ -23,8 +24,8 @@ export function parseArray(input: unknown): readonly unknown[] | undefined {
   }
 
   if (isIterable(input)) {
-    return Array.from(input);
+    return from(input);
   }
 
-  return isArrayLike(input) ? Array.from(input) : undefined;
+  return isArrayLike(input) ? from(input) : undefined;
 }

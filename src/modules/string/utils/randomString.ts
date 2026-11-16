@@ -1,3 +1,4 @@
+import { from } from "#modules/array/utils/from";
 import { flag } from "#modules/general/utils/flag";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import { randomInteger } from "#modules/random/utils/randomInteger";
@@ -51,7 +52,7 @@ export function randomString(options?: RandomStringOptions | number): string {
     throw new RangeError("Length must be a non-negative safe integer.");
   }
 
-  const characters = Array.from(
+  const characters = from(
     pool ?? (uppercase ? lowercasePool + uppercaseLetters : lowercasePool),
   );
 

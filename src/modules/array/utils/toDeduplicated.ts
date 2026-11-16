@@ -1,6 +1,7 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { copyIterable } from "#modules/array/internals/copyIterable";
 import { deduplicate } from "#modules/array/utils/deduplicate";
+import { from } from "#modules/array/utils/from";
 import { unique } from "#modules/iterable/utils/unique";
 import type { Maybe } from "#types/Maybe";
 
@@ -30,7 +31,7 @@ export function toDeduplicated(
   }
 
   if (isArray(iterable)) {
-    return Array.from(unique(iterable));
+    return from(unique(iterable));
   }
 
   return deduplicate(copyIterable(iterable));

@@ -1,3 +1,4 @@
+import { from } from "#modules/array/utils/from";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { isString } from "#modules/string/guards/isString";
 
@@ -13,5 +14,5 @@ export function copyIterable(iterable: object): unknown[] {
     throw new TypeError("Expected an iterable.");
   }
 
-  return Array.from(iterable);
+  return from(iterable);
 }

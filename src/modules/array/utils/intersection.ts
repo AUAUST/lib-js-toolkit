@@ -1,4 +1,5 @@
 import { asArray } from "#modules/array/utils/asArray";
+import { from } from "#modules/array/utils/from";
 import { intersection as intersectionIterable } from "#modules/iterable/utils/intersection";
 import type { Maybe } from "#types/Maybe";
 
@@ -42,5 +43,5 @@ export function intersection(
 
   const array = asArray(iterable);
 
-  return Array.from(intersectionIterable(array, other));
+  return from(intersectionIterable(array, other));
 }

@@ -1,4 +1,5 @@
 import { asArray } from "#modules/array/utils/asArray";
+import { from } from "#modules/array/utils/from";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isPropertyKey } from "#modules/guard/guards/isPropertyKey";
 import { filterMap as filterMapIterable } from "#modules/iterable/utils/filterMap";
@@ -305,7 +306,7 @@ export function filterMap(
   const array: readonly Record<PropertyKey, unknown>[] = asArray(iterable);
 
   if (second === undefined) {
-    return Array.from(
+    return from(
       isPropertyKey(first)
         ? filterMapIterable(array, first)
         : filterMapIterable(array, first),
@@ -313,7 +314,7 @@ export function filterMap(
   }
 
   if (isFunction(first)) {
-    return Array.from(
+    return from(
       isPropertyKey(second)
         ? filterMapIterable(array, first, second)
         : filterMapIterable(array, first, second),
@@ -324,7 +325,7 @@ export function filterMap(
     throw new TypeError("Expected a predicate function or a property name.");
   }
 
-  return Array.from(
+  return from(
     isPropertyKey(second)
       ? filterMapIterable(array, first, second)
       : filterMapIterable(array, first, second),

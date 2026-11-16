@@ -1,4 +1,5 @@
 import { asArray } from "#modules/array/utils/asArray";
+import { from } from "#modules/array/utils/from";
 import { pluck as pluckIterable } from "#modules/iterable/utils/pluck";
 import type { MemberValue } from "#modules/general/utils/memberValue";
 import type { Maybe } from "#types/Maybe";
@@ -50,5 +51,5 @@ export function pluck(
 
   const array = asArray(iterable);
 
-  return Array.from(pluckIterable(array, property));
+  return from(pluckIterable(array, property));
 }

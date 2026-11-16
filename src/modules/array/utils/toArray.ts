@@ -1,4 +1,5 @@
 import { isArray } from "#modules/array/guards/isArray";
+import { from } from "#modules/array/utils/from";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { isString } from "#modules/string/guards/isString";
 
@@ -45,7 +46,7 @@ export function toArray(input: unknown): readonly unknown[] {
   }
 
   if (!isString(input) && isIterable(input)) {
-    return Array.from(input);
+    return from(input);
   }
 
   return [input];
