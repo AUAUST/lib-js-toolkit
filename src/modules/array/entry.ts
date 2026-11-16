@@ -63,6 +63,7 @@ export type * from "#modules/array/guards/isEmptyArray";
 export type * from "#modules/array/guards/isNonEmptyArray";
 export type * from "#modules/array/guards/isNotArray";
 export type * from "#modules/array/types/Comparator";
+export type * from "#modules/array/types/SortOptions";
 export type * from "#modules/array/utils/at";
 export type * from "#modules/array/utils/clear";
 export type * from "#modules/array/utils/collapse";

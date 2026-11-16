@@ -13,6 +13,24 @@ describe("toSorted", () => {
     expectTypeOf(result).toEqualTypeOf<(1 | 2 | 3)[]>();
   });
 
+  test("reverses in one pass", () => {
+    const set = new Set([1, 3, 2]);
+    const result = toSorted(set, { reverse: true });
+
+    expect(result).toEqual([3, 2, 1]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+
+    expect(
+      toSorted(
+        [1, 3, 2],
+        (left, right) => {
+          return left - right;
+        },
+        { reverse: true },
+      ),
+    ).toEqual([3, 2, 1]);
+  });
+
   test("passes nullish through", () => {
     expect(toSorted(null)).toBeUndefined();
   });

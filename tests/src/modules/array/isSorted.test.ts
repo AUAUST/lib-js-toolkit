@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 
+import { numeric } from "@auaust/toolkit";
 import { isSorted } from "@auaust/toolkit/array";
 
 describe("isSorted", () => {
@@ -16,6 +17,12 @@ describe("isSorted", () => {
   test("uses a comparator", () => {
     expect(isSorted([9, 10], (left, right) => left - right)).toBe(true);
     expect(isSorted([10, 9], (left, right) => left - right)).toBe(false);
+  });
+
+  test("checks the reversed order", () => {
+    expect(isSorted([3, 2, 1], numeric, { reverse: true })).toBe(true);
+    expect(isSorted([1, 2, 3], numeric, { reverse: true })).toBe(false);
+    expect(isSorted([9, 10, 1], { reverse: true })).toBe(true);
   });
 
   test("treats an empty array as sorted", () => {
