@@ -3,3 +3,4 @@
 ---
 
 - Add array.clear
+- Add array.retain
