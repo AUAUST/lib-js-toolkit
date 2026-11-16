@@ -8,3 +8,4 @@
 - Add whenString, whenEmptyString, whenNonEmptyString, whenBlankString and whenBoolean
 - Add whenNumber, whenFinite, whenInteger, whenNaN and whenSafeInteger
 - Add whenFunction, whenCallable, whenConstructible, whenAsyncFunction, whenGeneratorFunction, whenAsyncGeneratorFunction, whenMethod and whenCallableMember
+- Add whenObject, whenPlainObject, whenArray, whenArrayLike, whenEmptyArray, whenNonEmptyArray and whenIterable
