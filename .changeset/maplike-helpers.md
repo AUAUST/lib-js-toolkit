@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": minor
+"@auaust/toolkit": patch
 ---
 
 - Add the MapLike, ReadonlyMapLike and WritableMapLike types

@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": minor
+"@auaust/toolkit": patch
 ---
 
 - Add array.sort and array.toSorted, copying any iterable but a string

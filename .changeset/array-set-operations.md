@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": minor
+"@auaust/toolkit": patch
 ---
 
 - Add iterable.unique, array.deduplicate and array.toDeduplicated, copying any iterable but a string

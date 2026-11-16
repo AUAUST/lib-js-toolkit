@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": minor
+"@auaust/toolkit": patch
 ---
 
 - Rename ensureStart to withPrefix and ensureEnd to withSuffix

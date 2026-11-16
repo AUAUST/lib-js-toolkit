@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": minor
+"@auaust/toolkit": patch
 ---
 
 - Add startsWith, endsWith and includes; primitive-kit's contains is now includes
