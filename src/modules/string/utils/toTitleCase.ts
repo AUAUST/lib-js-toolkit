@@ -6,7 +6,7 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to Title Case, splitting through `splitWords`, which drops
- * characters that are neither letters, marks nor digits,, then capitalizing
+ * characters that are neither letters, marks nor digits, then capitalizing
  * each word following `locale` and joining them with spaces; a nullish string
  * returns `undefined`.
  *

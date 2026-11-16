@@ -57,6 +57,6 @@
 
 ## 10. Member-or-callback resolution
 
-- "Property name or callback" resolves in four places: `iterable/internals/toKeyer`, `array/internals/sortItemsBy`, `general/utils/diamondBy`, and inline in `retain`, `filter`, `find`, `every`, `some` (`array` and `iterable`). Validation diverges: the predicates and `toKeyer` throw a `TypeError` on neither, `sortBy`, `toSortedBy` and `diamondBy` never throw (#153, #267).
+- "Property name or callback" resolves in four places: `iterable/internals/toKeyer`, `array/internals/sortItemsBy`, `general/utils/diamondBy`, and inline in `retain`, `filter`, `find`, `every`, `some` (`array` and `iterable`), plus `toPredicate` and `toMapper` in `iterable/utils/filterMap`. Method-name dispatch (`MethodHolder` plus `callMethod`) repeats in `array.map`, `array.transform` and `iterable.map`. Validation diverges: the predicates and `toKeyer` throw a `TypeError` on neither, `sortBy`, `toSortedBy` and `diamondBy` never throw (#153, #267).
 - Expected: one helper in the lowest domain holding `memberValue`, with one stated validation policy per helper family.
 - Done when extracted and adopted, or the duplication is accepted.

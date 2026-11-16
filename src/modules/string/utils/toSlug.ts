@@ -33,6 +33,7 @@ export function toSlug(
 
   const casing = { ...options, unaccent: options.unaccent ?? true };
 
+  // @debt Since `splitWords` yields only letters, marks and digits, this step only strips combining marks, so NFD and NFC input slug differently under `unaccent: false`; whether marks stay is undecided.
   const words = map(splitWords(string, casing), (word) => {
     return word.split(nonAlphanumericRunPattern).join("");
   });

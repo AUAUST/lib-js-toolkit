@@ -7,7 +7,7 @@ import type { MethodName } from "#types/MethodName";
 import type { MethodParameters } from "#types/MethodParameters";
 import type { MethodReturnType } from "#types/MethodReturnType";
 
-// @debt `MethodHolder` and the mapper dispatch duplicate `map`; share them through array `internals/`.
+// @debt `MethodHolder` and the method-name dispatch duplicate `array.map` and `iterable.map`; one shared definition would own them.
 // @debt The implementation signature types items as method holders so `callMethod` accepts any property key; the overloads hold the real contract.
 type MethodHolder = Record<
   PropertyKey,
