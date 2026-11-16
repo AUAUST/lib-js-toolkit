@@ -4,8 +4,9 @@ import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Converts the string to snake_case, splitting through `splitWords` and casing
- * words following `locale`; a nullish string returns `undefined`.
+ * Converts the string to snake_case, splitting through `splitWords`, which
+ * drops characters that are neither letters, marks nor digits, and casing words
+ * following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand snake
  */

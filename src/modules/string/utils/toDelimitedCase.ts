@@ -4,8 +4,9 @@ import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Splits the string through `splitWords` and joins the words with `delimiter`,
- * keeping each word's case; a nullish string returns `undefined`.
+ * Splits the string through `splitWords`, dropping characters that are neither
+ * letters, marks nor digits, and joins the words with `delimiter`, keeping each
+ * word's case; a nullish string returns `undefined`.
  */
 export function toDelimitedCase(
   string: string,

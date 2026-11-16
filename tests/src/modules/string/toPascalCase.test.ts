@@ -7,4 +7,8 @@ describe("toPascalCase", () => {
     expect(toPascalCase("hello_world")).toBe("HelloWorld");
     expect(pascal).toBe(toPascalCase);
   });
+
+  test("drops characters that are not part of a word", () => {
+    expect(toPascalCase("@typescript-eslint")).toBe("TypescriptEslint");
+  });
 });

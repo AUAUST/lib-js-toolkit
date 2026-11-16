@@ -22,13 +22,18 @@ export const unaccentLigatures: Readonly<Record<string, string>> = freeze({
 export const combiningMarkPattern = freeze(/\p{M}/u);
 
 /**
- * Matches a word boundary: a run of whitespace, `-`, `_` or `.`, a lowercase to
- * uppercase change, the end of an uppercase run before a capitalized word, and
- * either side of a digit run.
+ * Matches a word boundary: a run of characters that are neither letters, marks
+ * nor digits, a lowercase to uppercase change, the end of an uppercase run before
+ * a capitalized word, and either side of a digit run.
  */
 export const wordBoundaryPattern = freeze(
-  /[\s\-_.]+|(?<=\p{Ll})(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})|(?<=\p{N})(?=\P{N})|(?<=\P{N})(?=\p{N})/u,
+  /[^\p{L}\p{M}\p{N}]+|(?<=\p{Ll})(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})|(?<=\p{N})(?=\P{N})|(?<=\P{N})(?=\p{N})/u,
 );
+
+/**
+ * Matches an apostrophe, which `splitWords` removes without breaking the word.
+ */
+export const apostrophePattern = freeze(/['’]/u);
 
 /**
  * Matches a run of characters that are neither letters nor digits.

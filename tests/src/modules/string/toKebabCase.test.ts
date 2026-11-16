@@ -11,4 +11,8 @@ describe("toKebabCase", () => {
   test("returns undefined for nullish input", () => {
     expect(toKebabCase(null)).toBeUndefined();
   });
+
+  test("removes apostrophes without breaking words", () => {
+    expect(toKebabCase("don't stop")).toBe("dont-stop");
+  });
 });

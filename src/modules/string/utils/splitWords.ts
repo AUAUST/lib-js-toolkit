@@ -1,13 +1,19 @@
 import { filter } from "#modules/array/utils/filter";
-import { wordBoundaryPattern } from "#modules/string/constants";
+import {
+  apostrophePattern,
+  wordBoundaryPattern,
+} from "#modules/string/constants";
+import { remove } from "#modules/string/utils/remove";
 import { unaccent } from "#modules/string/utils/unaccent";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Splits the string into words on whitespace, `-`, `_`, `.`, case changes and
- * digit boundaries, dropping the separators and keeping each word's case; accents
- * are removed only when `unaccent` is set. A nullish string returns `undefined`.
+ * Splits the string into words on every run of characters that are neither
+ * letters, marks nor digits, on case changes and on digit boundaries, dropping
+ * those runs and keeping each word's case. Apostrophes are removed without
+ * breaking the word (`don't` gives `dont`); accents are removed only when
+ * `unaccent` is set. A nullish string returns `undefined`.
  */
 export function splitWords(string: string, options?: CasingOptions): string[];
 export function splitWords(
@@ -28,7 +34,7 @@ export function splitWords(
 
   const source = options.unaccent === true ? unaccent(string) : string;
 
-  const parts = source.split(wordBoundaryPattern);
+  const parts = remove(source, apostrophePattern).split(wordBoundaryPattern);
 
   return filter(parts, (part) => part !== "");
 }

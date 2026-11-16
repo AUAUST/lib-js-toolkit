@@ -27,4 +27,8 @@ describe("splitWords", () => {
   test("returns undefined for nullish input", () => {
     expect(splitWords(null)).toBeUndefined();
   });
+
+  test("drops non-word characters and keeps apostrophes inside words", () => {
+    expect(splitWords("@scope/pkg don't")).toEqual(["scope", "pkg", "dont"]);
+  });
 });

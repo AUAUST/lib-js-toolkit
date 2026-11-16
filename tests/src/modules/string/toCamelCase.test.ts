@@ -13,4 +13,16 @@ describe("toCamelCase", () => {
       "tıtleIstanbul",
     );
   });
+
+  test("drops characters that are not part of a word", () => {
+    expect(toCamelCase("project/build")).toBe("projectBuild");
+  });
+
+  test("keeps letters of any script", () => {
+    expect(toCamelCase("élan vital")).toBe("élanVital");
+  });
+
+  test("keeps digit boundaries", () => {
+    expect(toCamelCase("2fa-code")).toBe("2FaCode");
+  });
 });
