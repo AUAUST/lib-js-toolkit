@@ -1,5 +1,11 @@
 # @auaust/toolkit
 
+## 0.7.1
+
+### Patch Changes
+
+- c7f4e0f: - Match oneOf candidates in constant time
+
 ## 0.7.0
 
 ### Minor Changes
