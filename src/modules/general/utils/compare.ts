@@ -1,10 +1,10 @@
 import { isCallable } from "#modules/function/guards/isCallable";
 import { call } from "#modules/function/utils/call";
+import { orderScalars } from "#modules/general/internals/orderScalars";
 import { resolveCustomOperator } from "#modules/general/internals/resolveCustomOperator";
 import { empty } from "#modules/general/utils/empty";
 import { filled } from "#modules/general/utils/filled";
 import { valueOf } from "#modules/general/utils/valueOf";
-import { isScalar } from "#modules/guard/guards/isScalar";
 import type { Callee } from "#types/Callee";
 import type { IsLiteral } from "#types/IsLiteral";
 import type { KeyAsString } from "#types/KeyAsString";
@@ -117,32 +117,23 @@ export function compare(
     }
   }
 
-  if (a == null || b == null) {
-    return false;
-  }
-
-  a = valueOf(a);
-  b = valueOf(b);
-
-  if (!isScalar(a) || !isScalar(b)) {
-    return false;
-  }
+  const order = orderScalars(a, b);
 
   switch (operator) {
     case "<": {
-      return a < b;
+      return order === -1;
     }
 
     case "<=": {
-      return a <= b;
+      return order === -1 || order === 0;
     }
 
     case ">": {
-      return a > b;
+      return order === 1;
     }
 
     case ">=": {
-      return a >= b;
+      return order === 1 || order === 0;
     }
   }
 
