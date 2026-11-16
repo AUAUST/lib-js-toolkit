@@ -5,8 +5,9 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Returns the items at `count` distinct random positions, in draw order, drawing
  * from `random.randomInteger`. A `count` past the array's length returns every
- * item. A nullish array returns `undefined` before `count` is checked; otherwise
- * a negative or non-integer `count` throws a `RangeError`.
+ * item. A nullish array returns `undefined` before `count` is checked.
+ *
+ * @throws {RangeError} when `count` is negative or not an integer.
  */
 export function sample<Items extends readonly unknown[]>(
   array: Items,

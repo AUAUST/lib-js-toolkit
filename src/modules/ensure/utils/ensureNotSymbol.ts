@@ -1,8 +1,9 @@
 import { assertNotSymbol } from "#modules/assert/utils/assertNotSymbol";
 
 /**
- * Returns the candidate when it is not a symbol; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is not a symbol.
+ *
+ * @throws {AssertionError} when the candidate is a symbol.
  */
 export function ensureNotSymbol<Candidate>(
   candidate: Candidate,

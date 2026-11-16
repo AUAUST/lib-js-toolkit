@@ -115,9 +115,10 @@ export interface Ensure {
 }
 
 /**
- * Returns the candidate when the guard passes; otherwise throws an
- * `AssertionError`. Every `ensure` helper is attached; importing it
- * bundles them all.
+ * Returns the candidate when the guard passes. Every `ensure` helper is attached;
+ * importing it bundles them all.
+ *
+ * @throws {AssertionError} when the guard fails.
  */
 export const ensure: Ensure = assign(
   function ensure<Candidate, Guarded>(

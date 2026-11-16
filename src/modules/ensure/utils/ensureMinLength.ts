@@ -2,9 +2,10 @@ import { assertMinLength } from "#modules/assert/utils/assertMinLength";
 import type { MinLengthTuple } from "#types/MinLengthTuple";
 
 /**
- * Returns the array, typed as a tuple of at least `length` elements, when
- * it holds that many; otherwise throws an `AssertionError`. Element types
- * are never checked.
+ * Returns the array, typed as a tuple of at least `length` elements, when it
+ * holds that many. Element types are never checked.
+ *
+ * @throws {AssertionError} when the array holds fewer than `length` elements.
  */
 export function ensureMinLength<Item, Length extends number>(
   array: Item[],

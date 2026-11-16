@@ -1,8 +1,9 @@
 import { assertNotBoolean } from "#modules/assert/utils/assertNotBoolean";
 
 /**
- * Returns the candidate when it is not a boolean; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is not a boolean.
+ *
+ * @throws {AssertionError} when the candidate is a boolean.
  */
 export function ensureNotBoolean<Candidate>(
   candidate: Candidate,

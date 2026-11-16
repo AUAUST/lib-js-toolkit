@@ -2,8 +2,9 @@ import { assertConstructible } from "#modules/assert/utils/assertConstructible";
 import type { Constructor } from "#types/Constructor";
 
 /**
- * Returns the candidate when it is a constructor; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is a constructor.
+ *
+ * @throws {AssertionError} when the candidate is not a constructor.
  */
 export function ensureConstructible<Candidate>(
   candidate: Candidate,

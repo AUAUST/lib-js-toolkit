@@ -1,8 +1,9 @@
 import { assertNotBigInt } from "#modules/assert/utils/assertNotBigInt";
 
 /**
- * Returns the candidate when it is not a bigint; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is not a bigint.
+ *
+ * @throws {AssertionError} when the candidate is a bigint.
  */
 export function ensureNotBigInt<Candidate>(
   candidate: Candidate,

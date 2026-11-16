@@ -1,7 +1,9 @@
 import { assertIterable } from "#modules/assert/utils/assertIterable";
 
 /**
- * Returns the candidate when it is iterable; otherwise throws an `AssertionError`.
+ * Returns the candidate when it is iterable.
+ *
+ * @throws {AssertionError} when the candidate is not iterable.
  */
 export function ensureIterable<Candidate>(
   candidate: Candidate,

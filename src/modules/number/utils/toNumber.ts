@@ -1,7 +1,7 @@
 /**
- * Converts input as `Number()` does, throwing `TypeError` for symbols; never
- * mutates its input.
+ * Converts input as `Number()` does; never mutates its input.
  *
+ * @throws {TypeError} when the input is a symbol.
  * @shorthand n
  */
 export function toNumber<Input extends number>(input: Input): Input;

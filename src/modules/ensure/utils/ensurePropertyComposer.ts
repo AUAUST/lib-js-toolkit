@@ -2,8 +2,9 @@ import { assertPropertyComposer } from "#modules/assert/utils/assertPropertyComp
 import type { PropertyComposer } from "#modules/composer/utils/propertyComposer";
 
 /**
- * Returns the candidate when it is a property composer; otherwise throws
- * an `AssertionError`.
+ * Returns the candidate when it is a property composer.
+ *
+ * @throws {AssertionError} when the candidate is not a property composer.
  */
 export function ensurePropertyComposer<Candidate>(
   candidate: Candidate,

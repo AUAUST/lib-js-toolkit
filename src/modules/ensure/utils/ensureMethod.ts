@@ -3,8 +3,10 @@ import type { MethodName } from "#types/MethodName";
 import type { UnknownFn } from "#types/UnknownFn";
 
 /**
- * Returns the candidate when it has a function-valued property under `method`;
- * otherwise throws an `AssertionError`.
+ * Returns the candidate when it has a function-valued property under `method`.
+ *
+ * @throws {AssertionError} when the candidate has no function-valued property
+ * under `method`.
  */
 export function ensureMethod<Target extends object>(
   candidate: Target,

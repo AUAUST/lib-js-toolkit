@@ -2,8 +2,9 @@ import { assertGeneratorFunction } from "#modules/assert/utils/assertGeneratorFu
 import type { Fn } from "#types/Fn";
 
 /**
- * Returns the candidate when it is a generator function; otherwise throws
- * an `AssertionError`.
+ * Returns the candidate when it is a generator function.
+ *
+ * @throws {AssertionError} when the candidate is not a generator function.
  */
 export function ensureGeneratorFunction<Candidate>(
   candidate: Candidate,

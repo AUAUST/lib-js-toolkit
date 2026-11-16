@@ -1,8 +1,9 @@
 import { assertPropertyKey } from "#modules/assert/utils/assertPropertyKey";
 
 /**
- * Returns the candidate when it is a property key; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is a property key.
+ *
+ * @throws {AssertionError} when the candidate is not a property key.
  */
 export function ensurePropertyKey<Candidate>(
   candidate: Candidate,

@@ -1,8 +1,9 @@
 import { assertUndefined } from "#modules/assert/utils/assertUndefined";
 
 /**
- * Returns the candidate when it is undefined; otherwise throws an
- * `AssertionError`.
+ * Returns the candidate when it is undefined.
+ *
+ * @throws {AssertionError} when the candidate is not undefined.
  */
 export function ensureUndefined<Candidate>(
   candidate: Candidate,

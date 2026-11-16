@@ -1,8 +1,9 @@
 import { assertArrayLike } from "#modules/assert/utils/assertArrayLike";
 
 /**
- * Returns the candidate when it is an array-like value; otherwise throws
- * an `AssertionError`.
+ * Returns the candidate when it is an array-like value.
+ *
+ * @throws {AssertionError} when the candidate is not an array-like value.
  */
 export function ensureArrayLike<Candidate>(
   candidate: Candidate,

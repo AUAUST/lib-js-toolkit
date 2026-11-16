@@ -1,8 +1,10 @@
 import { assertNonEmptyArray } from "#modules/assert/utils/assertNonEmptyArray";
 
 /**
- * Returns the candidate when it is an array holding at least one slot; otherwise
- * throws an `AssertionError`.
+ * Returns the candidate when it is an array holding at least one slot.
+ *
+ * @throws {AssertionError} when the candidate is not an array holding
+ * at least one slot.
  */
 export function ensureNonEmptyArray<Item>(
   candidate: Item[],

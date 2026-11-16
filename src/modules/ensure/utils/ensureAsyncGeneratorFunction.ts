@@ -2,8 +2,9 @@ import { assertAsyncGeneratorFunction } from "#modules/assert/utils/assertAsyncG
 import type { Fn } from "#types/Fn";
 
 /**
- * Returns the candidate when it is an async generator function; otherwise
- * throws an `AssertionError`.
+ * Returns the candidate when it is an async generator function.
+ *
+ * @throws {AssertionError} when the candidate is not an async generator function.
  */
 export function ensureAsyncGeneratorFunction<Candidate>(
   candidate: Candidate,
