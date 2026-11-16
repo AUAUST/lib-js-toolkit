@@ -15,12 +15,14 @@ import type { Maybe } from "#types/Maybe";
  * instead maps each item to its member, calling it when it is a method; a union
  * item type accepts only a name every member has. A leading predicate or type
  * predicate first selects the items to map, and a type predicate narrows the
- * items the mapper receives. The predicate and the mapper receive each item with
- * its index. Any other iterable but a string is copied once first. A nullish
- * iterable returns `undefined`.
+ * items the mapper receives; a leading property name instead keeps the items
+ * whose member is truthy, calling it when it is a method, without narrowing. The
+ * predicate and the mapper receive each item with its index. Any other iterable
+ * but a string is copied once first. A nullish iterable returns `undefined`.
  *
- * @throws {TypeError} when the iterable is a string or is not iterable, the mapper
- * is neither a function nor a property key, or the predicate is not a function.
+ * @throws {TypeError} when the iterable is a string or is not iterable, the
+ * mapper is neither a function nor a property key, or the predicate is neither
+ * a function nor a property key.
  */
 export function filterMap<Items extends readonly unknown[], Output>(
   iterable: Items,
@@ -78,6 +80,24 @@ export function filterMap<
   predicate: (value: Items[number], index: number) => unknown,
   property: Name,
 ): Exclude<MemberValue<Items[number], Name>, undefined>[];
+export function filterMap<
+  Items extends readonly unknown[],
+  const Filter extends keyof Items[number],
+  Output,
+>(
+  iterable: Items,
+  filter: Filter,
+  mapper: (value: Items[number], index: number) => Output,
+): Exclude<Output, undefined>[];
+export function filterMap<
+  Items extends readonly unknown[],
+  const Filter extends keyof Items[number],
+  const Name extends keyof Items[number],
+>(
+  iterable: Items,
+  filter: Filter,
+  property: Name,
+): Exclude<MemberValue<Items[number], Name>, undefined>[];
 export function filterMap<Item, Output>(
   iterable: Iterable<Item> & object,
   mapper: (value: Item, index: number) => Output,
@@ -122,6 +142,20 @@ export function filterMap<Item, Output>(
 export function filterMap<Item, const Name extends keyof Item>(
   iterable: Iterable<Item> & object,
   predicate: (value: Item, index: number) => unknown,
+  property: Name,
+): Exclude<MemberValue<Item, Name>, undefined>[];
+export function filterMap<Item, const Filter extends keyof Item, Output>(
+  iterable: Iterable<Item> & object,
+  filter: Filter,
+  mapper: (value: Item, index: number) => Output,
+): Exclude<Output, undefined>[];
+export function filterMap<
+  Item,
+  const Filter extends keyof Item,
+  const Name extends keyof Item,
+>(
+  iterable: Iterable<Item> & object,
+  filter: Filter,
   property: Name,
 ): Exclude<MemberValue<Item, Name>, undefined>[];
 export function filterMap<Items extends readonly unknown[], Output>(
@@ -182,6 +216,24 @@ export function filterMap<
   predicate: (value: Items[number], index: number) => unknown,
   property: Name,
 ): Exclude<MemberValue<Items[number], Name>, undefined>[] | undefined;
+export function filterMap<
+  Items extends readonly unknown[],
+  const Filter extends keyof Items[number],
+  Output,
+>(
+  iterable: Maybe<Items>,
+  filter: Filter,
+  mapper: (value: Items[number], index: number) => Output,
+): Exclude<Output, undefined>[] | undefined;
+export function filterMap<
+  Items extends readonly unknown[],
+  const Filter extends keyof Items[number],
+  const Name extends keyof Items[number],
+>(
+  iterable: Maybe<Items>,
+  filter: Filter,
+  property: Name,
+): Exclude<MemberValue<Items[number], Name>, undefined>[] | undefined;
 export function filterMap<Item, Output>(
   iterable: Maybe<Iterable<Item> & object>,
   mapper: (value: Item, index: number) => Output,
@@ -228,6 +280,20 @@ export function filterMap<Item, const Name extends keyof Item>(
   predicate: (value: Item, index: number) => unknown,
   property: Name,
 ): Exclude<MemberValue<Item, Name>, undefined>[] | undefined;
+export function filterMap<Item, const Filter extends keyof Item, Output>(
+  iterable: Maybe<Iterable<Item> & object>,
+  filter: Filter,
+  mapper: (value: Item, index: number) => Output,
+): Exclude<Output, undefined>[] | undefined;
+export function filterMap<
+  Item,
+  const Filter extends keyof Item,
+  const Name extends keyof Item,
+>(
+  iterable: Maybe<Iterable<Item> & object>,
+  filter: Filter,
+  property: Name,
+): Exclude<MemberValue<Item, Name>, undefined>[] | undefined;
 export function filterMap(
   iterable: Maybe<Iterable<Record<PropertyKey, unknown>> & object>,
   first: ((value: unknown, index: number) => unknown) | PropertyKey,
@@ -250,8 +316,16 @@ export function filterMap(
     );
   }
 
-  if (!isFunction(first)) {
-    throw new TypeError("Expected a predicate function.");
+  if (isFunction(first)) {
+    return Array.from(
+      isPropertyKey(second)
+        ? filterMapIterable(array, first, second)
+        : filterMapIterable(array, first, second),
+    );
+  }
+
+  if (!isPropertyKey(first)) {
+    throw new TypeError("Expected a predicate function or a property name.");
   }
 
   return Array.from(

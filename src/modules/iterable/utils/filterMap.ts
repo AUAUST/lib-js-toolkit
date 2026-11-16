@@ -16,13 +16,16 @@ import type { Maybe } from "#types/Maybe";
  * mutates the source. A property name instead maps each value to its member,
  * calling it when it is a method; a union value type accepts only a name every
  * member has. A leading predicate or type predicate first selects the values to
- * map, and a type predicate narrows the values the mapper receives. The predicate
- * and the mapper receive each value with its index among the values read. The
- * source is read lazily: changes made to it before a value is pulled are visible.
- * A nullish source returns `undefined`.
+ * map, and a type predicate narrows the values the mapper receives; a leading
+ * property name instead keeps the values whose member is truthy, calling it
+ * when it is a method, without narrowing. The predicate and the mapper receive
+ * each value with its index among the values read. The source is read lazily:
+ * changes made to it before a value is pulled are visible. A nullish source
+ * returns `undefined`.
  *
  * @throws {TypeError} at call time when the source is not iterable, the mapper
- * is neither a function nor a property key, or the predicate is not a function.
+ * is neither a function nor a property key, or the predicate is neither a
+ * function nor a property key.
  */
 export function filterMap<Input, Output>(
   iterable: Iterable<Input>,
@@ -71,6 +74,20 @@ export function filterMap<Input, Output>(
 export function filterMap<Input, const Name extends keyof Input>(
   iterable: Iterable<Input>,
   predicate: (value: Input, index: number) => unknown,
+  property: Name,
+): IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>;
+export function filterMap<Input, const Filter extends keyof Input, Output>(
+  iterable: Iterable<Input>,
+  filter: Filter,
+  mapper: (value: Input, index: number) => Output,
+): IteratorObject<Exclude<Output, undefined>, undefined>;
+export function filterMap<
+  Input,
+  const Filter extends keyof Input,
+  const Name extends keyof Input,
+>(
+  iterable: Iterable<Input>,
+  filter: Filter,
   property: Name,
 ): IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>;
 export function filterMap<Input, Output>(
@@ -130,6 +147,22 @@ export function filterMap<Input, const Name extends keyof Input>(
 ):
   | IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>
   | undefined;
+export function filterMap<Input, const Filter extends keyof Input, Output>(
+  iterable: Maybe<Iterable<Input>>,
+  filter: Filter,
+  mapper: (value: Input, index: number) => Output,
+): IteratorObject<Exclude<Output, undefined>, undefined> | undefined;
+export function filterMap<
+  Input,
+  const Filter extends keyof Input,
+  const Name extends keyof Input,
+>(
+  iterable: Maybe<Iterable<Input>>,
+  filter: Filter,
+  property: Name,
+):
+  | IteratorObject<Exclude<MemberValue<Input, Name>, undefined>, undefined>
+  | undefined;
 export function filterMap(
   iterable: Maybe<Iterable<Record<PropertyKey, unknown>>>,
   first: ((value: unknown, index: number) => unknown) | PropertyKey,
@@ -147,11 +180,21 @@ export function filterMap(
     return filterMapped(iterable, undefined, toMapper(first));
   }
 
-  if (!isFunction(first)) {
-    throw new TypeError("Expected a predicate function.");
+  return filterMapped(iterable, toPredicate(first), toMapper(second));
+}
+
+function toPredicate(
+  predicate: ((value: unknown, index: number) => unknown) | PropertyKey,
+): (value: Record<PropertyKey, unknown>, index: number) => unknown {
+  if (isFunction(predicate)) {
+    return predicate;
   }
 
-  return filterMapped(iterable, first, toMapper(second));
+  if (!isPropertyKey(predicate)) {
+    throw new TypeError("Expected a predicate function or a property name.");
+  }
+
+  return (value) => memberValue(value, predicate);
 }
 
 function toMapper(

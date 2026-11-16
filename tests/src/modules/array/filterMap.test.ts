@@ -61,7 +61,7 @@ describe("filterMap", () => {
   test("passes nullish through and rejects invalid arguments", () => {
     expect(filterMap(null, String)).toBeUndefined();
     expect(() => filterMap([1], true as never)).toThrow(TypeError);
-    expect(() => filterMap([1], "x" as never, String)).toThrow(TypeError);
+    expect(() => filterMap([1], {} as never, String)).toThrow(TypeError);
 
     expectTypeOf(filterMap([1] as Maybe<number[]>, String)).toEqualTypeOf<
       string[] | undefined
@@ -74,5 +74,27 @@ describe("filterMap", () => {
     expect(result).toEqual(["a", null]);
     expectTypeOf(result).toEqualTypeOf<(string | null)[]>();
     expect(() => filterMap({} as never, String)).toThrow(TypeError);
+  });
+
+  test("selects with a property name before mapping", () => {
+    const entries = [
+      {
+        default: true,
+        name: "a",
+        active: () => false,
+      },
+      {
+        default: false,
+        name: "b",
+        active: () => true,
+      },
+    ];
+
+    const names = filterMap(entries, "default", "name");
+
+    expect(names).toEqual(["a"]);
+    expectTypeOf(names).toEqualTypeOf<string[]>();
+    expect(filterMap(entries, "active", ({ name }) => name)).toEqual(["b"]);
+    expect(() => filterMap([1], true as never, String)).toThrow(TypeError);
   });
 });
