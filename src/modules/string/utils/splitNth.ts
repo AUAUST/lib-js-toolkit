@@ -5,7 +5,7 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Splits the string around the needle's occurrence at the zero-based position,
  * located as `nthIndexOf` does; returns the string and `""` when that occurrence
- * does not exist. Nullish input is returned as is.
+ * does not exist. A nullish string returns `undefined`.
  *
  * @throws {RangeError} when the position is not an integer.
  */
@@ -14,25 +14,25 @@ export function splitNth(
   needle: string,
   position: number,
 ): [string, string];
-export function splitNth<Value extends null | undefined>(
-  string: Value,
+export function splitNth(
+  string: null | undefined,
   needle: string,
   position: number,
-): Value;
+): undefined;
 export function splitNth(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<[string, string]>;
+): [string, string] | undefined;
 export function splitNth(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<[string, string]> {
+): [string, string] | undefined {
   assertOccurrencePosition(position);
 
   if (string == null) {
-    return string;
+    return;
   }
 
   const index = nthIndexOf(string, needle, position);

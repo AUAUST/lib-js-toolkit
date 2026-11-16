@@ -18,6 +18,6 @@ describe("replaceEach", () => {
   test("replaces every substring occurrence with all", () => {
     expect(replaceEach("aa", { a: "b" })).toBe("ba");
     expect(replaceEach("aa", { a: "b" }, { all: true })).toBe("bb");
-    expect(replaceEach(null, { a: "b" })).toBeNull();
+    expect(replaceEach(null, { a: "b" })).toBeUndefined();
   });
 });

@@ -5,7 +5,7 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Returns the part of the string after the needle's occurrence at the zero-based
  * position, located as `nthIndexOf` does, or `undefined` when that occurrence
- * does not exist. Nullish input is returned as is.
+ * does not exist. A nullish string returns `undefined`.
  *
  * @throws {RangeError} when the position is not an integer.
  */
@@ -14,25 +14,25 @@ export function afterNth(
   needle: string,
   position: number,
 ): string | undefined;
-export function afterNth<Value extends null | undefined>(
-  string: Value,
+export function afterNth(
+  string: null | undefined,
   needle: string,
   position: number,
-): Value;
+): undefined;
 export function afterNth(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<string>;
+): string | undefined;
 export function afterNth(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<string> {
+): string | undefined {
   assertOccurrencePosition(position);
 
   if (string == null) {
-    return string;
+    return;
   }
 
   const index = nthIndexOf(string, needle, position);

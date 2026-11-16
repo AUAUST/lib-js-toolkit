@@ -19,7 +19,7 @@ describe("nthIndexOf", () => {
     expect(() => nthIndexOf("a.b.c", ".", 1.5)).toThrow(RangeError);
   });
 
-  test("passes nullish input through", () => {
-    expect(nthIndexOf(null, ".", 0)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(nthIndexOf(null, ".", 0)).toBeUndefined();
   });
 });

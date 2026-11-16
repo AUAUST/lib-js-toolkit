@@ -7,7 +7,7 @@ describe("trim", () => {
     expect(trim("  a  ")).toBe("a");
     expect(trim("--a--", { chars: "-" })).toBe("a");
     expectTypeOf(trim("a")).toEqualTypeOf<string>();
-    expect(trim(null)).toBeNull();
+    expect(trim(null)).toBeUndefined();
   });
 
   test("treats the characters literally", () => {

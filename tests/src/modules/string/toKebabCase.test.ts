@@ -8,7 +8,7 @@ describe("toKebabCase", () => {
     expect(kebab).toBe(toKebabCase);
   });
 
-  test("passes nullish input through", () => {
-    expect(toKebabCase(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(toKebabCase(null)).toBeUndefined();
   });
 });

@@ -11,6 +11,6 @@ describe("afterFirst", () => {
 
   test("returns undefined for a missing needle", () => {
     expect(afterFirst("abc", ".")).toBeUndefined();
-    expect(afterFirst(null, ".")).toBeNull();
+    expect(afterFirst(null, ".")).toBeUndefined();
   });
 });

@@ -11,8 +11,8 @@ describe("toLocaleUpperCase", () => {
     expect(toLocaleUpperCase("i")).toBe("I");
   });
 
-  test("passes nullish input through", () => {
-    expect(toLocaleUpperCase(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(toLocaleUpperCase(null)).toBeUndefined();
     expectTypeOf(toLocaleUpperCase(undefined)).toEqualTypeOf<undefined>();
   });
 });

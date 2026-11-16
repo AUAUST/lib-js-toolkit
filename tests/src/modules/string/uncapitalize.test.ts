@@ -16,7 +16,7 @@ describe("uncapitalize", () => {
     expectTypeOf(uncapitalize("A" as string)).toEqualTypeOf<string>();
   });
 
-  test("passes nullish input through", () => {
+  test("returns undefined for nullish input", () => {
     expect(uncapitalize(undefined)).toBeUndefined();
   });
 });

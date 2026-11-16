@@ -10,10 +10,10 @@ describe("toUpperCase", () => {
     expectTypeOf(upper("a" as string)).toEqualTypeOf<string>();
   });
 
-  test("passes nullish input through", () => {
-    expect(upper(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(upper(null)).toBeUndefined();
     expect(upper(undefined)).toBeUndefined();
-    expectTypeOf(upper(null)).toEqualTypeOf<null>();
+    expectTypeOf(upper(null)).toEqualTypeOf<undefined>();
   });
 
   test("is aliased upper", () => {

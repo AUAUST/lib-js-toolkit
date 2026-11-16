@@ -3,18 +3,16 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Uppercases the first code point of the string, keeping an astral character
- * whole; nullish input is returned as is.
+ * whole; a nullish string returns `undefined`.
  */
 export function capitalize<Value extends string>(
   string: Value,
 ): string extends Value ? string : Capitalize<Value>;
-export function capitalize<Value extends null | undefined>(
-  string: Value,
-): Value;
-export function capitalize(string: Maybe<string>): Maybe<string>;
-export function capitalize(string: Maybe<string>): Maybe<string> {
+export function capitalize(string: null | undefined): undefined;
+export function capitalize(string: Maybe<string>): string | undefined;
+export function capitalize(string: Maybe<string>): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const [first = ""] = string;

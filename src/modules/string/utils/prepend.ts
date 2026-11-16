@@ -3,27 +3,28 @@ import type { SeparatorOptions } from "#modules/string/types/SeparatorOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Prepends the prefixes, in order, to the string, joined by the `separator` of a
- * last options argument. Empty prefixes are kept. Nullish input is returned as is.
+ * Prepends the prefixes, in order, to the string, joined by the `separator`
+ * of a last options argument. Empty prefixes are kept. A nullish string
+ * returns `undefined`.
  */
 export function prepend(
   string: string,
   ...prefixes: [...prefixes: string[], options: SeparatorOptions] | string[]
 ): string;
-export function prepend<Value extends null | undefined>(
-  string: Value,
+export function prepend(
+  string: null | undefined,
   ...prefixes: [...prefixes: string[], options: SeparatorOptions] | string[]
-): Value;
+): undefined;
 export function prepend(
   string: Maybe<string>,
   ...prefixes: [...prefixes: string[], options: SeparatorOptions] | string[]
-): Maybe<string>;
+): string | undefined;
 export function prepend(
   string: Maybe<string>,
   ...prefixes: [...prefixes: string[], options: SeparatorOptions] | string[]
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const [strings, separator] = splitSeparatorOptions(prefixes);

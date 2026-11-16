@@ -12,7 +12,7 @@ describe("capitalizeWords", () => {
     expect(capitalizeWords(" a ")).toBe(" A ");
   });
 
-  test("passes nullish input through", () => {
-    expect(capitalizeWords(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(capitalizeWords(null)).toBeUndefined();
   });
 });

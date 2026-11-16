@@ -2,23 +2,20 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Splits the string around the first occurrence of the needle; returns the string
- * and `""` when the needle is missing. Nullish input is returned as is.
+ * and `""` when the needle is missing. A nullish string returns `undefined`.
  */
 export function splitFirst(string: string, needle: string): [string, string];
-export function splitFirst<Value extends null | undefined>(
-  string: Value,
-  needle: string,
-): Value;
+export function splitFirst(string: null | undefined, needle: string): undefined;
 export function splitFirst(
   string: Maybe<string>,
   needle: string,
-): Maybe<[string, string]>;
+): [string, string] | undefined;
 export function splitFirst(
   string: Maybe<string>,
   needle: string,
-): Maybe<[string, string]> {
+): [string, string] | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const index = string.indexOf(needle);

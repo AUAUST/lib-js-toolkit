@@ -3,26 +3,26 @@ import type { TrimOptions } from "#modules/string/types/TrimOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Removes whitespace, or the `chars` characters, from both ends. Nullish
- * input is returned as is.
+ * Removes whitespace, or the `chars` characters, from both ends. A nullish
+ * string returns `undefined`.
  *
  * @native nullsafe String.prototype.trim
  */
 export function trim(string: string, options?: TrimOptions): string;
-export function trim<Value extends null | undefined>(
-  string: Value,
+export function trim(
+  string: null | undefined,
   options?: TrimOptions,
-): Value;
+): undefined;
 export function trim(
   string: Maybe<string>,
   options?: TrimOptions,
-): Maybe<string>;
+): string | undefined;
 export function trim(
   string: Maybe<string>,
   options: TrimOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   if (options.chars == null) {

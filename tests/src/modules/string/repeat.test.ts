@@ -5,7 +5,7 @@ import { repeat } from "@auaust/toolkit/string";
 describe("repeat", () => {
   test("repeats the string", () => {
     expect(repeat("ab", 2)).toBe("abab");
-    expect(repeat(null, 2)).toBeNull();
+    expect(repeat(null, 2)).toBeUndefined();
   });
 
   test("throws a RangeError for a negative count", () => {

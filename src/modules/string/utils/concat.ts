@@ -4,7 +4,7 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Appends the parts to the string, joined by the `separator` of a last options
- * argument. Empty parts are kept. Nullish input is returned as is.
+ * argument. Empty parts are kept. A nullish string returns `undefined`.
  *
  * @native variant String.prototype.concat
  */
@@ -12,20 +12,20 @@ export function concat(
   string: string,
   ...parts: [...parts: string[], options: SeparatorOptions] | string[]
 ): string;
-export function concat<Value extends null | undefined>(
-  string: Value,
+export function concat(
+  string: null | undefined,
   ...parts: [...parts: string[], options: SeparatorOptions] | string[]
-): Value;
+): undefined;
 export function concat(
   string: Maybe<string>,
   ...parts: [...parts: string[], options: SeparatorOptions] | string[]
-): Maybe<string>;
+): string | undefined;
 export function concat(
   string: Maybe<string>,
   ...parts: [...parts: string[], options: SeparatorOptions] | string[]
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const [strings, separator] = splitSeparatorOptions(parts);

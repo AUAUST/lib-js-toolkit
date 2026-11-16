@@ -1,8 +1,8 @@
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Returns the string in uppercase, locale-independently; nullish input
- * is returned as is.
+ * Returns the string in uppercase, locale-independently; a nullish string
+ * returns `undefined`.
  *
  * @shorthand upper
  * @native nullsafe String.prototype.toUpperCase
@@ -10,10 +10,8 @@ import type { Maybe } from "#types/Maybe";
 export function toUpperCase<Value extends string>(
   string: Value,
 ): string extends Value ? string : Uppercase<Value>;
-export function toUpperCase<Value extends null | undefined>(
-  string: Value,
-): Value;
-export function toUpperCase(string: Maybe<string>): Maybe<string>;
-export function toUpperCase(string: Maybe<string>): Maybe<string> {
-  return string == null ? string : string.toUpperCase();
+export function toUpperCase(string: null | undefined): undefined;
+export function toUpperCase(string: Maybe<string>): string | undefined;
+export function toUpperCase(string: Maybe<string>): string | undefined {
+  return string == null ? undefined : string.toUpperCase();
 }

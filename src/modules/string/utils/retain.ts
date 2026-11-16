@@ -5,24 +5,24 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Keeps only the matches of `pattern`, a substring or a regex, joined in order.
- * A regex is cloned, so its `lastIndex` is neither read nor changed. Nullish
- * input is returned as is.
+ * A regex is cloned, so its `lastIndex` is neither read nor changed. A nullish
+ * string returns `undefined`.
  */
 export function retain(string: string, pattern: string | RegExp): string;
-export function retain<Value extends null | undefined>(
-  string: Value,
+export function retain(
+  string: null | undefined,
   pattern: string | RegExp,
-): Value;
+): undefined;
 export function retain(
   string: Maybe<string>,
   pattern: string | RegExp,
-): Maybe<string>;
+): string | undefined;
 export function retain(
   string: Maybe<string>,
   pattern: string | RegExp,
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const regex = toGlobalRegExp(

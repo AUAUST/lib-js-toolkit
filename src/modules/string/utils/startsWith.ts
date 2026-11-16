@@ -1,8 +1,8 @@
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Returns whether the string starts with the search string at the position;
- * nullish input is returned as is.
+ * Returns whether the string starts with the search string at the position; a
+ * nullish string returns `undefined`.
  *
  * @native equal String.prototype.startsWith
  */
@@ -11,20 +11,20 @@ export function startsWith(
   search: string,
   position?: number,
 ): boolean;
-export function startsWith<Value extends null | undefined>(
-  string: Value,
+export function startsWith(
+  string: null | undefined,
   search: string,
   position?: number,
-): Value;
+): undefined;
 export function startsWith(
   string: Maybe<string>,
   search: string,
   position?: number,
-): Maybe<boolean>;
+): boolean | undefined;
 export function startsWith(
   string: Maybe<string>,
   search: string,
   position?: number,
-): Maybe<boolean> {
-  return string == null ? string : string.startsWith(search, position);
+): boolean | undefined {
+  return string == null ? undefined : string.startsWith(search, position);
 }

@@ -24,7 +24,7 @@ describe("splitWords", () => {
     ]);
   });
 
-  test("passes nullish input through", () => {
-    expect(splitWords(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(splitWords(null)).toBeUndefined();
   });
 });

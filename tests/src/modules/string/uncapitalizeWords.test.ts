@@ -7,7 +7,7 @@ describe("uncapitalizeWords", () => {
     expect(uncapitalizeWords("Foo  BAR\nBaz")).toBe("foo  bAR\nbaz");
   });
 
-  test("passes nullish input through", () => {
+  test("returns undefined for nullish input", () => {
     expect(uncapitalizeWords(undefined)).toBeUndefined();
   });
 });

@@ -17,7 +17,12 @@ describe("capitalize", () => {
     expectTypeOf(capitalize("a" as string)).toEqualTypeOf<string>();
   });
 
-  test("passes nullish input through", () => {
-    expect(capitalize(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(capitalize(null)).toBeUndefined();
+    expectTypeOf(capitalize(null)).toEqualTypeOf<undefined>();
+
+    expectTypeOf(capitalize("a" as string | null)).toEqualTypeOf<
+      string | undefined
+    >();
   });
 });

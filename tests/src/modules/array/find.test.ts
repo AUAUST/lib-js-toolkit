@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { find } from "@auaust/toolkit/array";
-import { isString } from "@auaust/toolkit/guard";
+import { isNull, isString } from "@auaust/toolkit/guard";
 
 describe("find", () => {
   test("returns the first accepted item, passing each index", () => {
@@ -43,8 +43,13 @@ describe("find", () => {
     find(union, "active");
   });
 
-  test("passes nullish through and rejects invalid predicates", () => {
-    expect(find(null, Boolean)).toBeUndefined();
+  test("returns undefined for a nullish array and keeps a found null", () => {
+    expect(find(null, isNull)).toBeUndefined();
+    expect(find([null], isNull)).toBeNull();
+    expectTypeOf(find([null], isNull)).toEqualTypeOf<null | undefined>();
+  });
+
+  test("rejects invalid predicates", () => {
     expect(() => find([1], true as never)).toThrow(TypeError);
   });
 });

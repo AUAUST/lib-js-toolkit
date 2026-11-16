@@ -8,17 +8,17 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Removes diacritics by decomposing the string to NFD and dropping combining
- * marks, and spells out ligatures such as `Œ` and `ß`; nullish input is
- * returned as is.
+ * marks, and spells out ligatures such as `Œ` and `ß`; a nullish string
+ * returns `undefined`.
  *
  * @native variant String.prototype.normalize
  */
 export function unaccent(string: string): string;
-export function unaccent<Value extends null | undefined>(string: Value): Value;
-export function unaccent(string: Maybe<string>): Maybe<string>;
-export function unaccent(string: Maybe<string>): Maybe<string> {
+export function unaccent(string: null | undefined): undefined;
+export function unaccent(string: Maybe<string>): string | undefined;
+export function unaccent(string: Maybe<string>): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const characters = [...string.normalize("NFD")];

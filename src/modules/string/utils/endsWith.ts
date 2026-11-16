@@ -2,7 +2,7 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Returns whether the string, cut at the end position, ends with the search
- * string; nullish input is returned as is.
+ * string; a nullish string returns `undefined`.
  *
  * @native equal String.prototype.endsWith
  */
@@ -11,20 +11,20 @@ export function endsWith(
   search: string,
   endPosition?: number,
 ): boolean;
-export function endsWith<Value extends null | undefined>(
-  string: Value,
+export function endsWith(
+  string: null | undefined,
   search: string,
   endPosition?: number,
-): Value;
+): undefined;
 export function endsWith(
   string: Maybe<string>,
   search: string,
   endPosition?: number,
-): Maybe<boolean>;
+): boolean | undefined;
 export function endsWith(
   string: Maybe<string>,
   search: string,
   endPosition?: number,
-): Maybe<boolean> {
-  return string == null ? string : string.endsWith(search, endPosition);
+): boolean | undefined {
+  return string == null ? undefined : string.endsWith(search, endPosition);
 }

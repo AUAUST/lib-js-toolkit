@@ -8,7 +8,7 @@ describe("increment", () => {
     expect(increment("file")).toBe("file1");
     expect(increment("v009")).toBe("v010");
     expectTypeOf(increment("a")).toEqualTypeOf<string>();
-    expect(increment(null)).toBeNull();
+    expect(increment(null)).toBeUndefined();
   });
 
   test("is exact past 2^53", () => {

@@ -5,16 +5,14 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Uppercases the first code point of each whitespace-separated word, keeping
- * whitespace as given; nullish input is returned as is.
+ * whitespace as given; a nullish string returns `undefined`.
  */
 export function capitalizeWords(string: string): string;
-export function capitalizeWords<Value extends null | undefined>(
-  string: Value,
-): Value;
-export function capitalizeWords(string: Maybe<string>): Maybe<string>;
-export function capitalizeWords(string: Maybe<string>): Maybe<string> {
+export function capitalizeWords(string: null | undefined): undefined;
+export function capitalizeWords(string: Maybe<string>): string | undefined;
+export function capitalizeWords(string: Maybe<string>): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const parts = string.split(whitespaceRunPattern);

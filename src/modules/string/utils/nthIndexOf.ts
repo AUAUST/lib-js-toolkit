@@ -5,7 +5,7 @@ import type { Maybe } from "#types/Maybe";
  * Returns the index of the needle's occurrence at the zero-based position,
  * occurrences possibly overlapping; a negative position counts from the end, `-1`
  * being the last occurrence. Returns `-1` when that occurrence does not exist;
- * nullish input is returned as is.
+ * a nullish string returns `undefined`.
  *
  * @throws {RangeError} when the position is not an integer.
  */
@@ -14,30 +14,28 @@ export function nthIndexOf(
   needle: string,
   position: number,
 ): number;
-export function nthIndexOf<Value extends null | undefined>(
-  string: Value,
+export function nthIndexOf(
+  string: null | undefined,
   needle: string,
   position: number,
-): Value;
+): undefined;
 export function nthIndexOf(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<number>;
+): number | undefined;
 export function nthIndexOf(
   string: Maybe<string>,
   needle: string,
   position: number,
-): Maybe<number> {
+): number | undefined {
   assertOccurrencePosition(position);
 
-  if (string == null) {
-    return string;
+  if (string != null) {
+    return position < 0
+      ? lastNthIndexOf(string, needle, -position)
+      : firstNthIndexOf(string, needle, position + 1);
   }
-
-  return position < 0
-    ? lastNthIndexOf(string, needle, -position)
-    : firstNthIndexOf(string, needle, position + 1);
 }
 
 function firstNthIndexOf(

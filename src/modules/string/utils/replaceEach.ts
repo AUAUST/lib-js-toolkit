@@ -8,30 +8,30 @@ import type { Maybe } from "#types/Maybe";
  * Applies each replacement in entry order, every one on the previous result.
  * Replacements are a record of substrings, or pairs whose first item is a
  * substring or a regex; replacements are inserted literally, without `$` patterns.
- * Nullish input is returned as is.
+ * A nullish string returns `undefined`.
  */
 export function replaceEach(
   string: string,
   replacements: ReplaceEachReplacements,
   options?: ReplaceEachOptions,
 ): string;
-export function replaceEach<Value extends null | undefined>(
-  string: Value,
+export function replaceEach(
+  string: null | undefined,
   replacements: ReplaceEachReplacements,
   options?: ReplaceEachOptions,
-): Value;
+): undefined;
 export function replaceEach(
   string: Maybe<string>,
   replacements: ReplaceEachReplacements,
   options?: ReplaceEachOptions,
-): Maybe<string>;
+): string | undefined;
 export function replaceEach(
   string: Maybe<string>,
   replacements: ReplaceEachReplacements,
   options: ReplaceEachOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const pairs = isArray(replacements) ? replacements : entries(replacements);

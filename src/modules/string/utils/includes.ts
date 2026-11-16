@@ -1,8 +1,8 @@
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Returns whether the string contains the search string from the position on;
- * nullish input is returned as is.
+ * Returns whether the string contains the search string from the position on; a
+ * nullish string returns `undefined`.
  *
  * @native equal String.prototype.includes
  */
@@ -11,20 +11,20 @@ export function includes(
   search: string,
   position?: number,
 ): boolean;
-export function includes<Value extends null | undefined>(
-  string: Value,
+export function includes(
+  string: null | undefined,
   search: string,
   position?: number,
-): Value;
+): undefined;
 export function includes(
   string: Maybe<string>,
   search: string,
   position?: number,
-): Maybe<boolean>;
+): boolean | undefined;
 export function includes(
   string: Maybe<string>,
   search: string,
   position?: number,
-): Maybe<boolean> {
-  return string == null ? string : string.includes(search, position);
+): boolean | undefined {
+  return string == null ? undefined : string.includes(search, position);
 }

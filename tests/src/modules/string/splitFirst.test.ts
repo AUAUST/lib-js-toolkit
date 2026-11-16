@@ -10,6 +10,6 @@ describe("splitFirst", () => {
 
   test("returns the string and an empty string for a missing needle", () => {
     expect(splitFirst("abc", ".")).toEqual(["abc", ""]);
-    expect(splitFirst(null, ".")).toBeNull();
+    expect(splitFirst(null, ".")).toBeUndefined();
   });
 });

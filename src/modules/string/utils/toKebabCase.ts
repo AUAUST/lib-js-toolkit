@@ -5,25 +5,25 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to kebab-case, splitting through `splitWords` and casing
- * words following `locale`; nullish input is returned as is.
+ * words following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand kebab
  */
 export function toKebabCase(string: string, options?: CasingOptions): string;
-export function toKebabCase<Value extends null | undefined>(
-  string: Value,
+export function toKebabCase(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toKebabCase(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toKebabCase(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const words = splitWords(string, options);

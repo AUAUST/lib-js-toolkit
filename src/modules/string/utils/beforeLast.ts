@@ -2,23 +2,20 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Returns the part of the string before the last occurrence of the needle, or
- * `undefined` when the needle is missing. Nullish input is returned as is.
+ * `undefined` when the needle is missing. A nullish string returns `undefined`.
  */
 export function beforeLast(string: string, needle: string): string | undefined;
-export function beforeLast<Value extends null | undefined>(
-  string: Value,
-  needle: string,
-): Value;
+export function beforeLast(string: null | undefined, needle: string): undefined;
 export function beforeLast(
   string: Maybe<string>,
   needle: string,
-): Maybe<string>;
+): string | undefined;
 export function beforeLast(
   string: Maybe<string>,
   needle: string,
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const index = string.lastIndexOf(needle);

@@ -3,23 +3,26 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Splits the string into parts of `size` code points; the last part holds the
- * remainder. Nullish input is returned as is.
+ * remainder. A nullish string returns `undefined`.
  *
  * @throws {RangeError} when the size is not a positive safe integer.
  */
 export function chunk(string: string, size: number): string[];
-export function chunk<Value extends null | undefined>(
-  string: Value,
+export function chunk(string: null | undefined, size: number): undefined;
+export function chunk(
+  string: Maybe<string>,
   size: number,
-): Value;
-export function chunk(string: Maybe<string>, size: number): Maybe<string[]>;
-export function chunk(string: Maybe<string>, size: number): Maybe<string[]> {
+): string[] | undefined;
+export function chunk(
+  string: Maybe<string>,
+  size: number,
+): string[] | undefined {
   if (!isSafeInteger(size) || size < 1) {
     throw new RangeError("A chunk size must be a positive safe integer.");
   }
 
   if (string == null) {
-    return string;
+    return;
   }
 
   const codePoints = [...string];

@@ -10,7 +10,7 @@ describe("remove", () => {
     expectTypeOf(remove("a", "a")).toEqualTypeOf<string>();
   });
 
-  test("returns nullish input as is", () => {
+  test("returns undefined for nullish input", () => {
     expect(remove(undefined, "a")).toBeUndefined();
   });
 });

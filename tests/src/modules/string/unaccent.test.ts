@@ -7,7 +7,7 @@ describe("unaccent", () => {
     expect(unaccent("Œuvre à côté")).toBe("OEuvre a cote");
   });
 
-  test("passes nullish input through", () => {
+  test("returns undefined for nullish input", () => {
     expect(unaccent(undefined)).toBeUndefined();
   });
 });

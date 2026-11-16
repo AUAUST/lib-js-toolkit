@@ -8,7 +8,7 @@ describe("toTitleCase", () => {
     expect(title).toBe(toTitleCase);
   });
 
-  test("passes nullish input through", () => {
+  test("returns undefined for nullish input", () => {
     expect(toTitleCase(undefined)).toBeUndefined();
   });
 });

@@ -10,6 +10,6 @@ describe("withPrefix", () => {
 
   test("adds a missing prefix", () => {
     expect(withPrefix("a", "/")).toBe("/a");
-    expect(withPrefix(null, "/")).toBeNull();
+    expect(withPrefix(null, "/")).toBeUndefined();
   });
 });

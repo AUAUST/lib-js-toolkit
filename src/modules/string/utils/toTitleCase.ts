@@ -6,26 +6,26 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to Title Case, splitting through `splitWords`, then
- * capitalizing each word following `locale` and joining them with spaces; nullish
- * input is returned as is.
+ * capitalizing each word following `locale` and joining them with spaces; a
+ * nullish string returns `undefined`.
  *
  * @shorthand title
  */
 export function toTitleCase(string: string, options?: CasingOptions): string;
-export function toTitleCase<Value extends null | undefined>(
-  string: Value,
+export function toTitleCase(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toTitleCase(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toTitleCase(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const words = splitWords(string, options);

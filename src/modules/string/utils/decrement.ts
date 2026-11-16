@@ -7,7 +7,7 @@ import type { Maybe } from "#types/Maybe";
  * Subtracts `decrement`, 1 by default, from the trailing ASCII digits of the
  * string, keeping a zero counter; a string without one counts as zero. The counter
  * keeps its width, padded to `pad` with `filler`; arithmetic is exact past 2^53.
- * A number is the `decrement` shorthand. Nullish input is returned as is.
+ * A number is the `decrement` shorthand. A nullish string returns `undefined`.
  *
  * @throws {RangeError} when `decrement` is not a safe integer or the counter
  * would go below zero.
@@ -16,20 +16,20 @@ export function decrement(
   string: string,
   options?: DecrementOptions | number,
 ): string;
-export function decrement<Value extends null | undefined>(
-  string: Value,
+export function decrement(
+  string: null | undefined,
   options?: DecrementOptions | number,
-): Value;
+): undefined;
 export function decrement(
   string: Maybe<string>,
   options?: DecrementOptions | number,
-): Maybe<string>;
+): string | undefined;
 export function decrement(
   string: Maybe<string>,
   options?: DecrementOptions | number,
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const {

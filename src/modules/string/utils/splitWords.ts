@@ -7,23 +7,23 @@ import type { Maybe } from "#types/Maybe";
 /**
  * Splits the string into words on whitespace, `-`, `_`, `.`, case changes and
  * digit boundaries, dropping the separators and keeping each word's case; accents
- * are removed only when `unaccent` is set. Nullish input is returned as is.
+ * are removed only when `unaccent` is set. A nullish string returns `undefined`.
  */
 export function splitWords(string: string, options?: CasingOptions): string[];
-export function splitWords<Value extends null | undefined>(
-  string: Value,
+export function splitWords(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function splitWords(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string[]>;
+): string[] | undefined;
 export function splitWords(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string[]> {
+): string[] | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const source = options.unaccent === true ? unaccent(string) : string;

@@ -3,8 +3,8 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Shortens the string to `length` code points by cutting its start, replacing the
- * cut part with `ellipsis`. A string within the length is returned unchanged.
- * Nullish input is returned as is.
+ * cut part with `ellipsis`. A string within the length is returned unchanged. A
+ * nullish string returns `undefined`.
  *
  * @throws {RangeError} when the length is not a non-negative safe integer, or a
  * non-empty ellipsis is not shorter than it.
@@ -14,25 +14,25 @@ export function truncateStart(
   length: number,
   ellipsis?: string,
 ): string;
-export function truncateStart<Value extends null | undefined>(
-  string: Value,
+export function truncateStart(
+  string: null | undefined,
   length: number,
   ellipsis?: string,
-): Value;
+): undefined;
 export function truncateStart(
   string: Maybe<string>,
   length: number,
   ellipsis?: string,
-): Maybe<string>;
+): string | undefined;
 export function truncateStart(
   string: Maybe<string>,
   length: number,
   ellipsis = "",
-): Maybe<string> {
+): string | undefined {
   assertTruncation(length, ellipsis);
 
   if (string == null) {
-    return string;
+    return;
   }
 
   const codePoints = [...string];

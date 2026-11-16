@@ -6,25 +6,25 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to PascalCase, splitting through `splitWords` and casing
- * words following `locale`; nullish input is returned as is.
+ * words following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand pascal
  */
 export function toPascalCase(string: string, options?: CasingOptions): string;
-export function toPascalCase<Value extends null | undefined>(
-  string: Value,
+export function toPascalCase(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toPascalCase(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toPascalCase(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const words = splitWords(string, options);

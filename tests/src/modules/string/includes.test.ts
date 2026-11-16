@@ -9,7 +9,7 @@ describe("includes", () => {
     expectTypeOf(includes("abc", "b")).toEqualTypeOf<boolean>();
   });
 
-  test("passes nullish input through", () => {
-    expect(includes(null, "a")).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(includes(null, "a")).toBeUndefined();
   });
 });

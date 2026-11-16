@@ -9,7 +9,7 @@ describe("endsWith", () => {
     expectTypeOf(endsWith("abc", "c")).toEqualTypeOf<boolean>();
   });
 
-  test("passes nullish input through", () => {
+  test("returns undefined for nullish input", () => {
     expect(endsWith(undefined, "a")).toBeUndefined();
   });
 });

@@ -5,31 +5,29 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Splits the string through `splitWords` and joins the words with `delimiter`,
- * keeping each word's case; nullish input is returned as is.
+ * keeping each word's case; a nullish string returns `undefined`.
  */
 export function toDelimitedCase(
   string: string,
   delimiter: string,
   options?: CasingOptions,
 ): string;
-export function toDelimitedCase<Value extends null | undefined>(
-  string: Value,
+export function toDelimitedCase(
+  string: null | undefined,
   delimiter: string,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toDelimitedCase(
   string: Maybe<string>,
   delimiter: string,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toDelimitedCase(
   string: Maybe<string>,
   delimiter: string,
   options: CasingOptions = {},
-): Maybe<string> {
-  if (string == null) {
-    return string;
+): string | undefined {
+  if (string != null) {
+    return join(splitWords(string, options), delimiter);
   }
-
-  return join(splitWords(string, options), delimiter);
 }

@@ -10,6 +10,6 @@ describe("insert", () => {
 
   test("inserts at the end", () => {
     expect(insert("abc", 3, "x")).toBe("abcx");
-    expect(insert(null, 3, "x")).toBeNull();
+    expect(insert(null, 3, "x")).toBeUndefined();
   });
 });

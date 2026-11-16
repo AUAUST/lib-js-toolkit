@@ -9,8 +9,8 @@ describe("startsWith", () => {
     expectTypeOf(startsWith("abc", "a")).toEqualTypeOf<boolean>();
   });
 
-  test("passes nullish input through", () => {
-    expect(startsWith(null, "a")).toBeNull();
-    expectTypeOf(startsWith(null, "a")).toEqualTypeOf<null>();
+  test("returns undefined for nullish input", () => {
+    expect(startsWith(null, "a")).toBeUndefined();
+    expectTypeOf(startsWith(null, "a")).toEqualTypeOf<undefined>();
   });
 });

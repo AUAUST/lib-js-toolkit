@@ -10,6 +10,6 @@ describe("concat", () => {
 
   test("keeps empty parts between separators", () => {
     expect(concat("a", "", "b", { separator: "-" })).toBe("a--b");
-    expect(concat(null, "b")).toBeNull();
+    expect(concat(null, "b")).toBeUndefined();
   });
 });

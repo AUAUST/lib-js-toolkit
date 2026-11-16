@@ -6,25 +6,25 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to camelCase, splitting through `splitWords` and casing
- * words following `locale`; nullish input is returned as is.
+ * words following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand camel
  */
 export function toCamelCase(string: string, options?: CasingOptions): string;
-export function toCamelCase<Value extends null | undefined>(
-  string: Value,
+export function toCamelCase(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toCamelCase(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toCamelCase(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string> {
+): string | undefined {
   if (string == null) {
-    return string;
+    return;
   }
 
   const words = splitWords(string, options);

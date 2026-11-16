@@ -9,8 +9,8 @@ describe("toLowerCase", () => {
     expectTypeOf(lower("A" as string)).toEqualTypeOf<string>();
   });
 
-  test("passes nullish input through", () => {
-    expect(lower(null)).toBeNull();
+  test("returns undefined for nullish input", () => {
+    expect(lower(null)).toBeUndefined();
     expectTypeOf(lower(undefined)).toEqualTypeOf<undefined>();
   });
 

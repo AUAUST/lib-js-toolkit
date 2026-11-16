@@ -5,26 +5,24 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Converts the string to snake_case, splitting through `splitWords` and casing
- * words following `locale`; nullish input is returned as is.
+ * words following `locale`; a nullish string returns `undefined`.
  *
  * @shorthand snake
  */
 export function toSnakeCase(string: string, options?: CasingOptions): string;
-export function toSnakeCase<Value extends null | undefined>(
-  string: Value,
+export function toSnakeCase(
+  string: null | undefined,
   options?: CasingOptions,
-): Value;
+): undefined;
 export function toSnakeCase(
   string: Maybe<string>,
   options?: CasingOptions,
-): Maybe<string>;
+): string | undefined;
 export function toSnakeCase(
   string: Maybe<string>,
   options: CasingOptions = {},
-): Maybe<string> {
-  if (string == null) {
-    return string;
+): string | undefined {
+  if (string != null) {
+    return joinLowercaseWords(splitWords(string, options), "_", options);
   }
-
-  return joinLowercaseWords(splitWords(string, options), "_", options);
 }
