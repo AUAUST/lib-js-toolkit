@@ -15,4 +15,15 @@ describe("toDeduplicated", () => {
   test("passes nullish through", () => {
     expect(toDeduplicated(null)).toBeUndefined();
   });
+
+  test("copies the distinct values of any iterable but a string", () => {
+    expect(
+      toDeduplicated(
+        new Map([
+          [1, 1],
+          [2, 1],
+        ]).values(),
+      ),
+    ).toEqual([1]);
+  });
 });

@@ -16,4 +16,18 @@ describe("toSorted", () => {
   test("passes nullish through", () => {
     expect(toSorted(null)).toBeUndefined();
   });
+
+  test("copies any iterable but a string", () => {
+    const result = toSorted(new Set([3, 1, 2]));
+
+    expect(result).toEqual([1, 2, 3]);
+    expectTypeOf(result).toEqualTypeOf<number[]>();
+  });
+
+  test("throws on a string or a non-iterable", () => {
+    // @ts-expect-error a string is rejected
+    expect(() => toSorted("cba")).toThrow(TypeError);
+    // @ts-expect-error a non-iterable is rejected
+    expect(() => toSorted({})).toThrow(TypeError);
+  });
 });

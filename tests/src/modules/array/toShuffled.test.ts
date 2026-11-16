@@ -16,4 +16,8 @@ describe("toShuffled", () => {
   test("gives an empty array for an empty array", () => {
     expect(toShuffled([])).toEqual([]);
   });
+
+  test("copies any iterable but a string", () => {
+    expect(toShuffled(new Set([1, 2, 3])).toSorted()).toEqual([1, 2, 3]);
+  });
 });

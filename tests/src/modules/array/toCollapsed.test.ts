@@ -19,4 +19,8 @@ describe("toCollapsed", () => {
   test("passes nullish through", () => {
     expect(toCollapsed(null)).toBeUndefined();
   });
+
+  test("copies any iterable but a string", () => {
+    expect(toCollapsed(new Set([1, 2]))).toEqual([1, 2]);
+  });
 });

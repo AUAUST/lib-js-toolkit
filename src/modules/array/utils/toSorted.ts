@@ -1,24 +1,44 @@
+import { isArray } from "#modules/array/guards/isArray";
+import { copyIterable } from "#modules/array/internals/copyIterable";
 import type { Comparator } from "#modules/array/types/Comparator";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Copies an array into a new sorted array with a comparator, by default in
- * ascending order of the items' string forms, `undefined` and holes last, as
- * with `Array.prototype.toSorted`. A nullish array returns `undefined`.
+ * Copies any iterable but a string once into a new sorted array with a
+ * comparator, by default in ascending order of the items' string forms,
+ * `undefined` and holes last, as with `Array.prototype.toSorted`. A nullish
+ * iterable returns `undefined`.
  *
- * @native equal Array.prototype.toSorted
+ * @throws {TypeError} when the iterable is a string or is not iterable.
+ * @native variant Array.prototype.toSorted
  */
 export function toSorted<Items extends readonly unknown[]>(
-  array: Items,
+  iterable: Items,
   comparator?: Comparator<Items[number]>,
 ): Items[number][];
+export function toSorted<Item>(
+  iterable: Iterable<Item> & object,
+  comparator?: Comparator<Item>,
+): Item[];
 export function toSorted<Items extends readonly unknown[]>(
-  array: Maybe<Items>,
+  iterable: Maybe<Items>,
   comparator?: Comparator<Items[number]>,
 ): Items[number][] | undefined;
+export function toSorted<Item>(
+  iterable: Maybe<Iterable<Item> & object>,
+  comparator?: Comparator<Item>,
+): Item[] | undefined;
 export function toSorted(
-  array: Maybe<readonly unknown[]>,
+  iterable: Maybe<Iterable<unknown> & object>,
   comparator?: Comparator<unknown>,
 ): unknown[] | undefined {
-  return array?.toSorted(comparator);
+  if (iterable == null) {
+    return;
+  }
+
+  if (isArray(iterable)) {
+    return iterable.toSorted(comparator);
+  }
+
+  return copyIterable(iterable).sort(comparator);
 }

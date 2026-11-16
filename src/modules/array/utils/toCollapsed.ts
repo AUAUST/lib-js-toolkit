@@ -1,17 +1,33 @@
+import { isArray } from "#modules/array/guards/isArray";
+import { copyIterable } from "#modules/array/internals/copyIterable";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Copies an array's items into a new array without its holes, keeping their
- * order. A nullish array returns `undefined`.
+ * Copies any iterable but a string once into a new array without holes, keeping
+ * the order. A nullish iterable returns `undefined`.
+ *
+ * @throws {TypeError} when the iterable is a string or is not iterable.
  */
 export function toCollapsed<Items extends readonly unknown[]>(
-  array: Items,
+  iterable: Items,
 ): Items[number][];
+export function toCollapsed<Item>(iterable: Iterable<Item> & object): Item[];
 export function toCollapsed<Items extends readonly unknown[]>(
-  array: Maybe<Items>,
+  iterable: Maybe<Items>,
 ): Items[number][] | undefined;
+export function toCollapsed<Item>(
+  iterable: Maybe<Iterable<Item> & object>,
+): Item[] | undefined;
 export function toCollapsed(
-  array: Maybe<readonly unknown[]>,
+  iterable: Maybe<Iterable<unknown> & object>,
 ): unknown[] | undefined {
-  return array?.filter(() => true);
+  if (iterable == null) {
+    return;
+  }
+
+  if (isArray(iterable)) {
+    return iterable.filter(() => true);
+  }
+
+  return copyIterable(iterable);
 }
