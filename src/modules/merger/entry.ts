@@ -2,7 +2,9 @@
 
 export { lazyMerge } from "#modules/merger/utils/lazyMerge";
 export { merge } from "#modules/merger/utils/merge";
+export { merger } from "#modules/merger/utils/merger";
 export { toMerged } from "#modules/merger/utils/toMerged";
 export type * from "#modules/merger/utils/lazyMerge";
 export type * from "#modules/merger/utils/merge";
+export type * from "#modules/merger/utils/merger";
 export type * from "#modules/merger/utils/toMerged";
