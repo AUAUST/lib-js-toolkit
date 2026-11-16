@@ -7,20 +7,25 @@ describe("toMerged", () => {
     const first = {
       a: { x: 1 },
     };
+
     const second = {
       a: { y: 2 },
       b: 2,
     };
+
     const result = toMerged(first, second);
 
     expect(result).toEqual({
       a: { x: 1, y: 2 },
       b: 2,
     });
+
     expect(result).not.toBe(first);
+
     expect(first).toEqual({
       a: { x: 1 },
     });
+
     expect(second).toEqual({
       a: { y: 2 },
       b: 2,
@@ -47,6 +52,7 @@ describe("toMerged", () => {
       a: 1,
       b: { x: 1 },
     });
+
     expectTypeOf(result.a).toEqualTypeOf<number>();
   });
 });

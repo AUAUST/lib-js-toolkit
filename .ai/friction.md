@@ -114,3 +114,10 @@
 - engrenage CLI: ran `engrenage planning issue claim` as the planning skill writes it — not on PATH; used `pnpm exec engrenage`
 - zsh word splitting: `git cherry-pick $C` with newline-joined SHAs — zsh passed one arg; used a range `base..tip`
 - Bash auto-mode classifier: `gh issue view` loops while planning — no verdict three times in a row; continued with Read on backlog files, then the same command passed
+- zsh globbing: `echo =====` and `grep --include=*.ts` unquoted — zsh read `=word` as command expansion and failed on the unmatched glob; quoted the arguments
+- engrenage Bash hook: ran a command after `cd` into a `node_modules` package — the hook took that package.json as the consumer root and failed (`engrenage` not found); ran `cd` to the project root alone first
+- `engrenage planning issue publish`: published a new Segment under a Task — refused, a new segment must be a direct sub-issue of a Plan in the set (found in dist source); moved its members under the task
+- `engrenage planning issue publish`: published #266 detached from its parent with its header line — check passed but publish failed "header line but no ancestors"; removed the header
+- zsh word splitting: passed a $F file list to eslint and git — zsh keeps it one word; used an array
+- worktree isolation guard: python heredocs, sed+perl chains and `git` in compound commands — refused as unverifiable; wrote scripts to the scratchpad or used Edit, ran git alone
+- worktree Bash isolation: heredoc python edits and chained git add+commit — refused as too complex to verify; split into separate plain commands and Write/Edit tools
