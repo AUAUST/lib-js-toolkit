@@ -23,12 +23,14 @@ describe("flatMap", () => {
     expect([...iterator]).toEqual([]);
   });
 
-  test("rejects a string result during iteration, as Iterator.prototype.flatMap", () => {
-    const result = flatMap(["ab"], (value) => value);
+  test("yields a bare mapped value as is, strings included", () => {
+    const result = flatMap([1, 2], (value) => {
+      return value === 1 ? [value, value] : value;
+    });
 
-    expect(() => {
-      return [...result];
-    }).toThrow(TypeError);
+    expect([...result]).toEqual([1, 1, 2]);
+    expectTypeOf(result).toEqualTypeOf<IteratorObject<number, undefined>>();
+    expect([...flatMap([1], () => "ab")]).toEqual(["ab"]);
   });
 
   test("runs nothing before iteration and closes the source and the inner iterable on break", () => {

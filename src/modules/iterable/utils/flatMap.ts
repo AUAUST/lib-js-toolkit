@@ -1,18 +1,18 @@
+import { isCallableMember } from "#modules/function/guards/isCallableMember";
 import { isFunction } from "#modules/function/guards/isFunction";
-import { isContainer } from "#modules/guard/guards/isContainer";
 import { isIterable } from "#modules/iterable/guards/isIterable";
+import { isFlattenable } from "#modules/iterable/internals/isFlattenable";
 import type { Maybe } from "#types/Maybe";
 
 /**
- * Lazily maps each value of an iterable to an iterable or an iterator,
- * passing it with its index, and yields the values of each in turn, as
- * `Iterator.prototype.flatMap`; returns a new single-use iterator and never
- * mutates the source. The source is read lazily: changes made to it before a
- * value is pulled are visible. A nullish source returns `undefined`.
+ * Lazily maps each value of an iterable, passing it with its index, and yields
+ * the values of each mapped iterable or iterator in turn, or the mapped value
+ * itself when it is neither, strings included; returns a new single-use iterator
+ * and never mutates the source. The source is read lazily: changes made to it
+ * before a value is pulled are visible. A nullish source returns `undefined`.
  *
- * @throws {TypeError} at call time when the source is not iterable or the mapper
- * is not a function; during iteration when the mapper returns a primitive,
- * strings included.
+ * @throws {TypeError} at call time when the source is not iterable or the
+ * mapper is not a function.
  */
 export function flatMap<Input, Output>(
   iterable: Iterable<Input>,
@@ -20,7 +20,9 @@ export function flatMap<Input, Output>(
     value: Input,
     index: number,
   ) =>
-    Iterator<Output, unknown, undefined> | Iterable<Output, unknown, undefined>,
+    | Output
+    | Iterable<Output, unknown, undefined>
+    | Iterator<Output, unknown, undefined>,
 ): IteratorObject<Output, undefined>;
 export function flatMap<Input, Output>(
   iterable: Maybe<Iterable<Input>>,
@@ -28,15 +30,13 @@ export function flatMap<Input, Output>(
     value: Input,
     index: number,
   ) =>
-    Iterator<Output, unknown, undefined> | Iterable<Output, unknown, undefined>,
+    | Output
+    | Iterable<Output, unknown, undefined>
+    | Iterator<Output, unknown, undefined>,
 ): IteratorObject<Output, undefined> | undefined;
 export function flatMap<Input, Output>(
   iterable: Maybe<Iterable<Input>>,
-  mapper: (
-    value: Input,
-    index: number,
-  ) =>
-    Iterator<Output, unknown, undefined> | Iterable<Output, unknown, undefined>,
+  mapper: FlatMapper<Input, Output>,
 ): IteratorObject<Output, undefined> | undefined {
   if (iterable == null) {
     return;
@@ -55,23 +55,27 @@ export function flatMap<Input, Output>(
 
 function* flatMapped<Input, Output>(
   iterable: Iterable<Input>,
-  mapper: (
-    value: Input,
-    index: number,
-  ) =>
-    Iterator<Output, unknown, undefined> | Iterable<Output, unknown, undefined>,
+  mapper: FlatMapper<Input, Output>,
 ): Generator<Output, undefined, undefined> {
   let index = 0;
 
   for (const value of iterable) {
     const inner = mapper(value, index++);
 
-    if (!isContainer(inner)) {
-      throw new TypeError(
-        "Expected the mapper to return an iterable or an iterator.",
-      );
+    if (isFlattenable(inner)) {
+      yield* inner;
+    } else if (isCallableMember(inner, "next")) {
+      yield* { [Symbol.iterator]: () => inner };
+    } else {
+      yield inner;
     }
-
-    yield* isIterable(inner) ? inner : { [Symbol.iterator]: () => inner };
   }
 }
+
+type FlatMapper<Input, Output> = (
+  value: Input,
+  index: number,
+) =>
+  | Output
+  | Iterable<Output, unknown, undefined>
+  | Iterator<Output, unknown, undefined>;
