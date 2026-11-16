@@ -32,3 +32,4 @@
 - Set of type names in `is()`: early `unknown` return, deduplicated checks — building the Set per call is ~6x slower than a switch loop (benchmark, 1–3 names)
 - shared in-place compaction for `array.retain` and `array.pullBy`: one write-pointer loop — hole policies and return values differ by decision (#145)
 - rolldown output keepNames: keep Function.name in minified CI builds — injects a __name runtime helper that declaration chunks import, failing the dist typecheck
+- shared array wrapper over iterable set helpers: one body for `array.difference`, `array.intersection` (and `pluck`) — four-line bodies; a higher-order factory loses the per-helper overloads and JSDoc

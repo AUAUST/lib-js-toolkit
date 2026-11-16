@@ -29,3 +29,9 @@
 - CI runs the development Node (`devEngines.runtime`, 24) only, so passing it does not prove the advertised `engines.node` minimum (22). The generated workflows offer no Node version matrix (only test shards), and local edits are overwritten on sync. Moved from AUAUST/lib-js-toolkit#150.
 - Outcome: the generated library workflows run `pnpm test` against `dist/` on the `engines.node` minimum too; until then, run it by hand before each release changing runtime code.
 - Done when toolkit's CI tests `dist/` on Node 22.
+
+## 6. Pushed `Closes` commits keep reopened issues closed
+
+- `listIssueCommits` reads `Closes #n` from all of `HEAD`, and `checkIssueReadiness` reports any issue it names as "closed by local commit", ancestors included, with no override. Pushed commit 36e6cc3 wrongly carried `Closes #275`; GitHub closed and the user reopened #275, yet the worker dispatch guard refuses every task under it (AUAUST/lib-js-toolkit#288).
+- Outcome: a closing commit counts only until GitHub has applied it: either only commits absent from remote-tracking refs (`HEAD --not --remotes`), or ignoring a commit once the issue's timeline records its closure by that commit.
+- Done when a reopened issue whose closing commit is pushed reads as open in `walk check` and the dispatch guard.

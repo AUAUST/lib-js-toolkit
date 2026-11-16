@@ -127,3 +127,11 @@
 - sed (BSD): word-boundary \b rename — unsupported on macOS sed, redid with perl -pi
 - git commit -m: one -m per Closes line separates them with blank lines — commit-msg hook rejects; used -F with consecutive lines
 - `tsc` on a single file: type probe of a copied `Split` type — TS5112 refuses files beside tsconfig.json; reran with `--ignoreConfig` from the scratchpad
+- walking dispatch hook: briefed `Issue: AUAUST/toolkit#<n>` from the package name — repo is `AUAUST/lib-js-toolkit`; hook 404s, read `gh repo view` to fix
+- zsh `echo =====`: separator between command outputs — zsh expands `=word` as a command path and fails the whole call; quote separators
+- pnpm exec in a scratch clone with symlinked node_modules: probed engrenage on a clone — pnpm ran its install check and lefthook postinstall first; harmless, but run the engrenage bin directly next time
+- git stash push --include-untracked: stashing a leaf worktree with an intent-to-add file — failed "not uptodate. Cannot merge"; moved the uncommitted leaf with `git checkout --detach <head>` instead
+- zsh word splitting: passed `$files` from awk to `git add` — zsh keeps it one word; stage paths by name
+- engrenage gate jscpd: worktree gate reported map/transform and difference/intersection duplicates after a rename-only edit — rerun on the unchanged tree passed
+- worktree isolation: compound Bash commands containing git — refused as unverifiable; split git into lone `git -C <worktree>` calls
+- zsh `echo ====`: separator between gh outputs in a loop — `=word` expansion failed the call after the first issue; quote separators
