@@ -3,3 +3,4 @@
 ---
 
 - Add object.loosenKeys
+- Add array.loosen
