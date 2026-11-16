@@ -28,12 +28,16 @@ const guards = createRolePreset({
     resolve({ name }) {
       const rest = name.slice("is".length);
 
-      return [
+      const companions = [
         `src/modules/assert/utils/assert${rest}.ts`,
         `src/modules/ensure/utils/ensure${rest}.ts`,
       ];
+
+      return /^isNot[A-Z]/u.test(name)
+        ? companions
+        : [...companions, `src/modules/when/utils/when${rest}.ts`];
     },
-    description: "src/modules/assert/utils/assert<Rest>.ts, src/modules/ensure/utils/ensure<Rest>.ts for is<Rest>.ts",
+    description: "src/modules/assert/utils/assert<Rest>.ts, src/modules/ensure/utils/ensure<Rest>.ts, src/modules/when/utils/when<Rest>.ts (except isNot<Upper>…) for is<Rest>.ts",
   },
 });
 
