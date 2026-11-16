@@ -61,6 +61,7 @@
     "./iterable": "./dist/iterable.mjs",
     "./maplike": "./dist/maplike.mjs",
     "./math": "./dist/math.mjs",
+    "./merger": "./dist/merger.mjs",
     "./number": "./dist/number.mjs",
     "./object": "./dist/object.mjs",
     "./parse": "./dist/parse.mjs",

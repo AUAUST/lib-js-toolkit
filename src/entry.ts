@@ -138,6 +138,7 @@ export * as guard from "#modules/guard/entry";
 export * as iterable from "#modules/iterable/entry";
 export * as maplike from "#modules/maplike/entry";
 export * as math from "#modules/math/entry";
+export * as merger from "#modules/merger/entry";
 export * as number from "#modules/number/entry";
 export * as object from "#modules/object/entry";
 export * as parse from "#modules/parse/entry";

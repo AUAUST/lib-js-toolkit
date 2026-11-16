@@ -19,6 +19,7 @@
       "@auaust/toolkit/iterable": ["./src/modules/iterable/entry.ts"],
       "@auaust/toolkit/maplike": ["./src/modules/maplike/entry.ts"],
       "@auaust/toolkit/math": ["./src/modules/math/entry.ts"],
+      "@auaust/toolkit/merger": ["./src/modules/merger/entry.ts"],
       "@auaust/toolkit/number": ["./src/modules/number/entry.ts"],
       "@auaust/toolkit/object": ["./src/modules/object/entry.ts"],
       "@auaust/toolkit/parse": ["./src/modules/parse/entry.ts"],

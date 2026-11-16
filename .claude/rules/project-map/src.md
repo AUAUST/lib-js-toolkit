@@ -21,6 +21,7 @@ src/  (global roles: errors types constants.ts symbols.ts)
    ├─ iterable*  Helpers over iterables.
    ├─ maplike*  Helpers over maps and map-like collections.
    ├─ math*  Math helpers and native Math statics.
+   ├─ merger*  Merge objects recursively, lazily or with a custom rule.
    ├─ number*  Helpers over numbers.
    ├─ object*  Object helpers and native Object statics.
    ├─ parse*[collects: utils]  Parsers converting unknown input to a type.
