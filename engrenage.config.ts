@@ -1,11 +1,12 @@
 import { define, defineConfig } from "@auaust/engrenage/config";
 import {
   constants,
-  createRolePreset,
   entry,
   errors,
   fixtures,
   index,
+  operations,
+  role,
   testutils,
   types,
   utils,
@@ -14,7 +15,7 @@ import {
 import { createBarrelsExtension } from "#tooling/barrels/index";
 import { native, relates, root, shorthand } from "#tooling/tags/index";
 
-const guards = createRolePreset({
+const guards = role({
   name: "guards",
   purpose: "Type predicates over a candidate, exported by the module and the guard entry.",
   exports: {
@@ -41,7 +42,7 @@ const guards = createRolePreset({
   },
 });
 
-const symbols = createRolePreset({
+const symbols = role({
   name: "symbols",
   purpose: "Symbols a module defines, re-exported by its entry.",
   file: ["symbols.ts"],
@@ -50,19 +51,11 @@ const symbols = createRolePreset({
   collected: true,
 });
 
-const internals = createRolePreset({
+const internals = role({
   name: "internals",
   purpose: "Helpers shared inside a module, never re-exported.",
   exports: "named-match",
   effects: "confined",
-  public: false,
-});
-
-const operations = createRolePreset({
-  name: "operations",
-  purpose: "Functions that read the project's files or structure, one per module.",
-  exports: "named-match",
-  effects: "observing",
   public: false,
 });
 
@@ -112,9 +105,9 @@ export default defineConfig({
         subpath: true,
         reexport: "flat",
       }),
-      guards(),
-      symbols(),
-      internals(),
+      guards,
+      symbols,
+      internals,
     ],
     structure: {
       namespaces: {
@@ -135,7 +128,15 @@ export default defineConfig({
   tooling: {
     // @debt explicit only because engrenage writes no tsconfig for tooling while the scripts environment it inherits from is inactive (AUAUST/lib-js-engrenage#521)
     tsconfig: {},
-    roles: [index(), utils(), operations()],
+    roles: [
+      index(),
+      utils(),
+      operations({
+        purpose: "Functions that read the project's files or structure, one per module.",
+        effects: "observing",
+        public: false,
+      }),
+    ],
   },
   format: {
     maxCognitiveComplexity: 10,
