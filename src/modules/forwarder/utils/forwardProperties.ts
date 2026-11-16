@@ -54,6 +54,7 @@ export function forwardProperties<
     >
   >[]
 >;
+// @debt The implementation signature types the source `any`, because no overload accepts an `object | PropertyKey` source; an internal factory taking that union, which the overloads and the plural forms would share, would remove it.
 export function forwardProperties(
   target: object,
   source: any,

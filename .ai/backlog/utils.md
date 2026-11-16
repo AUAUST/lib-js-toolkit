@@ -48,3 +48,9 @@
 
 - A lazy counterpart of `merger(closure)` in the `merger` module, deferred from AUAUST/lib-js-toolkit#160 (user decision, 2026-11-16): `lazyMerge` resolving each key through a custom rule.
 - Done when a use needs it, or obsolete if none appears by the end of the merge.
+
+## 9. Array subject validation
+
+- `array.clear` rejects a non-array with a `TypeError` (user decision, AUAUST/lib-js-toolkit#145); `retain`, `pullBy`, `filter`, `some` accept any object and `overlaps` any iterable, so mutating helpers can shrink an array-like.
+- Expected: one policy for non-array subjects across `array` helpers, at least the mutating ones.
+- Done when decided and applied, or the divergence is accepted.

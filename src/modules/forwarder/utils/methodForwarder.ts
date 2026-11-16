@@ -64,7 +64,7 @@ export type ForwardedMethod<
   infer Name
 >
   ? SourceKey extends keyof Target
-    ? Method extends keyof Target[SourceKey]
+    ? Method extends MethodName<Target[SourceKey]>
       ? { [K in Name]: Target[SourceKey][Method] }
       : never
     : never
@@ -145,6 +145,7 @@ export function methodForwarder<
   Method,
   [Alias] extends [never] ? Method : Alias
 >;
+// @debt The implementation signature types the source `any`, because no overload accepts an `object | PropertyKey` source; an internal factory taking that union, which the overloads and the plural forms would share, would remove it.
 export function methodForwarder(
   source: any,
   method: MethodForwardingInput<PropertyKey>,
@@ -168,32 +169,61 @@ export function methodForwarder(
 
   const sourceMethod = method as PropertyKey;
 
-  const isKeySource = isPropertyKey(source);
+  if (isPropertyKey(source)) {
+    return keyMethodForwarder(source, sourceMethod, targetMethod, options);
+  }
 
-  const descriptor = isKeySource
-    ? undefined
-    : ownDescriptor(source, sourceMethod);
+  const descriptor = ownDescriptor(source, sourceMethod);
 
   const {
     configurable = descriptor?.configurable ?? true,
     enumerable = descriptor?.enumerable ?? false,
   } = options ?? {};
 
+  return {
+    kind: "method",
+    name: targetMethod,
+    configurable,
+    enumerable,
+    get: methodGetter(() => source, sourceMethod),
+  };
+}
+
+function keyMethodForwarder(
+  sourceKey: PropertyKey,
+  method: PropertyKey,
+  name: PropertyKey,
+  options?: Record<PropertyKey, any>,
+): KeyMethodForwarder {
+  const { configurable = true, enumerable = false } = options ?? {};
+
+  return {
+    kind: "method",
+    name,
+    sourceKey,
+    method,
+    configurable,
+    enumerable,
+    get: methodGetter((receiver) => Reflect.get(receiver, sourceKey), method),
+  };
+}
+
+function methodGetter(resolve: (receiver: object) => any, method: PropertyKey) {
   const forwarders = new WeakMap<object, (...args: unknown[]) => unknown>();
 
   function createForwarder(receiver: object) {
     return function forwarder(this: unknown, ...args: unknown[]) {
-      const resolved = isKeySource ? Reflect.get(receiver, source) : source;
+      const resolved = resolve(receiver);
 
       return Reflect.apply(
-        resolved[sourceMethod],
+        resolved[method],
         this == null || this === receiver ? resolved : this,
         args,
       );
     };
   }
 
-  function get(this: object) {
+  return function get(this: object) {
     let forwarder = forwarders.get(this);
 
     if (!forwarder) {
@@ -202,25 +232,5 @@ export function methodForwarder(
     }
 
     return forwarder;
-  }
-
-  if (isKeySource) {
-    return {
-      kind: "method",
-      name: targetMethod,
-      sourceKey: source,
-      method: sourceMethod,
-      configurable,
-      enumerable,
-      get,
-    };
-  }
-
-  return {
-    kind: "method",
-    name: targetMethod,
-    configurable,
-    enumerable,
-    get,
   };
 }

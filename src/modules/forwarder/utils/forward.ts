@@ -5,22 +5,20 @@ import {
   methodForwarder,
   type AnyMethodForwarder,
   type ForwardedMethod,
-  type KeyMethodForwarder,
 } from "#modules/forwarder/utils/methodForwarder";
 import { methodForwarders } from "#modules/forwarder/utils/methodForwarders";
 import {
   propertyForwarder,
   type AnyPropertyForwarder,
   type ForwardedProperty,
-  type KeyPropertyForwarder,
 } from "#modules/forwarder/utils/propertyForwarder";
 import { propertyForwarders } from "#modules/forwarder/utils/propertyForwarders";
 import { defineProperties } from "#modules/object/utils/defineProperties";
 import { finalize } from "#modules/object/utils/finalize";
 import { hasOwn } from "#modules/object/utils/hasOwn";
 import type { FlatEntries } from "#types/FlatEntries";
+import type { IsNever } from "#types/IsNever";
 import type { MaybeArray } from "#types/MaybeArray";
-import type { MethodName } from "#types/MethodName";
 import type { PropertyDescriptor } from "#types/PropertyDescriptor";
 import type { Simplify } from "#types/Simplify";
 import type { UnionToIntersection } from "#types/UnionToIntersection";
@@ -44,32 +42,18 @@ export type ForwardedEntry<
   : never;
 
 /**
- * Maps a forwarder to `never` when its source key is not a key of `Target`, or
- * its member not a member (a method name for a method) of `Target[SourceKey]`.
+ * Maps a forwarder to `never` when `ForwardedEntry` rejects it on `Target`: a
+ * key-source forwarder whose key is not a key of `Target`, or whose member is
+ * not a member (a method name for a method) of `Target[SourceKey]`.
  */
 export type CheckedForward<
   Target extends object,
   Forward,
 > = Forward extends readonly unknown[]
   ? { [Index in keyof Forward]: CheckedForward<Target, Forward[Index]> }
-  : Forward extends KeyMethodForwarder<infer SourceKey, infer Method, any>
-    ? SourceKey extends keyof Target
-      ? Method extends MethodName<Target[SourceKey]>
-        ? Forward
-        : never
-      : never
-    : Forward extends KeyPropertyForwarder<
-          infer SourceKey,
-          infer Property,
-          any,
-          any
-        >
-      ? SourceKey extends keyof Target
-        ? Property extends keyof Target[SourceKey]
-          ? Forward
-          : never
-        : never
-      : Forward;
+  : Forward extends AnyMethodForwarder | AnyPropertyForwarder
+    ? IsNever<ForwardedEntry<Target, Forward>, never, Forward>
+    : Forward;
 
 function doForward<
   Target extends object,

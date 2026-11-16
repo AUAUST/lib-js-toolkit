@@ -339,5 +339,30 @@ describe("forward", () => {
       // @ts-expect-error -- `missing` is not a key of the target.
       forward(target, forward.method("missing", "doStuff"));
     });
+
+    test("rejects a member the source does not hold", () => {
+      const target = { client: createClient(1) };
+
+      // @ts-expect-error -- `value` is not a method of the source.
+      forward(target, forward.method("client", "value"));
+
+      // @ts-expect-error -- `missing` is not a property of the source.
+      forward(target, forward.property("client", "missing"));
+    });
+
+    test("types a member of the source from an array of forwarders", () => {
+      const target = { client: createClient(1) };
+
+      const forwarded = forward(target, [
+        forward.method("client", "doStuff", { as: "run" }),
+        forward.property("client", "value", { readonly: true }),
+      ]);
+
+      expectTypeOf(forwarded.run).toEqualTypeOf<
+        (typeof target)["client"]["doStuff"]
+      >();
+
+      expectTypeOf(forwarded).toHaveProperty("value").toEqualTypeOf<number>();
+    });
   });
 });

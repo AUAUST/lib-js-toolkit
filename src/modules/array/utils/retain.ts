@@ -13,8 +13,9 @@ import type { Maybe } from "#types/Maybe";
  * returns the array; the mutating counterpart of `filter`. The predicate
  * receives each item with its index and the array, and a type predicate narrows
  * the returned array. A property name instead keeps the items whose member is
- * truthy, calling it when it is a method. Holes are dropped without calling the
- * predicate. A nullish array returns `undefined`.
+ * truthy, calling it when it is a method; a union item type accepts only a name
+ * every member has. Holes are dropped without calling the predicate. A nullish
+ * array returns `undefined`.
  *
  * @throws {TypeError} when the predicate is neither a function nor a property key.
  */
