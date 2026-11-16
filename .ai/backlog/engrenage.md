@@ -23,3 +23,9 @@
 - The matrix lets `*.test.ts` import `tooling` and `tooling` import internal aliases, but the dist source guard rejects transitive resolutions into `src/`, so `tests/tooling/tags/tags.test.src.ts` stays source-only.
 - Outcome: tooling tests run in source mode only, or lint forbids the chain.
 - Done when such a `*.test.ts` passes both runs or fails lint.
+
+## 5. No CI test on the minimum Node
+
+- CI runs the development Node (`devEngines.runtime`, 24) only, so passing it does not prove the advertised `engines.node` minimum (22). The generated workflows offer no Node version matrix (only test shards), and local edits are overwritten on sync. Moved from AUAUST/lib-js-toolkit#150.
+- Outcome: the generated library workflows run `pnpm test` against `dist/` on the `engines.node` minimum too; until then, run it by hand before each release changing runtime code.
+- Done when toolkit's CI tests `dist/` on Node 22.

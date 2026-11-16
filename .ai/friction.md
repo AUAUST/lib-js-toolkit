@@ -109,3 +109,8 @@
 - worktree git guard: compound commands mixing git with other steps (heredocs, loops, cat) — refused as unverifiable; split git into standalone calls
 - git apply --index after cherry-pick: applied a leaf patch right after cherry-picking — failed with 'does not match index'; git update-index --refresh then retry
 - worktree removal after a failed closing commit: chained commit and worktree removal with ';' — removed the worktree though the gate failed; chain with && and keep worktrees until the commit lands
+- walking dispatch brief: used `AUAUST/toolkit#251` from the package name — dispatch hook 404'd; repo is `AUAUST/lib-js-toolkit`, read via `gh repo view`
+- engrenage CLI: ran `engrenage planning issue claim` as the planning skill writes it — not on PATH; used `pnpm exec engrenage`
+- engrenage CLI: ran `engrenage planning issue claim` as the planning skill writes it — not on PATH; used `pnpm exec engrenage`
+- zsh word splitting: `git cherry-pick $C` with newline-joined SHAs — zsh passed one arg; used a range `base..tip`
+- Bash auto-mode classifier: `gh issue view` loops while planning — no verdict three times in a row; continued with Read on backlog files, then the same command passed

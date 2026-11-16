@@ -43,3 +43,8 @@
 
 - From AUAUST/lib-js-toolkit#151 (closed): `@throws` tags derived from `throw` statements carrying a `@cause` comment, as an engrenage extension in `tooling/`. First check it is automatable; open on rethrows and shared error builders (AUAUST/lib-js-toolkit#119). The missing native helpers check is entry 1.
 - Done when chosen and turned into an issue, or dropped.
+
+## 8. `lazyMerger`
+
+- A lazy counterpart of `merger(closure)` in the `merger` module, deferred from AUAUST/lib-js-toolkit#160 (user decision, 2026-11-16): `lazyMerge` resolving each key through a custom rule.
+- Done when a use needs it, or obsolete if none appears by the end of the merge.
