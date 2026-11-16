@@ -10,22 +10,17 @@ import type { Maybe } from "#types/Maybe";
 
 /**
  * Keeps in place the items of an array the predicate accepts, in order, and
- * returns the array; the mutating counterpart of `filter`. The predicate
- * receives each item with its index and the array, and a type predicate narrows
- * the returned array. A property name instead keeps the items whose member is
- * truthy, calling it when it is a method; a union item type accepts only a name
- * every member has. Holes are dropped without calling the predicate. A nullish
- * array returns `undefined`.
+ * returns the array; the mutating counterpart of `filter`. The predicate receives
+ * each item with its index, and a type predicate narrows the returned array. A
+ * property name instead keeps the items whose member is truthy, calling it when
+ * it is a method; a union item type accepts only a name every member has. Holes
+ * are dropped without calling the predicate. A nullish array returns `undefined`.
  *
  * @throws {TypeError} when the predicate is neither a function nor a property key.
  */
 export function retain<Items extends unknown[], Output extends Items[number]>(
   array: Items,
-  predicate: (
-    value: NoInfer<Items[number]>,
-    index: number,
-    array: NoInfer<Items>,
-  ) => value is Output,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Output,
 ): Output[];
 export function retain<Items extends unknown[], Guarded>(
   array: Items,
@@ -34,16 +29,11 @@ export function retain<Items extends unknown[], Guarded>(
 export function retain<Items extends unknown[]>(
   array: Items,
   predicate:
-    | ((value: Items[number], index: number, array: Items) => unknown)
-    | keyof Items[number],
+    ((value: Items[number], index: number) => unknown) | keyof Items[number],
 ): Items;
 export function retain<Items extends unknown[], Output extends Items[number]>(
   array: Maybe<Items>,
-  predicate: (
-    value: NoInfer<Items[number]>,
-    index: number,
-    array: NoInfer<Items>,
-  ) => value is Output,
+  predicate: (value: NoInfer<Items[number]>, index: number) => value is Output,
 ): Output[] | undefined;
 export function retain<Items extends unknown[], Guarded>(
   array: Maybe<Items>,
@@ -52,14 +42,11 @@ export function retain<Items extends unknown[], Guarded>(
 export function retain<Items extends unknown[]>(
   array: Maybe<Items>,
   predicate:
-    | ((value: Items[number], index: number, array: Items) => unknown)
-    | keyof Items[number],
+    ((value: Items[number], index: number) => unknown) | keyof Items[number],
 ): Items | undefined;
 export function retain(
   array: Maybe<Record<PropertyKey, unknown>[]>,
-  predicate:
-    | ((value: unknown, index: number, array: unknown[]) => unknown)
-    | PropertyKey,
+  predicate: ((value: unknown, index: number) => unknown) | PropertyKey,
 ): unknown[] | undefined {
   if (array == null) {
     return;
@@ -78,7 +65,7 @@ export function retain(
 
 function compact<Item>(
   array: Item[],
-  predicate: (value: Item, index: number, array: Item[]) => unknown,
+  predicate: (value: Item, index: number) => unknown,
 ): Item[] {
   let pointer = 0;
 
@@ -89,7 +76,7 @@ function compact<Item>(
 
     const value = array[index];
 
-    if (predicate(value, index, array)) {
+    if (predicate(value, index)) {
       array[pointer++] = value;
     }
   }

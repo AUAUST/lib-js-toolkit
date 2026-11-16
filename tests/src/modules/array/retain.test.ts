@@ -13,6 +13,21 @@ describe("retain", () => {
     expectTypeOf(result).toEqualTypeOf<number[]>();
   });
 
+  test("passes the predicate each item with its index only", () => {
+    const calls: unknown[][] = [];
+
+    retain(["a", "b"], (...args) => {
+      calls.push(args);
+
+      return true;
+    });
+
+    expect(calls).toEqual([
+      ["a", 0],
+      ["b", 1],
+    ]);
+  });
+
   test("leaves what filter returns on a holey array", () => {
     const array: number[] = [];
 
