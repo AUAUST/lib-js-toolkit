@@ -1,4 +1,4 @@
-import { ownEnumerableKeys } from "#modules/object/internals/ownEnumerableKeys";
+import { ownEnumerableKeys } from "#modules/object/utils/ownEnumerableKeys";
 import type { FilterPredicate } from "#modules/object/utils/filter";
 
 /**

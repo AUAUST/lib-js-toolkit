@@ -1,5 +1,5 @@
-import { ownEnumerableKeys } from "#modules/object/internals/ownEnumerableKeys";
 import { defineProperty } from "#modules/object/utils/defineProperty";
+import { ownEnumerableKeys } from "#modules/object/utils/ownEnumerableKeys";
 import type { Simplify } from "#types/Simplify";
 
 /**
