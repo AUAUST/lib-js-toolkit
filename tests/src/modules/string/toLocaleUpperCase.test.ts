@@ -15,4 +15,10 @@ describe("toLocaleUpperCase", () => {
     expect(toLocaleUpperCase(null)).toBeUndefined();
     expectTypeOf(toLocaleUpperCase(undefined)).toEqualTypeOf<undefined>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toLocaleUpperCase("i", "tr")).toBe("İ");
+    expect(toLocaleUpperCase("i", ["tr"])).toBe("İ");
+    expect(toLocaleUpperCase("i", new Intl.Locale("tr"))).toBe("İ");
+  });
 });

@@ -15,4 +15,12 @@ describe("toLocaleLowerCase", () => {
     expect(toLocaleLowerCase(null)).toBeUndefined();
     expectTypeOf(toLocaleLowerCase(undefined)).toEqualTypeOf<undefined>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toLocaleLowerCase("I", "tr")).toBe("ı");
+
+    expect(toLocaleLowerCase("I", "tr")).toBe(
+      toLocaleLowerCase("I", { locale: "tr" }),
+    );
+  });
 });

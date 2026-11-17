@@ -28,4 +28,10 @@ describe("toSnakeCase", () => {
       toSnakeCase("a b", { unaccent: true }),
     ).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toSnakeCase("I a", "tr")).toBe("ı_a");
+    expect(toSnakeCase("I a", "tr")).toBe(toSnakeCase("I a", { locale: "tr" }));
+    expectTypeOf(toSnakeCase("I a", "tr")).toEqualTypeOf<string>();
+  });
 });

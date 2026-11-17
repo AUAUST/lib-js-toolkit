@@ -1,7 +1,9 @@
 import { joinCapitalizedWords } from "#modules/string/internals/joinCapitalizedWords";
+import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -10,25 +12,35 @@ import type { Maybe } from "#types/Maybe";
  * each word following `locale` and joining them with spaces; a nullish string
  * returns `undefined`.
  *
+ * `locale` may be passed alone in place of the options.
+ *
  * @shorthand title
  * @root
  */
 export function toTitleCase<Value extends string>(
   string: Value,
 ): CapitalizedJoinedWords<Value, " ">;
-export function toTitleCase(string: string, options?: CasingOptions): string;
+export function toTitleCase(
+  string: string,
+  options?: OptionsOrField<CasingOptions, "locale">,
+): string;
 export function toTitleCase(
   string: null | undefined,
-  options?: CasingOptions,
+  options?: OptionsOrField<CasingOptions, "locale">,
 ): undefined;
 export function toTitleCase(
   string: Maybe<string>,
-  options?: CasingOptions,
+  options?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined;
 export function toTitleCase(
   string: Maybe<string>,
-  options: CasingOptions = {},
+  optionsOrField?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined {
+  const options = resolveOptions<CasingOptions, "locale">(
+    optionsOrField,
+    "locale",
+  );
+
   if (string != null) {
     return joinCapitalizedWords(splitWords(string, options), " ", options);
   }

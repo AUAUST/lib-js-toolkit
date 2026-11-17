@@ -32,4 +32,12 @@ describe("toDelimitedCase", () => {
       toDelimitedCase("a b", ".", { locale: "tr" }),
     ).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toDelimitedCase("I a", ".", "tr")).toBe(
+      toDelimitedCase("I a", ".", { locale: "tr" }),
+    );
+
+    expectTypeOf(toDelimitedCase("I a", ".", "tr")).toEqualTypeOf<string>();
+  });
 });

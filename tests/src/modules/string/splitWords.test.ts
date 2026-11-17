@@ -55,4 +55,14 @@ describe("splitWords", () => {
       string[]
     >();
   });
+
+  test("accepts the locale alone", () => {
+    expect(splitWords("I a", "tr")).toEqual(["I", "a"]);
+
+    expect(splitWords("I a", "tr")).toEqual(
+      splitWords("I a", { locale: "tr" }),
+    );
+
+    expectTypeOf(splitWords("I a", "tr")).toEqualTypeOf<string[]>();
+  });
 });

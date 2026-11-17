@@ -21,4 +21,10 @@ describe("toWordCase", () => {
 
     expectTypeOf(toWordCase("a" as string)).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toWordCase("I", "tr")).toBe("ı");
+    expect(toWordCase("I", "tr")).toBe(toWordCase("I", { locale: "tr" }));
+    expectTypeOf(toWordCase("I", "tr")).toEqualTypeOf<string>();
+  });
 });

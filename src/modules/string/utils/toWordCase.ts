@@ -1,11 +1,15 @@
+import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { toLocaleLowerCase } from "#modules/string/utils/toLocaleLowerCase";
 import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
+import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { WordCaseOptions } from "#modules/string/types/WordCaseOptions";
 import type { Maybe } from "#types/Maybe";
 
 /**
  * Lowercases the string following `locale`, then uppercases its first code point
  * when `capitalized` is set; a nullish string returns `undefined`.
+ *
+ * `locale` may be passed alone in place of the options.
  *
  * @root
  */
@@ -23,22 +27,30 @@ export function toWordCase<Value extends string>(
     readonly locale?: undefined;
   },
 ): string extends Value ? string : Capitalize<Lowercase<Value>>;
-export function toWordCase(string: string, options?: WordCaseOptions): string;
+export function toWordCase(
+  string: string,
+  options?: OptionsOrField<WordCaseOptions, "locale">,
+): string;
 export function toWordCase(
   string: null | undefined,
-  options?: WordCaseOptions,
+  options?: OptionsOrField<WordCaseOptions, "locale">,
 ): undefined;
 export function toWordCase(
   string: Maybe<string>,
-  options?: WordCaseOptions,
+  options?: OptionsOrField<WordCaseOptions, "locale">,
 ): string | undefined;
 export function toWordCase(
   string: Maybe<string>,
-  options: WordCaseOptions = {},
+  optionsOrField?: OptionsOrField<WordCaseOptions, "locale">,
 ): string | undefined {
   if (string == null) {
     return;
   }
+
+  const options = resolveOptions<WordCaseOptions, "locale">(
+    optionsOrField,
+    "locale",
+  );
 
   const lowered = toLocaleLowerCase(string, options);
 

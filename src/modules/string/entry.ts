@@ -97,6 +97,7 @@ export type * from "#modules/string/types/InspectOptions";
 export type * from "#modules/string/types/LocaleOptions";
 export type * from "#modules/string/types/LowercaseJoinedWords";
 export type * from "#modules/string/types/LowercaseWords";
+export type * from "#modules/string/types/OptionsOrField";
 export type * from "#modules/string/types/ReplaceEachOptions";
 export type * from "#modules/string/types/SeparatorOptions";
 export type * from "#modules/string/types/SplitWords";

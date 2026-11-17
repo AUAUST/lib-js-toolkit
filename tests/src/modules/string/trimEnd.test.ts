@@ -7,4 +7,9 @@ describe("trimEnd", () => {
     expect(trimEnd("  a  ")).toBe("  a");
     expect(trimEnd("--a--", { chars: "-" })).toBe("--a");
   });
+
+  test("accepts the characters alone", () => {
+    expect(trimEnd("//a//", "/")).toBe("//a");
+    expect(trimEnd("//a//", "/")).toBe(trimEnd("//a//", { chars: "/" }));
+  });
 });

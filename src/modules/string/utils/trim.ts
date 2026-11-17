@@ -1,4 +1,6 @@
 import { charRunPattern } from "#modules/string/internals/charRunPattern";
+import { resolveOptions } from "#modules/string/internals/resolveOptions";
+import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { TrimOptions } from "#modules/string/types/TrimOptions";
 import type { Maybe } from "#types/Maybe";
 
@@ -6,24 +8,31 @@ import type { Maybe } from "#types/Maybe";
  * Removes whitespace, or the `chars` characters, from both ends. A nullish
  * string returns `undefined`.
  *
+ * `chars` may be passed alone in place of the options.
+ *
  * @native nullsafe String.prototype.trim
  */
-export function trim(string: string, options?: TrimOptions): string;
+export function trim(
+  string: string,
+  options?: OptionsOrField<TrimOptions, "chars">,
+): string;
 export function trim(
   string: null | undefined,
-  options?: TrimOptions,
+  options?: OptionsOrField<TrimOptions, "chars">,
 ): undefined;
 export function trim(
   string: Maybe<string>,
-  options?: TrimOptions,
+  options?: OptionsOrField<TrimOptions, "chars">,
 ): string | undefined;
 export function trim(
   string: Maybe<string>,
-  options: TrimOptions = {},
+  optionsOrField?: OptionsOrField<TrimOptions, "chars">,
 ): string | undefined {
   if (string == null) {
     return;
   }
+
+  const options = resolveOptions<TrimOptions, "chars">(optionsOrField, "chars");
 
   if (options.chars == null) {
     return string.trim();

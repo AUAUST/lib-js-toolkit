@@ -14,4 +14,9 @@ describe("trim", () => {
     expect(trim("a.", { chars: "." })).toBe("a");
     expect(trim("ab", { chars: "." })).toBe("ab");
   });
+
+  test("accepts the characters alone", () => {
+    expect(trim("//a//", "/")).toBe("a");
+    expect(trim("//a//", "/")).toBe(trim("//a//", { chars: "/" }));
+  });
 });

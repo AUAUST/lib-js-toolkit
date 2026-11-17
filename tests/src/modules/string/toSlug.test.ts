@@ -36,4 +36,10 @@ describe("toSlug", () => {
     expectTypeOf(toSlug("café")).toEqualTypeOf<string>();
     expectTypeOf(toSlug("a b", { unaccent: false })).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toSlug("I a", "tr")).toBe("ı-a");
+    expect(toSlug("I a", "tr")).toBe(toSlug("I a", { locale: "tr" }));
+    expectTypeOf(toSlug("I a", "tr")).toEqualTypeOf<string>();
+  });
 });

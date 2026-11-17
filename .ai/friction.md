@@ -142,3 +142,4 @@
 - engrenage CLI: ran bare `engrenage planning` — not on PATH; used `pnpm exec engrenage`
 - Bash tool zsh: passed a file list through an unquoted `$F` to eslint — zsh does not word-split, eslint got one path; listed the files inline.
 - SubagentHandback: brief asked for an interim report before continuing — the handback ends the run, so no interim report is possible; folded it into the final report.
+- PreToolUse Bash hook: `${2:+-m "$2"}` in a shell function — hook parser rejected "Bad substitution"; rewrote as explicit commands

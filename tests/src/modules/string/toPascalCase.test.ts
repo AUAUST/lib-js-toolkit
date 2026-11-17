@@ -24,4 +24,14 @@ describe("toPascalCase", () => {
     expectTypeOf(toPascalCase("café")).toEqualTypeOf<string>();
     expectTypeOf(toPascalCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toPascalCase("i a", "tr")).toBe("İA");
+
+    expect(toPascalCase("i a", "tr")).toBe(
+      toPascalCase("i a", { locale: "tr" }),
+    );
+
+    expectTypeOf(toPascalCase("i a", "tr")).toEqualTypeOf<string>();
+  });
 });

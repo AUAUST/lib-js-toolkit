@@ -24,4 +24,10 @@ describe("toTitleCase", () => {
     expectTypeOf(toTitleCase("café")).toEqualTypeOf<string>();
     expectTypeOf(toTitleCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toTitleCase("i a", "tr")).toBe("İ A");
+    expect(toTitleCase("i a", "tr")).toBe(toTitleCase("i a", { locale: "tr" }));
+    expectTypeOf(toTitleCase("i a", "tr")).toEqualTypeOf<string>();
+  });
 });

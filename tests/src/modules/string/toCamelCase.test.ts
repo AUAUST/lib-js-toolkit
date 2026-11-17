@@ -35,4 +35,10 @@ describe("toCamelCase", () => {
     expectTypeOf(toCamelCase("café")).toEqualTypeOf<string>();
     expectTypeOf(toCamelCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toCamelCase("a i", "tr")).toBe("aİ");
+    expect(toCamelCase("a i", "tr")).toBe(toCamelCase("a i", { locale: "tr" }));
+    expectTypeOf(toCamelCase("a i", "tr")).toEqualTypeOf<string>();
+  });
 });

@@ -28,4 +28,10 @@ describe("toKebabCase", () => {
     expectTypeOf(toKebabCase("café")).toEqualTypeOf<string>();
     expectTypeOf(toKebabCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toKebabCase("I a", "tr")).toBe("ı-a");
+    expect(toKebabCase("I a", "tr")).toBe(toKebabCase("I a", { locale: "tr" }));
+    expectTypeOf(toKebabCase("I a", "tr")).toEqualTypeOf<string>();
+  });
 });

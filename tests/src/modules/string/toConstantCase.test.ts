@@ -18,4 +18,14 @@ describe("toConstantCase", () => {
     expect(toConstantCase(null)).toBeUndefined();
     expectTypeOf(toConstantCase("a" as string)).toEqualTypeOf<string>();
   });
+
+  test("accepts the locale alone", () => {
+    expect(toConstantCase("i a", "tr")).toBe("İ_A");
+
+    expect(toConstantCase("i a", "tr")).toBe(
+      toConstantCase("i a", { locale: "tr" }),
+    );
+
+    expectTypeOf(toConstantCase("i a", "tr")).toEqualTypeOf<string>();
+  });
 });
