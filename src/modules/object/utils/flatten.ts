@@ -52,6 +52,7 @@ function collectLeaves(
       continue;
     }
 
+    // @debt Joins `leafPath` with native `Array.prototype.join` instead of the array module's `join`, which the #317 sweep adopted elsewhere.
     const leafKey = isFunction(separator)
       ? separator(leafPath)
       : leafPath.join(separator);

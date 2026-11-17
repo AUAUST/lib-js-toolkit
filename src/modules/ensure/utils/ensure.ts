@@ -114,6 +114,7 @@ export interface Ensure {
   readonly isUndefined: typeof ensureUndefined;
 }
 
+// @debt The module-level `assign(...)` call carries no `/* @__PURE__ */` annotation, unlike `createWhen` and `uint32Source` sites, so bundlers keep it in shared chunks when the export is unused.
 /**
  * Returns the candidate when the guard passes. Every `ensure` helper is attached;
  * importing it bundles them all.

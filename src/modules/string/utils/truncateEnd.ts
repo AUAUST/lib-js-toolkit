@@ -30,6 +30,7 @@ export function truncateEnd(
   length: number,
   ellipsis = "",
 ): string | undefined {
+  // @debt Repeats `truncateStart`'s nullish return, code-point split and length check; one internal could own the truncation and leave only the slicing here.
   assertTruncation(length, ellipsis);
 
   if (string == null) {

@@ -331,6 +331,7 @@ export function overload<
 >(traps: Traps & Record<Names, unknown>): Overloaded<Traps>;
 export function overload(traps: Readonly<Record<string, unknown>>): unknown {
   const table = resolveTraps(traps);
+  // @debt Joins the trap names with native `Array.prototype.join` instead of the array module's `join`, which the #317 sweep adopted elsewhere.
   const names = keys(traps).join(", ");
 
   function overloaded(this: unknown): unknown {

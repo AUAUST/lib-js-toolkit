@@ -19,10 +19,10 @@ export interface DeprecateOptions {
  * on its first call only, then forwards `this`, arguments and the result. A
  * callable `closure` is resolved once, here.
  */
-export function deprecate<Callback extends Callee>(
-  closure: Callback,
+export function deprecate<Closure extends Callee>(
+  closure: Closure,
   options: DeprecateOptions = {},
-): CallSignature<Callback> {
+): CallSignature<Closure> {
   const resolve = toFunction(closure);
   const name = options.name ?? resolve.name;
 
@@ -39,5 +39,5 @@ export function deprecate<Callback extends Callee>(
     }
 
     return Reflect.apply(resolve, this, args);
-  } as CallSignature<Callback>;
+  } as CallSignature<Closure>;
 }

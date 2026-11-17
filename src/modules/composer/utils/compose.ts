@@ -149,6 +149,7 @@ function doCompose(...inputs: readonly object[]): object {
   return target;
 }
 
+// @debt The module-level `finalize(...)` call carries no `/* @__PURE__ */` annotation, unlike `createWhen` and `uint32Source` sites, so bundlers keep it in shared chunks when the export is unused.
 export const compose = finalize(doCompose, {
   getter: getterComposer,
   getters: getterComposers,

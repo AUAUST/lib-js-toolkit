@@ -79,6 +79,7 @@ function isReadonly(object: unknown): boolean {
   return object != null && hasOwn(object, readonlySymbol);
 }
 
+// @debt The module-level `finalize(...)` call carries no `/* @__PURE__ */` annotation, unlike `createWhen` and `uint32Source` sites, so bundlers keep it in shared chunks when the export is unused.
 export const readonly = finalize(doReadonly, {
   isReadonly,
 });

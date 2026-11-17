@@ -86,6 +86,7 @@ function doForward(
   return target;
 }
 
+// @debt The module-level `finalize(...)` call carries no `/* @__PURE__ */` annotation, unlike `createWhen` and `uint32Source` sites, so bundlers keep it in shared chunks when the export is unused.
 /**
  * Defines each forwarder on `target` and returns it. A forwarder built from a
  * property key resolves its source from that property of `target` on every call

@@ -59,6 +59,7 @@ function doExpose(
   return valueOrWhen;
 }
 
+// @debt The module-level `finalize(...)` call carries no `/* @__PURE__ */` annotation, unlike `createWhen` and `uint32Source` sites, so bundlers keep it in shared chunks when the export is unused.
 export const expose: Expose = finalize(doExpose, {
   target(target: Record<PropertyKey, any>) {
     defaultTarget = target;

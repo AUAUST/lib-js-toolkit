@@ -13,6 +13,7 @@ import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { CallSignature } from "#types/CallSignature";
 
+// @debt Repeats most members of `Cached` from `cache.ts` (`call`, `keyFor`, `clear`, `value`); a shared base type in the function module could own them.
 export type Memoized<
   Closure extends CacheResolver = CacheResolver,
   Key = CallParameters<Closure>[0],

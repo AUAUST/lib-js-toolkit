@@ -1,6 +1,6 @@
 import { uint32Source } from "#modules/random/internals/uint32Source";
 
-const draw = uint32Source(() => 1);
+const draw = /* @__PURE__ */ uint32Source(() => 1);
 
 /**
  * Returns an integer in [0, 2 ** 32). Draws from the host's cryptographically
