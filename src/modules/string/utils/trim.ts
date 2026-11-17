@@ -32,13 +32,15 @@ export function trim(
     return;
   }
 
-  const options = resolveOptions<TrimOptions, "chars">(optionsOrField, "chars");
+  const {
+    chars,
+  } = resolveOptions<TrimOptions, "chars">(optionsOrField, "chars");
 
-  if (options.chars == null) {
+  if (chars == null) {
     return string.trim();
   }
 
-  const charRun = charRunPattern(options.chars);
+  const charRun = charRunPattern(chars);
 
   return string.replace(new RegExp(`^${charRun}|${charRun}$`, "gu"), "");
 }

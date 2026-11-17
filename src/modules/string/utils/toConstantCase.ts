@@ -36,12 +36,14 @@ export function toConstantCase(
   string: Maybe<string>,
   optionsOrField?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined {
+  if (string == null) {
+    return;
+  }
+
   const options = resolveOptions<CasingOptions, "locale">(
     optionsOrField,
     "locale",
   );
 
-  if (string != null) {
-    return toLocaleUpperCase(toDelimitedCase(string, "_", options), options);
-  }
+  return toLocaleUpperCase(toDelimitedCase(string, "_", options), options);
 }

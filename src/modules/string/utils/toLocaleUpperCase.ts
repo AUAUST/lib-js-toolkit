@@ -28,14 +28,15 @@ export function toLocaleUpperCase(
   string: Maybe<string>,
   optionsOrField?: OptionsOrField<LocaleOptions, "locale">,
 ): string | undefined {
-  const options = resolveOptions<LocaleOptions, "locale">(
-    optionsOrField,
-    "locale",
-  );
-
-  if (string != null) {
-    return options.locale == null
-      ? string.toUpperCase()
-      : string.toLocaleUpperCase(options.locale);
+  if (string == null) {
+    return;
   }
+
+  const {
+    locale,
+  } = resolveOptions<LocaleOptions, "locale">(optionsOrField, "locale");
+
+  return locale == null
+    ? string.toUpperCase()
+    : string.toLocaleUpperCase(locale);
 }

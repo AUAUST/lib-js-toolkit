@@ -36,15 +36,17 @@ export function toTitleCase(
   string: Maybe<string>,
   optionsOrField?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined {
+  if (string == null) {
+    return;
+  }
+
   const options = resolveOptions<CasingOptions, "locale">(
     optionsOrField,
     "locale",
   );
 
-  if (string != null) {
-    return joinCasedWords(splitWords(string, options), " ", {
-      ...options,
-      capitalized: true,
-    });
-  }
+  return joinCasedWords(splitWords(string, options), " ", {
+    ...options,
+    capitalized: true,
+  });
 }

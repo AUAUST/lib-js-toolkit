@@ -35,12 +35,14 @@ export function toSnakeCase(
   string: Maybe<string>,
   optionsOrField?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined {
+  if (string == null) {
+    return;
+  }
+
   const options = resolveOptions<CasingOptions, "locale">(
     optionsOrField,
     "locale",
   );
 
-  if (string != null) {
-    return joinCasedWords(splitWords(string, options), "_", options);
-  }
+  return joinCasedWords(splitWords(string, options), "_", options);
 }

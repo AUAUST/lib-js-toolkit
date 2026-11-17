@@ -143,3 +143,5 @@
 - Bash tool zsh: passed a file list through an unquoted `$F` to eslint — zsh does not word-split, eslint got one path; listed the files inline.
 - SubagentHandback: brief asked for an interim report before continuing — the handback ends the run, so no interim report is possible; folded it into the final report.
 - PreToolUse Bash hook: `${2:+-m "$2"}` in a shell function — hook parser rejected "Bad substitution"; rewrote as explicit commands
+- engrenage CLI: ran bare `engrenage planning` from the planning skill — not on PATH; used `pnpm exec engrenage`
+- Agent dispatch hook: briefed `Issue: AUAUST/toolkit#<n>` from package name — 404, GitHub repo is AUAUST/lib-js-toolkit; read it from `gh repo view`

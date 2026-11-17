@@ -40,12 +40,14 @@ export function toDelimitedCase(
   delimiter: string,
   optionsOrField?: OptionsOrField<CasingOptions, "locale">,
 ): string | undefined {
+  if (string == null) {
+    return;
+  }
+
   const options = resolveOptions<CasingOptions, "locale">(
     optionsOrField,
     "locale",
   );
 
-  if (string != null) {
-    return join(splitWords(string, options), delimiter);
-  }
+  return join(splitWords(string, options), delimiter);
 }
