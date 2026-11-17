@@ -1,5 +1,5 @@
 ---
-"@auaust/toolkit": patch
+"@auaust/toolkit": minor
 ---
 
 - Type casing helpers with literal results
