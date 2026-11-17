@@ -16,13 +16,13 @@ export type AttemptResult<Result> =
       error: unknown;
     };
 
-export function attempt<Callback extends Callee>(
-  this: CallThisParameterType<Callback>,
-  callback: Callback,
-  ...args: CallParameters<Callback>
-): AttemptResult<CallReturnType<Callback>> {
+export function attempt<Fn extends Callee>(
+  this: CallThisParameterType<Fn>,
+  fn: Fn,
+  ...args: CallParameters<Fn>
+): AttemptResult<CallReturnType<Fn>> {
   try {
-    const result = apply.call(this, callback, args);
+    const result = apply.call(this, fn, args);
 
     return {
       success: true,

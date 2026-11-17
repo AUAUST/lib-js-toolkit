@@ -6,13 +6,13 @@ import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export async function attemptAsync<Callback extends Callee>(
-  this: CallThisParameterType<Callback>,
-  callback: Callback,
-  ...args: CallParameters<Callback>
-): Promise<AttemptResult<Awaited<CallReturnType<Callback>>>> {
+export async function attemptAsync<Fn extends Callee>(
+  this: CallThisParameterType<Fn>,
+  fn: Fn,
+  ...args: CallParameters<Fn>
+): Promise<AttemptResult<Awaited<CallReturnType<Fn>>>> {
   try {
-    const result = await toPromise(apply.call(this, callback, args));
+    const result = await toPromise(apply.call(this, fn, args));
 
     return {
       success: true,
