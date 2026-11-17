@@ -17,9 +17,9 @@ export function negate<Callback extends Callee>(
   ...args: CallParameters<Callback>
 ) => boolean;
 export function negate(closure: Callee): (...args: unknown[]) => boolean {
-  const resolve = toFunction(closure);
+  const predicate = toFunction(closure);
 
   return function negated(this: unknown, ...args: unknown[]): boolean {
-    return !Reflect.apply(resolve, this, args);
+    return !Reflect.apply(predicate, this, args);
   };
 }

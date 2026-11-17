@@ -14,9 +14,9 @@ export type Voided<Closure extends Callee> = (
 export function voided<Closure extends Callee>(
   closure: Closure,
 ): Voided<Closure> {
-  const execute = toFunction(closure);
+  const resolved = toFunction(closure);
 
   return function voided(this, ...args) {
-    execute.call(this, ...args);
+    resolved.call(this, ...args);
   };
 }

@@ -57,10 +57,10 @@ export function keyMapper(
   }
 
   if (isCallable(mapper)) {
-    const resolve = toFunction(mapper);
+    const resolved = toFunction(mapper);
 
     return function (...args: [any, any]) {
-      const result = resolve(...args);
+      const result = resolved(...args);
 
       if (isNumber(result)) {
         return String(result);

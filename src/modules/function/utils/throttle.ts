@@ -43,7 +43,7 @@ export function throttle<Closure extends Callee>(
 ): Throttled<Closure> {
   const interval = toDelay(delay);
 
-  const execute = toFunction(closure);
+  const resolved = toFunction(closure);
 
   let throttledUntil = 0;
 
@@ -58,7 +58,7 @@ export function throttle<Closure extends Callee>(
     const now = Date.now();
 
     if (now >= throttledUntil) {
-      execute.call(this, ...args);
+      resolved.call(this, ...args);
 
       throttledUntil = now + interval;
 
@@ -72,7 +72,7 @@ export function throttle<Closure extends Callee>(
     this: CallThisParameterType<Closure>,
     ...args: CallParameters<Closure>
   ): void {
-    execute.call(this, ...args);
+    resolved.call(this, ...args);
   }
 
   function remaining(): number {

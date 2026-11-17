@@ -23,8 +23,8 @@ export function deprecate<Closure extends Callee>(
   closure: Closure,
   options: DeprecateOptions = {},
 ): CallSignature<Closure> {
-  const resolve = toFunction(closure);
-  const name = options.name ?? resolve.name;
+  const resolved = toFunction(closure);
+  const name = options.name ?? resolved.name;
 
   const message = options.message === undefined
     ? `${name} is deprecated.`
@@ -38,6 +38,6 @@ export function deprecate<Closure extends Callee>(
       console.warn(message);
     }
 
-    return Reflect.apply(resolve, this, args);
+    return Reflect.apply(resolved, this, args);
   } as CallSignature<Closure>;
 }

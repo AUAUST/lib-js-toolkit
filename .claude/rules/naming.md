@@ -50,3 +50,4 @@ paths:
 | Any other parameter                          | its role; plural for rest | `object.assign(object, ...sources)`                           |
 
 A `closure` is resolved once with `toFunction`; a `callback` or `fn` is invoked directly with `call`.
+Name the local holding a resolved `closure` after its role, otherwise `resolved`: `const predicate = toFunction(closure)`.

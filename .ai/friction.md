@@ -148,3 +148,4 @@
 - worktree isolation: compound Bash commands containing git, or long scripts with `cd` — refused as unverifiable; split git into `git -C` calls and moved scripts to the scratchpad
 - vitest --typecheck: probed casing result types in a scratch `*.test.ts` — passed a deliberately wrong assertion; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
 - timeout (Bash tool, macOS): wrapped tsc in `timeout 300` — command not found on darwin; used the tool timeout instead
+- sed -i '' -E: word boundaries `\b` in a rename — BSD sed matched nothing silently; used `perl -pi`

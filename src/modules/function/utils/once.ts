@@ -44,14 +44,14 @@ export function once<Closure extends Callee<any, readonly []>>(
   let value: Return | undefined;
   let called = false;
 
-  const resolve = toFunction(closure, this);
+  const resolved = toFunction(closure, this);
 
   function accessor() {
     if (called) {
       return value;
     }
 
-    value = resolve();
+    value = resolved();
 
     called = true;
 

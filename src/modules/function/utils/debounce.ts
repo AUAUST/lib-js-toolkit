@@ -45,7 +45,7 @@ export function debounce<Closure extends Callee>(
   delay: number,
 ): Debounced<Closure> {
   const wait = toDelay(delay);
-  const execute = toFunction(closure);
+  const resolved = toFunction(closure);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
@@ -87,7 +87,7 @@ export function debounce<Closure extends Callee>(
       const { thisArg, args } = pendingCall;
 
       pendingCall = undefined;
-      Reflect.apply(execute, thisArg, args);
+      Reflect.apply(resolved, thisArg, args);
     }
 
     return pending;
@@ -103,7 +103,7 @@ export function debounce<Closure extends Callee>(
     this: CallThisParameterType<Closure>,
     ...args: CallParameters<Closure>
   ): void {
-    Reflect.apply(execute, this, args);
+    Reflect.apply(resolved, this, args);
   }
 
   return assign(debounced, {
