@@ -4,3 +4,4 @@ export { AssertionError } from "#errors/AssertionError";
 export { PipelineError } from "#errors/PipelineError";
 export { ReadonlyError } from "#errors/ReadonlyError";
 export { StateError } from "#errors/StateError";
+export { UnreachableError } from "#errors/UnreachableError";

@@ -1,3 +1,6 @@
+import { UnreachableError } from "#errors/UnreachableError";
+import { fail } from "#modules/function/utils/fail";
+
 const buffer = new Uint32Array(1);
 
 /**
@@ -8,11 +11,5 @@ const buffer = new Uint32Array(1);
 export function randomUint32(): number {
   crypto.getRandomValues(buffer);
 
-  const value = buffer[0];
-
-  if (value === undefined) {
-    throw new Error("The random buffer is empty.");
-  }
-
-  return value;
+  return buffer[0] ?? fail(UnreachableError, "The random buffer is empty.");
 }
