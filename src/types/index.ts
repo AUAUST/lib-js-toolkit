@@ -92,3 +92,4 @@ export type * from "#types/Whitespace";
 export type * from "#types/WithParameters";
 export type * from "#types/WithReturnType";
 export type * from "#types/WithThisParameter";
+export type * from "#types/Writable";
