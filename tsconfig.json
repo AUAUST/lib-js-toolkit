@@ -42,7 +42,7 @@
       "path": "./tsconfig.tests.json"
     },
     {
-      "path": "./tsconfig.tooling.json"
+      "path": "./tsconfig.scripts.json"
     }
   ]
 }

@@ -126,8 +126,6 @@ export default defineConfig({
     mirror: true,
   },
   tooling: {
-    // @debt explicit only because engrenage writes no tsconfig for tooling while the scripts environment it inherits from is inactive (AUAUST/lib-js-engrenage#521)
-    tsconfig: {},
     roles: [
       index(),
       utils(),
