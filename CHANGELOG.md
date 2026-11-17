@@ -1,5 +1,35 @@
 # @auaust/toolkit
 
+## 0.8.0
+
+### Minor Changes
+
+- 5c9da0d: `applyWith(callback, thisArg, args)` and `callWith(callback, thisArg, ...args)` call a function or `Callable` with an explicit receiver, replacing `apply.call` and `call.call`.
+- 8fe0658: - Type casing helpers with literal results
+- baf55c4: - `splitFirst` and `splitNth` return `[string, undefined]` for a missing needle or occurrence; `splitLast` returns `[undefined, string]`
+  - Rename `removePrefix` and `removeSuffix` to `withoutPrefix` and `withoutSuffix`
+  - Add `afterPrefix` and `beforeSuffix`
+
+### Patch Changes
+
+- 8aed0e9: - Add array.chunk and iterable.chunk
+- 689c391: - Name the function `attempt` and `attemptAsync` call `fn`
+- 618fee9: - Export a named result type for each casing helper
+- 7f299c2: - Widen `ConstantCased` to `string` for out-of-precision literals
+- 28ea306: - Add fail and unreachable
+  - Add UnreachableError
+- 13b0151: - Name the kept function `closure` in function wrappers
+- 54ce27a: - Add fromEntries as the canonical name of record
+  - Add plain as an alias of toNullPrototype
+- 589a45a: - Type `overload` trap keys as `TrapName`, rejecting other keys
+  - Omit non-trap keys from `OverloadTraps` instead of typing them `never`
+- 78967fd: - Add randomIntegers and a lazy random integer iterator
+- 44ce213: `pipe`, `pipeAsync`, `spy`, `throttle` and `voided` invoke a function even when it has its own `call` or `apply` property.
+- f65eed1: - Accept the canonical option alone in trim and casing helpers
+- 9ac0429: - Add toConstantCase and toWordCase
+- 5b8ac47: - Export the `LowerLetter` and `UpperLetter` types
+- 3649e0c: - Add the Writable type
+
 ## 0.7.1
 
 ### Patch Changes
