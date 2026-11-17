@@ -1,3 +1,4 @@
+import { beforeSuffix } from "#modules/string/utils/beforeSuffix";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -18,8 +19,6 @@ export function withoutSuffix(
   suffix: string,
 ): string | undefined {
   if (string != null) {
-    return string.endsWith(suffix)
-      ? string.slice(0, string.length - suffix.length)
-      : string;
+    return beforeSuffix(string, suffix) ?? string;
   }
 }

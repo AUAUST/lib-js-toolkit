@@ -1,3 +1,4 @@
+import { afterPrefix } from "#modules/string/utils/afterPrefix";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -18,6 +19,6 @@ export function withoutPrefix(
   prefix: string,
 ): string | undefined {
   if (string != null) {
-    return string.startsWith(prefix) ? string.slice(prefix.length) : string;
+    return afterPrefix(string, prefix) ?? string;
   }
 }
