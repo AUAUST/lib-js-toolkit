@@ -1,6 +1,6 @@
 import { map } from "#modules/array/utils/map";
-import { toWordCase } from "#modules/string/internals/toWordCase";
 import { splitWords } from "#modules/string/utils/splitWords";
+import { toWordCase } from "#modules/string/utils/toWordCase";
 import type { CamelCasedWords } from "#modules/string/types/CamelCasedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { SplitWords } from "#modules/string/types/SplitWords";
@@ -38,6 +38,6 @@ export function toCamelCase(
   const words = splitWords(string, options);
 
   return map(words, (word, index) => {
-    return toWordCase(word, index > 0, options);
+    return toWordCase(word, { ...options, capitalized: index > 0 });
   }).join("");
 }

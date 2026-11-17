@@ -1,6 +1,6 @@
 import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
-import { toWordCase } from "#modules/string/internals/toWordCase";
+import { toWordCase } from "#modules/string/utils/toWordCase";
 import type { LocaleOptions } from "#modules/string/types/LocaleOptions";
 
 /**
@@ -13,7 +13,7 @@ export function joinLowercaseWords(
 ): string {
   return join(
     map(words, (word) => {
-      return toWordCase(word, false, options);
+      return toWordCase(word, options);
     }),
     delimiter,
   );

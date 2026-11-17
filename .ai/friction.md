@@ -140,3 +140,5 @@
 - engrenage planning issue claim: cross-repo refs `owner/repo#1, #2` — bare `#2` resolves to the current repo; write each as `#{repo.n}`
 - engrenage debt: ran `engrenage debt --json` — command not on PATH; ran `pnpm exec engrenage debt --json`
 - engrenage CLI: ran bare `engrenage planning` — not on PATH; used `pnpm exec engrenage`
+- Bash tool zsh: passed a file list through an unquoted `$F` to eslint — zsh does not word-split, eslint got one path; listed the files inline.
+- SubagentHandback: brief asked for an interim report before continuing — the handback ends the run, so no interim report is possible; folded it into the final report.

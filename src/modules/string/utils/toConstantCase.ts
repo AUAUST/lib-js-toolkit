@@ -1,0 +1,35 @@
+import { toDelimitedCase } from "#modules/string/utils/toDelimitedCase";
+import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
+import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { SplitWords } from "#modules/string/types/SplitWords";
+import type { Joined } from "#types/Joined";
+import type { Maybe } from "#types/Maybe";
+
+/**
+ * Converts the string to CONSTANT_CASE, splitting through `splitWords`, which
+ * drops characters that are neither letters, marks nor digits, and uppercasing
+ * following `locale`; a nullish string returns `undefined`.
+ *
+ * @shorthand screaming
+ * @root
+ */
+export function toConstantCase<Value extends string>(
+  string: Value,
+): string extends Value ? string : Uppercase<Joined<SplitWords<Value>, "_">>;
+export function toConstantCase(string: string, options?: CasingOptions): string;
+export function toConstantCase(
+  string: null | undefined,
+  options?: CasingOptions,
+): undefined;
+export function toConstantCase(
+  string: Maybe<string>,
+  options?: CasingOptions,
+): string | undefined;
+export function toConstantCase(
+  string: Maybe<string>,
+  options: CasingOptions = {},
+): string | undefined {
+  if (string != null) {
+    return toLocaleUpperCase(toDelimitedCase(string, "_", options), options);
+  }
+}

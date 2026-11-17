@@ -1,5 +1,4 @@
-import { map } from "#modules/array/utils/map";
-import { toWordCase } from "#modules/string/internals/toWordCase";
+import { joinCapitalizedWords } from "#modules/string/internals/joinCapitalizedWords";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
@@ -30,11 +29,7 @@ export function toTitleCase(
   string: Maybe<string>,
   options: CasingOptions = {},
 ): string | undefined {
-  if (string == null) {
-    return;
+  if (string != null) {
+    return joinCapitalizedWords(splitWords(string, options), " ", options);
   }
-
-  const words = splitWords(string, options);
-
-  return map(words, (word) => toWordCase(word, true, options)).join(" ");
 }
