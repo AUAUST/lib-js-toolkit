@@ -1,9 +1,9 @@
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { toLocaleLowerCase } from "#modules/string/utils/toLocaleLowerCase";
 import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { WordCaseOptions } from "#modules/string/types/WordCaseOptions";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Lowercases the string following `locale`, then uppercases its first code point

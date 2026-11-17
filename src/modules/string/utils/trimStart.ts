@@ -1,8 +1,8 @@
 import { charRunPattern } from "#modules/string/internals/charRunPattern";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { TrimOptions } from "#modules/string/types/TrimOptions";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Removes whitespace, or the `chars` characters, from the start. A nullish

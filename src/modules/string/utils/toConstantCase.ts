@@ -2,10 +2,10 @@ import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { toDelimitedCase } from "#modules/string/utils/toDelimitedCase";
 import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { SplitWords } from "#modules/string/types/SplitWords";
 import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Converts the string to CONSTANT_CASE, splitting through `splitWords`, which

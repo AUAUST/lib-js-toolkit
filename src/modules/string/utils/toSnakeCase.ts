@@ -3,8 +3,8 @@ import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { LowercaseJoinedWords } from "#modules/string/types/LowercaseJoinedWords";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Converts the string to snake_case, splitting through `splitWords`, which

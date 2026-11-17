@@ -1,7 +1,7 @@
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import type { LocaleOptions } from "#modules/string/types/LocaleOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Returns the string in uppercase following `locale`, locale-independently

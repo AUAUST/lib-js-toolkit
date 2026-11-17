@@ -2,10 +2,10 @@ import { join } from "#modules/array/utils/join";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { SplitWords } from "#modules/string/types/SplitWords";
 import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Splits the string through `splitWords`, dropping characters that are neither

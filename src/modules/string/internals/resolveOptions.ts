@@ -1,5 +1,5 @@
 import { isPlainObject } from "#modules/object/guards/isPlainObject";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Resolves an options object or its canonical `field` value alone into the

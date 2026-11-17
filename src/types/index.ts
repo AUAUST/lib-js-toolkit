@@ -65,6 +65,7 @@ export type * from "#types/NullaryMethodName";
 export type * from "#types/ObjectEntry";
 export type * from "#types/ObjectKey";
 export type * from "#types/ObjectValue";
+export type * from "#types/OptionsOrField";
 export type * from "#types/PathValue";
 export type * from "#types/Primitive";
 export type * from "#types/PropertyDescriptor";

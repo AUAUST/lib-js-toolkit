@@ -7,9 +7,9 @@ import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { remove } from "#modules/string/utils/remove";
 import { unaccent } from "#modules/string/utils/unaccent";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { SplitWords } from "#modules/string/types/SplitWords";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Splits the string into words on every run of characters that are neither

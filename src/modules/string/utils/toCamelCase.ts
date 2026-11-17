@@ -5,10 +5,10 @@ import { splitWords } from "#modules/string/utils/splitWords";
 import { toWordCase } from "#modules/string/utils/toWordCase";
 import type { CamelCasedWords } from "#modules/string/types/CamelCasedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { OptionsOrField } from "#modules/string/types/OptionsOrField";
 import type { SplitWords } from "#modules/string/types/SplitWords";
 import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
+import type { OptionsOrField } from "#types/OptionsOrField";
 
 /**
  * Converts the string to camelCase, splitting through `splitWords`, which drops
