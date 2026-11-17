@@ -1,3 +1,5 @@
+import { uint32sPerInteger } from "#modules/random/internals/uint32sPerInteger";
+
 export function uniformInteger(
   min: number,
   max: number,
@@ -5,7 +7,7 @@ export function uniformInteger(
 ): number {
   const range = max - min + 1;
 
-  if (range <= 2 ** 32) {
+  if (uint32sPerInteger(min, max) === 1) {
     const limit = 2 ** 32 - (2 ** 32 % range);
 
     let value: number;

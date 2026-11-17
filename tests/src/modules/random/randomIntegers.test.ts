@@ -32,3 +32,25 @@ test("fills one buffer for many draws", () => {
   expect(spy.mock.calls.length).toBeGreaterThanOrEqual(1);
   expect(spy.mock.calls.length).toBeLessThanOrEqual(2);
 });
+
+test("sizes fills to the words the remaining draws need", () => {
+  const sizes: number[] = [];
+
+  vi.spyOn(crypto, "getRandomValues").mockImplementation((array) => {
+    if (array instanceof Uint32Array) {
+      sizes.push(array.length);
+      array.fill(0);
+
+      if (sizes.length === 1) {
+        array.fill(2 ** 32 - 1, -1);
+      }
+    }
+
+    return array;
+  });
+
+  randomIntegers(0, 2 ** 31, 4);
+  randomIntegers(0, 2 ** 40, 3);
+
+  expect(sizes).toEqual([4, 1, 6]);
+});
