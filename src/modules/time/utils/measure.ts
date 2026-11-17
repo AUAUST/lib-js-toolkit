@@ -1,4 +1,4 @@
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -18,7 +18,7 @@ export function measure<Callback extends Callee>(
 ): MeasureResult<CallReturnType<Callback>> {
   const start = performance.now();
 
-  const result = apply.call(this, callback, args);
+  const result = applyWith(callback, this, args);
 
   const end = performance.now();
 

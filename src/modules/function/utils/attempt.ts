@@ -1,4 +1,4 @@
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -22,7 +22,7 @@ export function attempt<Fn extends Callee>(
   ...args: CallParameters<Fn>
 ): AttemptResult<CallReturnType<Fn>> {
   try {
-    const result = apply.call(this, fn, args);
+    const result = applyWith(fn, this, args);
 
     return {
       success: true,

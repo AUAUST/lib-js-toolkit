@@ -1,4 +1,4 @@
-import { call } from "#modules/function/utils/call";
+import { callWith } from "#modules/function/utils/callWith";
 import type { Callee } from "#types/Callee";
 
 export function tap<V, This = any>(
@@ -6,7 +6,7 @@ export function tap<V, This = any>(
   value: V,
   callback: Callee<void, [value: V], This>,
 ): V {
-  call.call(this, callback, value);
+  callWith(callback, this, value);
 
   return value;
 }

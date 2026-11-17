@@ -1,5 +1,5 @@
 import { toDelay } from "#modules/function/internals/toDelay";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { MaybeAsyncCallee } from "#types/MaybeAsyncCallee";
 
 /**
@@ -21,7 +21,7 @@ export function after<Result, Arguments extends readonly any[], This>(
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {
-        resolve(apply.call(this, callback, args));
+        resolve(applyWith(callback, this, args));
       } catch (error) {
         reject(error);
       }

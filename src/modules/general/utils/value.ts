@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { CallReturnType } from "#types/CallReturnType";
 import type { CallSignature } from "#types/CallSignature";
@@ -69,5 +69,5 @@ export const value: ValueResolver = function value(
   input: unknown,
   ...args: unknown[]
 ): unknown {
-  return isCallable(input) ? apply.call(this, input, args) : input;
+  return isCallable(input) ? applyWith(input, this, args) : input;
 };

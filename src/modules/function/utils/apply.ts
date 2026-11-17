@@ -1,6 +1,4 @@
-import { isFunction } from "#modules/function/guards/isFunction";
-import { callable } from "#modules/protocol/symbols";
-import { implementsProtocol } from "#modules/protocol/utils/implementsProtocol";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -39,22 +37,9 @@ export interface Apply {
 
 export const apply: Apply = function apply(
   this: unknown,
-  callback: unknown,
+  callback: Callee,
   args: readonly unknown[] = [],
 ): unknown {
-  const receiver = this === apply ? undefined : this;
-
-  if (implementsProtocol(callable, callback)) {
-    return Reflect.apply(
-      callback[callable],
-      receiver === undefined ? callback : receiver,
-      args,
-    );
-  }
-
-  if (isFunction(callback)) {
-    return Reflect.apply(callback, receiver, args);
-  }
-
-  throw new TypeError(`${String(callback)} is not callable`);
+  // @debt A `this` equal to `apply` itself counts as no receiver, a tested contract with no stated reason.
+  return applyWith(callback, this === apply ? undefined : this, args);
 };

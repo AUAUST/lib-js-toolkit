@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { IfNever } from "#types/IfNever";
 import type { MethodName } from "#types/MethodName";
@@ -33,7 +33,7 @@ export function memberValue(
   const value = target[property];
 
   if (isCallable(value)) {
-    return apply.call(target, value, args);
+    return applyWith(value, target, args);
   }
 
   return value;

@@ -1,5 +1,5 @@
 import { isCallable } from "#modules/function/guards/isCallable";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallReturnType } from "#types/CallReturnType";
@@ -37,5 +37,5 @@ export function applyMethod(
   method: PropertyKey | Callee,
   args: any,
 ): unknown {
-  return apply.call(target, isCallable(method) ? method : target[method], args);
+  return applyWith(isCallable(method) ? method : target[method], target, args);
 }

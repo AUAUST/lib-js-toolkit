@@ -1,5 +1,5 @@
 import { toPromise } from "#modules/async/utils/toPromise";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import type { AttemptResult } from "#modules/function/utils/attempt";
 import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
@@ -12,7 +12,7 @@ export async function attemptAsync<Fn extends Callee>(
   ...args: CallParameters<Fn>
 ): Promise<AttemptResult<Awaited<CallReturnType<Fn>>>> {
   try {
-    const result = await toPromise(apply.call(this, fn, args));
+    const result = await toPromise(applyWith(fn, this, args));
 
     return {
       success: true,

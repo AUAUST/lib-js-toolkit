@@ -1,5 +1,5 @@
 import { map } from "#modules/array/utils/map";
-import { apply } from "#modules/function/utils/apply";
+import { applyWith } from "#modules/function/utils/applyWith";
 import { value, type ResolvedValue } from "#modules/general/utils/value";
 import type { Callee } from "#types/Callee";
 
@@ -24,5 +24,5 @@ export function on(this: any, ...args: any[]): any {
   const callback = args.pop();
   const resolvedArgs = map(args, value.bind(this));
 
-  return apply.call(this, callback, resolvedArgs);
+  return applyWith(callback, this, resolvedArgs);
 }
