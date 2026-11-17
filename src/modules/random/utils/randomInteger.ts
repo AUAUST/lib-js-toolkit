@@ -1,4 +1,5 @@
-import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
+import { assertIntegerBounds } from "#modules/random/internals/assertIntegerBounds";
+import { uniformInteger } from "#modules/random/internals/uniformInteger";
 import { randomUint32 } from "#modules/random/utils/randomUint32";
 
 /**
@@ -7,38 +8,7 @@ import { randomUint32 } from "#modules/random/utils/randomUint32";
  * (`crypto.getRandomValues`), with no guarantee beyond the host's.
  */
 export function randomInteger(min: number, max: number): number {
-  if (
-    !isSafeInteger(min) ||
-    !isSafeInteger(max) ||
-    min > max ||
-    max - min > Number.MAX_SAFE_INTEGER
-  ) {
-    throw new RangeError(
-      "Bounds must be safe integers with an ordered safe span.",
-    );
-  }
+  assertIntegerBounds(min, max);
 
-  const range = max - min + 1;
-
-  if (range <= 2 ** 32) {
-    const limit = 2 ** 32 - (2 ** 32 % range);
-
-    let value: number;
-
-    do {
-      value = randomUint32();
-    } while (value >= limit);
-
-    return min + (value % range);
-  }
-
-  const limit = 2 ** 53 - (2 ** 53 % range);
-
-  let value: number;
-
-  do {
-    value = (randomUint32() >>> 11) * 2 ** 32 + randomUint32();
-  } while (value >= limit);
-
-  return min + (value % range);
+  return uniformInteger(min, max, randomUint32);
 }

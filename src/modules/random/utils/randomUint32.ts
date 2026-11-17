@@ -8,6 +8,7 @@ const buffer = new Uint32Array(1);
  * secure generator (`crypto.getRandomValues`), with no guarantee beyond
  * the host's.
  */
+// @debt Wraps `crypto.getRandomValues` like `internals/uint32Source`; it could draw from a one-value source instead.
 export function randomUint32(): number {
   crypto.getRandomValues(buffer);
 
