@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-// @debt source-only because the dist guard rejects tooling's transitive source imports (engrenage.4)
+// @debt source-only because the dist guard rejects tooling's transitive source imports (engrenage.1)
 
 import { native, relates } from "#tooling/tags/index";
 

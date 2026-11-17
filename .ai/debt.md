@@ -69,7 +69,7 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - why: `setTimeout` clamps delays above its maximum to 1 ms.
 - done: long delays wait as requested in `debounce` and `after`, or throw. Choosing between the two needs a decision first (planning).
 
-## 11. `String()` conversion differs from the native `ToString` the helpers mirror
+## 10. `String()` conversion differs from the native `ToString` the helpers mirror
 
 - `src/modules/general/utils/compare.ts:152`: `String()` throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.
 - `src/modules/iterable/utils/join.ts:6`: `String` converts a symbol where `Array.prototype.join` throws.
@@ -78,57 +78,52 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - want: one shared converter with the native `ToString` semantics the helpers mirror.
 - done: the converter is the only conversion used, with the throw and symbol cases decided.
 
-## 12. `pipeCompare` compares with `===` while `deepEquals` uses `sameValueZero`
+## 11. `pipeCompare` compares with `===` while `deepEquals` uses `sameValueZero`
 
 - `src/modules/general/utils/pipeCompare.ts:4`: transforms yielding `NaN` never match.
 - done: `NaN` matches, or the difference is documented as the contract.
 
-## 13. `comparator` name clashes with the sort comparator vocabulary
+## 12. `comparator` name clashes with the sort comparator vocabulary
 
 - `src/modules/general/utils/comparator.ts:7`: returns a boolean `compare` bound to custom operators, while `array`'s `Comparator` type and `numeric` use the word for a sort comparator.
 - done: the name is decided and applied (naming decision, planning).
 
-## 14. Match-argument resolution trusts overloads for case shapes
+## 13. Match-argument resolution trusts overloads for case shapes
 
 - `src/modules/general/internals/resolveMatchArguments.ts:18`
 - `src/modules/general/internals/resolveMatchArguments.ts:22`
 - why: the cases' shape is not validated at runtime.
 - done: the shape is validated under the validation policy of `utils.9`, or the trust is documented.
 
-## 15. Lint rules force workarounds in helper internals
+## 14. Lint rules force workarounds in helper internals
 
 - `src/modules/general/internals/matchesPredicate.ts:20`: reimplements `String#search` because `unicorn/prefer-regexp-test` rejects it for existence checks.
-- why: the lint config has no exemption for helpers that wrap the flagged call.
+- why: the lint config has no exemption for helpers that wrap the flagged call. The rule is enabled by engrenage's eslint preset (`defineEslintConfig`), so an exemption is a local `eslint.config.ts` override or an engrenage change.
 - want: a file-scoped lint exemption for these helpers (configuration change, to be reported with its reason).
 - done: the workarounds are removed or the exemption is decided.
 
-## 16. Hand-rolled assertions differ from the `assert` helpers' `AssertionError`
+## 15. Hand-rolled assertions differ from the `assert` helpers' `AssertionError`
 
 - `src/modules/object/utils/readonly.ts:58`: hand-rolls `assertContainer`.
 - `src/modules/string/utils/md5.ts:17`: hand-rolls `assertString`.
 - why: adopting the helpers throws `AssertionError` (still a `TypeError`), an observable change.
 - done: both use the assertion helpers, with the change recorded in a changeset, or the difference is accepted (decision, planning).
 
-## 17. `inspect` detects promises by `then` and marks them handled
+## 16. `inspectPrimitive` fallback in `inspect` is unreachable
 
-- `src/modules/string/internals/inspectLeaf.ts:99`: `then` is the only brand check for promises; it reads `constructor` and marks a rejected promise as handled.
-- done: promise detection has a brand check that does not read or mark the promise.
-
-## 18. `inspectPrimitive` fallback in `inspect` is unreachable
-
-- `src/modules/string/utils/inspect.ts:43`: `inspectPrimitive` returns `undefined` only for objects, which its type does not carry.
+- `src/modules/string/utils/inspect.ts:44`: `inspectPrimitive` returns `undefined` only for objects, which its type does not carry.
 - done: the type carries the object case, or the fallback is removed.
 
-## 19. Property forwarder has no stated contract for nullish sources and failed writes
+## 17. Property forwarder has no stated contract for nullish sources and failed writes
 
 - `src/modules/forwarder/utils/propertyForwarder.ts:270`: the nullish-source `TypeError` is the engine's implicit one; `methodGetter` in `methodForwarder` checks the source explicitly and boxes primitives through `toObject`.
 - `src/modules/forwarder/utils/propertyForwarder.ts:276`: a failed write is discarded silently, like the object-source setter.
 - why: no contract says whether the getter should check the source or the setter should throw.
 - done: the error and failed-write policy is stated and both forwarders follow it (decision, planning).
 
-## 20. Barrel tag metadata is read inside toolkit instead of engrenage
+## 18. Barrel tag metadata bypasses engrenage's `declarations` reader
 
-- `tooling/barrels/operations/readJsdocTags.ts:21`: shorthands and barrel metadata are read through the TypeScript compiler API inside toolkit. AUAUST/lib-js-engrenage#438 (closed, completed) shipped the `declarations` config key (one parse per file, through `readDocTag`) in installed engrenage 0.14.1, so the move is unblocked; the marker's issue link is stale.
+- `tooling/barrels/operations/readJsdocTags.ts:21`: shorthands and barrel metadata are read through the TypeScript compiler API inside toolkit. AUAUST/lib-js-engrenage#438 (closed, completed) shipped the `declarations` config key (one parse per file, through `readDocTag`) in installed engrenage 0.14.1, so the move is unblocked and local; the marker's wording and issue link are stale.
 - `tooling/barrels/operations/readJsdocTags.ts:22`: each caller reads and parses `file` again.
 - `tooling/tags/utils/root.ts:3`: `tooling/barrels` reads this tag through its own name literal.
 - `tooling/tags/utils/shorthand.ts:3`: same name literal.
@@ -136,7 +131,7 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - want: read tags through engrenage's `declarations` reader; the barrels extension owns and contributes the tag declaration.
 - done: one definition holds each tag name and the file is parsed once.
 
-## 22. Array and iterable implementation signatures widen items to records or method holders
+## 19. Array and iterable implementation signatures widen items to records or method holders
 
 - `src/modules/array/utils/every.ts:7`
 - `src/modules/array/utils/filter.ts:8`
@@ -160,7 +155,7 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - why: the implementation accepts any property key through `memberValue` or `callMethod`, so only the overloads state the contract.
 - done: implementation signatures keep the item type the overloads declare, or the widening is documented as the contract.
 
-## 23. Array keyer and filter-map helpers branch to an iterable overload that does not exist
+## 20. Array keyer and filter-map helpers branch to an iterable overload that does not exist
 
 - `src/modules/array/utils/groupBy.ts:62`
 - `src/modules/array/utils/keyBy.ts:58`
@@ -169,7 +164,7 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - want: one call once `iterable` declares that overload; otherwise remove the branch.
 - done: no branch repeats an identical call.
 
-## 24. Method-holder dispatch repeats across the array and iterable map helpers
+## 21. Method-holder dispatch repeats across the array and iterable map helpers
 
 - `src/modules/array/utils/transform.ts:10`: `MethodHolder` and the method-name dispatch duplicate `array.map` and `iterable.map`.
 - further: `src/modules/array/utils/map.ts`, `src/modules/iterable/utils/map.ts`.
@@ -177,14 +172,37 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - want: one shared definition of `MethodHolder` and the dispatch.
 - done: one definition serves all three helpers.
 
-## 27. `resolveOptions` casts rely on unstated invariants
+## 22. `resolveOptions` casts rely on unstated invariants
 
 - `src/modules/string/internals/resolveOptions.ts:13`
 - why: the casts hold only while every `Options` field is optional and no canonical field accepts a plain object; nothing states or checks either.
 - done: the invariant is typed or checked and the casts are gone (choosing between types and a runtime check needs planning).
 
-## 28. `toWordCase` repeats `capitalize`'s first-code-point split
+## 23. `toWordCase` repeats `capitalize`'s first-code-point split
 
-- `src/modules/string/utils/toWordCase.ts:61`
+- `src/modules/string/utils/toWordCase.ts:62`
 - why: `capitalize` takes no locale, so the split is repeated here.
 - done: one owner of the first-code-point split, which needs a locale-aware `capitalize` (design decision, planning).
+
+## 24. Native `Array.prototype.join` bypasses toolkit's `array.join`
+
+- `src/modules/object/utils/flatten.ts:55`: joins `leafPath` natively.
+- `src/modules/function/utils/overload.ts:334`: joins trap names natively.
+- why: the #317 sweep replaced such calls with the array module's `join` elsewhere; these two were missed.
+- want: the array module's `join` at both sites.
+- done: no native `join` call remains in `src/`.
+
+## 25. `apply` and `call` treat a receiver equal to themselves as no receiver
+
+- `src/modules/function/utils/apply.ts:43`
+- `src/modules/function/utils/call.ts:29`
+- why: the special case is tested but has no stated reason; it changes which `this` the callee sees.
+- done: the contract and its reason are stated in JSDoc, or the special case is removed (decision, planning).
+
+## 26. `truncateStart` and `truncateEnd` repeat the nullish return, code-point split and length check
+
+- `src/modules/string/utils/truncateEnd.ts:33`
+- `src/modules/string/utils/truncateStart.ts:33`
+- why: both functions carry the same validation and split; only the slicing differs.
+- want: one internal owning the truncation, leaving only the slicing in each function.
+- done: the validation and code-point split have one definition.

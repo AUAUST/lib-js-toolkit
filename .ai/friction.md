@@ -147,3 +147,4 @@
 - sed -i '' -E: word boundaries `\b` in a rename — BSD sed matched nothing silently; used `perl -pi`
 - Bash grep `--include=*.ts`: unquoted glob — zsh `nomatch` aborts the command; quote the pattern.
 - eslint.config.ts rules lookup: importing the config through tsx yielded no rules — used `eslint --print-config <file>` instead.
+- `engrenage debt --json`: ran bare `engrenage` — not on PATH — used `pnpm exec engrenage debt --json` — the CLI is only reachable through pnpm
