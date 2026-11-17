@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { isSafeInteger } from "#modules/number/guards/isSafeInteger";
 import type { Maybe } from "#types/Maybe";
 
@@ -30,7 +31,7 @@ export function chunk(
   const chunks: string[] = [];
 
   for (let index = 0; index < codePoints.length; index += size) {
-    chunks.push(codePoints.slice(index, index + size).join(""));
+    chunks.push(join(codePoints.slice(index, index + size), ""));
   }
 
   return chunks;

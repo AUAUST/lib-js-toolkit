@@ -1,4 +1,5 @@
 import { unreachable } from "#modules/function/utils/unreachable";
+import { clamp } from "#modules/math/utils/clamp";
 
 const maxSize = 16_384;
 
@@ -9,7 +10,7 @@ export function uint32Source(fillSize: () => number): () => number {
 
   return () => {
     if (index >= buffer.length) {
-      const size = Math.max(1, Math.min(fillSize(), maxSize));
+      const size = clamp(fillSize(), 1, maxSize);
 
       if (size > storage.length) {
         storage = new Uint32Array(size);

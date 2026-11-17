@@ -1,3 +1,4 @@
+import { min } from "#modules/math/utils/min";
 import { isString } from "#modules/string/guards/isString";
 import { inspectList } from "#modules/string/internals/inspectList";
 import { inspectProbe } from "#modules/string/internals/inspectProbe";
@@ -88,7 +89,7 @@ function inspectTypedArray(
     return label;
   }
 
-  const shown = Math.min(size, context.maxItems);
+  const shown = min(size, context.maxItems);
   const items: string[] = [];
 
   for (let index = 0; index < shown; index++) {

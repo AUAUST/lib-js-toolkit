@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { assertTruncation } from "#modules/string/internals/assertTruncation";
 import type { Maybe } from "#types/Maybe";
 
@@ -43,5 +44,5 @@ export function truncateEnd(
 
   const ellipsisLength = [...ellipsis].length;
 
-  return codePoints.slice(0, length - ellipsisLength).join("") + ellipsis;
+  return join(codePoints.slice(0, length - ellipsisLength), "") + ellipsis;
 }

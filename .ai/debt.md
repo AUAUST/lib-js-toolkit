@@ -69,14 +69,6 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 - why: `setTimeout` clamps delays above its maximum to 1 ms.
 - done: long delays wait as requested in `debounce` and `after`, or throw. Choosing between the two needs a decision first (planning).
 
-## 10. Delays and durations use native coercion instead of `toNumber`
-
-- `src/modules/function/internals/toDelay.ts:10`
-- `src/modules/time/utils/stopwatch.ts:146`
-- why: `number` already provides `toNumber`, and these helpers coerce natively.
-- want: use the `number` module's `toNumber` converter.
-- done: neither file coerces with a native conversion.
-
 ## 11. `String()` conversion differs from the native `ToString` the helpers mirror
 
 - `src/modules/general/utils/compare.ts:152`: `String()` throws on objects without `toString` or `Symbol.toPrimitive`, null-prototype objects included.

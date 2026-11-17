@@ -1,6 +1,7 @@
 import { StateError } from "#errors/StateError";
 import { isNaN } from "#modules/number/guards/isNaN";
 import { isNumber } from "#modules/number/guards/isNumber";
+import { toNumber } from "#modules/number/utils/toNumber";
 import { defineGetters } from "#modules/object/utils/defineGetters";
 import { finalize } from "#modules/object/utils/finalize";
 import { freeze } from "#modules/object/utils/freeze";
@@ -143,8 +144,7 @@ function resolveOptions(options: StopwatchOptions) {
     };
   }
 
-  // @debt Reuse the number module's toNumber converter instead of native coercion.
-  if (isNaN((startAt = Number(startAt)))) {
+  if (isNaN((startAt = toNumber(startAt)))) {
     throw new TypeError(`Invalid startAt value: '${options.startAt}'`);
   }
 

@@ -1,6 +1,7 @@
 import { isArray } from "#modules/array/guards/isArray";
 import { isFunction } from "#modules/function/guards/isFunction";
 import { isSymbol } from "#modules/guard/guards/isSymbol";
+import { min } from "#modules/math/utils/min";
 import { isNumber } from "#modules/number/guards/isNumber";
 import { isObject } from "#modules/object/guards/isObject";
 import { isString } from "#modules/string/guards/isString";
@@ -99,7 +100,7 @@ function renderArray(
     return `Array(${size})`;
   }
 
-  const shown = Math.min(size, context.maxItems);
+  const shown = min(size, context.maxItems);
   const items: string[] = [];
 
   for (let index = 0; index < shown; index++) {

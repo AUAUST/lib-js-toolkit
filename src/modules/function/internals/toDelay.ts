@@ -1,4 +1,5 @@
 import { isNaN } from "#modules/number/guards/isNaN";
+import { toNumber } from "#modules/number/utils/toNumber";
 
 /**
  * Coerces a timing argument to milliseconds.
@@ -7,8 +8,7 @@ import { isNaN } from "#modules/number/guards/isNaN";
  * @throws {RangeError} when the delay is negative
  */
 export function toDelay(delay: number): number {
-  // @debt Reuse the number module's toNumber converter instead of native coercion.
-  const milliseconds = Number(delay);
+  const milliseconds = toNumber(delay);
 
   if (isNaN(milliseconds)) {
     throw new TypeError("A delay must be a number.", {

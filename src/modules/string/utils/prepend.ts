@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { splitSeparatorOptions } from "#modules/string/internals/splitSeparatorOptions";
 import type { SeparatorOptions } from "#modules/string/types/SeparatorOptions";
 import type { Maybe } from "#types/Maybe";
@@ -29,5 +30,5 @@ export function prepend(
 
   const [strings, separator] = splitSeparatorOptions(prefixes);
 
-  return [...strings, string].join(separator);
+  return join([...strings, string], separator);
 }

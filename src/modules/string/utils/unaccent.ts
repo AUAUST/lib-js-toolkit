@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
 import { getOwn } from "#modules/object/utils/getOwn";
 import {
@@ -23,9 +24,11 @@ export function unaccent(string: Maybe<string>): string | undefined {
 
   const characters = [...string.normalize("NFD")];
 
-  return map(characters, (character) => {
+  const unaccented = map(characters, (character) => {
     return combiningMarkPattern.test(character)
       ? ""
       : (getOwn<string>(unaccentLigatures, character) ?? character);
-  }).join("");
+  });
+
+  return join(unaccented, "");
 }

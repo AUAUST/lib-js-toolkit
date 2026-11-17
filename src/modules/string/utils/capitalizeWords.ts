@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
 import { whitespaceRunPattern } from "#modules/string/constants";
 import { capitalize } from "#modules/string/utils/capitalize";
@@ -17,5 +18,8 @@ export function capitalizeWords(string: Maybe<string>): string | undefined {
 
   const parts = string.split(whitespaceRunPattern);
 
-  return map(parts, (part) => capitalize(part)).join("");
+  return join(
+    map(parts, (part) => capitalize(part)),
+    "",
+  );
 }

@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { splitSeparatorOptions } from "#modules/string/internals/splitSeparatorOptions";
 import type { SeparatorOptions } from "#modules/string/types/SeparatorOptions";
 import type { Maybe } from "#types/Maybe";
@@ -30,5 +31,5 @@ export function concat(
 
   const [strings, separator] = splitSeparatorOptions(parts);
 
-  return [string, ...strings].join(separator);
+  return join([string, ...strings], separator);
 }

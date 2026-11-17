@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { isString } from "#modules/string/guards/isString";
 import { toGlobalRegExp } from "#modules/string/internals/toGlobalRegExp";
 import { escapeRegExp } from "#modules/string/utils/escapeRegExp";
@@ -29,5 +30,5 @@ export function retain(
     isString(pattern) ? new RegExp(escapeRegExp(pattern), "u") : pattern,
   );
 
-  return string.match(regex)?.join("") ?? "";
+  return join(string.match(regex), "") ?? "";
 }

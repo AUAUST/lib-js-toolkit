@@ -61,8 +61,3 @@
 - Positive safe-integer sizes (`array.chunk`, `iterable.chunk`, `string.chunk`) and non-negative safe-integer counts (`array.sample`, `general.count`, `random.randomIntegers`) are each checked inline, with diverging `RangeError` wording ("A chunk size must…", "Count must…", "A count must…"); `@debt` markers at each site.
 - Outcome: number guards (with their assert/ensure/when companions) or a shared assertion owning each check and its message; weigh against `.ai/discarded.md` (`iterable/internals` argument validation, #142 keeps prologues inline) and utils.5 for wording.
 - Done when one owner serves every site, or inline checks are kept with one wording.
-
-## 11. Native array joins in `string` helpers
-
-- `capitalizeWords`, `uncapitalizeWords`, `unaccent`, `chunk`, `truncateStart`, `truncateEnd`, `concat`, `prepend` and `retain` call `Array.prototype.join` where `array.join` exists, against the "use toolkit's helper once it exists" rule; the casing helpers already go through `array.join`.
-- Done when they use `array.join`, or the rule exempts joins on arrays the helper builds itself.

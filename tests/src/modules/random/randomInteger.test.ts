@@ -2,6 +2,7 @@ import { afterEach, expect, test, vi } from "vitest";
 
 import { randomInteger } from "@auaust/toolkit/random";
 
+import { expectIntegersInRange } from "#tests/testutils/expectIntegersInRange";
 import { mockRandomWords } from "#tests/testutils/mockRandomWords";
 
 afterEach(() => {
@@ -39,12 +40,7 @@ test.each([
 });
 
 test("produces integers within bounds without mocks", () => {
-  // @debt Hand-writes the range check `#tests/testutils/expectIntegersInRange` provides.
-  for (let index = 0; index < 1000; index++) {
-    const value = randomInteger(0, 9);
+  const values = Array.from({ length: 1000 }, () => randomInteger(0, 9));
 
-    expect(Number.isInteger(value)).toBe(true);
-    expect(value).toBeGreaterThanOrEqual(0);
-    expect(value).toBeLessThanOrEqual(9);
-  }
+  expectIntegersInRange(values, 0, 9);
 });
