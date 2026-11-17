@@ -1,8 +1,8 @@
 import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
-import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { TitleCased } from "#modules/string/types/TitleCased";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -19,7 +19,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  */
 export function toTitleCase<Value extends string>(
   string: Value,
-): CapitalizedJoinedWords<Value, " ">;
+): TitleCased<Value>;
 export function toTitleCase(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,

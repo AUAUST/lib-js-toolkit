@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { toWordCase } from "@auaust/toolkit/string";
+import { toWordCase, type WordCased } from "@auaust/toolkit/string";
 
 describe("toWordCase", () => {
   test("lowercases and optionally capitalizes", () => {
@@ -26,5 +26,9 @@ describe("toWordCase", () => {
     expect(toWordCase("I", "tr")).toBe("ı");
     expect(toWordCase("I", "tr")).toBe(toWordCase("I", { locale: "tr" }));
     expectTypeOf(toWordCase("I", "tr")).toEqualTypeOf<string>();
+  });
+
+  test("names its result type", () => {
+    expectTypeOf<WordCased<"FOO", true>>().toEqualTypeOf<"Foo">();
   });
 });

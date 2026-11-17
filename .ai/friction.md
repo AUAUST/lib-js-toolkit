@@ -145,3 +145,4 @@
 - PreToolUse Bash hook: `${2:+-m "$2"}` in a shell function — hook parser rejected "Bad substitution"; rewrote as explicit commands
 - engrenage CLI: ran bare `engrenage planning` from the planning skill — not on PATH; used `pnpm exec engrenage`
 - Agent dispatch hook: briefed `Issue: AUAUST/toolkit#<n>` from package name — 404, GitHub repo is AUAUST/lib-js-toolkit; read it from `gh repo view`
+- worktree isolation: compound Bash commands containing git, or long scripts with `cd` — refused as unverifiable; split git into `git -C` calls and moved scripts to the scratchpad

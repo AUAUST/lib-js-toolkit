@@ -1,6 +1,7 @@
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { toLocaleLowerCase } from "#modules/string/utils/toLocaleLowerCase";
 import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
+import type { WordCased } from "#modules/string/types/WordCased";
 import type { WordCaseOptions } from "#modules/string/types/WordCaseOptions";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
@@ -19,14 +20,14 @@ export function toWordCase<Value extends string>(
     readonly capitalized?: false;
     readonly locale?: undefined;
   },
-): string extends Value ? string : Lowercase<Value>;
+): WordCased<Value>;
 export function toWordCase<Value extends string>(
   string: Value,
   options: {
     readonly capitalized: true;
     readonly locale?: undefined;
   },
-): string extends Value ? string : Capitalize<Lowercase<Value>>;
+): WordCased<Value, true>;
 export function toWordCase(
   string: string,
   options?: OptionsOrField<WordCaseOptions, "locale">,

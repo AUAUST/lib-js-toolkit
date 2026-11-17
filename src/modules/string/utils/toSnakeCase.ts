@@ -2,7 +2,7 @@ import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { LowercaseJoinedWords } from "#modules/string/types/LowercaseJoinedWords";
+import type { SnakeCased } from "#modules/string/types/SnakeCased";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -18,7 +18,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  */
 export function toSnakeCase<Value extends string>(
   string: Value,
-): LowercaseJoinedWords<Value, "_">;
+): SnakeCased<Value>;
 export function toSnakeCase(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,

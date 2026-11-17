@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { camel, toCamelCase } from "@auaust/toolkit/string";
+import { camel, toCamelCase, type CamelCased } from "@auaust/toolkit/string";
 
 describe("toCamelCase", () => {
   test("lowercases the first word and capitalizes the others", () => {
@@ -40,5 +40,9 @@ describe("toCamelCase", () => {
     expect(toCamelCase("a i", "tr")).toBe("aİ");
     expect(toCamelCase("a i", "tr")).toBe(toCamelCase("a i", { locale: "tr" }));
     expectTypeOf(toCamelCase("a i", "tr")).toEqualTypeOf<string>();
+  });
+
+  test("names its result type", () => {
+    expectTypeOf<CamelCased<"foo-bar">>().toEqualTypeOf<"fooBar">();
   });
 });

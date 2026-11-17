@@ -1,8 +1,8 @@
 import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
-import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { PascalCased } from "#modules/string/types/PascalCased";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -18,7 +18,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  */
 export function toPascalCase<Value extends string>(
   string: Value,
-): CapitalizedJoinedWords<Value, "">;
+): PascalCased<Value>;
 export function toPascalCase(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,

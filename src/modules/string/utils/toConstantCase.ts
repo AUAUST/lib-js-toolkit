@@ -2,8 +2,7 @@ import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { toDelimitedCase } from "#modules/string/utils/toDelimitedCase";
 import { toLocaleUpperCase } from "#modules/string/utils/toLocaleUpperCase";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { SplitWords } from "#modules/string/types/SplitWords";
-import type { Joined } from "#types/Joined";
+import type { ConstantCased } from "#modules/string/types/ConstantCased";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -19,7 +18,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  */
 export function toConstantCase<Value extends string>(
   string: Value,
-): string extends Value ? string : Uppercase<Joined<SplitWords<Value>, "_">>;
+): ConstantCased<Value>;
 export function toConstantCase(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,

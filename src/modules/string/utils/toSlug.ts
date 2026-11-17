@@ -2,7 +2,7 @@ import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { LowercaseJoinedWords } from "#modules/string/types/LowercaseJoinedWords";
+import type { Slugged } from "#modules/string/types/Slugged";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -17,9 +17,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  * @shorthand slug
  * @root
  */
-export function toSlug<Value extends string>(
-  string: Value,
-): LowercaseJoinedWords<Value, "-">;
+export function toSlug<Value extends string>(string: Value): Slugged<Value>;
 export function toSlug(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,

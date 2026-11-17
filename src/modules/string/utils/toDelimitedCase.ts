@@ -2,8 +2,7 @@ import { join } from "#modules/array/utils/join";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { SplitWords } from "#modules/string/types/SplitWords";
-import type { Joined } from "#types/Joined";
+import type { DelimitedCased } from "#modules/string/types/DelimitedCased";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -19,7 +18,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
 export function toDelimitedCase<Value extends string, Delimiter extends string>(
   string: Value,
   delimiter: Delimiter,
-): Joined<SplitWords<Value>, Delimiter>;
+): DelimitedCased<Value, Delimiter>;
 export function toDelimitedCase(
   string: string,
   delimiter: string,

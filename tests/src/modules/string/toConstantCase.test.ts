@@ -1,6 +1,10 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
 
-import { screaming, toConstantCase } from "@auaust/toolkit/string";
+import {
+  screaming,
+  toConstantCase,
+  type ConstantCased,
+} from "@auaust/toolkit/string";
 
 describe("toConstantCase", () => {
   test("joins uppercased words with underscores", () => {
@@ -27,5 +31,9 @@ describe("toConstantCase", () => {
     );
 
     expectTypeOf(toConstantCase("i a", "tr")).toEqualTypeOf<string>();
+  });
+
+  test("names its result type", () => {
+    expectTypeOf<ConstantCased<string>>().toEqualTypeOf<string>();
   });
 });

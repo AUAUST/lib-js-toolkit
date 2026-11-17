@@ -3,10 +3,8 @@ import { map } from "#modules/array/utils/map";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import { toWordCase } from "#modules/string/utils/toWordCase";
-import type { CamelCasedWords } from "#modules/string/types/CamelCasedWords";
+import type { CamelCased } from "#modules/string/types/CamelCased";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
-import type { SplitWords } from "#modules/string/types/SplitWords";
-import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
 import type { OptionsOrField } from "#types/OptionsOrField";
 
@@ -22,7 +20,7 @@ import type { OptionsOrField } from "#types/OptionsOrField";
  */
 export function toCamelCase<Value extends string>(
   string: Value,
-): Joined<CamelCasedWords<SplitWords<Value>>, "">;
+): CamelCased<Value>;
 export function toCamelCase(
   string: string,
   options?: OptionsOrField<CasingOptions, "locale">,
