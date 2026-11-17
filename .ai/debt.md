@@ -128,15 +128,63 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 
 ## 20. Barrel tag metadata is read inside toolkit instead of engrenage
 
-- `tooling/barrels/operations/readJsdocTags.ts:21`: shorthands and barrel metadata are read through the TypeScript compiler API inside toolkit. Cites engrenage #438, which is closed; check whether the closure lets this move.
+- `tooling/barrels/operations/readJsdocTags.ts:21`: shorthands and barrel metadata are read through the TypeScript compiler API inside toolkit. AUAUST/lib-js-engrenage#438 (closed, completed) shipped the `declarations` config key (one parse per file, through `readDocTag`) in installed engrenage 0.14.1, so the move is unblocked; the marker's issue link is stale.
 - `tooling/barrels/operations/readJsdocTags.ts:22`: each caller reads and parses `file` again.
 - `tooling/tags/utils/root.ts:3`: `tooling/barrels` reads this tag through its own name literal.
 - `tooling/tags/utils/shorthand.ts:3`: same name literal.
 - why: the tag name and its reading are defined in two places and parsed per caller.
-- want: the barrels extension owns and contributes the tag declaration, with one parse of the file.
+- want: read tags through engrenage's `declarations` reader; the barrels extension owns and contributes the tag declaration.
 - done: one definition holds each tag name and the file is parsed once.
 
-## 21. Tooling sets an explicit tsconfig for an engrenage gap
+## 22. Array and iterable implementation signatures widen items to records or method holders
 
-- `engrenage.config.ts:129`: needed because engrenage writes no tsconfig for tooling while the scripts environment is inactive. Cites engrenage #521, which is closed; check whether the setting can be dropped.
-- done: the explicit tsconfig is removed or the gap is confirmed open.
+- `src/modules/array/utils/every.ts:7`
+- `src/modules/array/utils/filter.ts:8`
+- `src/modules/array/utils/find.ts:7`
+- `src/modules/array/utils/findIndex.ts:6`
+- `src/modules/array/utils/findLast.ts:7`
+- `src/modules/array/utils/findLastIndex.ts:6`
+- `src/modules/array/utils/retain.ts:8`
+- `src/modules/array/utils/some.ts:6`
+- `src/modules/array/utils/sortBy.ts:7`
+- `src/modules/array/utils/toSortedBy.ts:8`
+- `src/modules/array/utils/map.ts:10` and `src/modules/array/utils/transform.ts:11`: method holders so `callMethod` takes any key.
+- `src/modules/iterable/utils/every.ts:8`
+- `src/modules/iterable/utils/filter.ts:8`
+- `src/modules/iterable/utils/filterMap.ts:11`
+- `src/modules/iterable/utils/find.ts:8`
+- `src/modules/iterable/utils/map.ts:10`: method holders so `callMethod` takes any key.
+- `src/modules/iterable/utils/pluck.ts:9`
+- `src/modules/iterable/utils/some.ts:7`
+- `src/modules/iterable/internals/toKeyer.ts:5`
+- why: the implementation accepts any property key through `memberValue` or `callMethod`, so only the overloads state the contract.
+- done: implementation signatures keep the item type the overloads declare, or the widening is documented as the contract.
+
+## 23. Array keyer and filter-map helpers branch to an iterable overload that does not exist
+
+- `src/modules/array/utils/groupBy.ts:62`
+- `src/modules/array/utils/keyBy.ts:58`
+- `src/modules/array/utils/filterMap.ts:10`
+- why: both branches make the same call, because `iterable` has no overload taking the keyer union.
+- want: one call once `iterable` declares that overload; otherwise remove the branch.
+- done: no branch repeats an identical call.
+
+## 24. Method-holder dispatch repeats across the array and iterable map helpers
+
+- `src/modules/array/utils/transform.ts:10`: `MethodHolder` and the method-name dispatch duplicate `array.map` and `iterable.map`.
+- further: `src/modules/array/utils/map.ts`, `src/modules/iterable/utils/map.ts`.
+- why: the type and dispatch live in three places and can drift.
+- want: one shared definition of `MethodHolder` and the dispatch.
+- done: one definition serves all three helpers.
+
+## 27. `resolveOptions` casts rely on unstated invariants
+
+- `src/modules/string/internals/resolveOptions.ts:13`
+- why: the casts hold only while every `Options` field is optional and no canonical field accepts a plain object; nothing states or checks either.
+- done: the invariant is typed or checked and the casts are gone (choosing between types and a runtime check needs planning).
+
+## 28. `toWordCase` repeats `capitalize`'s first-code-point split
+
+- `src/modules/string/utils/toWordCase.ts:61`
+- why: `capitalize` takes no locale, so the split is repeated here.
+- done: one owner of the first-code-point split, which needs a locale-aware `capitalize` (design decision, planning).
