@@ -1,4 +1,4 @@
-import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
+import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
@@ -41,6 +41,6 @@ export function toSnakeCase(
   );
 
   if (string != null) {
-    return joinLowercaseWords(splitWords(string, options), "_", options);
+    return joinCasedWords(splitWords(string, options), "_", options);
   }
 }

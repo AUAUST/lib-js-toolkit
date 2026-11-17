@@ -1,4 +1,4 @@
-import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
+import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
@@ -47,7 +47,7 @@ export function toSlug(
 
   const casing = { ...options, unaccent: options.unaccent ?? true };
 
-  return joinLowercaseWords(splitWords(string, casing), "-", casing).normalize(
+  return joinCasedWords(splitWords(string, casing), "-", casing).normalize(
     "NFC",
   );
 }

@@ -1,19 +1,20 @@
 import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
 import { toWordCase } from "#modules/string/utils/toWordCase";
-import type { LocaleOptions } from "#modules/string/types/LocaleOptions";
+import type { WordCaseOptions } from "#modules/string/types/WordCaseOptions";
 
 /**
- * Capitalizes each word following `locale` and joins them with `delimiter`.
+ * Cases each word through `toWordCase` with `options` and joins them
+ * with `delimiter`.
  */
-export function joinCapitalizedWords(
+export function joinCasedWords(
   words: readonly string[],
   delimiter: string,
-  options: LocaleOptions,
+  options: WordCaseOptions,
 ): string {
   return join(
     map(words, (word) => {
-      return toWordCase(word, { ...options, capitalized: true });
+      return toWordCase(word, options);
     }),
     delimiter,
   );

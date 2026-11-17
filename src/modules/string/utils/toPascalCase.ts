@@ -1,4 +1,4 @@
-import { joinCapitalizedWords } from "#modules/string/internals/joinCapitalizedWords";
+import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
@@ -41,6 +41,9 @@ export function toPascalCase(
   );
 
   if (string != null) {
-    return joinCapitalizedWords(splitWords(string, options), "", options);
+    return joinCasedWords(splitWords(string, options), "", {
+      ...options,
+      capitalized: true,
+    });
   }
 }

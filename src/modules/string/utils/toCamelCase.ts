@@ -1,3 +1,4 @@
+import { join } from "#modules/array/utils/join";
 import { map } from "#modules/array/utils/map";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
@@ -49,7 +50,10 @@ export function toCamelCase(
 
   const words = splitWords(string, options);
 
-  return map(words, (word, index) => {
-    return toWordCase(word, { ...options, capitalized: index > 0 });
-  }).join("");
+  return join(
+    map(words, (word, index) => {
+      return toWordCase(word, { ...options, capitalized: index > 0 });
+    }),
+    "",
+  );
 }

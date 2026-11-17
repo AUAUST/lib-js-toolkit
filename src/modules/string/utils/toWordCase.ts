@@ -58,6 +58,7 @@ export function toWordCase(
     return lowered;
   }
 
+  // @debt Repeats `capitalize`'s first-code-point split because `capitalize` takes no locale; a locale-aware `capitalize` would own it.
   const [first = ""] = lowered;
 
   return toLocaleUpperCase(first, options) + lowered.slice(first.length);

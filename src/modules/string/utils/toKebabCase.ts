@@ -1,4 +1,4 @@
-import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
+import { joinCasedWords } from "#modules/string/internals/joinCasedWords";
 import { resolveOptions } from "#modules/string/internals/resolveOptions";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
@@ -46,5 +46,5 @@ export function toKebabCase(
 
   const words = splitWords(string, options);
 
-  return joinLowercaseWords(words, "-", options);
+  return joinCasedWords(words, "-", options);
 }
