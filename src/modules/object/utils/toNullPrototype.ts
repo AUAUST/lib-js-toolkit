@@ -5,6 +5,8 @@ import { create } from "#modules/object/utils/create";
 /**
  * Returns a new null-prototype object, copying own enumerable properties.
  * Primitives and nullish values produce an empty object.
+ *
+ * @shorthand plain
  */
 export function toNullPrototype<Source extends object>(value: Source): Source;
 export function toNullPrototype<Source extends object = {}>(

@@ -1,7 +1,7 @@
 import { toPromise } from "#modules/async/utils/toPromise";
 import { isIterable } from "#modules/iterable/guards/isIterable";
 import { entries } from "#modules/object/utils/entries";
-import { record } from "#modules/object/utils/record";
+import { fromEntries } from "#modules/object/utils/fromEntries";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -59,7 +59,7 @@ export function awaitAll(values: Maybe<object>): Promise<unknown> {
   const pairs: [string, unknown][] = entries(values);
 
   return Promise.all(pairs.map(([, value]) => value)).then((settled) => {
-    return record(
+    return fromEntries(
       pairs.map(([key], index) => {
         return [key, settled[index]];
       }),
