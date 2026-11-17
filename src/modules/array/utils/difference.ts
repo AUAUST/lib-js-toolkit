@@ -37,11 +37,7 @@ export function difference(
   iterable: Maybe<Iterable<unknown> & object>,
   other: Iterable<unknown> | { has(value: unknown): unknown },
 ): unknown[] | undefined {
-  if (iterable == null) {
-    return;
+  if (iterable != null) {
+    return from(differenceIterable(asArray(iterable), other));
   }
-
-  const array = asArray(iterable);
-
-  return from(differenceIterable(array, other));
 }
