@@ -8,6 +8,7 @@ import { isNumber } from "#modules/number/guards/isNumber";
  *
  * @throws {TypeError} when a bound or the step is not a number.
  * @throws {RangeError} when the step is `0` or not finite.
+ * @root
  */
 export function range(end: number): IteratorObject<number, undefined>;
 export function range(

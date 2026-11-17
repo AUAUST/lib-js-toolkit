@@ -125,6 +125,7 @@ export { once } from "#modules/function/utils/once";
 export { throttle } from "#modules/function/utils/throttle";
 export { toFunction } from "#modules/function/utils/toFunction";
 export { unreachable } from "#modules/function/utils/unreachable";
+export { range } from "#modules/iterable/utils/range";
 export { toNumber } from "#modules/number/utils/toNumber";
 export { toNumber as n } from "#modules/number/utils/toNumber";
 export { freeze } from "#modules/object/utils/freeze";
