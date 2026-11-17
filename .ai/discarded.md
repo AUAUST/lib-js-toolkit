@@ -33,3 +33,5 @@
 - shared in-place compaction for `array.retain` and `array.pullBy`: one write-pointer loop — hole policies and return values differ by decision (#145)
 - rolldown output keepNames: keep Function.name in minified CI builds — injects a __name runtime helper that declaration chunks import, failing the dist typecheck
 - shared array wrapper over iterable set helpers: one body for `array.difference`, `array.intersection` (and `pluck`) — four-line bodies; a higher-order factory loses the per-helper overloads and JSDoc
+- casing helper factory: one body for `toKebabCase`, `toSnakeCase`, `toPascalCase`, `toTitleCase`, `toConstantCase`, `toCamelCase` — bodies are a nullish return plus one call; a factory loses the per-helper overloads and JSDoc
+- shared trim and locale-case bodies: one internal for `trim`/`trimStart`/`trimEnd` and `toLocaleLowerCase`/`toLocaleUpperCase` — each differs by one native call; the duplication jscpd sees is the overload set, which must stay per helper

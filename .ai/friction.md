@@ -146,3 +146,5 @@
 - engrenage CLI: ran bare `engrenage planning` from the planning skill — not on PATH; used `pnpm exec engrenage`
 - Agent dispatch hook: briefed `Issue: AUAUST/toolkit#<n>` from package name — 404, GitHub repo is AUAUST/lib-js-toolkit; read it from `gh repo view`
 - worktree isolation: compound Bash commands containing git, or long scripts with `cd` — refused as unverifiable; split git into `git -C` calls and moved scripts to the scratchpad
+- vitest --typecheck: probed casing result types in a scratch `*.test.ts` — passed a deliberately wrong assertion; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
+- timeout (Bash tool, macOS): wrapped tsc in `timeout 300` — command not found on darwin; used the tool timeout instead

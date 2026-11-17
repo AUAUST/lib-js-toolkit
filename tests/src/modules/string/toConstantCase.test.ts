@@ -35,5 +35,6 @@ describe("toConstantCase", () => {
 
   test("names its result type", () => {
     expectTypeOf<ConstantCased<string>>().toEqualTypeOf<string>();
+    expectTypeOf<ConstantCased<"é a">>().toEqualTypeOf<string>();
   });
 });
