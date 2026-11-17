@@ -4,16 +4,16 @@ import type { Maybe } from "#types/Maybe";
  * Returns the string without the suffix, or the string unchanged when it does
  * not end with it. A nullish string returns `undefined`.
  */
-export function removeSuffix(string: string, suffix: string): string;
-export function removeSuffix(
+export function withoutSuffix(string: string, suffix: string): string;
+export function withoutSuffix(
   string: null | undefined,
   suffix: string,
 ): undefined;
-export function removeSuffix(
+export function withoutSuffix(
   string: Maybe<string>,
   suffix: string,
 ): string | undefined;
-export function removeSuffix(
+export function withoutSuffix(
   string: Maybe<string>,
   suffix: string,
 ): string | undefined {

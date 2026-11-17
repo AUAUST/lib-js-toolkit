@@ -4,16 +4,16 @@ import type { Maybe } from "#types/Maybe";
  * Returns the string without the prefix, or the string unchanged when it does
  * not start with it. A nullish string returns `undefined`.
  */
-export function removePrefix(string: string, prefix: string): string;
-export function removePrefix(
+export function withoutPrefix(string: string, prefix: string): string;
+export function withoutPrefix(
   string: null | undefined,
   prefix: string,
 ): undefined;
-export function removePrefix(
+export function withoutPrefix(
   string: Maybe<string>,
   prefix: string,
 ): string | undefined;
-export function removePrefix(
+export function withoutPrefix(
   string: Maybe<string>,
   prefix: string,
 ): string | undefined {
