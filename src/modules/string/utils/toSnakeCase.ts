@@ -1,6 +1,7 @@
 import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { LowercaseJoinedWords } from "#modules/string/types/LowercaseJoinedWords";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -11,6 +12,9 @@ import type { Maybe } from "#types/Maybe";
  * @shorthand snake
  * @root
  */
+export function toSnakeCase<Value extends string>(
+  string: Value,
+): LowercaseJoinedWords<Value, "_">;
 export function toSnakeCase(string: string, options?: CasingOptions): string;
 export function toSnakeCase(
   string: null | undefined,

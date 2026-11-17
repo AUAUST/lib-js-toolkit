@@ -1,6 +1,7 @@
 import { map } from "#modules/array/utils/map";
 import { toWordCase } from "#modules/string/internals/toWordCase";
 import { splitWords } from "#modules/string/utils/splitWords";
+import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
 
@@ -13,6 +14,9 @@ import type { Maybe } from "#types/Maybe";
  * @shorthand title
  * @root
  */
+export function toTitleCase<Value extends string>(
+  string: Value,
+): CapitalizedJoinedWords<Value, " ">;
 export function toTitleCase(string: string, options?: CasingOptions): string;
 export function toTitleCase(
   string: null | undefined,

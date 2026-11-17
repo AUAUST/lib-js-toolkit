@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { camel, toCamelCase } from "@auaust/toolkit/string";
 
@@ -24,5 +24,15 @@ describe("toCamelCase", () => {
 
   test("keeps digit boundaries", () => {
     expect(toCamelCase("2fa-code")).toBe("2FaCode");
+  });
+
+  test("keeps literal types", () => {
+    expect(toCamelCase("foo-bar")).toBe("fooBar");
+    expectTypeOf(toCamelCase("foo-bar")).toEqualTypeOf<"fooBar">();
+    expectTypeOf(toCamelCase("v2Api")).toEqualTypeOf<"v2Api">();
+    expectTypeOf(toCamelCase("a b" as "a b" | "C")).toEqualTypeOf<"aB" | "c">();
+    expectTypeOf(toCamelCase("a" as string)).toEqualTypeOf<string>();
+    expectTypeOf(toCamelCase("café")).toEqualTypeOf<string>();
+    expectTypeOf(toCamelCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
 });

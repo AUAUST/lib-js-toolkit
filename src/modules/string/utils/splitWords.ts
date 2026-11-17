@@ -6,6 +6,7 @@ import {
 import { remove } from "#modules/string/utils/remove";
 import { unaccent } from "#modules/string/utils/unaccent";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { SplitWords } from "#modules/string/types/SplitWords";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -15,6 +16,9 @@ import type { Maybe } from "#types/Maybe";
  * breaking the word (`don't` gives `dont`); accents are removed only when
  * `unaccent` is set. A nullish string returns `undefined`.
  */
+export function splitWords<Value extends string>(
+  string: Value,
+): SplitWords<Value>;
 export function splitWords(string: string, options?: CasingOptions): string[];
 export function splitWords(
   string: null | undefined,

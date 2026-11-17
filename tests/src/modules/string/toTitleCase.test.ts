@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { title, toTitleCase } from "@auaust/toolkit/string";
 
@@ -10,5 +10,18 @@ describe("toTitleCase", () => {
 
   test("returns undefined for nullish input", () => {
     expect(toTitleCase(undefined)).toBeUndefined();
+  });
+
+  test("keeps literal types", () => {
+    expectTypeOf(toTitleCase("foo_bar")).toEqualTypeOf<"Foo Bar">();
+    expectTypeOf(toTitleCase("v2Api")).toEqualTypeOf<"V 2 Api">();
+
+    expectTypeOf(toTitleCase("a b" as "a b" | "c")).toEqualTypeOf<
+      "A B" | "C"
+    >();
+
+    expectTypeOf(toTitleCase("a" as string)).toEqualTypeOf<string>();
+    expectTypeOf(toTitleCase("café")).toEqualTypeOf<string>();
+    expectTypeOf(toTitleCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
 });

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { slug, toSlug } from "@auaust/toolkit/string";
 
@@ -26,5 +26,14 @@ describe("toSlug", () => {
 
   test("keeps combining vowel signs when unaccent is false", () => {
     expect(toSlug("हिन्दी", { unaccent: false })).toBe("हिन्दी");
+  });
+
+  test("keeps literal types", () => {
+    expectTypeOf(toSlug("Hello, World!")).toEqualTypeOf<"hello-world">();
+    expectTypeOf(toSlug("v2Api")).toEqualTypeOf<"v-2-api">();
+    expectTypeOf(toSlug("a b" as "a b" | "C")).toEqualTypeOf<"a-b" | "c">();
+    expectTypeOf(toSlug("a" as string)).toEqualTypeOf<string>();
+    expectTypeOf(toSlug("café")).toEqualTypeOf<string>();
+    expectTypeOf(toSlug("a b", { unaccent: false })).toEqualTypeOf<string>();
   });
 });

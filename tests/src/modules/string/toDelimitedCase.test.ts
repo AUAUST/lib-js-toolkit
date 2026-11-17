@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { toDelimitedCase } from "@auaust/toolkit/string";
 
@@ -9,5 +9,27 @@ describe("toDelimitedCase", () => {
 
   test("removes accents when unaccent is set", () => {
     expect(toDelimitedCase("çà va", "+", { unaccent: true })).toBe("ca+va");
+  });
+
+  test("keeps literal types", () => {
+    expect(toDelimitedCase("fooBar baz", ".")).toBe("foo.Bar.baz");
+
+    expectTypeOf(
+      toDelimitedCase("fooBar baz", "."),
+    ).toEqualTypeOf<"foo.Bar.baz">();
+
+    expectTypeOf(toDelimitedCase("v2Api", ".")).toEqualTypeOf<"v.2.Api">();
+
+    expectTypeOf(toDelimitedCase("a b" as "a b" | "c", ".")).toEqualTypeOf<
+      "a.b" | "c"
+    >();
+
+    expectTypeOf(toDelimitedCase("a" as string, ".")).toEqualTypeOf<string>();
+    expectTypeOf(toDelimitedCase("a b", "." as string)).toEqualTypeOf<string>();
+    expectTypeOf(toDelimitedCase("café", ".")).toEqualTypeOf<string>();
+
+    expectTypeOf(
+      toDelimitedCase("a b", ".", { locale: "tr" }),
+    ).toEqualTypeOf<string>();
   });
 });

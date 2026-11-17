@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 
 import { pascal, toPascalCase } from "@auaust/toolkit/string";
 
@@ -10,5 +10,18 @@ describe("toPascalCase", () => {
 
   test("drops characters that are not part of a word", () => {
     expect(toPascalCase("@typescript-eslint")).toBe("TypescriptEslint");
+  });
+
+  test("keeps literal types", () => {
+    expectTypeOf(toPascalCase("foo-BAR")).toEqualTypeOf<"FooBar">();
+    expectTypeOf(toPascalCase("v2Api")).toEqualTypeOf<"V2Api">();
+
+    expectTypeOf(toPascalCase("a b" as "a b" | "c")).toEqualTypeOf<
+      "AB" | "C"
+    >();
+
+    expectTypeOf(toPascalCase("a" as string)).toEqualTypeOf<string>();
+    expectTypeOf(toPascalCase("café")).toEqualTypeOf<string>();
+    expectTypeOf(toPascalCase("a b", { locale: "tr" })).toEqualTypeOf<string>();
   });
 });

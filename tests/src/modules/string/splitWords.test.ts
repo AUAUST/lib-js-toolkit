@@ -12,7 +12,7 @@ describe("splitWords", () => {
       "x",
     ]);
 
-    expectTypeOf(splitWords("a")).toEqualTypeOf<string[]>();
+    expectTypeOf(splitWords("a")).toEqualTypeOf<["a"]>();
   });
 
   test("keeps accents unless unaccent is set", () => {
@@ -30,5 +30,29 @@ describe("splitWords", () => {
 
   test("drops non-word characters and keeps apostrophes inside words", () => {
     expect(splitWords("@scope/pkg don't")).toEqual(["scope", "pkg", "dont"]);
+  });
+
+  test("keeps literal types", () => {
+    expectTypeOf(splitWords("fooBar-baz")).toEqualTypeOf<
+      ["foo", "Bar", "baz"]
+    >();
+
+    expectTypeOf(splitWords("XMLHttpRequest")).toEqualTypeOf<
+      ["XML", "Http", "Request"]
+    >();
+
+    expectTypeOf(splitWords("don't stop")).toEqualTypeOf<["dont", "stop"]>();
+    expectTypeOf(splitWords("v2Api")).toEqualTypeOf<["v", "2", "Api"]>();
+
+    expectTypeOf(splitWords("a b" as "a b" | "c")).toEqualTypeOf<
+      ["a", "b"] | ["c"]
+    >();
+
+    expectTypeOf(splitWords("a" as string)).toEqualTypeOf<string[]>();
+    expectTypeOf(splitWords("café")).toEqualTypeOf<string[]>();
+
+    expectTypeOf(splitWords("a b", { unaccent: true })).toEqualTypeOf<
+      string[]
+    >();
   });
 });

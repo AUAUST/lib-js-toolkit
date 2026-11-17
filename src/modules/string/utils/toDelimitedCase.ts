@@ -1,6 +1,8 @@
 import { join } from "#modules/array/utils/join";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { SplitWords } from "#modules/string/types/SplitWords";
+import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -10,6 +12,10 @@ import type { Maybe } from "#types/Maybe";
  *
  * @root
  */
+export function toDelimitedCase<Value extends string, Delimiter extends string>(
+  string: Value,
+  delimiter: Delimiter,
+): Joined<SplitWords<Value>, Delimiter>;
 export function toDelimitedCase(
   string: string,
   delimiter: string,

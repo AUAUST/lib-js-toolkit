@@ -1,6 +1,7 @@
 import { joinLowercaseWords } from "#modules/string/internals/joinLowercaseWords";
 import { splitWords } from "#modules/string/utils/splitWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { LowercaseJoinedWords } from "#modules/string/types/LowercaseJoinedWords";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -11,6 +12,9 @@ import type { Maybe } from "#types/Maybe";
  * @shorthand kebab
  * @root
  */
+export function toKebabCase<Value extends string>(
+  string: Value,
+): LowercaseJoinedWords<Value, "-">;
 export function toKebabCase(string: string, options?: CasingOptions): string;
 export function toKebabCase(
   string: null | undefined,

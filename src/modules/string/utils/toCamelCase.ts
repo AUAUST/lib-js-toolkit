@@ -1,7 +1,10 @@
 import { map } from "#modules/array/utils/map";
 import { toWordCase } from "#modules/string/internals/toWordCase";
 import { splitWords } from "#modules/string/utils/splitWords";
+import type { CamelCasedWords } from "#modules/string/types/CamelCasedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
+import type { SplitWords } from "#modules/string/types/SplitWords";
+import type { Joined } from "#types/Joined";
 import type { Maybe } from "#types/Maybe";
 
 /**
@@ -12,6 +15,9 @@ import type { Maybe } from "#types/Maybe";
  * @shorthand camel
  * @root
  */
+export function toCamelCase<Value extends string>(
+  string: Value,
+): Joined<CamelCasedWords<SplitWords<Value>>, "">;
 export function toCamelCase(string: string, options?: CasingOptions): string;
 export function toCamelCase(
   string: null | undefined,

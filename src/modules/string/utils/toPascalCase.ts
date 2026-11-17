@@ -1,6 +1,7 @@
 import { map } from "#modules/array/utils/map";
 import { toWordCase } from "#modules/string/internals/toWordCase";
 import { splitWords } from "#modules/string/utils/splitWords";
+import type { CapitalizedJoinedWords } from "#modules/string/types/CapitalizedJoinedWords";
 import type { CasingOptions } from "#modules/string/types/CasingOptions";
 import type { Maybe } from "#types/Maybe";
 
@@ -12,6 +13,9 @@ import type { Maybe } from "#types/Maybe";
  * @shorthand pascal
  * @root
  */
+export function toPascalCase<Value extends string>(
+  string: Value,
+): CapitalizedJoinedWords<Value, "">;
 export function toPascalCase(string: string, options?: CasingOptions): string;
 export function toPascalCase(
   string: null | undefined,
