@@ -58,7 +58,7 @@ export function throttle<Closure extends Callee>(
     const now = Date.now();
 
     if (now >= throttledUntil) {
-      resolved.call(this, ...args);
+      Reflect.apply(resolved, this, args);
 
       throttledUntil = now + interval;
 
@@ -72,7 +72,7 @@ export function throttle<Closure extends Callee>(
     this: CallThisParameterType<Closure>,
     ...args: CallParameters<Closure>
   ): void {
-    resolved.call(this, ...args);
+    Reflect.apply(resolved, this, args);
   }
 
   function remaining(): number {

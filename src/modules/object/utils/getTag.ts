@@ -3,5 +3,5 @@
  * `Symbol.toStringTag` property overrides the name; the tag matches across realms.
  */
 export function getTag(value: unknown): string {
-  return Object.prototype.toString.call(value);
+  return Reflect.apply(Object.prototype.toString, value, []);
 }

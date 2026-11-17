@@ -35,3 +35,4 @@
 - shared array wrapper over iterable set helpers: one body for `array.difference`, `array.intersection` (and `pluck`) — four-line bodies; a higher-order factory loses the per-helper overloads and JSDoc
 - casing helper factory: one body for `toKebabCase`, `toSnakeCase`, `toPascalCase`, `toTitleCase`, `toConstantCase`, `toCamelCase` — bodies are a nullish return plus one call; a factory loses the per-helper overloads and JSDoc
 - shared trim and locale-case bodies: one internal for `trim`/`trimStart`/`trimEnd` and `toLocaleLowerCase`/`toLocaleUpperCase` — each differs by one native call; the duplication jscpd sees is the overload set, which must stay per helper
+- no-restricted-syntax on `.call`/`.apply`: enforce canonical invocation forms — the AST cannot tell a toolkit helper's typed `.call` from a native one

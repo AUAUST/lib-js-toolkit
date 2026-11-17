@@ -161,4 +161,16 @@ describe("throttle", () => {
     expect(fn(2)).toBe(true);
     expect(callback.mock.calls).toEqual([[1], [2]]);
   });
+
+  test("ignores own call and apply properties of the closure", () => {
+    const closure = vi.fn();
+    const hijack = vi.fn();
+    const throttled = throttle(Object.assign(closure, { call: hijack }), 10);
+
+    throttled(1);
+    throttled.immediate(2);
+
+    expect(closure.mock.calls).toEqual([[1], [2]]);
+    expect(hijack).not.toHaveBeenCalled();
+  });
 });

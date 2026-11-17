@@ -78,14 +78,14 @@ export function pipe(this: any, ...callbacks: PipeEntry<any, any, any>[]) {
 
       const shouldRun = isBoolean(condition)
         ? condition
-        : condition.call(this, carry);
+        : Reflect.apply(condition, this, [carry]);
 
       if (!shouldRun) {
         return carry;
       }
 
       try {
-        return callback.call(this, carry);
+        return Reflect.apply(callback, this, [carry]);
       } catch (error) {
         throw new PipelineError({
           fn: original,

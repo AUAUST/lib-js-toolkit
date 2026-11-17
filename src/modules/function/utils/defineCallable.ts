@@ -47,7 +47,7 @@ export function defineCallable(
     return method;
   }
 
-  resolve.call(object);
+  Reflect.apply(resolve, object, []);
 
   return defineGetter(object, callable, resolve);
 }

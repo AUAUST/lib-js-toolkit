@@ -216,4 +216,12 @@ describe("pipeAsync", () => {
     expectTypeOf(result).toEqualTypeOf<string>();
     expect(result).toBe("12!");
   });
+
+  test("ignores own call and apply properties of entries", async () => {
+    const hijack = () => -1;
+    const double = Object.assign(async (x: number) => x * 2, { call: hijack });
+    const isPositive = Object.assign((x: number) => x > 0, { call: hijack });
+
+    await expect(pipeAsync([isPositive, double])(3)).resolves.toBe(6);
+  });
 });

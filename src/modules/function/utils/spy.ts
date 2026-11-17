@@ -58,11 +58,15 @@ export function spy(
   after = isCallable(after) ? toFunction(after) : undefined;
 
   return function spied(this: any, ...args: any[]): any {
-    before?.apply(this, args);
+    if (before) {
+      Reflect.apply(before, this, args);
+    }
 
-    const result = closure?.apply(this, args);
+    const result = closure ? Reflect.apply(closure, this, args) : undefined;
 
-    after?.call(this, result, ...args);
+    if (after) {
+      Reflect.apply(after, this, [result, ...args]);
+    }
 
     return result;
   };

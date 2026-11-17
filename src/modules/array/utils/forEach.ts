@@ -12,7 +12,6 @@ export function forEach<Items extends readonly unknown[]>(
   fn: (value: Items[number], index: number) => unknown,
 ): void {
   if (array != null) {
-    // @debt `unicorn/no-for-each` flags the native call this helper exists to wrap, so it goes through `call`; the lint config could exempt this file instead.
-    Array.prototype.forEach.call(array, fn);
+    Reflect.apply(Array.prototype.forEach, array, [fn]);
   }
 }

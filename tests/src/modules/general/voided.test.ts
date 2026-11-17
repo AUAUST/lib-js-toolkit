@@ -35,4 +35,14 @@ describe("voided", () => {
 
     fn.call(context);
   });
+
+  test("ignores own call and apply properties of the closure", () => {
+    const closure = vi.fn();
+    const hijack = vi.fn();
+
+    voided(Object.assign(closure, { call: hijack, apply: hijack }))(1);
+
+    expect(closure).toHaveBeenCalledWith(1);
+    expect(hijack).not.toHaveBeenCalled();
+  });
 });

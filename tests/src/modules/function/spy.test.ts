@@ -153,4 +153,20 @@ describe("spy", () => {
 
     expect(absent()).toBeUndefined();
   });
+
+  test("ignores own call and apply properties of the closure and listeners", () => {
+    const hijack = () => -1;
+    const after = vi.fn();
+    const closure = Object.assign((x: number) => x * 2, { apply: hijack });
+
+    expect(
+      spy(
+        closure,
+        Object.assign(vi.fn(), { apply: hijack }),
+        Object.assign(after, { call: hijack }),
+      )(3),
+    ).toBe(6);
+
+    expect(after).toHaveBeenCalledWith(6, 3);
+  });
 });

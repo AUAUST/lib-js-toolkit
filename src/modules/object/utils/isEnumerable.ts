@@ -5,5 +5,5 @@
  * @native equal Object.prototype.propertyIsEnumerable
  */
 export function isEnumerable(target: {}, key: PropertyKey): boolean {
-  return Object.prototype.propertyIsEnumerable.call(target, key);
+  return Reflect.apply(Object.prototype.propertyIsEnumerable, target, [key]);
 }

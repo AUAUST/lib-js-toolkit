@@ -84,14 +84,14 @@ export function pipeAsync(
 
       const shouldRun = isBoolean(condition)
         ? condition
-        : condition.call(this, carry);
+        : Reflect.apply(condition, this, [carry]);
 
       if (!shouldRun) {
         continue;
       }
 
       try {
-        carry = await callback.call(this, carry);
+        carry = await Reflect.apply(callback, this, [carry]);
       } catch (error) {
         throw new PipelineError({
           fn: original,

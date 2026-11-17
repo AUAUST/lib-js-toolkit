@@ -75,7 +75,6 @@
 - pnpm exec: pause duplication review — sandbox signature lookup stalled and failed; retried with escalation.
 - pnpm dependency skills: found where `.claude/skills/pnpm-*` links come from — no instruction names pnpm `permissions.<pkg>.skills`; read `pnpm-workspace.yaml` and the symlink
 - worktree isolation: ran git inside a chained or heredoc command — refused as unverifiable; split into separate plain commands
-- vitest --typecheck: ran the documented focused command to prove a type regression — reported no type errors on `*.test.ts` expectTypeOf failures; `pnpm typecheck` caught them
 - agent worktree base: brief said main HEAD 3f54c20 — worktree started at older 7690a29; fast-forwarded with git merge --ff-only main
 - worktree isolation: heredoc batch and git status in compound commands refused as unverifiable — split into separate commands and used Write
 - zsh: `grep -rn ... --include=*.ts` unquoted once more — `nomatch` aborted it; used `grep -rn -e … src`
@@ -86,7 +85,6 @@
 - `engrenage planning walk check`: parent Tasks with no work beyond their sub-issues flagged for missing **Steps**/**Tests** — the item contract requires both on every Task, the planning skill has no form for "no own work"; read `checkIssueReadiness.ts`, wrote "None after the sub-issues" in both
 - `tsc` on a single file: `pnpm exec tsc --noEmit <file>` for a type probe — TS5112 refuses files while tsconfig.json is present; added `--ignoreConfig`
 - commit gate: commit during a walk failed naming `.ai/discarded.md`, a file another agent was writing at the same moment — retried the same commit and it passed
-- vitest --typecheck: focused command on new `*.test.ts` files — printed "Type Errors no errors" while `pnpm typecheck` failed on them; relied on `pnpm typecheck`
 - worktree isolation: `cat > file <<EOF` and multi-step heredoc commands refused as unverifiable — wrote files with Write instead
 - worktree isolation (#242 worker): `cd` followed by a command and heredoc batches refused as too complex — fell back to Write
 - zsh `echo =====`: separator line in a chained Bash command — zsh expands `=word` as a command path and aborts the chain; reran with a separator not starting with `=`
@@ -98,7 +96,6 @@
 - worktree isolation guard: ran git inside multi-command Bash calls — refused as too complex to verify; split git into separate calls
 - gh api graphql (issue project fields): queried an issue's field values — token lacks `read:project`; read fields from claimed drafts instead
 - auto mode classifier: edited AGENTS.md with the wording #255 records as consented — refused as undermining oversight; left the edit for the user to confirm
-- vitest --typecheck (AGENTS.md focused-test command): relied on it for expectTypeOf assertions in `.test.ts` — wrong type assertions still passed; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
 - engrenage sync barrels: added a domain `index.ts` to expose an internal — sync then deleted the generated `entry.ts`; removed the index, restored the entry
 - zsh word splitting: passed a space-separated file list held in a variable to eslint — zsh does not split it; listed the files inline
 - worktree isolation check: chained heredoc + eslint + vitest in one Bash call — refused as too complex; split into separate calls
@@ -146,6 +143,7 @@
 - engrenage CLI: ran bare `engrenage planning` from the planning skill — not on PATH; used `pnpm exec engrenage`
 - Agent dispatch hook: briefed `Issue: AUAUST/toolkit#<n>` from package name — 404, GitHub repo is AUAUST/lib-js-toolkit; read it from `gh repo view`
 - worktree isolation: compound Bash commands containing git, or long scripts with `cd` — refused as unverifiable; split git into `git -C` calls and moved scripts to the scratchpad
-- vitest --typecheck: probed casing result types in a scratch `*.test.ts` — passed a deliberately wrong assertion; ran `pnpm exec tsc -p tsconfig.tests.json --noEmit` instead
 - timeout (Bash tool, macOS): wrapped tsc in `timeout 300` — command not found on darwin; used the tool timeout instead
 - sed -i '' -E: word boundaries `\b` in a rename — BSD sed matched nothing silently; used `perl -pi`
+- Bash grep `--include=*.ts`: unquoted glob — zsh `nomatch` aborts the command; quote the pattern.
+- eslint.config.ts rules lookup: importing the config through tsx yielded no rules — used `eslint --print-config <file>` instead.

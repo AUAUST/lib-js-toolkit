@@ -154,4 +154,12 @@ describe("pipe", () => {
       });
     }
   });
+
+  test("ignores own call and apply properties of entries", () => {
+    const hijack = () => -1;
+    const double = Object.assign((x: number) => x * 2, { call: hijack });
+    const isPositive = Object.assign((x: number) => x > 0, { call: hijack });
+
+    expect(pipe([isPositive, double])(3)).toBe(6);
+  });
 });

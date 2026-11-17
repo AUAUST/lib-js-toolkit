@@ -97,7 +97,6 @@ Intake queue of `@debt` markers in the code, grouped by kind. Markers stay in th
 
 ## 15. Lint rules force workarounds in helper internals
 
-- `src/modules/array/utils/forEach.ts:15`: `unicorn/no-for-each` flags the native call the helper wraps, so it goes through `call`.
 - `src/modules/general/internals/matchesPredicate.ts:20`: reimplements `String#search` because `unicorn/prefer-regexp-test` rejects it for existence checks.
 - why: the lint config has no exemption for helpers that wrap the flagged call.
 - want: a file-scoped lint exemption for these helpers (configuration change, to be reported with its reason).

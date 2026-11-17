@@ -17,6 +17,6 @@ export function voided<Closure extends Callee>(
   const resolved = toFunction(closure);
 
   return function voided(this, ...args) {
-    resolved.call(this, ...args);
+    Reflect.apply(resolved, this, args);
   };
 }
