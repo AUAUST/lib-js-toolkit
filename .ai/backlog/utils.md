@@ -51,6 +51,7 @@
 
 ## 9. Array subject validation
 
-- `array.clear` rejects a non-array with a `TypeError` (user decision, AUAUST/lib-js-toolkit#145); `retain`, `pullBy`, `filter`, `some` accept any object and `overlaps` any iterable, so mutating helpers can shrink an array-like.
+- `array.clear` rejects a non-array with a `TypeError` (user decision, AUAUST/lib-js-toolkit#145); `retain`, `pullBy`, `filter`, `some` accept any object and `overlaps` any iterable, so mutating helpers can shrink an array-like (`@debt` at `src/modules/array/utils/retain.ts:9` proposes rejecting non-arrays in `retain`, with a changeset).
+- AUAUST/lib-js-toolkit#296 question 1 aligns keyer validation with this policy.
 - Expected: one policy for non-array subjects across `array` helpers, at least the mutating ones.
 - Done when decided and applied, or the divergence is accepted.

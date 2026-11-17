@@ -138,3 +138,4 @@
 - engrenage planning issue create: tried type `report` — types are plan/segment/task/problem/resource/idea; a report is `resource` with Material `report`
 - jscpd: ran `pnpm exec jscpd src` directly — `engrenage jscpd` holds the project config; found via `engrenage --help`
 - engrenage planning issue claim: cross-repo refs `owner/repo#1, #2` — bare `#2` resolves to the current repo; write each as `#{repo.n}`
+- engrenage debt: ran `engrenage debt --json` — command not on PATH; ran `pnpm exec engrenage debt --json`
