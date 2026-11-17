@@ -17,6 +17,7 @@ export function chunk(
   string: Maybe<string>,
   size: number,
 ): string[] | undefined {
+  // @debt The positive-integer size check is duplicated across `array.chunk`, `iterable.chunk` and `string.chunk`; a shared guard in the number domain would own it (backlog utils.10).
   if (!isSafeInteger(size) || size < 1) {
     throw new RangeError("A chunk size must be a positive safe integer.");
   }

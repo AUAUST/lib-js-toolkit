@@ -39,6 +39,7 @@ test.each([
 });
 
 test("produces integers within bounds without mocks", () => {
+  // @debt Hand-writes the range check `#tests/testutils/expectIntegersInRange` provides.
   for (let index = 0; index < 1000; index++) {
     const value = randomInteger(0, 9);
 

@@ -9,6 +9,7 @@ export function valueComposers<const Values extends object>(
   {
     [Key in keyof Values]: { value: Values[Key]; writable: true };
   },
+  // @debt Hand-writes `Writable<Values>` from `#types/Writable`, which toolkit now provides.
   { -readonly [Key in keyof Values]: Values[Key] }
 > {
   return map(ownKeys(values), (key) => {

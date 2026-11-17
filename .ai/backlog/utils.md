@@ -55,3 +55,9 @@
 - AUAUST/lib-js-toolkit#296 question 1 aligns keyer validation with this policy.
 - Expected: one policy for non-array subjects across `array` helpers, at least the mutating ones.
 - Done when decided and applied, or the divergence is accepted.
+
+## 10. Size and count validation
+
+- Positive safe-integer sizes (`array.chunk`, `iterable.chunk`, `string.chunk`) and non-negative safe-integer counts (`array.sample`, `general.count`, `random.randomIntegers`) are each checked inline, with diverging `RangeError` wording ("A chunk size must…", "Count must…", "A count must…"); `@debt` markers at each site.
+- Outcome: number guards (with their assert/ensure/when companions) or a shared assertion owning each check and its message; weigh against `.ai/discarded.md` (`iterable/internals` argument validation, #142 keeps prologues inline) and utils.5 for wording.
+- Done when one owner serves every site, or inline checks are kept with one wording.
