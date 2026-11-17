@@ -14,21 +14,21 @@ import type { CallReturnType } from "#types/CallReturnType";
 import type { CallSignature } from "#types/CallSignature";
 
 export type Memoized<
-  Callback extends CacheResolver = CacheResolver,
-  Key = CallParameters<Callback>[0],
-> = CallSignature<Callback> & {
+  Closure extends CacheResolver = CacheResolver,
+  Key = CallParameters<Closure>[0],
+> = CallSignature<Closure> & {
   /**
    * Calls the memoized function without overriding its resolver's receiver.
    */
   call(
     thisArg: undefined,
-    ...args: CallParameters<Callback>
-  ): CallReturnType<Callback>;
+    ...args: CallParameters<Closure>
+  ): CallReturnType<Closure>;
 
   /**
    * Resolves a key without computing or caching a value.
    */
-  keyFor(this: void, ...args: CallParameters<Callback>): Key;
+  keyFor(this: void, ...args: CallParameters<Closure>): Key;
 
   /**
    * Clears every cached value.
@@ -43,7 +43,7 @@ export type Memoized<
   /**
    * Returns a cached value without computing it.
    */
-  value(key: Key): CallReturnType<Callback> | undefined;
+  value(key: Key): CallReturnType<Closure> | undefined;
 
   /**
    * Returns whether a value is cached for the given key.
@@ -57,9 +57,9 @@ export type Memoized<
 };
 
 export type MemoizedOptions<
-  Callback extends Callee = Callee,
+  Closure extends Callee = Callee,
   Key = unknown,
-> = Pick<CachedOptions<Callback, Key>, "resolveKey">;
+> = Pick<CachedOptions<Closure, Key>, "resolveKey">;
 
 /**
  * Caches results by the first argument or a custom resolved key. Returning
@@ -67,19 +67,19 @@ export type MemoizedOptions<
  * are ignored; callable resolvers retain their holders. Both resolvers are
  * resolved once at setup.
  */
-export function memoize<Callback extends CacheResolver, Key>(
-  callback: Callback,
-  resolveKey: KeyResolver<Callback, Key>,
-): Memoized<Callback, Key>;
+export function memoize<Closure extends CacheResolver, Key>(
+  closure: Closure,
+  resolveKey: KeyResolver<Closure, Key>,
+): Memoized<Closure, Key>;
 export function memoize<
-  Callback extends CacheResolver,
-  Key = CallParameters<Callback>[0],
+  Closure extends CacheResolver,
+  Key = CallParameters<Closure>[0],
 >(
-  callback: Callback,
-  options?: MemoizedOptions<Callback, Key>,
-): Memoized<Callback, Key>;
+  closure: Closure,
+  options?: MemoizedOptions<Closure, Key>,
+): Memoized<Closure, Key>;
 export function memoize(
-  callback: CacheResolver,
+  closure: CacheResolver,
   options: MemoizedOptions | Callee = {},
 ): Memoized {
   const resolveKey = isCallable(options) ? options : options.resolveKey;
@@ -90,7 +90,7 @@ export function memoize(
     ? toFunction(resolveKey, resolveKey)
     : identity.bind(undefined);
 
-  const resolveValue = toFunction(callback, callback);
+  const resolveValue = toFunction(closure, closure);
 
   const cache = new Map<unknown, unknown>();
 

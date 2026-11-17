@@ -18,49 +18,49 @@ export type SafeParameters<F> = [NonNullable<F>] extends [never]
     ? Parameters<CallSignature<NonNullable<F>>>
     : [];
 
-export function spy<Callback extends Callee>(
-  callback: Callback,
+export function spy<Closure extends Callee>(
+  closure: Closure,
   beforeHook?: Callee<
     void,
-    CallParameters<Callback>,
-    CallThisParameterType<Callback>
+    CallParameters<Closure>,
+    CallThisParameterType<Closure>
   > | null,
   afterHook?: Callee<
     void,
-    [result: CallReturnType<Callback>, ...args: CallParameters<Callback>],
-    CallThisParameterType<Callback>
+    [result: CallReturnType<Closure>, ...args: CallParameters<Closure>],
+    CallThisParameterType<Closure>
   > | null,
-): CallSignature<Callback>;
-export function spy<Callback extends Callee | null | undefined>(
-  callback: Callback,
+): CallSignature<Closure>;
+export function spy<Closure extends Callee | null | undefined>(
+  closure: Closure,
   beforeHook?: Callee<
     void,
-    SafeParameters<Callback>,
-    CallThisParameterType<Callback>
+    SafeParameters<Closure>,
+    CallThisParameterType<Closure>
   > | null,
   afterHook?: Callee<
     void,
-    [result: SafeReturnType<Callback>, ...args: SafeParameters<Callback>],
-    CallThisParameterType<Callback>
+    [result: SafeReturnType<Closure>, ...args: SafeParameters<Closure>],
+    CallThisParameterType<Closure>
   > | null,
 ): (
-  this: CallThisParameterType<Callback>,
-  ...args: SafeParameters<Callback>
-) => SafeReturnType<Callback>;
+  this: CallThisParameterType<Closure>,
+  ...args: SafeParameters<Closure>
+) => SafeReturnType<Closure>;
 export function spy(
   this: any,
-  callback: any,
+  closure: any,
   before?: any,
   after?: any,
 ): (...args: any[]) => any {
-  callback = isCallable(callback) ? toFunction(callback) : undefined;
+  closure = isCallable(closure) ? toFunction(closure) : undefined;
   before = isCallable(before) ? toFunction(before) : undefined;
   after = isCallable(after) ? toFunction(after) : undefined;
 
   return function spied(this: any, ...args: any[]): any {
     before?.apply(this, args);
 
-    const result = callback?.apply(this, args);
+    const result = closure?.apply(this, args);
 
     after?.call(this, result, ...args);
 

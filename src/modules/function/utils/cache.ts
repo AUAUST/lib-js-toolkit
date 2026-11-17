@@ -17,26 +17,26 @@ export type CacheResolver<
   | Callable<Return, Arguments>
   | Fn<Return, Arguments, void>;
 
-export type KeyResolver<Callback extends Callee, Key> = Callee<
+export type KeyResolver<Closure extends Callee, Key> = Callee<
   Key,
-  CallParameters<Callback>,
-  Callback
+  CallParameters<Closure>,
+  Closure
 >;
 
 export type Cached<
-  Callback extends CacheResolver,
-  Key = CallParameters<Callback>[0],
-> = CallSignature<Callback> & {
+  Closure extends CacheResolver,
+  Key = CallParameters<Closure>[0],
+> = CallSignature<Closure> & {
   call(
     thisArg: undefined,
-    ...args: CallParameters<Callback>
-  ): CallReturnType<Callback>;
+    ...args: CallParameters<Closure>
+  ): CallReturnType<Closure>;
 
   /**
    * Resolves a key without computing or caching a value. Callable resolvers use
    * their holders as receivers; caller receivers are ignored.
    */
-  keyFor(this: void, ...args: CallParameters<Callback>): Key;
+  keyFor(this: void, ...args: CallParameters<Closure>): Key;
 
   /**
    * Clears the cached values.
@@ -47,7 +47,7 @@ export type Cached<
    * Returns the cached entry for the resolved key only if it already exists.
    * Does not compute the value if it doesn't exist.
    */
-  value(key: Key): CallReturnType<Callback> | undefined;
+  value(key: Key): CallReturnType<Closure> | undefined;
 
   /**
    * Returns true if the cache contains an entry for the resolved key.
@@ -60,16 +60,13 @@ export type Cached<
   delete(key: Key): boolean;
 };
 
-export interface CachedOptions<
-  Callback extends Callee = Callee,
-  Key = unknown,
-> {
+export interface CachedOptions<Closure extends Callee = Callee, Key = unknown> {
   /**
-   * Resolves the cache key from all callback arguments. Callable objects use
-   * their holders as receivers. Resolved once at setup. Returning undefined
-   * bypasses cache reads and writes.
+   * Resolves the cache key from all closure arguments. Callable objects use their
+   * holders as receivers. Resolved once at setup. Returning undefined bypasses
+   * cache reads and writes.
    */
-  resolveKey?: KeyResolver<Callback, Key> | undefined;
+  resolveKey?: KeyResolver<Closure, Key> | undefined;
 
   /**
    * Caches primitive keys in a strong Map when true. These entries remain until
@@ -86,19 +83,19 @@ export interface CachedOptions<
  * Passing a key resolver directly enables primitive caching. In options,
  * `resolveKey` leaves `cachePrimitives` false by default.
  */
-export function cache<Callback extends CacheResolver, Key>(
-  callback: Callback,
-  resolveKey: KeyResolver<Callback, Key>,
-): Cached<Callback, Key>;
+export function cache<Closure extends CacheResolver, Key>(
+  closure: Closure,
+  resolveKey: KeyResolver<Closure, Key>,
+): Cached<Closure, Key>;
 export function cache<
-  Callback extends CacheResolver,
-  Key = CallParameters<Callback>[0],
+  Closure extends CacheResolver,
+  Key = CallParameters<Closure>[0],
 >(
-  callback: Callback,
-  options?: CachedOptions<Callback, Key>,
-): Cached<Callback, Key>;
+  closure: Closure,
+  options?: CachedOptions<Closure, Key>,
+): Cached<Closure, Key>;
 export function cache(
-  callback: Callee,
+  closure: Callee,
   options: CachedOptions | Callee = {},
 ): Cached<Callee> {
   const { cachePrimitives = false, resolveKey } = isCallable(options)
@@ -116,7 +113,7 @@ export function cache(
     ? toFunction(resolveKey, resolveKey)
     : identity.bind(undefined);
 
-  const resolveValue = toFunction(callback, callback);
+  const resolveValue = toFunction(closure, closure);
 
   let objectCache = new WeakMap<any, unknown>();
 

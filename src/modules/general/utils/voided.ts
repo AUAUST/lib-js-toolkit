@@ -3,18 +3,18 @@ import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export type Voided<Callback extends Callee> = (
-  this: CallThisParameterType<Callback>,
-  ...args: CallParameters<Callback>
+export type Voided<Closure extends Callee> = (
+  this: CallThisParameterType<Closure>,
+  ...args: CallParameters<Closure>
 ) => void;
 
 /**
- * Returns the resolved callable input as a function that ignores its return value.
+ * Returns the resolved `closure` as a function that ignores its return value.
  */
-export function voided<Callable extends Callee>(
-  callback: Callable,
-): Voided<Callable> {
-  const execute = toFunction(callback);
+export function voided<Closure extends Callee>(
+  closure: Closure,
+): Voided<Closure> {
+  const execute = toFunction(closure);
 
   return function voided(this, ...args) {
     execute.call(this, ...args);

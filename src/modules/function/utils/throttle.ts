@@ -6,9 +6,9 @@ import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export type Throttled<Callback extends Callee> = ((
-  this: CallThisParameterType<Callback>,
-  ...args: CallParameters<Callback>
+export type Throttled<Closure extends Callee> = ((
+  this: CallThisParameterType<Closure>,
+  ...args: CallParameters<Closure>
 ) => boolean) & {
   /**
    * Clears the cooldown and makes any subsequent call happen immediately.
@@ -20,8 +20,8 @@ export type Throttled<Callback extends Callee> = ((
    * affect the cooldown of other calls.
    */
   immediate(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): void;
 
   /**
@@ -37,13 +37,13 @@ export type Throttled<Callback extends Callee> = ((
  *
  * @root
  */
-export function throttle<Callback extends Callee>(
-  callback: Callback,
+export function throttle<Closure extends Callee>(
+  closure: Closure,
   delay: number,
-): Throttled<Callback> {
+): Throttled<Closure> {
   const interval = toDelay(delay);
 
-  const execute = toFunction(callback);
+  const execute = toFunction(closure);
 
   let throttledUntil = 0;
 
@@ -52,8 +52,8 @@ export function throttle<Callback extends Callee>(
   }
 
   function throttled(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): boolean {
     const now = Date.now();
 
@@ -69,8 +69,8 @@ export function throttle<Callback extends Callee>(
   }
 
   function immediate(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): void {
     execute.call(this, ...args);
   }

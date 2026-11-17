@@ -15,23 +15,23 @@ import type { CallReturnType } from "#types/CallReturnType";
 import type { MaybePromise } from "#types/MaybePromise";
 
 export interface CachedAsync<
-  Callback extends CacheResolver,
-  Key = CallParameters<Callback>[0],
+  Closure extends CacheResolver,
+  Key = CallParameters<Closure>[0],
 > {
   (
     this: void,
-    ...args: CallParameters<Callback>
-  ): MaybePromise<Awaited<CallReturnType<Callback>>>;
+    ...args: CallParameters<Closure>
+  ): MaybePromise<Awaited<CallReturnType<Closure>>>;
 
   call(
     thisArg: undefined,
-    ...args: CallParameters<Callback>
-  ): MaybePromise<Awaited<CallReturnType<Callback>>>;
+    ...args: CallParameters<Closure>
+  ): MaybePromise<Awaited<CallReturnType<Closure>>>;
 
   /**
    * Resolves a key without computing or caching a value.
    */
-  keyFor(this: void, ...args: CallParameters<Callback>): Key;
+  keyFor(this: void, ...args: CallParameters<Closure>): Key;
 
   /**
    * Clears pending and fulfilled entries.
@@ -41,13 +41,13 @@ export interface CachedAsync<
   /**
    * Returns only fulfilled values without computing missing entries.
    */
-  value(key: Key): Awaited<CallReturnType<Callback>> | undefined;
+  value(key: Key): Awaited<CallReturnType<Closure>> | undefined;
 
   /**
    * Returns the promise associated with a key without computing missing entries.
    * It will return a promise even if the entry is settled.
    */
-  promise(key: Key): Promise<Awaited<CallReturnType<Callback>>> | undefined;
+  promise(key: Key): Promise<Awaited<CallReturnType<Closure>>> | undefined;
 
   /**
    * Returns whether an entry exists, including pending entries.
@@ -84,19 +84,19 @@ interface CacheEntry {
  * resolver errors propagate without creating an entry. Clearing or deleting
  * pending entries does not cancel or restore them.
  */
-export function cacheAsync<Callback extends CacheResolver, Key>(
-  callback: Callback,
-  resolveKey: KeyResolver<Callback, Key>,
-): CachedAsync<Callback, Key>;
+export function cacheAsync<Closure extends CacheResolver, Key>(
+  closure: Closure,
+  resolveKey: KeyResolver<Closure, Key>,
+): CachedAsync<Closure, Key>;
 export function cacheAsync<
-  Callback extends CacheResolver,
-  Key = CallParameters<Callback>[0],
+  Closure extends CacheResolver,
+  Key = CallParameters<Closure>[0],
 >(
-  callback: Callback,
-  options?: CachedOptions<Callback, Key>,
-): CachedAsync<Callback, Key>;
+  closure: Closure,
+  options?: CachedOptions<Closure, Key>,
+): CachedAsync<Closure, Key>;
 export function cacheAsync(
-  callback: Callee,
+  closure: Callee,
   options: CachedOptions | Callee = {},
 ): CachedAsync<Callee> {
   const { cachePrimitives = true, resolveKey } = isCallable(options)
@@ -112,7 +112,7 @@ export function cacheAsync(
     ? toFunction(resolveKey, resolveKey)
     : identity.bind(undefined);
 
-  const resolveValue = toFunction(callback, callback);
+  const resolveValue = toFunction(closure, closure);
 
   const entries = cache(createEntry, {
     cachePrimitives,

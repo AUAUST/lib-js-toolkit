@@ -5,9 +5,9 @@ import type { Callee } from "#types/Callee";
 import type { CallParameters } from "#types/CallParameters";
 import type { CallThisParameterType } from "#types/CallThisParameterType";
 
-export type Debounced<Callback extends Callee> = ((
-  this: CallThisParameterType<Callback>,
-  ...args: CallParameters<Callback>
+export type Debounced<Closure extends Callee> = ((
+  this: CallThisParameterType<Closure>,
+  ...args: CallParameters<Closure>
 ) => boolean) & {
   /**
    * Cancels any pending execution of the debounced function. Returns `true` if
@@ -27,38 +27,38 @@ export type Debounced<Callback extends Callee> = ((
    * to avoid duplicate executions.
    */
   immediate(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): void;
 };
 
 /**
  * Returns the debounced function. Calling the returned function delays the
- * execution of the callback until after the specified delay has passed only if it
+ * execution of the closure until after the specified delay has passed only if it
  * has not been called again during that delay. It returns a `boolean` indicating
  * whether the call replaced a pending execution.
  *
  * @root
  */
-export function debounce<Callback extends Callee>(
-  callback: Callback,
+export function debounce<Closure extends Callee>(
+  closure: Closure,
   delay: number,
-): Debounced<Callback> {
+): Debounced<Closure> {
   const wait = toDelay(delay);
-  const execute = toFunction(callback);
+  const execute = toFunction(closure);
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   let pendingCall:
     | {
-        thisArg: CallThisParameterType<Callback>;
-        args: CallParameters<Callback>;
+        thisArg: CallThisParameterType<Closure>;
+        args: CallParameters<Closure>;
       }
     | undefined;
 
   function debounced(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): boolean {
     const pending = clear();
 
@@ -100,8 +100,8 @@ export function debounce<Callback extends Callee>(
   }
 
   function immediate(
-    this: CallThisParameterType<Callback>,
-    ...args: CallParameters<Callback>
+    this: CallThisParameterType<Closure>,
+    ...args: CallParameters<Closure>
   ): void {
     Reflect.apply(execute, this, args);
   }

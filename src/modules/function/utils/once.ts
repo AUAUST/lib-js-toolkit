@@ -30,21 +30,21 @@ export type OnceFn<Return> = (() => Return) & {
   );
 
 /**
- * Wraps `callback` so it runs on the first call only; later calls return the
+ * Wraps `closure` so it runs on the first call only; later calls return the
  * first call's result.
  *
  * @root
  */
-export function once<Callback extends Callee<any, readonly []>>(
-  this: CallThisParameterType<Callback>,
-  callback: Callback,
-): OnceFn<CallReturnType<Callback>> {
-  type Return = CallReturnType<Callback>;
+export function once<Closure extends Callee<any, readonly []>>(
+  this: CallThisParameterType<Closure>,
+  closure: Closure,
+): OnceFn<CallReturnType<Closure>> {
+  type Return = CallReturnType<Closure>;
 
   let value: Return | undefined;
   let called = false;
 
-  const resolve = toFunction(callback, this);
+  const resolve = toFunction(closure, this);
 
   function accessor() {
     if (called) {
