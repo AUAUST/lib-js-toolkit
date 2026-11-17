@@ -109,6 +109,13 @@ describe("overload", () => {
 
     expect(() => {
       return overload({
+        // @ts-expect-error `strnig` is no trap name.
+        strnig: () => 1,
+      });
+    }).toThrow(TypeError);
+
+    expect(() => {
+      return overload({
         // @ts-expect-error a trap must be a function.
         string: 1,
       });

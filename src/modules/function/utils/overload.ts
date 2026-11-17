@@ -83,14 +83,12 @@ type TrapShape<Input> = [Input] extends [never]
     }["trap"];
 
 /**
- * Constrains each trap of `overload` to receive the values it is reached by:
- * a trap whose name is no type name, an unreachable group trap and `default`
- * beside `unknown` are `never`.
+ * Constrains each trap of `overload` to receive the values it is reached by: an
+ * unreachable group trap and `default` beside `unknown` are `never`. Keys that
+ * are no trap name are left out.
  */
 export type OverloadTraps<Traps> = {
-  [Name in keyof Traps]: Name extends TrapName
-    ? TrapShape<Reach<Name, keyof Traps>>
-    : never;
+  [Name in keyof Traps & TrapName]: TrapShape<Reach<Name, keyof Traps>>;
 };
 
 type TrapParameters<Trap> = Trap extends (...args: infer Parameters) => unknown
@@ -328,7 +326,7 @@ function resolveTraps(traps: Readonly<Record<string, unknown>>): TrapTable {
  * @throws {TypeError} at call, on a first argument whose type has no trap.
  */
 export function overload<
-  Names extends PropertyKey,
+  Names extends TrapName,
   Traps extends OverloadTraps<Record<Names, unknown>>,
 >(traps: Traps & Record<Names, unknown>): Overloaded<Traps>;
 export function overload(traps: Readonly<Record<string, unknown>>): unknown {
