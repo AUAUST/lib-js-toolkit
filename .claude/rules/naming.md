@@ -49,5 +49,5 @@ paths:
 | Function used only during the call           | `fn`                      | `attempt(fn)`                                                 |
 | Any other parameter                          | its role; plural for rest | `object.assign(object, ...sources)`                           |
 
-A `closure` is resolved once with `toFunction`; a `callback` or `fn` is invoked directly with `call`.
+A `closure` is resolved once with `toFunction` and invoked with `Reflect.apply`; a `callback` or `fn` is invoked with `call` or `apply`, or `callWith` or `applyWith` when it takes a receiver. Invoke a toolkit helper with a forwarded receiver through its declared `call`.
 Name the local holding a resolved `closure` after its role, otherwise `resolved`: `const predicate = toFunction(closure)`.
